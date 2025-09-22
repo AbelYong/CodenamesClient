@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesClient", "CodenamesClient.csproj", "{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesGame", "..\CodenamesGame\CodenamesGame.csproj", "{BAD686BF-E733-4A30-9251-F108D26C99AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B4A4C60F-36E9-42D3-9F9F-434F440D68FE}
+	EndGlobalSection
+EndGlobal

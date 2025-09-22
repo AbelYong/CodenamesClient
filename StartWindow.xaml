@@ -1,0 +1,26 @@
+﻿<Window x:Class="CodenamesClient.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CodenamesClient"
+        mc:Ignorable="d"
+        xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
+        Title="{x:Static language:Lang.langSelectLanguage}" Height="450" Width="400" Background="#FF1D1D1D">
+    <Grid>
+        <Label Content="{x:Static language:Lang.langSelectLanguage}" Style="{StaticResource subtitle}" Margin="0,49,0,0" VerticalAlignment="Top" />
+        <Label Content="{x:Static language:Lang.langEnglish}" Style="{StaticResource normal}" Margin="0,112,0,0" VerticalAlignment="Top"/>
+        <Button Content="" Style="{StaticResource imageButtonFocus}" HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Height="50" Width="88" BorderBrush="#00707070">
+            <Button.Background>
+                <ImageBrush ImageSource="/Assets/GameUI/usFlag.png"/>
+            </Button.Background>
+        </Button>
+        <Label Content="{x:Static language:Lang.langSpanish}" Style="{StaticResource normal}" Margin="0,213,0,0" VerticalAlignment="Top"/>
+        <Button Content="" Style="{StaticResource imageButtonFocus}" HorizontalAlignment="Center" Margin="0,247,0,0" VerticalAlignment="Top" Height="50" Width="88" BorderBrush="#00707070">
+            <Button.Background>
+                <ImageBrush ImageSource="/Assets/GameUI/mexicoFlag.png"/>
+            </Button.Background>
+        </Button>
+        <Button Content="{x:Static language:Lang.globalStart}" Style="{StaticResource buttonCustomFocus}" Margin="0,345,0,0" VerticalAlignment="Top" Height="35" Width="150" Background="#00DDDDDD" BorderBrush="White" Foreground="White"/>
+    </Grid>
+</Window>
