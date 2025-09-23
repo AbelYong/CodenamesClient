@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodenamesClient.GameUI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -40,10 +41,12 @@ namespace CodenamesClient
             Restart();
         }
 
+
         private void Click_btnStart(object sender, RoutedEventArgs e)
         {
-            //TODO
-            throw new NotImplementedException();
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
         }
 
         private static void Restart()

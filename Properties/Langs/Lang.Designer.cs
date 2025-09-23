@@ -70,6 +70,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Username.
+        /// </summary>
+        public static string globalUsername {
+            get {
+                return ResourceManager.GetString("globalUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a English.
         /// </summary>
         public static string langEnglish {
@@ -93,6 +102,51 @@ namespace CodenamesClient.Properties.Langs {
         public static string langSpanish {
             get {
                 return ResourceManager.GetString("langSpanish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Don&apos;t have an account?.
+        /// </summary>
+        public static string loginDontHaveAccount {
+            get {
+                return ResourceManager.GetString("loginDontHaveAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Log-In.
+        /// </summary>
+        public static string loginLogIn {
+            get {
+                return ResourceManager.GetString("loginLogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password.
+        /// </summary>
+        public static string loginPassword {
+            get {
+                return ResourceManager.GetString("loginPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Play as a guest.
+        /// </summary>
+        public static string loginPlayAsGuest {
+            get {
+                return ResourceManager.GetString("loginPlayAsGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sign-In.
+        /// </summary>
+        public static string loginSignIn {
+            get {
+                return ResourceManager.GetString("loginSignIn", resourceCulture);
             }
         }
     }

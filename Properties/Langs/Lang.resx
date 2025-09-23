@@ -120,6 +120,9 @@
   <data name="globalStart" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="globalUsername" xml:space="preserve">
+    <value>Username</value>
+  </data>
   <data name="langEnglish" xml:space="preserve">
     <value>English</value>
   </data>
@@ -128,5 +131,20 @@
   </data>
   <data name="langSpanish" xml:space="preserve">
     <value>Spanish</value>
+  </data>
+  <data name="loginDontHaveAccount" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="loginLogIn" xml:space="preserve">
+    <value>Log-In</value>
+  </data>
+  <data name="loginPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="loginPlayAsGuest" xml:space="preserve">
+    <value>Play as a guest</value>
+  </data>
+  <data name="loginSignIn" xml:space="preserve">
+    <value>Sign-In</value>
   </data>
 </root>

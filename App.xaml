@@ -5,6 +5,15 @@
              StartupUri="StartWindow.xaml">
     <Application.Resources>
         <!-- Label Styles-->
+        <!-- Title Style-->
+        <Style x:Key="title" >
+            <Setter Property="Label.VerticalAlignment" Value="Center" />
+            <Setter Property="Label.HorizontalAlignment" Value="Center" />
+            <Setter Property="Label.FontFamily" Value="Consolas" />
+            <Setter Property="Label.FontSize" Value="36" />
+            <Setter Property="Label.FontWeight" Value="Bold" />
+            <Setter Property="Label.Foreground" Value="White" />
+        </Style>
         <!-- Subtitle Style-->
         <Style x:Key="subtitle" >
             <Setter Property="Label.VerticalAlignment" Value="Center" />
