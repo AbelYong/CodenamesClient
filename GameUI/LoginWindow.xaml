@@ -14,10 +14,10 @@
                 <Label Content="Duet" Margin="0,10,0,0" Foreground="White" FontSize="72" FontFamily="Bell MT"/>
             </StackPanel>
             <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
-            <TextBox Name="txb" HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="" Width="320" FontFamily="Consolas" FontSize="24" Background="Transparent" BorderBrush="White" Foreground="White" SelectionBrush="#FFD6D6D6"/>
+            <TextBox Name="txb" Style="{StaticResource textBoxCustomFocus}" Margin="0,10,0,0" Text="" Width="320" />
             <Label Content="*errorMessage1" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
             <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
-            <PasswordBox  Margin="0,10,0,0" Width="320" FontFamily="Consolas" FontSize="16" Background="Transparent" BorderBrush="White" Foreground="White" SelectionBrush="#FFD6D6D6" Height="30"/>
+            <PasswordBox Style="{StaticResource passwordBoxCustomFocus}" Margin="0,10,0,0" Width="320"/>
             <Label Content="*errorMessage2" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
             <Button Content="{x:Static language:Lang.loginLogIn}" Style="{StaticResource buttonCustomFocus}" Margin="0,10,0,0" Width="316" Background="#00DDDDDD" FontSize="24" Height="60"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
