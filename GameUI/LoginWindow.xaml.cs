@@ -23,5 +23,12 @@ namespace CodenamesClient.GameUI
         {
             InitializeComponent();
         }
+
+        private void Click_btnSignIn(object sender, RoutedEventArgs e)
+        {
+            SignInWindow signInWindow = new SignInWindow();
+            signInWindow.Owner = this;
+            signInWindow.ShowDialog();
+        }
     }
 }

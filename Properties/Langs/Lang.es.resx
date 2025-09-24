@@ -147,4 +147,19 @@
   <data name="loginSignIn" xml:space="preserve">
     <value>Registrarse</value>
   </data>
+  <data name="profileEmail" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
+  <data name="profileLastName" xml:space="preserve">
+    <value>Apellidos</value>
+  </data>
+  <data name="profileName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="profileOptionalLastName" xml:space="preserve">
+    <value>Apellidos (Opcional)</value>
+  </data>
+  <data name="profileOptionalName" xml:space="preserve">
+    <value>Nombre (Opcional)</value>
+  </data>
 </root>

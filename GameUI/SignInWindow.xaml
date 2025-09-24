@@ -5,12 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodenamesClient.GameUI"
         mc:Ignorable="d"
-        Title="SignInWindow" Height="450" Width="400" Background="#FF1D1D1D">
+        xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
+        Title="{x:Static language:Lang.loginSignIn}" Height="525" Width="400" Background="#FF1D1D1D">
     <Grid>
-        <StackPanel VerticalAlignment="Center">
-            <Label Content="SignIn" Style="{StaticResource subtitle}"/>
-            <TextBox TextWrapping="Wrap" Text="TextBox" Width="120"/>
-
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource subtitle}"/>
+            <Label Content="{x:Static language:Lang.profileEmail}" Style="{StaticResource normal}" />
+            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="" Width="200"/>
+            <Label Content="*emailErrorMessage" Style="{StaticResource normal}" Width="300" />
+            <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource normal}" />
+            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
+            <Label Content="*usernameErrorMessage" Style="{StaticResource normal}" Width="300" />
+            <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" />
+            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
+            <Label Content="*passwordErrorMessage" Style="{StaticResource normal}" Width="300" />
+            <Label Content="{x:Static language:Lang.profileOptionalName}" Style="{StaticResource normal}" />
+            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
+            <Label Content="*nameErrorMessage" Style="{StaticResource normal}" Width="300" />
+            <Label Content="{x:Static language:Lang.profileOptionalLastName}" Style="{StaticResource normal}" />
+            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
+            <Label Content="*lastNameErrorMessage" Style="{StaticResource normal}" Width="300" />
+            <Button Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource buttonCustomFocus}" Width="200" Height="30" />
         </StackPanel>
     </Grid>
 </Window>

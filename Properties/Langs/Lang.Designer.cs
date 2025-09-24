@@ -149,5 +149,50 @@ namespace CodenamesClient.Properties.Langs {
                 return ResourceManager.GetString("loginSignIn", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Email.
+        /// </summary>
+        public static string profileEmail {
+            get {
+                return ResourceManager.GetString("profileEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Last name.
+        /// </summary>
+        public static string profileLastName {
+            get {
+                return ResourceManager.GetString("profileLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Name.
+        /// </summary>
+        public static string profileName {
+            get {
+                return ResourceManager.GetString("profileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Last name (optional).
+        /// </summary>
+        public static string profileOptionalLastName {
+            get {
+                return ResourceManager.GetString("profileOptionalLastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Name (Optional).
+        /// </summary>
+        public static string profileOptionalName {
+            get {
+                return ResourceManager.GetString("profileOptionalName", resourceCulture);
+            }
+        }
     }
 }
