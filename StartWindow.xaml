@@ -8,20 +8,22 @@
         xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
         Title="{x:Static language:Lang.langSelectLanguage}" Height="450" Width="400" Background="#FF1D1D1D">
     <Grid>
-        <Label Content="{x:Static language:Lang.langSelectLanguage}" Style="{StaticResource subtitle}" Margin="0,49,0,0" VerticalAlignment="Top" />
-        <Label Content="{x:Static language:Lang.langEnglish}" Style="{StaticResource normal}" Margin="0,112,0,0" VerticalAlignment="Top"/>
-        <Button Click="Click_btnEnglish"  Content="" Style="{StaticResource imageButtonFocus}" HorizontalAlignment="Center" Margin="0,146,0,0" VerticalAlignment="Top" Height="50" Width="88" BorderBrush="#00707070">
-            <Button.Background>
-                <ImageBrush ImageSource="/Assets/GameUI/usFlag.png"/>
-            </Button.Background>
-        </Button>
-        <Label Content="{x:Static language:Lang.langSpanish}" Style="{StaticResource normal}" Margin="0,213,0,0" VerticalAlignment="Top"/>
-        <Button Click="Click_btnSpanish" Content="" Style="{StaticResource imageButtonFocus}" HorizontalAlignment="Center" Margin="0,247,0,0" VerticalAlignment="Top" Height="50" Width="88" BorderBrush="#00707070">
-            <Button.Background>
-                <ImageBrush ImageSource="/Assets/GameUI/mexicoFlag.png"/>
-            </Button.Background>
-        </Button>
-        <Button Click="Click_btnStart"
-            Content="{x:Static language:Lang.globalStart}" Style="{StaticResource buttonCustomFocus}" Margin="0,345,0,0" VerticalAlignment="Top" Height="35" Width="150" Background="#00DDDDDD" BorderBrush="White" Foreground="White"/>
+        <StackPanel VerticalAlignment="Center">
+            <Label Content="{x:Static language:Lang.langSelectLanguage}" Style="{StaticResource subtitle}" Margin="0,0,0,0" VerticalAlignment="Top" />
+            <Label Content="{x:Static language:Lang.langEnglish}" Style="{StaticResource normal}" Margin="0,10,0,0"/>
+            <Button Click="Click_btnEnglish"  Content="" Style="{StaticResource imageButtonFocus}" Margin="0,10,0,0" Height="50" Width="88" BorderBrush="#00707070">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/GameUI/usFlag.png"/>
+                </Button.Background>
+            </Button>
+            <Label Content="{x:Static language:Lang.langSpanish}" Style="{StaticResource normal}" Margin="0,10,0,0"/>
+            <Button Click="Click_btnSpanish" Content="" Style="{StaticResource imageButtonFocus}" Margin="0,10,0,0" Height="50" Width="88" BorderBrush="#00707070">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/GameUI/mexicoFlag.png"/>
+                </Button.Background>
+            </Button>
+            <Button Click="Click_btnStart"
+                    Content="{x:Static language:Lang.globalStart}" Style="{StaticResource buttonCustomFocus}" Margin="0,25,0,0" Height="35" Width="150" Background="#00DDDDDD" BorderBrush="White" Foreground="White"/>
+        </StackPanel>
     </Grid>
 </Window>
