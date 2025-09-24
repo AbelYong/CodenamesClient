@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesClient", "CodenamesClient.csproj", "{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesGame", "..\CodenamesGame\CodenamesGame.csproj", "{BAD686BF-E733-4A30-9251-F108D26C99AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesGame", "CodenamesGame\CodenamesGame.csproj", "{44A44618-D4A9-4413-A5BA-494CDD647AE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{646F31BD-EE40-4CE6-9BE8-8DBB6FA4A4F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAD686BF-E733-4A30-9251-F108D26C99AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A44618-D4A9-4413-A5BA-494CDD647AE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A44618-D4A9-4413-A5BA-494CDD647AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A44618-D4A9-4413-A5BA-494CDD647AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A44618-D4A9-4413-A5BA-494CDD647AE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
