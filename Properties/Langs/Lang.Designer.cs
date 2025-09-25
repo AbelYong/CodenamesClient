@@ -61,6 +61,42 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Friends.
+        /// </summary>
+        public static string globalFriends {
+            get {
+                return ResourceManager.GetString("globalFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Play.
+        /// </summary>
+        public static string globalPlay {
+            get {
+                return ResourceManager.GetString("globalPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Scoreboards.
+        /// </summary>
+        public static string globalScoreboards {
+            get {
+                return ResourceManager.GetString("globalScoreboards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Settings.
+        /// </summary>
+        public static string globalSettings {
+            get {
+                return ResourceManager.GetString("globalSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Start.
         /// </summary>
         public static string globalStart {
@@ -147,6 +183,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string loginSignIn {
             get {
                 return ResourceManager.GetString("loginSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Logged-in as:.
+        /// </summary>
+        public static string mainMenuLoggedIn {
+            get {
+                return ResourceManager.GetString("mainMenuLoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Quit.
+        /// </summary>
+        public static string mainMenuQuit {
+            get {
+                return ResourceManager.GetString("mainMenuQuit", resourceCulture);
             }
         }
         

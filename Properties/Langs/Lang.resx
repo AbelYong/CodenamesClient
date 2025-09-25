@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="globalStart" xml:space="preserve">
-    <value>Start</value>
-  </data>
   <data name="globalUsername" xml:space="preserve">
     <value>Username</value>
   </data>
@@ -161,5 +158,26 @@
   </data>
   <data name="profileOptionalName" xml:space="preserve">
     <value>Name (Optional)</value>
+  </data>
+  <data name="globalStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="globalPlay" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="globalFriends" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="globalScoreboards" xml:space="preserve">
+    <value>Scoreboards</value>
+  </data>
+  <data name="globalSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="mainMenuQuit" xml:space="preserve">
+    <value>Quit</value>
+  </data>
+  <data name="mainMenuLoggedIn" xml:space="preserve">
+    <value>Logged-in as:</value>
   </data>
 </root>
