@@ -61,6 +61,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Back.
+        /// </summary>
+        public static string globalBack {
+            get {
+                return ResourceManager.GetString("globalBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Friends.
         /// </summary>
         public static string globalFriends {
@@ -75,6 +84,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalPlay {
             get {
                 return ResourceManager.GetString("globalPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Save.
+        /// </summary>
+        public static string globalSave {
+            get {
+                return ResourceManager.GetString("globalSave", resourceCulture);
             }
         }
         
@@ -246,6 +264,42 @@ namespace CodenamesClient.Properties.Langs {
         public static string profileOptionalName {
             get {
                 return ResourceManager.GetString("profileOptionalName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Search for a friend.
+        /// </summary>
+        public static string socialSearchForAFriend {
+            get {
+                return ResourceManager.GetString("socialSearchForAFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Game Effects.
+        /// </summary>
+        public static string soundGameEffects {
+            get {
+                return ResourceManager.GetString("soundGameEffects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Master Volume.
+        /// </summary>
+        public static string soundMasterVolume {
+            get {
+                return ResourceManager.GetString("soundMasterVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Music Volume.
+        /// </summary>
+        public static string soundMusicVolume {
+            get {
+                return ResourceManager.GetString("soundMusicVolume", resourceCulture);
             }
         }
     }

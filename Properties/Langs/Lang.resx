@@ -180,4 +180,22 @@
   <data name="mainMenuLoggedIn" xml:space="preserve">
     <value>Logged-in as:</value>
   </data>
+  <data name="soundMasterVolume" xml:space="preserve">
+    <value>Master Volume</value>
+  </data>
+  <data name="soundGameEffects" xml:space="preserve">
+    <value>Game Effects</value>
+  </data>
+  <data name="soundMusicVolume" xml:space="preserve">
+    <value>Music Volume</value>
+  </data>
+  <data name="socialSearchForAFriend" xml:space="preserve">
+    <value>Search for a friend</value>
+  </data>
+  <data name="globalBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="globalSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>
