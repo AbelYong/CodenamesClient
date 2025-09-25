@@ -19,7 +19,6 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-
         <Storyboard x:Key="SlideOutAnimation">
             <DoubleAnimation Storyboard.TargetName="SettingsGrid"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -29,7 +28,6 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-
         <Storyboard x:Key="SlideInFriendsAnimation">
             <DoubleAnimation Storyboard.TargetName="FriendsGrid"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -39,11 +37,49 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-
         <Storyboard x:Key="SlideOutFriendsAnimation">
             <DoubleAnimation Storyboard.TargetName="FriendsGrid"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
                              From="0" To="640" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="SlideInGameModeAnimation">
+            <DoubleAnimation Storyboard.TargetName="GameModeGrid"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="640" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="SlideOutGameModeAnimation">
+            <DoubleAnimation Storyboard.TargetName="GameModeGrid"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="0" To="640" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="SlideInScoreboardsAnimation">
+            <DoubleAnimation Storyboard.TargetName="ScoreboardsGrid"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="640" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="SlideOutScoreboardsAnimation">
+            <DoubleAnimation Storyboard.TargetName="ScoreboardsGrid"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="0" To="640" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -65,19 +101,49 @@
                 <Label Content="Duet" Foreground="White" FontFamily="Bell MT" FontSize="72"/>
             </StackPanel>
             <Button Content="{x:Static language:Lang.globalPlay}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,40,645,0"/>
+                    Width="316" Height="60" FontSize="24" Margin="0,40,645,0" Click="ShowGameMode_Click"/>
             <Button Content="{x:Static language:Lang.globalFriends}" Style="{StaticResource buttonCustomFocus}"
                     Width="316" Height="60" FontSize="24" Margin="0,10,645,0" Click="ShowFriends_Click"/>
             <Button Content="{x:Static language:Lang.globalScoreboards}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,10,645,0"/>
+                    Width="316" Height="60" FontSize="24" Margin="0,10,645,0" Click="ShowScoreboards_Click"/>
             <Button Content="{x:Static language:Lang.globalSettings}" Style="{StaticResource buttonCustomFocus}" Width="316" Height="60"
                     FontSize="24" Margin="0,10,645,0" Click="ShowSettings_Click"/>
             <Button Content="{x:Static language:Lang.mainMenuQuit}" Style="{StaticResource buttonCustomFocus}"
                     Width="316" Height="60" FontSize="24" Margin="0,10,645,0" Click="btnQuit_Click"/>
         </StackPanel>
 
-        <!-- Panel de Settings -->
-        <Grid x:Name="SettingsGrid" Width="550" Height="400" Background="#FF1D1D1D"
+        <!-- GamemodeGrid -->
+        <Grid x:Name="GameModeGrid" Width="550" Height="400" Background="#272727" HorizontalAlignment="Center"
+              VerticalAlignment="Center" Visibility="Collapsed">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="640"/>
+            </Grid.RenderTransform>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Content="{x:Static language:Lang.gamemodeChooseAGamemode}" Style="{StaticResource subtitle}" Foreground="White" 
+                       HorizontalAlignment="Center" Margin="0,20,0,20"/>
+
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+                    <Button Content="{x:Static language:Lang.gamemodeNormalGame}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60" 
+                            FontSize="24" Margin="10" Click="GameMode_Button_Click"/>
+                    <Button Content="{x:Static language:Lang.gamemodeCustomGame}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60"
+                            FontSize="24" Margin="10" Click="GameMode_Button_Click"/>
+                    <Button Content="{x:Static language:Lang.gamemodeCounterintelligenceMode}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60" 
+                            FontSize="24" Margin="10" Click="GameMode_Button_Click"/>
+                </StackPanel>
+
+                <Button Grid.Row="2" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" 
+                        Width="180" Height="40" Click="HideGameMode_Click" Margin="0,0,0,20"/>
+            </Grid>
+        </Grid>
+
+        <!-- Settings Grid -->
+        <Grid x:Name="SettingsGrid" Width="550" Height="400" Background="#272727"
               HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
             <Grid.RenderTransform>
                 <TranslateTransform Y="640"/>
@@ -116,8 +182,8 @@
             </Grid>
         </Grid>
 
-        <!-- Panel de Friends -->
-        <Grid x:Name="FriendsGrid" Width="550" Height="600" Background="#FF1D1D1D" HorizontalAlignment="Center"
+        <!-- Friends Grid -->
+        <Grid x:Name="FriendsGrid" Width="700" Height="600" Background="#272727" HorizontalAlignment="Center"
               VerticalAlignment="Center" Visibility="Collapsed">
             <Grid.RenderTransform>
                 <TranslateTransform Y="640"/>
@@ -127,26 +193,21 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="20,20,20,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
-                            Width="80" Height="40" Click="HideFriends_Click"/>
-                    <Label Grid.Column="1" Content="{x:Static language:Lang.globalFriends}" Style="{StaticResource subtitle}" Foreground="White"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
+                <Label Grid.Row="0" Content="{x:Static language:Lang.globalFriends}" Style="{StaticResource subtitle}"
+                       Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,20"/>
                 <Border Grid.Row="1" Background="#FF2D2D2D" Height="40" Margin="20,10,20,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="SearchBox" Grid.Column="0" Text="{x:Static language:Lang.socialSearchForAFriend}" Background="Transparent"
-                                 BorderThickness="0" Foreground="#AAAAAA" FontFamily="Consolas" HorizontalAlignment="Left"
-                                 VerticalContentAlignment="Center" Margin="15,0,0,0" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
+                        <TextBox x:Name="SearchBox" Grid.Column="0" 
+                         Text="{x:Static language:Lang.socialSearchForAFriend}" Background="Transparent"
+                                 BorderThickness="0" Foreground="#AAAAAA" FontFamily="Consolas" 
+                                 HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="15,0,0,0"
+                                 GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
                         <Button Grid.Column="1" Content="❌" Background="Transparent" BorderThickness="0"
                                 Foreground="#AAAAAA" Width="30" Height="30" VerticalContentAlignment="Center"
                                 HorizontalContentAlignment="Center" Margin="0,0,5,0" Click="ClearSearchBox_Click"/>
@@ -154,10 +215,46 @@
                 </Border>
                 <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="20,15,20,20">
                     <StackPanel x:Name="FriendsListStackPanel">
-                        <Label Content="Feature not currently available" Foreground="White"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Margin="0,100,0,0"/>
+                        <Label Content="Feature not currently available" Foreground="White" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" FontSize="18" Margin="0,100,0,0"/>
                     </StackPanel>
                 </ScrollViewer>
+                <Button Grid.Row="3" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
+                        Width="180" Height="40" HorizontalAlignment="Left" Margin="20,0,0,20" Click="HideFriends_Click"/>
+            </Grid>
+        </Grid>
+
+        <!-- ScoreboardsGrid -->
+        <Grid x:Name="ScoreboardsGrid" Width="700" Height="600" Background="#272727" HorizontalAlignment="Center"
+              VerticalAlignment="Center" Visibility="Collapsed">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="640"/>
+            </Grid.RenderTransform>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="{x:Static language:Lang.globalScoreboards}" Style="{StaticResource subtitle}"
+                       Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,20"/>
+                <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Feature not currently available" Foreground="White" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontSize="18" Margin="0,100,0,0"/>
+                </StackPanel>
+                <Grid Grid.Row="2" Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}"
+                            Style="{StaticResource buttonCustomFocus}" Width="180" Height="40" Click="HideScoreboards_Click"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.scoresMyScore}" 
+                            Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"/>
+                    <Button Grid.Column="2" Content="{x:Static language:Lang.scoresRefresh}"
+                            Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

@@ -198,4 +198,22 @@
   <data name="globalSave" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="scoresMyScore" xml:space="preserve">
+    <value>My score</value>
+  </data>
+  <data name="scoresRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="gamemodeChooseAGamemode" xml:space="preserve">
+    <value>Choose a gamemode</value>
+  </data>
+  <data name="gamemodeNormalGame" xml:space="preserve">
+    <value>Normal game</value>
+  </data>
+  <data name="gamemodeCustomGame" xml:space="preserve">
+    <value>Custom game</value>
+  </data>
+  <data name="gamemodeCounterintelligenceMode" xml:space="preserve">
+    <value>Counterintelligence mode</value>
+  </data>
 </root>

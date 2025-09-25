@@ -132,5 +132,10 @@
     <Resource Include="Assets\GameUI\mexicoFlag.png" />
     <Resource Include="Assets\GameUI\usFlag.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Main Theme %28NOT FINAL%29.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

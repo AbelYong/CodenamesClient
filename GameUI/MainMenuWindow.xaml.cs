@@ -1,16 +1,24 @@
 ﻿using CodenamesClient.Properties.Langs;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace CodenamesClient.GameUI
 {
     public partial class MainMenuWindow : Window
     {
+        private MediaPlayer mediaPlayer;
+
         public MainMenuWindow()
         {
             InitializeComponent();
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.Open(new Uri("Main Theme (NOT FINAL).mp3", UriKind.Relative));
+            mediaPlayer.Play();
+            mediaPlayer.MediaEnded += (s, e) => mediaPlayer.Position = TimeSpan.Zero;
         }
 
         private void ShowSettings_Click(object sender, RoutedEventArgs e)
@@ -80,6 +88,48 @@ namespace CodenamesClient.GameUI
                 SearchBox.Text = Lang.socialSearchForAFriend;
                 SearchBox.FontStyle = FontStyles.Italic;
             }
+        }
+
+        private void ShowGameMode_Click(object sender, RoutedEventArgs e)
+        {
+            var slideInAnimation = (Storyboard)FindResource("SlideInGameModeAnimation");
+            GameModeGrid.Visibility = Visibility.Visible;
+            slideInAnimation.Begin();
+        }
+
+        private void HideGameMode_Click(object sender, RoutedEventArgs e)
+        {
+            var slideOutAnimation = (Storyboard)FindResource("SlideOutGameModeAnimation");
+            slideOutAnimation.Completed += (s, ev) =>
+            {
+                GameModeGrid.Visibility = Visibility.Collapsed;
+            };
+            slideOutAnimation.Begin();
+        }
+
+        private void GameMode_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            string gameMode = clickedButton.Content.ToString();
+            MessageBox.Show($"Starting game in {gameMode} mode!");
+            // Aquí podrías agregar la lógica para iniciar el juego real.
+        }
+
+        private void ShowScoreboards_Click(object sender, RoutedEventArgs e)
+        {
+            var slideInAnimation = (Storyboard)FindResource("SlideInScoreboardsAnimation");
+            ScoreboardsGrid.Visibility = Visibility.Visible;
+            slideInAnimation.Begin();
+        }
+
+        private void HideScoreboards_Click(object sender, RoutedEventArgs e)
+        {
+            var slideOutAnimation = (Storyboard)FindResource("SlideOutScoreboardsAnimation");
+            slideOutAnimation.Completed += (s, ev) =>
+            {
+                ScoreboardsGrid.Visibility = Visibility.Collapsed;
+            };
+            slideOutAnimation.Begin();
         }
     }
 }

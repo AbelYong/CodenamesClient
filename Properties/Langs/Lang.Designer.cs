@@ -61,6 +61,42 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Choose a gamemode.
+        /// </summary>
+        public static string gamemodeChooseAGamemode {
+            get {
+                return ResourceManager.GetString("gamemodeChooseAGamemode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Counterintelligence mode.
+        /// </summary>
+        public static string gamemodeCounterintelligenceMode {
+            get {
+                return ResourceManager.GetString("gamemodeCounterintelligenceMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Custom game.
+        /// </summary>
+        public static string gamemodeCustomGame {
+            get {
+                return ResourceManager.GetString("gamemodeCustomGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Normal game.
+        /// </summary>
+        public static string gamemodeNormalGame {
+            get {
+                return ResourceManager.GetString("gamemodeNormalGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Back.
         /// </summary>
         public static string globalBack {
@@ -264,6 +300,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string profileOptionalName {
             get {
                 return ResourceManager.GetString("profileOptionalName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a My score.
+        /// </summary>
+        public static string scoresMyScore {
+            get {
+                return ResourceManager.GetString("scoresMyScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Refresh.
+        /// </summary>
+        public static string scoresRefresh {
+            get {
+                return ResourceManager.GetString("scoresRefresh", resourceCulture);
             }
         }
         
