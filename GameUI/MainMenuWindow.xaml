@@ -101,16 +101,21 @@
                 </StackPanel>
                 <Label Content="Duet" Foreground="White" FontFamily="Bell MT" FontSize="72"/>
             </StackPanel>
-            <Button Content="{x:Static language:Lang.globalPlay}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,20,645,0" Click="ShowGameMode_Click"/>
-            <Button Content="{x:Static language:Lang.globalFriends}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,10,645,0" Click="ShowFriends_Click"/>
-            <Button Content="{x:Static language:Lang.globalScoreboards}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,10,645,0" Click="ShowScoreboards_Click"/>
-            <Button Content="{x:Static language:Lang.globalSettings}" Style="{StaticResource buttonCustomFocus}" Width="316" Height="60"
-                    FontSize="24" Margin="0,10,645,0" Click="ShowSettings_Click"/>
-            <Button Content="{x:Static language:Lang.mainMenuQuit}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,10,645,0" Click="btnQuit_Click"/>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="0,0,20,0">
+                    <Button Content="{x:Static language:Lang.globalPlay}" Style="{StaticResource buttonCustomFocus}"
+                            Width="316" Height="60" FontSize="24" Margin="0,20,0,0" Click="ShowGameMode_Click"/>
+                    <Button Content="{x:Static language:Lang.globalFriends}" Style="{StaticResource buttonCustomFocus}"
+                            Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="ShowFriends_Click"/>
+                    <Button Content="{x:Static language:Lang.globalScoreboards}" Style="{StaticResource buttonCustomFocus}"
+                            Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="ShowScoreboards_Click"/>
+                    <Button Content="{x:Static language:Lang.globalSettings}" Style="{StaticResource buttonCustomFocus}" Width="316" Height="60"
+                            FontSize="24" Margin="0,10,0,0" Click="ShowSettings_Click"/>
+                    <Button Content="{x:Static language:Lang.mainMenuQuit}" Style="{StaticResource buttonCustomFocus}"
+                            Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="btnQuit_Click"/>
+                </StackPanel>
+                <Image Height="362" Source="/Assets/GameUI/spyMap.png" Width="628" Stretch="Fill"/>
+            </StackPanel>
         </StackPanel>
 
         <!-- GamemodeGrid -->

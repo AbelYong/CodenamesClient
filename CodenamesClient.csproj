@@ -133,6 +133,7 @@
     <Resource Include="Assets\GameUI\usFlag.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\GameUI\spyMap.png" />
     <Content Include="Main Theme %28NOT FINAL%29.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
