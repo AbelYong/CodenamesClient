@@ -1,4 +1,4 @@
-﻿<Window x:Class="CodenamesClient.GameUI.MainMenuWindow"
+﻿<UserControl x:Class="CodenamesClient.GameUI.MainMenuWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:CodenamesClient.GameUI"
         xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
         mc:Ignorable="d"
-        Title="Codenames: Duet" Height="640" Width="1024" Background="#FF1D1D1D">
+        Height="640" Width="1024" Background="#FF1D1D1D">
 
     <!-- Animaciones generales -->
-    <Window.Resources>
+    <UserControl.Resources>
         <Storyboard x:Key="SlideInAnimation">
             <DoubleAnimation Storyboard.TargetName="SettingsGrid"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -85,23 +85,24 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-    </Window.Resources>
+    </UserControl.Resources>
 
     <Grid>
-        <!-- Usuario -->
-        <Label Content="{x:Static language:Lang.mainMenuLoggedIn}" Style="{StaticResource subtitle}"
-               HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,280,0"/>
-        <Button Content="Player" Style="{StaticResource buttonCustomFocus}" Width="250" Height="60" FontSize="24"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,20,0"/>
-
-        <!-- Menú principal -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Height="200" Orientation="Vertical" HorizontalAlignment="Center">
-                <Label Content="Codenames:" Foreground="White" FontFamily="Consolas" FontSize="72" Margin="0,0,550,0"/>
+        <!-- Main menu -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Codenames:" HorizontalAlignment="Left" Foreground="White" FontFamily="Consolas" FontSize="72" />
+                    <!-- User -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="100,0,0,0">
+                        <Label Content="{x:Static language:Lang.mainMenuLoggedIn}" Style="{StaticResource subtitle}" VerticalAlignment="Center"/>
+                        <Button Content="Player" Style="{StaticResource buttonCustomFocus}" Width="250" Height="60" FontSize="24" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
                 <Label Content="Duet" Foreground="White" FontFamily="Bell MT" FontSize="72"/>
             </StackPanel>
             <Button Content="{x:Static language:Lang.globalPlay}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,40,645,0" Click="ShowGameMode_Click"/>
+                    Width="316" Height="60" FontSize="24" Margin="0,20,645,0" Click="ShowGameMode_Click"/>
             <Button Content="{x:Static language:Lang.globalFriends}" Style="{StaticResource buttonCustomFocus}"
                     Width="316" Height="60" FontSize="24" Margin="0,10,645,0" Click="ShowFriends_Click"/>
             <Button Content="{x:Static language:Lang.globalScoreboards}" Style="{StaticResource buttonCustomFocus}"
@@ -258,4 +259,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Window>
+</UserControl>

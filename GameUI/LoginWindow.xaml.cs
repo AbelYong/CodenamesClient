@@ -19,9 +19,16 @@ namespace CodenamesClient.GameUI
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private MainMenuWindow _mainMenuWindow;
         public LoginWindow()
         {
             InitializeComponent();
+            _mainMenuWindow = new MainMenuWindow();
+        }
+
+        private void Click_btnLogin(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not avaible yet");
         }
 
         private void Click_btnSignIn(object sender, RoutedEventArgs e)
@@ -29,6 +36,12 @@ namespace CodenamesClient.GameUI
             SignInWindow signInWindow = new SignInWindow();
             signInWindow.Owner = this;
             signInWindow.ShowDialog();
+        }
+
+        private void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
+        {
+            stackPanelLogin.Visibility = Visibility.Collapsed;
+            CurrentContent.Content = _mainMenuWindow;
         }
     }
 }

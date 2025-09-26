@@ -8,7 +8,7 @@ using System.Windows.Media.Animation;
 
 namespace CodenamesClient.GameUI
 {
-    public partial class MainMenuWindow : Window
+    public partial class MainMenuWindow : UserControl
     {
         private MediaPlayer mediaPlayer;
 
@@ -20,7 +20,6 @@ namespace CodenamesClient.GameUI
             mediaPlayer.Play();
             mediaPlayer.MediaEnded += (s, e) => mediaPlayer.Position = TimeSpan.Zero;
         }
-
         private void ShowSettings_Click(object sender, RoutedEventArgs e)
         {
             var slideInAnimation = (Storyboard)FindResource("SlideInAnimation");
