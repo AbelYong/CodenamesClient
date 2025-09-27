@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CodenamesClient.GameUI"
+        xmlns:local="clr-namespace:CodenamesClient.GameUI"  
         xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
         mc:Ignorable="d"
         Height="640" Width="1024" Background="#FF1D1D1D">
@@ -180,10 +180,10 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}"
-                            Width="180" Height="40" Click="SaveButton_Click"/>
-                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
                             Width="180" Height="40" Click="HideSettings_Click"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}"
+                            Width="180" Height="40" Click="SaveButton_Click"/>
                 </Grid>
             </Grid>
         </Grid>
