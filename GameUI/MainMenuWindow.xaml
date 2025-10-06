@@ -210,12 +210,11 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="SearchBox" Grid.Column="0" 
-                         Text="{x:Static language:Lang.socialSearchForAFriend}" Background="Transparent"
-                                 BorderThickness="0" Foreground="#AAAAAA" FontFamily="Consolas" 
-                                 HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="15,0,0,0"
+                         Text="{x:Static language:Lang.socialSearchForAFriend}" Style="{StaticResource textBoxCustomFocus}" 
+                                 HorizontalAlignment="Left" BorderThickness="0" VerticalContentAlignment="Center" Margin="15,0,0,0"
                                  GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
                         <Button Grid.Column="1" Content="❌" Background="Transparent" BorderThickness="0"
-                                Foreground="#AAAAAA" Width="30" Height="30" VerticalContentAlignment="Center"
+                                Foreground="White" Width="30" Height="30" VerticalContentAlignment="Center"
                                 HorizontalContentAlignment="Center" Margin="0,0,5,0" Click="ClearSearchBox_Click"/>
                     </Grid>
                 </Border>

@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="CodenamesClient.GameUI.LobbyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CodenamesClient.GameUI"
+        mc:Ignorable="d"
+        Height="640" Width="1024" Background="#FF1D1D1D">
+    <Grid>
+        <DockPanel LastChildFill="False">
+            <StackPanel DockPanel.Dock="Left" Margin="30,30,0,30">
+                <Label Content="Gamemode" Style="{StaticResource title}"
+                       FontSize="72" FontWeight="Normal" Margin="0,0,0,30"/>
+                <Label Content="Rules" Style="{StaticResource subtitle}"
+                       HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="White" Width="320"/>
+                <Grid Margin="0,0,0,200">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Timer tokens: "
+                           Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="Bystander tokens: " 
+                           Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="Turn timer: " 
+                           Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="0"
+                             Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0" />
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="0" 
+                             Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="0" 
+                             Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0" />
+                </Grid>
+                <Button Content="Play"
+                        Style="{StaticResource buttonCustomFocus}" Height="76" FontSize="48"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Right" Margin="0,30,30,30">
+                <Label Content="Party"
+                       Style="{StaticResource title}" />
+                <Label Content="Player" Height="40" 
+                       Style="{StaticResource subtitle}" Background="White" BorderBrush="White" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" Width="110"/>
+                <Button Content="Friend"
+                        Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
+                <Button Content="Invite+" 
+                        Style="{StaticResource buttonCustomFocus}" Height="40" />
+            </StackPanel>
+            <Image Source="/Assets/GameUI/spyMap.png" Stretch="Fill" Margin="30,150,30,55"/>
+
+        </DockPanel>
+    </Grid>
+</UserControl>
