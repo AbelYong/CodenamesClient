@@ -55,10 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
     <Page Include="GameUI\LobbyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+=======
+    <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />
+    <Compile Include="Validation\SignInValidation.cs" />
+>>>>>>> 9cd77a65958cc4f5fefb87a940953c97ddf64044
     <Page Include="GameUI\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

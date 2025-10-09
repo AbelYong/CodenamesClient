@@ -322,6 +322,159 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Confirm password.
+        /// </summary>
+        public static string signInConfirmPassword {
+            get {
+                return ResourceManager.GetString("signInConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Email format is invalid.
+        /// </summary>
+        public static string signInEmailInvalidFormat {
+            get {
+                return ResourceManager.GetString("signInEmailInvalidFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Email is required.
+        /// </summary>
+        public static string signInEmailRequired {
+            get {
+                return ResourceManager.GetString("signInEmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a First name may contain letters (with accents) and spaces only.
+        /// </summary>
+        public static string signInFirstNameOnlyLettersSpacesAccents {
+            get {
+                return ResourceManager.GetString("signInFirstNameOnlyLettersSpacesAccents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a First name is required.
+        /// </summary>
+        public static string signInFirstNameRequired {
+            get {
+                return ResourceManager.GetString("signInFirstNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Last name may contain letters (with accents) and spaces only.
+        /// </summary>
+        public static string signInLastNameOnlyLettersSpacesAccents {
+            get {
+                return ResourceManager.GetString("signInLastNameOnlyLettersSpacesAccents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Los apellidos son obligatorios.
+        /// </summary>
+        public static string signInLastNameRequired {
+            get {
+                return ResourceManager.GetString("signInLastNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must contain at least one digit.
+        /// </summary>
+        public static string signInPasswordAtLeastOneDigit {
+            get {
+                return ResourceManager.GetString("signInPasswordAtLeastOneDigit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must contain at least one lowercase letter.
+        /// </summary>
+        public static string signInPasswordAtLeastOneLowercaseLetter {
+            get {
+                return ResourceManager.GetString("signInPasswordAtLeastOneLowercaseLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must contain at least one special character.
+        /// </summary>
+        public static string signInPasswordAtLeastOneSpecialCharacter {
+            get {
+                return ResourceManager.GetString("signInPasswordAtLeastOneSpecialCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must contain at least one uppercase letter.
+        /// </summary>
+        public static string signInPasswordAtLeastOneUppercaseLetter {
+            get {
+                return ResourceManager.GetString("signInPasswordAtLeastOneUppercaseLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must be at most {0} characters.
+        /// </summary>
+        public static string signInPasswordMaxLength {
+            get {
+                return ResourceManager.GetString("signInPasswordMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must be at least {0} characters.
+        /// </summary>
+        public static string signInPasswordMinLength {
+            get {
+                return ResourceManager.GetString("signInPasswordMinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must not contain more than 3 consecutive digits.
+        /// </summary>
+        public static string signInPasswordNotContainMoreThan3ConsecutiveDigits {
+            get {
+                return ResourceManager.GetString("signInPasswordNotContainMoreThan3ConsecutiveDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password is required.
+        /// </summary>
+        public static string signInPasswordRequired {
+            get {
+                return ResourceManager.GetString("signInPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Passwords do not match.
+        /// </summary>
+        public static string signInPasswordsDoNotMatch {
+            get {
+                return ResourceManager.GetString("signInPasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Username is required.
+        /// </summary>
+        public static string signInUsernameRequired {
+            get {
+                return ResourceManager.GetString("signInUsernameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Search for a friend.
         /// </summary>
         public static string socialSearchForAFriend {

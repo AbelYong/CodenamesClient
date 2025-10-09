@@ -4,28 +4,130 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodenamesClient.GameUI"
-        mc:Ignorable="d"
         xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
-        Title="{x:Static language:Lang.loginSignIn}" Height="525" Width="400" Background="#FF1D1D1D">
+        mc:Ignorable="d"
+        Title="{x:Static language:Lang.loginSignIn}"
+        Height="800" Width="1000" Background="#FF1D1D1D"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="BelowTextValidationTemplate">
+            <DockPanel LastChildFill="True">
+                <TextBlock Margin="0,4,0,0"
+                           Foreground="Tomato"
+                           FontSize="12"
+                           TextWrapping="Wrap"
+                           DockPanel.Dock="Bottom"
+                           Text="{Binding ElementName=adorner,
+                                          Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                <AdornedElementPlaceholder x:Name="adorner"/>
+            </DockPanel>
+        </ControlTemplate>
+
+        <Style x:Key="ValidatedTextBox"
+               TargetType="TextBox"
+               BasedOn="{StaticResource textBoxCustomFocus}">
+            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource BelowTextValidationTemplate}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="360"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="BorderBrush" Value="Tomato"/>
+                    <Setter Property="ToolTip"
+                            Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ChecklistItemStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Tomato"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,2,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                    <Setter Property="Foreground" Value="LimeGreen"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource subtitle}"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="520">
+
+            <Label Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource subtitle}" Margin="0,0,0,8"/>
+
+            <!-- Email -->
             <Label Content="{x:Static language:Lang.profileEmail}" Style="{StaticResource normal}" />
-            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="" Width="200"/>
-            <Label Content="*emailErrorMessage" Style="{StaticResource normal}" Width="300" />
-            <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource normal}" />
-            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
-            <Label Content="*usernameErrorMessage" Style="{StaticResource normal}" Width="300" />
-            <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" />
-            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
-            <Label Content="*passwordErrorMessage" Style="{StaticResource normal}" Width="300" />
-            <Label Content="{x:Static language:Lang.profileOptionalName}" Style="{StaticResource normal}" />
-            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
-            <Label Content="*nameErrorMessage" Style="{StaticResource normal}" Width="300" />
-            <Label Content="{x:Static language:Lang.profileOptionalLastName}" Style="{StaticResource normal}" />
-            <TextBox TextWrapping="Wrap" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Text="TextBox" Width="200"/>
-            <Label Content="*lastNameErrorMessage" Style="{StaticResource normal}" Width="300" />
-            <Button Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource buttonCustomFocus}" Width="200" Height="30" />
+            <TextBox
+                Style="{StaticResource ValidatedTextBox}"
+                Text="{Binding Email, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"/>
+
+            <!-- Username -->
+            <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource normal}" Margin="0,16,0,0"/>
+            <TextBox
+                Style="{StaticResource ValidatedTextBox}"
+                Text="{Binding Username, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"/>
+
+            <!-- Password -->
+            <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" Margin="0,16,0,0"/>
+            <TextBox
+                x:Name="PasswordInput"
+                Style="{StaticResource textBoxCustomFocus}"
+                Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="16" Width="360"/>
+
+            <!-- Checklist de reglas -->
+            <Border Margin="0,4,0,0" Padding="8" Width="{Binding ElementName=PasswordInput, Path=ActualWidth}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource ChecklistItemStyle}"
+                               Tag="{Binding PwHasMinLength}"
+                               Text="{Binding PwMinLengthText}"/>
+                    <TextBlock Style="{StaticResource ChecklistItemStyle}"
+                               Tag="{Binding PwWithinMaxLength}"
+                               Text="{Binding PwMaxLengthText}"/>
+                    <TextBlock Style="{StaticResource ChecklistItemStyle}"
+                               Tag="{Binding PwHasUpper}"
+                               Text="{x:Static language:Lang.signInPasswordAtLeastOneUppercaseLetter}"/>
+                    <TextBlock Style="{StaticResource ChecklistItemStyle}"
+                               Tag="{Binding PwHasLower}"
+                               Text="{x:Static language:Lang.signInPasswordAtLeastOneLowercaseLetter}"/>
+                    <TextBlock Style="{StaticResource ChecklistItemStyle}"
+                               Tag="{Binding PwHasDigit}"
+                               Text="{x:Static language:Lang.signInPasswordAtLeastOneDigit}"/>
+                    <TextBlock Style="{StaticResource ChecklistItemStyle}"
+                               Tag="{Binding PwHasSpecial}"
+                               Text="{x:Static language:Lang.signInPasswordAtLeastOneSpecialCharacter}"/>
+                    <TextBlock Style="{StaticResource ChecklistItemStyle}"
+                               Tag="{Binding PwNoConsecutiveRun}"
+                               Text="{x:Static language:Lang.signInPasswordNotContainMoreThan3ConsecutiveDigits}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Confirm Password -->
+            <Label Content="{x:Static language:Lang.signInConfirmPassword}" Style="{StaticResource normal}" Margin="0,8,0,0"/>
+            <TextBox
+                Style="{StaticResource ValidatedTextBox}"
+                Text="{Binding ConfirmPassword, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"
+                FontSize="16" Width="360"/>
+
+            <!-- First name -->
+            <Label Content="{x:Static language:Lang.profileOptionalName}" Style="{StaticResource normal}" Margin="0,16,0,0"/>
+            <TextBox
+                Style="{StaticResource ValidatedTextBox}"
+                Text="{Binding FirstName, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"/>
+
+            <!-- Last name -->
+            <Label Content="{x:Static language:Lang.profileOptionalLastName}" Style="{StaticResource normal}" Margin="0,16,0,0"/>
+            <TextBox
+                Style="{StaticResource ValidatedTextBox}"
+                Text="{Binding LastName, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"/>
+
+            <!-- Submit -->
+            <Button Content="{x:Static language:Lang.loginSignIn}"
+                    Style="{StaticResource buttonCustomFocus}"
+                    Margin="0,24,0,0" Height="44" Width="240"
+                    IsEnabled="{Binding CanSubmit}"
+                    Click="Click_SignIn"/>
         </StackPanel>
     </Grid>
 </Window>
