@@ -123,9 +123,6 @@
   <data name="langEnglish" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="langSelectLanguage" xml:space="preserve">
-    <value>Select language</value>
-  </data>
   <data name="langSpanish" xml:space="preserve">
     <value>Spanish</value>
   </data>
@@ -215,5 +212,59 @@
   </data>
   <data name="gamemodeCounterintelligenceMode" xml:space="preserve">
     <value>Counterintelligence mode</value>
+  </data>
+  <data name="langSelectLanguage" xml:space="preserve">
+    <value>Select language</value>
+  </data>
+  <data name="signInEmailRequired" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="signInEmailInvalidFormat" xml:space="preserve">
+    <value>Email format is invalid</value>
+  </data>
+  <data name="signInUsernameRequired" xml:space="preserve">
+    <value>Username is required</value>
+  </data>
+  <data name="signInPasswordRequired" xml:space="preserve">
+    <value>Password is required</value>
+  </data>
+  <data name="signInPasswordMinLength" xml:space="preserve">
+    <value>Password must be at least {0} characters</value>
+  </data>
+  <data name="signInPasswordMaxLength" xml:space="preserve">
+    <value>Password must be at most {0} characters</value>
+  </data>
+  <data name="signInPasswordAtLeastOneUppercaseLetter" xml:space="preserve">
+    <value>Password must contain at least one uppercase letter</value>
+  </data>
+  <data name="signInPasswordAtLeastOneLowercaseLetter" xml:space="preserve">
+    <value>Password must contain at least one lowercase letter</value>
+  </data>
+  <data name="signInPasswordAtLeastOneDigit" xml:space="preserve">
+    <value>Password must contain at least one digit</value>
+  </data>
+  <data name="signInPasswordAtLeastOneSpecialCharacter" xml:space="preserve">
+    <value>Password must contain at least one special character</value>
+  </data>
+  <data name="signInPasswordNotContainMoreThan3ConsecutiveDigits" xml:space="preserve">
+    <value>Password must not contain more than 3 consecutive digits</value>
+  </data>
+  <data name="signInFirstNameOnlyLettersSpacesAccents" xml:space="preserve">
+    <value>First name may contain letters (with accents) and spaces only</value>
+  </data>
+  <data name="signInLastNameOnlyLettersSpacesAccents" xml:space="preserve">
+    <value>Last name may contain letters (with accents) and spaces only</value>
+  </data>
+  <data name="signInFirstNameRequired" xml:space="preserve">
+    <value>First name is required</value>
+  </data>
+  <data name="signInLastNameRequired" xml:space="preserve">
+    <value>Los apellidos son obligatorios</value>
+  </data>
+  <data name="signInPasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="signInConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
   </data>
 </root>

@@ -123,9 +123,6 @@
   <data name="langEnglish" xml:space="preserve">
     <value>Inglés</value>
   </data>
-  <data name="langSelectLanguage" xml:space="preserve">
-    <value>Seleccionar idioma</value>
-  </data>
   <data name="langSpanish" xml:space="preserve">
     <value>Español</value>
   </data>
@@ -215,5 +212,59 @@
   </data>
   <data name="gamemodeCounterintelligenceMode" xml:space="preserve">
     <value>Modo contrainteligencia</value>
+  </data>
+  <data name="langSelectLanguage" xml:space="preserve">
+    <value>Seleccionar idioma</value>
+  </data>
+  <data name="signInEmailRequired" xml:space="preserve">
+    <value>El correo electrónico es obligatorio</value>
+  </data>
+  <data name="signInEmailInvalidFormat" xml:space="preserve">
+    <value>El formato del correo electrónico no es valido</value>
+  </data>
+  <data name="signInUsernameRequired" xml:space="preserve">
+    <value>El nombre de usuario es obligatorio</value>
+  </data>
+  <data name="signInPasswordRequired" xml:space="preserve">
+    <value>La contraseña es obligatoria</value>
+  </data>
+  <data name="signInPasswordMinLength" xml:space="preserve">
+    <value>La contraseña debe tener al menos {0} caracteres</value>
+  </data>
+  <data name="signInPasswordMaxLength" xml:space="preserve">
+    <value>La contraseña debe tener como máximo {0} caracteres</value>
+  </data>
+  <data name="signInPasswordAtLeastOneUppercaseLetter" xml:space="preserve">
+    <value>La contraseña debe contener al menos una letra mayúscula</value>
+  </data>
+  <data name="signInPasswordAtLeastOneLowercaseLetter" xml:space="preserve">
+    <value>La contraseña debe contener al menos una letra minúscula</value>
+  </data>
+  <data name="signInPasswordAtLeastOneDigit" xml:space="preserve">
+    <value>La contraseña debe contener al menos un dígito</value>
+  </data>
+  <data name="signInPasswordAtLeastOneSpecialCharacter" xml:space="preserve">
+    <value>La contraseña debe contener al menos un carácter especial</value>
+  </data>
+  <data name="signInPasswordNotContainMoreThan3ConsecutiveDigits" xml:space="preserve">
+    <value>La contraseña no debe contener más de 3 dígitos consecutivos</value>
+  </data>
+  <data name="signInFirstNameOnlyLettersSpacesAccents" xml:space="preserve">
+    <value>El nombre solo puede contener letras (con acentos) y espacios</value>
+  </data>
+  <data name="signInLastNameOnlyLettersSpacesAccents" xml:space="preserve">
+    <value>Los apellidos solo pueden contener letras (con acentos) y espacios</value>
+  </data>
+  <data name="signInFirstNameRequired" xml:space="preserve">
+    <value>El nombre es obligatorio</value>
+  </data>
+  <data name="signInLastNameRequired" xml:space="preserve">
+    <value>Last name is required</value>
+  </data>
+  <data name="signInPasswordsDoNotMatch" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
+  </data>
+  <data name="signInConfirmPassword" xml:space="preserve">
+    <value>Confirmar contraseña</value>
   </data>
 </root>

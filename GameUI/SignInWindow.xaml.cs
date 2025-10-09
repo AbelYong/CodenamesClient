@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodenamesClient.GameUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,23 @@ namespace CodenamesClient.GameUI
     /// </summary>
     public partial class SignInWindow : Window
     {
+        private readonly SignInViewModel _vm = new SignInViewModel();
+
         public SignInWindow()
         {
             InitializeComponent();
+            DataContext = _vm;
+        }
+
+        private void Click_SignIn(object sender, RoutedEventArgs e)
+        {
+            _vm.ValidateAll();
+            if (_vm.CanSubmit)
+            {
+                // TODO: Llamar a la API/servicio de registro
+                // Cerrar o navegar
+                DialogResult = true;
+            }
         }
     }
 }
