@@ -11,6 +11,7 @@ namespace CodenamesClient.GameUI
     public partial class MainMenuWindow : UserControl
     {
         private MediaPlayer mediaPlayer;
+        private Guid? userID;
 
         public MainMenuWindow()
         {
@@ -129,6 +130,13 @@ namespace CodenamesClient.GameUI
                 ScoreboardsGrid.Visibility = Visibility.Collapsed;
             };
             slideOutAnimation.Begin();
+        }
+
+        public void setPlayer(Guid? userID)
+        {
+            //TODO this method should take a Player
+            this.userID = userID;
+            btnPlayer.Content = userID.ToString();
         }
     }
 }

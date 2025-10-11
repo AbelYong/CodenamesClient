@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CodenamesGame.Util
+{
+    public class Message
+    {
+        public bool IsError { get; set; }
+        public string Content { get; set; }
+
+        public Message()
+        {
+
+        }
+        public Message(bool isError, string content)
+        {
+            IsError = isError;
+            Content = content;
+        }
+    }
+}

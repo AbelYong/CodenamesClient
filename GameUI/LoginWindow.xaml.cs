@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodenamesClient.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,20 @@ namespace CodenamesClient.GameUI
 
         private void Click_btnLogin(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not avaible yet");
+            string username = tBxUsername.Text;
+            string password = pBxPassword.Password;
+
+            if (ValidateLoginData(username, password))
+            {
+                //DELETEME
+                MessageBox.Show("loginData was validated");
+                Guid? userID = CodenamesGame.Network.UserOperations.Authenticate(username, password);
+                MessageBox.Show("User id "+userID.ToString());
+                if (userID != null)
+                {
+                    GoToMainMenuWindow(userID);
+                }
+            }
         }
 
         private void Click_btnSignIn(object sender, RoutedEventArgs e)
@@ -40,8 +54,40 @@ namespace CodenamesClient.GameUI
 
         private void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
         {
+            GoToMainMenuWindow(null);
+        }
+
+        private void GoToMainMenuWindow(Guid? userID)
+        {
             stackPanelLogin.Visibility = Visibility.Collapsed;
             CurrentContent.Content = _mainMenuWindow;
+            _mainMenuWindow.setPlayer(userID);
+        }
+
+        private bool ValidateLoginData(string username, string password)
+        {
+            ClearFields();
+            string usernameMessage = LoginValidation.ValidateUsername(username);
+            if (!usernameMessage.Equals("OK"))
+            {
+                lblUsernameErrorMessage.Content = usernameMessage;
+            }
+
+            string passwordMessage = LoginValidation.ValidatePassword(password);
+            if (!passwordMessage.Equals("OK"))
+            {
+                lblPasswordErrorMessage.Content = passwordMessage;
+            }
+
+            System.Console.WriteLine(usernameMessage);
+            System.Console.WriteLine(passwordMessage);
+            return (usernameMessage.Equals("OK") && passwordMessage.Equals("OK"));
+        }
+
+        private void ClearFields()
+        {
+            lblUsernameErrorMessage.Content = "";
+            lblPasswordErrorMessage.Content = "";
         }
     }
 }

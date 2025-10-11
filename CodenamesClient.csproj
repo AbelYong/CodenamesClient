@@ -55,15 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-<<<<<<< HEAD
-    <Page Include="GameUI\LobbyWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-=======
     <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />
+    <Compile Include="Validation\LoginValidation.cs" />
     <Compile Include="Validation\SignInValidation.cs" />
->>>>>>> 9cd77a65958cc4f5fefb87a940953c97ddf64044
     <Page Include="GameUI\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -83,9 +77,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GameUI\LobbyWindow.xaml.cs">
-      <DependentUpon>LobbyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameUI\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -149,6 +140,12 @@
     <Content Include="Main Theme %28NOT FINAL%29.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="CodenamesGame\CodenamesGame.csproj">
+      <Project>{44a44618-d4a9-4413-a5ba-494cdd647ae7}</Project>
+      <Name>CodenamesGame</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
