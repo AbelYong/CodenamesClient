@@ -223,6 +223,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a *password required.
+        /// </summary>
+        public static string loginPasswordRequired {
+            get {
+                return ResourceManager.GetString("loginPasswordRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a *password is too long.
+        /// </summary>
+        public static string loginPasswordTooLong {
+            get {
+                return ResourceManager.GetString("loginPasswordTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Play as a guest.
         /// </summary>
         public static string loginPlayAsGuest {
@@ -237,6 +255,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string loginSignIn {
             get {
                 return ResourceManager.GetString("loginSignIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a *username required.
+        /// </summary>
+        public static string loginUsernameRequired {
+            get {
+                return ResourceManager.GetString("loginUsernameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a *username is too long.
+        /// </summary>
+        public static string loginUsernameTooLong {
+            get {
+                return ResourceManager.GetString("loginUsernameTooLong", resourceCulture);
             }
         }
         

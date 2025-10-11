@@ -267,4 +267,16 @@
   <data name="signInConfirmPassword" xml:space="preserve">
     <value>Confirmar contraseña</value>
   </data>
+  <data name="loginPasswordRequired" xml:space="preserve">
+    <value>*contraseña requerida</value>
+  </data>
+  <data name="loginUsernameRequired" xml:space="preserve">
+    <value>*nombre de usuario requerido</value>
+  </data>
+  <data name="loginUsernameTooLong" xml:space="preserve">
+    <value>*nombre de usuario demasiado largo</value>
+  </data>
+  <data name="loginPasswordTooLong" xml:space="preserve">
+    <value>*contraseña demasiado larga</value>
+  </data>
 </root>
