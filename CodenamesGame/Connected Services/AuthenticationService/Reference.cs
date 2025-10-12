@@ -9,7 +9,70 @@
 //------------------------------------------------------------------------------
 
 namespace CodenamesGame.AuthenticationService {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResetResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.SerializableAttribute()]
+    public partial class ResetResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SuccessField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Success {
+            get {
+                return this.SuccessField;
+            }
+            set {
+                if ((this.SuccessField.Equals(value) != true)) {
+                    this.SuccessField = value;
+                    this.RaisePropertyChanged("Success");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AuthenticationService.IAuthenticationManager")]
@@ -20,6 +83,18 @@ namespace CodenamesGame.AuthenticationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Login", ReplyAction="http://tempuri.org/IAuthenticationManager/LoginResponse")]
         System.Threading.Tasks.Task<System.Nullable<System.Guid>> LoginAsync(string username, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse")]
+        void BeginPasswordReset(string username, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse")]
+        System.Threading.Tasks.Task BeginPasswordResetAsync(string username, string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse")]
+        CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string username, string code, string newPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ResetResult> CompletePasswordResetAsync(string username, string code, string newPassword);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +130,22 @@ namespace CodenamesGame.AuthenticationService {
         
         public System.Threading.Tasks.Task<System.Nullable<System.Guid>> LoginAsync(string username, string password) {
             return base.Channel.LoginAsync(username, password);
+        }
+        
+        public void BeginPasswordReset(string username, string email) {
+            base.Channel.BeginPasswordReset(username, email);
+        }
+        
+        public System.Threading.Tasks.Task BeginPasswordResetAsync(string username, string email) {
+            return base.Channel.BeginPasswordResetAsync(username, email);
+        }
+        
+        public CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string username, string code, string newPassword) {
+            return base.Channel.CompletePasswordReset(username, code, newPassword);
+        }
+        
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ResetResult> CompletePasswordResetAsync(string username, string code, string newPassword) {
+            return base.Channel.CompletePasswordResetAsync(username, code, newPassword);
         }
     }
 }

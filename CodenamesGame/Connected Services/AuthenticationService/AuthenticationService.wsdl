@@ -33,6 +33,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IAuthenticationManager_Login_InputMessage">
@@ -41,10 +42,30 @@
   <wsdl:message name="IAuthenticationManager_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_BeginPasswordReset_InputMessage">
+    <wsdl:part name="parameters" element="tns:BeginPasswordReset" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_BeginPasswordReset_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BeginPasswordResetResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_CompletePasswordReset_InputMessage">
+    <wsdl:part name="parameters" element="tns:CompletePasswordReset" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_CompletePasswordReset_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CompletePasswordResetResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAuthenticationManager">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/Login" message="tns:IAuthenticationManager_Login_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/LoginResponse" message="tns:IAuthenticationManager_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BeginPasswordReset">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset" message="tns:IAuthenticationManager_BeginPasswordReset_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse" message="tns:IAuthenticationManager_BeginPasswordReset_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CompletePasswordReset">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset" message="tns:IAuthenticationManager_CompletePasswordReset_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse" message="tns:IAuthenticationManager_CompletePasswordReset_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IAuthenticationManager" type="tns:IAuthenticationManager">
@@ -59,6 +80,24 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="BeginPasswordReset">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/BeginPasswordReset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompletePasswordReset">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/CompletePasswordReset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="AuthenticationService">
     <wsdl:port name="NetTcpBinding_IAuthenticationManager" binding="tns:NetTcpBinding_IAuthenticationManager">
@@ -66,7 +105,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:9048/Services</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>ASUS-292-AHY\abelh</Upn>
+          <Upn>RAZIEL\Kaiser</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

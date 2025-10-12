@@ -4,29 +4,167 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodenamesClient.GameUI"
-        mc:Ignorable="d"
         xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
-        Title="Codenames: Duet" Height="640" Width="1024" Background="#FF1D1D1D">
+        mc:Ignorable="d"
+        Title="Codenames: Duet"
+        Height="640" Width="1024" Background="#FF1D1D1D">
+
+    <!-- ===================== Resources (styles + animations) ===================== -->
+    <Window.Resources>
+        <Style x:Key="InlineLinkStyle" TargetType="TextBlock" BasedOn="{StaticResource normal}">
+            <Setter Property="TextDecorations" Value="Underline"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <!-- Reset overlay entry animation -->
+        <Storyboard x:Key="SlideInResetAnimation">
+            <DoubleAnimation Storyboard.TargetName="ResetGrid"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="640" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <!-- Reset overlay exit animation -->
+        <Storyboard x:Key="SlideOutResetAnimation">
+            <DoubleAnimation Storyboard.TargetName="ResetGrid"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="0" To="640" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
+
+    <!-- ===================== Content ===================== -->
     <Grid>
         <ContentControl x:Name="CurrentContent" />
-        <StackPanel Name="stackPanelLogin" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <!-- ===== Login stack ===== -->
+        <StackPanel x:Name="stackPanelLogin" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!-- Title -->
             <StackPanel Height="110" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Codenames:" Margin="0,0,0,0"  Foreground="White" FontFamily="Consolas" FontSize="72"/>
-                <Label Content="Duet" Margin="0,10,0,0" Foreground="White" FontSize="72" FontFamily="Bell MT"/>
+                <Label Content="Duet"       Margin="0,10,0,0" Foreground="White" FontSize="72" FontFamily="Bell MT"/>
             </StackPanel>
+
+            <!-- User -->
             <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
-            <TextBox Name="tBxUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,10,0,0" Text="" Width="320" />
-            <Label Name="lblUsernameErrorMessage"  Content="*errorMessage1" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
+            <TextBox x:Name="tBxUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,10,0,0" Width="320" />
+            <Label  x:Name="lblUsernameErrorMessage" Content="" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
+
+            <!-- Password -->
             <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
-            <PasswordBox Name="pBxPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,10,0,0" Width="320"/>
-            <Label Name="lblPasswordErrorMessage"  Content="*errorMessage2" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
-            <Button Click="Click_btnLogin" Content="{x:Static language:Lang.loginLogIn}" Style="{StaticResource buttonCustomFocus}" Margin="0,10,0,0" Width="316" FontSize="24" Height="60"/>
+            <PasswordBox x:Name="pBxPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,10,0,0" Width="320"/>
+
+            <!-- Reset password link -->
+            <Grid Margin="0,6,0,0" Width="438">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="lblPasswordErrorMessage"
+                       Grid.Column="0"
+                       Content=""
+                       Style="{StaticResource normal}" />
+                <TextBlock Grid.Column="1" Style="{StaticResource InlineLinkStyle}"
+                           Foreground="{Binding Foreground, ElementName=lblPasswordErrorMessage}"
+                           VerticalAlignment="Center" MouseLeftButtonUp="ForgotLink_Click"
+                           Text="{x:Static language:Lang.loginForgotPassword}" />
+
+            </Grid>
+
+            <!-- Action buttons -->
+            <Button Click="Click_btnLogin"
+                    Content="{x:Static language:Lang.loginLogIn}"
+                    Style="{StaticResource buttonCustomFocus}"
+                    Margin="0,10,0,0" Width="316" FontSize="24" Height="60"/>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                <Label Content="{x:Static language:Lang.loginDontHaveAccount}" Style="{StaticResource normal}" Margin="0,0,0,0"/>
-                <Button Click="Click_btnSignIn"  Content="{x:Static language:Lang.loginSignIn}" 
-                        Style="{StaticResource buttonCustomFocus}" Margin="0,0,0,0" FontFamily="Consolas" FontSize="16" BorderBrush="#00000000" FontWeight="Normal" FontStyle="Italic" Width="107"/>
+                <Label  Content="{x:Static language:Lang.loginDontHaveAccount}" Style="{StaticResource normal}" Margin="0,0,0,0"/>
+                <Button Click="Click_btnSignIn"  Content="{x:Static language:Lang.loginSignIn}"
+                        Style="{StaticResource buttonCustomFocus}"
+                        Margin="0,0,0,0" FontFamily="Consolas" FontSize="16"
+                        BorderBrush="#00000000" FontWeight="Normal" FontStyle="Italic" Width="107"/>
             </StackPanel>
-            <Button Click="Click_btnPlayAsGuest"  Content="{x:Static language:Lang.loginPlayAsGuest}" Style="{StaticResource buttonCustomFocus}" Margin="0,10,0,0" VerticalAlignment="Top" Height="60" Width="316" FontSize="24"/>
+
+            <Button Click="Click_btnPlayAsGuest"
+                    Content="{x:Static language:Lang.loginPlayAsGuest}"
+                    Style="{StaticResource buttonCustomFocus}"
+                    Margin="0,10,0,0" Height="60" Width="316" FontSize="24"/>
         </StackPanel>
+
+        <!-- ===== Backdrop ===== -->
+        <Rectangle x:Name="ResetBackdrop"
+                   Fill="#80000000"
+                   Visibility="Collapsed"
+                   Panel.ZIndex="9"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   MouseLeftButtonUp="HideReset_Click"/>
+
+        <!-- ===== Sliding overlay for password reset ===== -->
+        <Grid x:Name="ResetGrid"
+              Width="640" Height="520"
+              Background="#272727"
+              Visibility="Collapsed"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Panel.ZIndex="10">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="640"/>
+            </Grid.RenderTransform>
+
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Content="{x:Static language:Lang.resetTitle}"
+                       Style="{StaticResource subtitle}"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Margin="0,10,0,16"/>
+
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="{x:Static language:Lang.globalUsername}" Style="{StaticResource normal}" />
+                    <TextBox x:Name="ResetUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320"/>
+
+                    <TextBlock Text="{x:Static language:Lang.resetEmail}" Style="{StaticResource normal}" />
+                    <TextBox x:Name="ResetEmail" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,12" Width="320"/>
+
+                    <Button x:Name="SendCodeBtn" Content="{x:Static language:Lang.resetSendCode}"
+                            Style="{StaticResource buttonCustomFocus}"
+                            Click="SendCode_Click"
+                            Width="316" Height="40" Margin="0,0,0,12"/>
+
+                    <TextBlock Text="{x:Static language:Lang.resetReceivedCode}" Style="{StaticResource normal}" />
+                    <TextBox x:Name="ResetCode" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320"/>
+
+                    <TextBlock Text="{x:Static language:Lang.resetNewPassword}" Style="{StaticResource normal}" />
+                    <PasswordBox x:Name="NewPass1" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,8" Width="320"/>
+                    <PasswordBox x:Name="NewPass2" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,0" Width="320"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}"
+                            Style="{StaticResource buttonCustomFocus}"
+                            Width="180" Height="40" Click="HideReset_Click"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.resetChangePassword}"
+                            Style="{StaticResource buttonCustomFocus}"
+                            Width="180" Height="40" Click="ConfirmReset_Click"/>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
