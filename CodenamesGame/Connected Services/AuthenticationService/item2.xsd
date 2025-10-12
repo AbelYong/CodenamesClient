@@ -24,4 +24,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ResetResult" nillable="true" type="tns:ResetResult" />
+  <xs:complexType name="BeginRegistrationResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequestId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BeginRegistrationResult" nillable="true" type="tns:BeginRegistrationResult" />
+  <xs:complexType name="ConfirmRegistrationResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConfirmRegistrationResult" nillable="true" type="tns:ConfirmRegistrationResult" />
 </xs:schema>

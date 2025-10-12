@@ -63,6 +63,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Connected Services\AuthenticationService\AuthenticationService.wsdl" />
+    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.BeginRegistrationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.ConfirmRegistrationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.ResetResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

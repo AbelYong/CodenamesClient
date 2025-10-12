@@ -2,27 +2,22 @@
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using Svc = CodenamesGame.AuthenticationService;
+using CodenamesClient.Properties.Langs;
 
 namespace CodenamesClient.GameUI
 {
-    /// <summary>
-    /// Lógica de interacción para SignInWindow.xaml
-    /// </summary>
     public partial class SignInWindow : Window
     {
         private readonly SignInViewModel _vm = new SignInViewModel();
+
+        private Guid? _pendingRequestId = null;
 
         public SignInWindow()
         {
@@ -30,41 +25,134 @@ namespace CodenamesClient.GameUI
             DataContext = _vm;
         }
 
-        private void Click_SignIn(object sender, RoutedEventArgs e)
+        private async void Click_SignIn(object sender, RoutedEventArgs e)
         {
             _vm.ValidateAll();
-            if (_vm.CanSubmit)
+            if (!_vm.CanSubmit) return;
+
+            try
             {
-                UserPOCO newUser = AssembleDmUser();
-                PlayerPOCO newPlayer = AssembleDmPlayer();
-                Guid? newUserID = UserOperations.SignIn(newUser, newPlayer);
-                if (newUserID != null)
+                using (var client = new Svc.AuthenticationManagerClient())
                 {
-                    MessageBox.Show("Welcome to codenames, agent "+newPlayer.Username+"!");
-                    DialogResult = true;
+                    var svUser = new Svc.User { Email = _vm.Email, Password = _vm.Password };
+                    var svPlay = new Svc.Player { Username = _vm.Username, Name = _vm.FirstName, LastName = _vm.LastName };
+
+                    var begin = await Task.Run(() => client.BeginRegistration(svUser, svPlay, _vm.Password));
+
+                    if (begin == null || !begin.Success || !begin.RequestId.HasValue)
+                    {
+                        MessageBox.Show(begin?.Message ?? Lang.signInRegistrationCouldNotBeStarted);
+                        return;
+                    }
+
+                    _pendingRequestId = begin.RequestId.Value;
+
+                    VerifyEmailLabel.Text = _vm.Email;
+                    VerifyCode.Text = string.Empty;
+                    ShowVerifyOverlay();
                 }
-                else
-                {
-                    MessageBox.Show("Sorry, we couldn't sign you in, please try again later. Contact the developers if the issue persists");
-                    DialogResult= false;
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Lang.signInErrorStartingRegistration + ex.Message);
             }
         }
 
-        private UserPOCO AssembleDmUser()
+        private void ShowVerifyOverlay()
         {
-            UserPOCO user = new UserPOCO();
-            user.Email = _vm.Email;
-            user.Password = _vm.Password;
-            return user;
+            VerifyBackdrop.Visibility = Visibility.Visible;
+            VerifyGrid.Visibility = Visibility.Visible;
+
+            var sb = (Storyboard)FindResource("SlideInVerifyAnimation");
+            sb.Begin(VerifyGrid, true);
         }
-        private PlayerPOCO AssembleDmPlayer()
+
+        private void HideVerifyOverlay()
         {
-            PlayerPOCO player = new PlayerPOCO();
-            player.Username = _vm.Username;
-            player.Name = _vm.FirstName;
-            player.LastName = _vm.LastName;
-            return player;
+            var sb = (Storyboard)FindResource("SlideOutVerifyAnimation");
+
+            EventHandler onDone = null;
+            onDone = (s, e) =>
+            {
+                sb.Completed -= onDone;
+                VerifyBackdrop.Visibility = Visibility.Collapsed;
+                VerifyGrid.Visibility = Visibility.Collapsed;
+
+                if (VerifyGrid.RenderTransform is TranslateTransform tt) tt.Y = 800;
+            };
+
+            sb.Completed += onDone;
+            sb.Begin(VerifyGrid, true);
         }
+
+        private async void ConfirmVerify_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            if (btn != null) btn.IsEnabled = false;
+
+            try
+            {
+                var code = (VerifyCode.Text ?? "").Trim();
+                if (code.Length != 6 || !code.All(char.IsDigit))
+                {
+                    MessageBox.Show(Lang.signInCodeMustHave6Digits);
+                    return;
+                }
+                if (_pendingRequestId == null)
+                {
+                    MessageBox.Show(Lang.signInNoPendingRequests);
+                    return;
+                }
+
+                using (var client = new Svc.AuthenticationManagerClient())
+                {
+                    var result = await Task.Run(() =>
+                        client.ConfirmRegistration(_pendingRequestId.Value, code)
+                    );
+
+                    MessageBox.Show(result.Message,
+                                    Lang.signInRegister,
+                                    MessageBoxButton.OK,
+                                    result.Success ? MessageBoxImage.Information : MessageBoxImage.Warning);
+
+                    if (result.Success)
+                    {
+                        DialogResult = true;
+                        Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Lang.signInErrorConfirmingRegistration + ex.Message);
+            }
+            finally
+            {
+                if (btn != null) btn.IsEnabled = true;
+            }
+        }
+
+        private async void HideVerify_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (_pendingRequestId != null)
+                {
+                    using (var client = new Svc.AuthenticationManagerClient())
+                    {
+                        await Task.Run(() => client.CancelRegistration(_pendingRequestId.Value));
+                    }
+                }
+            }
+            catch { /* best effort */ }
+            finally
+            {
+                _pendingRequestId = null;
+                HideVerifyOverlay();
+            }
+        }
+
+        private UserPOCO AssembleDmUser() => new UserPOCO { Email = _vm.Email, Password = _vm.Password };
+        private PlayerPOCO AssembleDmPlayer() => new PlayerPOCO { Username = _vm.Username, Name = _vm.FirstName, LastName = _vm.LastName };
     }
 }

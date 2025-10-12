@@ -106,6 +106,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cancel.
+        /// </summary>
+        public static string globalCancel {
+            get {
+                return ResourceManager.GetString("globalCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Confirm.
+        /// </summary>
+        public static string globalConfirm {
+            get {
+                return ResourceManager.GetString("globalConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Friends.
         /// </summary>
         public static string globalFriends {
@@ -196,6 +214,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We&apos;ve sent a 6-digit code to:.
+        /// </summary>
+        public static string loginCode6DigitsSent {
+            get {
+                return ResourceManager.GetString("loginCode6DigitsSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Don&apos;t have an account?.
         /// </summary>
         public static string loginDontHaveAccount {
@@ -282,6 +309,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string loginUsernameTooLong {
             get {
                 return ResourceManager.GetString("loginUsernameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Verification code.
+        /// </summary>
+        public static string loginVerificationCode {
+            get {
+                return ResourceManager.GetString("loginVerificationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Check email.
+        /// </summary>
+        public static string loginVerifyEmail {
+            get {
+                return ResourceManager.GetString("loginVerifyEmail", resourceCulture);
             }
         }
         
@@ -484,6 +529,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Code must have 6 digits..
+        /// </summary>
+        public static string signInCodeMustHave6Digits {
+            get {
+                return ResourceManager.GetString("signInCodeMustHave6Digits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Confirm password.
         /// </summary>
         public static string signInConfirmPassword {
@@ -507,6 +561,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string signInEmailRequired {
             get {
                 return ResourceManager.GetString("signInEmailRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error confirming registration: .
+        /// </summary>
+        public static string signInErrorConfirmingRegistration {
+            get {
+                return ResourceManager.GetString("signInErrorConfirmingRegistration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error starting registration: .
+        /// </summary>
+        public static string signInErrorStartingRegistration {
+            get {
+                return ResourceManager.GetString("signInErrorStartingRegistration", resourceCulture);
             }
         }
         
@@ -543,6 +615,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string signInLastNameRequired {
             get {
                 return ResourceManager.GetString("signInLastNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a There are not pending requests..
+        /// </summary>
+        public static string signInNoPendingRequests {
+            get {
+                return ResourceManager.GetString("signInNoPendingRequests", resourceCulture);
             }
         }
         
@@ -624,6 +705,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string signInPasswordsDoNotMatch {
             get {
                 return ResourceManager.GetString("signInPasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Register.
+        /// </summary>
+        public static string signInRegister {
+            get {
+                return ResourceManager.GetString("signInRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Registration could not be started..
+        /// </summary>
+        public static string signInRegistrationCouldNotBeStarted {
+            get {
+                return ResourceManager.GetString("signInRegistrationCouldNotBeStarted", resourceCulture);
             }
         }
         
