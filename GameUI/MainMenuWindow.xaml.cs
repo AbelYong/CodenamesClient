@@ -134,9 +134,7 @@ namespace CodenamesClient.GameUI
 
         public void setPlayer(Guid? userID)
         {
-            //TODO this method should take a Player
             this.userID = userID;
-            btnPlayer.Content = userID.ToString();
         }
     }
 }

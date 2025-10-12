@@ -16,10 +16,10 @@
             </StackPanel>
             <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
             <TextBox Name="tBxUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,10,0,0" Text="" Width="320" />
-            <Label Name="lblUsernameErrorMessage"  Content="*errorMessage1" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
+            <Label Name="lblUsernameErrorMessage"  Content="" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
             <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
             <PasswordBox Name="pBxPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,10,0,0" Width="320"/>
-            <Label Name="lblPasswordErrorMessage"  Content="*errorMessage2" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
+            <Label Name="lblPasswordErrorMessage"  Content="" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
             <Button Click="Click_btnLogin" Content="{x:Static language:Lang.loginLogIn}" Style="{StaticResource buttonCustomFocus}" Margin="0,10,0,0" Width="316" FontSize="24" Height="60"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                 <Label Content="{x:Static language:Lang.loginDontHaveAccount}" Style="{StaticResource normal}" Margin="0,0,0,0"/>

@@ -1,4 +1,5 @@
-﻿using CodenamesClient.Validation;
+﻿using CodenamesClient.Properties.Langs;
+using CodenamesClient.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +35,14 @@ namespace CodenamesClient.GameUI
 
             if (ValidateLoginData(username, password))
             {
-                //DELETEME
-                MessageBox.Show("loginData was validated");
                 Guid? userID = CodenamesGame.Network.UserOperations.Authenticate(username, password);
-                MessageBox.Show("User id "+userID.ToString());
                 if (userID != null)
                 {
                     GoToMainMenuWindow(userID);
+                }
+                else
+                {
+                    ShowFailedLoginMessage();
                 }
             }
         }
@@ -79,9 +81,13 @@ namespace CodenamesClient.GameUI
                 lblPasswordErrorMessage.Content = passwordMessage;
             }
 
-            System.Console.WriteLine(usernameMessage);
-            System.Console.WriteLine(passwordMessage);
             return (usernameMessage.Equals("OK") && passwordMessage.Equals("OK"));
+        }
+
+        private void ShowFailedLoginMessage()
+        {
+            lblUsernameErrorMessage.Content = Lang.loginWrongCredentials;
+            lblPasswordErrorMessage.Content = Lang.loginWrongCredentials;
         }
 
         private void ClearFields()
