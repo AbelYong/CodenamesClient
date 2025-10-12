@@ -277,6 +277,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a *wrong username or password, please try again.
+        /// </summary>
+        public static string loginWrongCredentials {
+            get {
+                return ResourceManager.GetString("loginWrongCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Logged-in as:.
         /// </summary>
         public static string mainMenuLoggedIn {

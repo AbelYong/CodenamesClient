@@ -279,4 +279,7 @@
   <data name="loginPasswordTooLong" xml:space="preserve">
     <value>*contraseña demasiado larga</value>
   </data>
+  <data name="loginWrongCredentials" xml:space="preserve">
+    <value>*nombre de usuario o contraseña incorrecta, inténtelo de nuevo</value>
+  </data>
 </root>
