@@ -205,6 +205,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Forgot your password.
+        /// </summary>
+        public static string loginForgotPassword {
+            get {
+                return ResourceManager.GetString("loginForgotPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Log-In.
         /// </summary>
         public static string loginLogIn {
@@ -345,6 +354,114 @@ namespace CodenamesClient.Properties.Langs {
         public static string profileOptionalName {
             get {
                 return ResourceManager.GetString("profileOptionalName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Change password.
+        /// </summary>
+        public static string resetChangePassword {
+            get {
+                return ResourceManager.GetString("resetChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We&apos;ve sent a code to your email. Please check your inbox and enter it where requested..
+        /// </summary>
+        public static string resetCodeSend {
+            get {
+                return ResourceManager.GetString("resetCodeSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Could not send code.
+        /// </summary>
+        public static string resetCodeSendFailed {
+            get {
+                return ResourceManager.GetString("resetCodeSendFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Associated email.
+        /// </summary>
+        public static string resetEmail {
+            get {
+                return ResourceManager.GetString("resetEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Please enter username and email.
+        /// </summary>
+        public static string resetMissingUserOrEmail {
+            get {
+                return ResourceManager.GetString("resetMissingUserOrEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a New password.
+        /// </summary>
+        public static string resetNewPassword {
+            get {
+                return ResourceManager.GetString("resetNewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Could not change password.
+        /// </summary>
+        public static string resetPasswordChangeFailed {
+            get {
+                return ResourceManager.GetString("resetPasswordChangeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Password must be between 10 and 16 characters.
+        /// </summary>
+        public static string resetPasswordLengthInvalid {
+            get {
+                return ResourceManager.GetString("resetPasswordLengthInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Passwords do not match.
+        /// </summary>
+        public static string resetPasswordsDoNotMatch {
+            get {
+                return ResourceManager.GetString("resetPasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Received code.
+        /// </summary>
+        public static string resetReceivedCode {
+            get {
+                return ResourceManager.GetString("resetReceivedCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Send code.
+        /// </summary>
+        public static string resetSendCode {
+            get {
+                return ResourceManager.GetString("resetSendCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Reset password.
+        /// </summary>
+        public static string resetTitle {
+            get {
+                return ResourceManager.GetString("resetTitle", resourceCulture);
             }
         }
         

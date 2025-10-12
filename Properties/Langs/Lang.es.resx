@@ -282,4 +282,43 @@
   <data name="loginWrongCredentials" xml:space="preserve">
     <value>*nombre de usuario o contraseña incorrecta, inténtelo de nuevo</value>
   </data>
+  <data name="loginForgotPassword" xml:space="preserve">
+    <value>¿Olvidaste tu contraseña?</value>
+  </data>
+  <data name="resetTitle" xml:space="preserve">
+    <value>Restablecer contraseña</value>
+  </data>
+  <data name="resetEmail" xml:space="preserve">
+    <value>Correo asociado</value>
+  </data>
+  <data name="resetSendCode" xml:space="preserve">
+    <value>Enviar código</value>
+  </data>
+  <data name="resetNewPassword" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="resetChangePassword" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="resetReceivedCode" xml:space="preserve">
+    <value>Código recibido</value>
+  </data>
+  <data name="resetMissingUserOrEmail" xml:space="preserve">
+    <value>Por favor ingrese usuario y correo</value>
+  </data>
+  <data name="resetCodeSend" xml:space="preserve">
+    <value>Te enviamos un código al correo. Verifica tu bandeja de entrada e ingrésalo donde se solicita.</value>
+  </data>
+  <data name="resetCodeSendFailed" xml:space="preserve">
+    <value>No se pudo enviar el código</value>
+  </data>
+  <data name="resetPasswordsDoNotMatch" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
+  </data>
+  <data name="resetPasswordLengthInvalid" xml:space="preserve">
+    <value>La contraseña debe tener entre 10 y 16 caracteres.</value>
+  </data>
+  <data name="resetPasswordChangeFailed" xml:space="preserve">
+    <value>No se pudo cambiar la contraseña</value>
+  </data>
 </root>

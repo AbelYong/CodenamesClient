@@ -282,4 +282,43 @@
   <data name="loginWrongCredentials" xml:space="preserve">
     <value>*wrong username or password, please try again</value>
   </data>
+  <data name="loginForgotPassword" xml:space="preserve">
+    <value>Forgot your password</value>
+  </data>
+  <data name="resetTitle" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
+  <data name="resetEmail" xml:space="preserve">
+    <value>Associated email</value>
+  </data>
+  <data name="resetSendCode" xml:space="preserve">
+    <value>Send code</value>
+  </data>
+  <data name="resetNewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="resetChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="resetReceivedCode" xml:space="preserve">
+    <value>Received code</value>
+  </data>
+  <data name="resetMissingUserOrEmail" xml:space="preserve">
+    <value>Please enter username and email</value>
+  </data>
+  <data name="resetCodeSend" xml:space="preserve">
+    <value>We've sent a code to your email. Please check your inbox and enter it where requested.</value>
+  </data>
+  <data name="resetCodeSendFailed" xml:space="preserve">
+    <value>Could not send code</value>
+  </data>
+  <data name="resetPasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="resetPasswordLengthInvalid" xml:space="preserve">
+    <value>Password must be between 10 and 16 characters</value>
+  </data>
+  <data name="resetPasswordChangeFailed" xml:space="preserve">
+    <value>Could not change password</value>
+  </data>
 </root>
