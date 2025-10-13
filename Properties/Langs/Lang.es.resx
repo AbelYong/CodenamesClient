@@ -321,6 +321,39 @@
   <data name="resetPasswordChangeFailed" xml:space="preserve">
     <value>No se pudo cambiar la contraseña</value>
   </data>
+  <data name="globalCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="globalConfirm" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="loginVerificationCode" xml:space="preserve">
+    <value>Código de verificación</value>
+  </data>
+  <data name="loginCode6DigitsSent" xml:space="preserve">
+    <value>Hemos enviado un código de 6 dígitos a:</value>
+  </data>
+  <data name="loginVerifyEmail" xml:space="preserve">
+    <value>Verificar correo</value>
+  </data>
+  <data name="signInRegistrationCouldNotBeStarted" xml:space="preserve">
+    <value>No se pudo iniciar el registro.</value>
+  </data>
+  <data name="signInErrorStartingRegistration" xml:space="preserve">
+    <value>Error al iniciar el registro: </value>
+  </data>
+  <data name="signInCodeMustHave6Digits" xml:space="preserve">
+    <value>El código debe tener 6 digitos.</value>
+  </data>
+  <data name="signInNoPendingRequests" xml:space="preserve">
+    <value>No hay solicitudes pendientes.</value>
+  </data>
+  <data name="signInRegister" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+  <data name="signInErrorConfirmingRegistration" xml:space="preserve">
+    <value>Error al confirmar registro: </value>
+  </data>
   <data name="loginGuest" xml:space="preserve">
     <value>Invitado</value>
   </data>

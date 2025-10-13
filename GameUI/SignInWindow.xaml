@@ -49,6 +49,27 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <!-- Verification overlay animations -->
+        <Storyboard x:Key="SlideInVerifyAnimation">
+            <DoubleAnimation Storyboard.TargetName="VerifyGrid"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="800" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="SlideOutVerifyAnimation">
+            <DoubleAnimation Storyboard.TargetName="VerifyGrid"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="0" To="800" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
     </Window.Resources>
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="520">
@@ -130,6 +151,67 @@
                 IsEnabled="{Binding CanSubmit}"
                 Click="Click_SignIn"/>
         </StackPanel>
+        <!-- ===== Verification backdrop ===== -->
+        <Rectangle x:Name="VerifyBackdrop"
+           Fill="#80000000"
+           Visibility="Collapsed"
+           Panel.ZIndex="9"
+           HorizontalAlignment="Stretch"
+           VerticalAlignment="Stretch"
+           MouseLeftButtonUp="HideVerify_Click"/>
 
+        <!-- ===== Verification overlay ===== -->
+        <Grid x:Name="VerifyGrid"
+      Width="640" Height="300"
+      Background="#272727"
+      Visibility="Collapsed"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      Panel.ZIndex="10">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="800"/>
+            </Grid.RenderTransform>
+
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+               Content="{x:Static language:Lang.loginVerifyEmail}"
+               Style="{StaticResource subtitle}"
+               Foreground="White"
+               HorizontalAlignment="Center"
+               Margin="0,10,0,16"/>
+
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="{x:Static language:Lang.loginCode6DigitsSent}"
+                       Style="{StaticResource normal}"/>
+                    <TextBlock x:Name="VerifyEmailLabel"
+                       Style="{StaticResource normal}"
+                       FontWeight="Bold" Margin="0,0,0,8"/>
+
+                    <TextBlock Text="{x:Static language:Lang.loginVerificationCode}" Style="{StaticResource normal}"/>
+                    <TextBox x:Name="VerifyCode"
+                     Style="{StaticResource textBoxCustomFocus}"
+                     Margin="0,2,0,8" Width="320" MaxLength="6"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}"
+                    Style="{StaticResource buttonCustomFocus}"
+                    Width="180" Height="40" Click="HideVerify_Click"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}"
+                    Style="{StaticResource buttonCustomFocus}"
+                    Width="180" Height="40" Click="ConfirmVerify_Click"/>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
