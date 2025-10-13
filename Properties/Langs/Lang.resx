@@ -216,9 +216,6 @@
   <data name="langSelectLanguage" xml:space="preserve">
     <value>Select language</value>
   </data>
-  <data name="signInEmailRequired" xml:space="preserve">
-    <value>Email is required</value>
-  </data>
   <data name="signInEmailInvalidFormat" xml:space="preserve">
     <value>Email format is invalid</value>
   </data>
@@ -359,5 +356,17 @@
   </data>
   <data name="mainMenuGuestCannotAccess" xml:space="preserve">
     <value>Sorry, guest accounts cannot access this feature</value>
+  </data>
+  <data name="signInFirstNameMaxLength" xml:space="preserve">
+    <value>The maximum length of the first name is 20 characters</value>
+  </data>
+  <data name="signInLastNameMaxLength" xml:space="preserve">
+    <value>The maximum length of the last name is 30 characters</value>
+  </data>
+  <data name="signInEmailRequired" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="globalInvalidData" xml:space="preserve">
+    <value>Invalid data</value>
   </data>
 </root>

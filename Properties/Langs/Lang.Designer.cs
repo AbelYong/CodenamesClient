@@ -133,6 +133,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invalid data.
+        /// </summary>
+        public static string globalInvalidData {
+            get {
+                return ResourceManager.GetString("globalInvalidData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Play.
         /// </summary>
         public static string globalPlay {
@@ -601,6 +610,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The maximum length of the first name is 20 characters.
+        /// </summary>
+        public static string signInFirstNameMaxLength {
+            get {
+                return ResourceManager.GetString("signInFirstNameMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a First name may contain letters (with accents) and spaces only.
         /// </summary>
         public static string signInFirstNameOnlyLettersSpacesAccents {
@@ -615,6 +633,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string signInFirstNameRequired {
             get {
                 return ResourceManager.GetString("signInFirstNameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The maximum length of the last name is 30 characters.
+        /// </summary>
+        public static string signInLastNameMaxLength {
+            get {
+                return ResourceManager.GetString("signInLastNameMaxLength", resourceCulture);
             }
         }
         

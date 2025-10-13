@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CodenamesClient.Properties.Langs;
 
 namespace CodenamesClient.GameUI
 {
@@ -31,6 +32,24 @@ namespace CodenamesClient.GameUI
 
         public void Click_btnSave(object sender, RoutedEventArgs e)
         {
+            var errors = CodenamesClient.Validation.ProfileValidation.ValidateAll(
+                username: tBxUsername.Text?.Trim(),
+                email: tBxEmail.Text?.Trim(),
+                firstName: tBxName.Text?.Trim(),
+                lastName: tBxLastName.Text?.Trim(),
+                facebook: tBxFacebook.Text?.Trim(),
+                instagram: tBxInstagram.Text?.Trim(),
+                discord: tBxDiscord.Text?.Trim()
+            );
+
+            var list = new List<string>(errors);
+            if (list.Count > 0)
+            {
+                System.Windows.MessageBox.Show(string.Join("\n", list), Lang.globalInvalidData,
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             this.DialogResult = true;
         }
 

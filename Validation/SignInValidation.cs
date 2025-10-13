@@ -1,11 +1,12 @@
 ﻿using CodenamesClient.Properties.Langs;
+using CodenamesGame.Domain.POCO;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
-using System.Text.RegularExpressions;
-using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CodenamesClient.Validation
 {
@@ -65,23 +66,25 @@ namespace CodenamesClient.Validation
         public static IEnumerable<string> ValidateFirstName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-            {
-                yield return Lang.signInFirstNameRequired;
                 yield break;
-            }
+
             if (!IsLettersAndSpacesOnly(name))
                 yield return Lang.signInFirstNameOnlyLettersSpacesAccents;
+
+            if (name.Length > PlayerPOCO.NAME_MAX_LENGTH)
+                yield return Lang.signInFirstNameMaxLength;
         }
 
         public static IEnumerable<string> ValidateLastName(string lastName)
         {
             if (string.IsNullOrWhiteSpace(lastName))
-            {
-                yield return Lang.signInLastNameRequired;
                 yield break;
-            }
+
             if (!IsLettersAndSpacesOnly(lastName))
                 yield return Lang.signInLastNameOnlyLettersSpacesAccents;
+
+            if (lastName.Length > PlayerPOCO.LASTNAME_MAX_LENGTH)
+                yield return Lang.signInLastNameMaxLength;
         }
 
 

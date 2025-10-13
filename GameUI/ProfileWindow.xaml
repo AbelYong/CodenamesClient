@@ -19,28 +19,28 @@
                 <StackPanel Margin="0,0,50,0" Width="200">
                     <Label Content="Username" Style="{StaticResource normal}" />
                     <TextBox Name="tBxUsername" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16"  />
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="20"/>
                     <Label Content="Email" Style="{StaticResource normal}" />
                     <TextBox Name="tBxEmail" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16"/>
                     <Label Content="Name" Style="{StaticResource normal}" />
                     <TextBox Name="tBxName"  Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="20"/>
                     <Label Content="Last Name" Style="{StaticResource normal}" />
                     <TextBox Name="tBxLastName" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Button Click="Click_btnBack" Content="Back" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,20,0,0" />
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="200">
                     <Label Content="Facebook" Style="{StaticResource normal}" />
                     <TextBox Name="tBxFacebook" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Label Content="Instagram" Style="{StaticResource normal}" />
                     <TextBox Name="tBxInstagram" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Label Content="Discord" Style="{StaticResource normal}" />
                     <TextBox Name="tBxDiscord"  Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Label Content="Address" Style="{StaticResource normal}" />
                     <TextBox Name="tBxAddress"  Text="Not implemented yet" 
                              Style="{StaticResource textBoxCustomFocus}" FontSize="16" IsEnabled="False" />

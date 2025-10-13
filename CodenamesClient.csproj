@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />
     <Compile Include="Validation\LoginValidation.cs" />
+    <Compile Include="Validation\ProfileValidation.cs" />
     <Compile Include="Validation\SignInValidation.cs" />
     <Page Include="GameUI\LoginWindow.xaml">
       <SubType>Designer</SubType>
