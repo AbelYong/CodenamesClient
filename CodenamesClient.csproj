@@ -145,7 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\GameUI\spyMap.png" />
-    <Resource Include="Assets\GameUI\placeholder_agent1.png" />
+    <Resource Include="Assets\GameUI\Agents\placeholder_agent1.png" />
     <Content Include="Main Theme %28NOT FINAL%29.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

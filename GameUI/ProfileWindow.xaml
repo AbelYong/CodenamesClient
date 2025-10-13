@@ -12,30 +12,38 @@
             <Label Content="Profile" Style="{StaticResource title}" />
             <Button Click="Click_btnProfilePicture" Content="" Style="{StaticResource imageButtonFocus}" Width="75" Height="75">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Assets/GameUI/placeholder_agent1.png"/>
+                    <ImageBrush ImageSource="/Assets/GameUI/Agents/placeholder_agent1.png"/>
                 </Button.Background>
             </Button>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel Margin="0,0,50,0" Width="200">
                     <Label Content="Username" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxUsername" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <TextBox Name="tBxUsername" Text="" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16"  />
                     <Label Content="Email" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxEmail" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <TextBox Name="tBxEmail" Text="" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
                     <Label Content="Name" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxName"  Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <TextBox Name="tBxName"  Text="" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
                     <Label Content="Last Name" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxLastName" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <TextBox Name="tBxLastName" Text="" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
                     <Button Click="Click_btnBack" Content="Back" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,20,0,0" />
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="200">
                     <Label Content="Facebook" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxFacebook" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <TextBox Name="tBxFacebook" Text="" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
                     <Label Content="Instagram" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxInstagram" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <TextBox Name="tBxInstagram" Text="" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
                     <Label Content="Discord" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxDiscord"  Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <TextBox Name="tBxDiscord"  Text="" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" />
                     <Label Content="Address" Style="{StaticResource normal}" />
-                    <TextBox Name="tBxAddress"  Text="" Style="{StaticResource textBoxCustomFocus}" IsEnabled="False" />
+                    <TextBox Name="tBxAddress"  Text="Not implemented yet" 
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" IsEnabled="False" />
                     <Button Click="Click_btnSave" Content="Save" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,20,0,0" />
                 </StackPanel>
             </StackPanel>
