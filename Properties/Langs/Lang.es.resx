@@ -369,4 +369,7 @@
   <data name="globalInvalidData" xml:space="preserve">
     <value>Datos inválidos</value>
   </data>
+  <data name="profileSocialNetwork" xml:space="preserve">
+    <value>Los enlaces a redes sociales solo admiten 30 caracteres</value>
+  </data>
 </root>

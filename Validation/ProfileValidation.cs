@@ -64,21 +64,21 @@ namespace CodenamesClient.Validation
         {
             if (!string.IsNullOrWhiteSpace(facebook) &&
                 facebook.Trim().Length > PlayerPOCO.SOCIALMEDIA_MAX_LENGTH)
-                yield return $"Facebook: máximo {PlayerPOCO.SOCIALMEDIA_MAX_LENGTH} caracteres.";
+                yield return Lang.profileSocialNetwork;
         }
 
         public static IEnumerable<string> ValidateInstagram(string instagram)
         {
             if (!string.IsNullOrWhiteSpace(instagram) &&
                 instagram.Trim().Length > PlayerPOCO.SOCIALMEDIA_MAX_LENGTH)
-                yield return $"Instagram: máximo {PlayerPOCO.SOCIALMEDIA_MAX_LENGTH} caracteres.";
+                yield return Lang.profileSocialNetwork;
         }
 
         public static IEnumerable<string> ValidateDiscord(string discord)
         {
             if (!string.IsNullOrWhiteSpace(discord) &&
                 discord.Trim().Length > PlayerPOCO.SOCIALMEDIA_MAX_LENGTH)
-                yield return $"Discord: máximo {PlayerPOCO.SOCIALMEDIA_MAX_LENGTH} caracteres.";
+                yield return Lang.profileSocialNetwork;
         }
 
         private static bool IsLettersAndSpacesOnly(string input)

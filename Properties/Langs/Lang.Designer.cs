@@ -430,6 +430,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Social media links only support 30 characters.
+        /// </summary>
+        public static string profileSocialNetwork {
+            get {
+                return ResourceManager.GetString("profileSocialNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Change password.
         /// </summary>
         public static string resetChangePassword {
