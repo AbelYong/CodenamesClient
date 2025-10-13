@@ -15,7 +15,7 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
     [System.SerializableAttribute()]
     public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -92,7 +92,7 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
     [System.SerializableAttribute()]
     public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -100,10 +100,28 @@ namespace CodenamesGame.AuthenticationService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int AvatarIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DiscordUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FacebookUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InstagramUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> PlayerIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.AuthenticationService.User UserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsernameField;
@@ -115,6 +133,58 @@ namespace CodenamesGame.AuthenticationService {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AvatarID {
+            get {
+                return this.AvatarIDField;
+            }
+            set {
+                if ((this.AvatarIDField.Equals(value) != true)) {
+                    this.AvatarIDField = value;
+                    this.RaisePropertyChanged("AvatarID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DiscordUsername {
+            get {
+                return this.DiscordUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DiscordUsernameField, value) != true)) {
+                    this.DiscordUsernameField = value;
+                    this.RaisePropertyChanged("DiscordUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FacebookUsername {
+            get {
+                return this.FacebookUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FacebookUsernameField, value) != true)) {
+                    this.FacebookUsernameField = value;
+                    this.RaisePropertyChanged("FacebookUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InstagramUsername {
+            get {
+                return this.InstagramUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InstagramUsernameField, value) != true)) {
+                    this.InstagramUsernameField = value;
+                    this.RaisePropertyChanged("InstagramUsername");
+                }
             }
         }
         
@@ -140,6 +210,32 @@ namespace CodenamesGame.AuthenticationService {
                 if ((object.ReferenceEquals(this.NameField, value) != true)) {
                     this.NameField = value;
                     this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> PlayerID {
+            get {
+                return this.PlayerIDField;
+            }
+            set {
+                if ((this.PlayerIDField.Equals(value) != true)) {
+                    this.PlayerIDField = value;
+                    this.RaisePropertyChanged("PlayerID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.AuthenticationService.User User {
+            get {
+                return this.UserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
                 }
             }
         }
@@ -228,6 +324,160 @@ namespace CodenamesGame.AuthenticationService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BeginRegistrationResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.SerializableAttribute()]
+    public partial class BeginRegistrationResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> RequestIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SuccessField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> RequestId {
+            get {
+                return this.RequestIdField;
+            }
+            set {
+                if ((this.RequestIdField.Equals(value) != true)) {
+                    this.RequestIdField = value;
+                    this.RaisePropertyChanged("RequestId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Success {
+            get {
+                return this.SuccessField;
+            }
+            set {
+                if ((this.SuccessField.Equals(value) != true)) {
+                    this.SuccessField = value;
+                    this.RaisePropertyChanged("Success");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ConfirmRegistrationResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.SerializableAttribute()]
+    public partial class ConfirmRegistrationResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SuccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> UserIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Success {
+            get {
+                return this.SuccessField;
+            }
+            set {
+                if ((this.SuccessField.Equals(value) != true)) {
+                    this.SuccessField = value;
+                    this.RaisePropertyChanged("Success");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                if ((this.UserIdField.Equals(value) != true)) {
+                    this.UserIdField = value;
+                    this.RaisePropertyChanged("UserId");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AuthenticationService.IAuthenticationManager")]
     public interface IAuthenticationManager {
@@ -255,6 +505,24 @@ namespace CodenamesGame.AuthenticationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse")]
         System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ResetResult> CompletePasswordResetAsync(string username, string code, string newPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginRegistration", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginRegistrationResponse")]
+        CodenamesGame.AuthenticationService.BeginRegistrationResult BeginRegistration(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer, string plainPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginRegistration", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginRegistrationResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.BeginRegistrationResult> BeginRegistrationAsync(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer, string plainPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/ConfirmRegistration", ReplyAction="http://tempuri.org/IAuthenticationManager/ConfirmRegistrationResponse")]
+        CodenamesGame.AuthenticationService.ConfirmRegistrationResult ConfirmRegistration(System.Guid requestId, string code);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/ConfirmRegistration", ReplyAction="http://tempuri.org/IAuthenticationManager/ConfirmRegistrationResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ConfirmRegistrationResult> ConfirmRegistrationAsync(System.Guid requestId, string code);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CancelRegistration", ReplyAction="http://tempuri.org/IAuthenticationManager/CancelRegistrationResponse")]
+        void CancelRegistration(System.Guid requestId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CancelRegistration", ReplyAction="http://tempuri.org/IAuthenticationManager/CancelRegistrationResponse")]
+        System.Threading.Tasks.Task CancelRegistrationAsync(System.Guid requestId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -314,6 +582,30 @@ namespace CodenamesGame.AuthenticationService {
         
         public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ResetResult> CompletePasswordResetAsync(string username, string code, string newPassword) {
             return base.Channel.CompletePasswordResetAsync(username, code, newPassword);
+        }
+        
+        public CodenamesGame.AuthenticationService.BeginRegistrationResult BeginRegistration(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer, string plainPassword) {
+            return base.Channel.BeginRegistration(svUser, svPlayer, plainPassword);
+        }
+        
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.BeginRegistrationResult> BeginRegistrationAsync(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer, string plainPassword) {
+            return base.Channel.BeginRegistrationAsync(svUser, svPlayer, plainPassword);
+        }
+        
+        public CodenamesGame.AuthenticationService.ConfirmRegistrationResult ConfirmRegistration(System.Guid requestId, string code) {
+            return base.Channel.ConfirmRegistration(requestId, code);
+        }
+        
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ConfirmRegistrationResult> ConfirmRegistrationAsync(System.Guid requestId, string code) {
+            return base.Channel.ConfirmRegistrationAsync(requestId, code);
+        }
+        
+        public void CancelRegistration(System.Guid requestId) {
+            base.Channel.CancelRegistration(requestId);
+        }
+        
+        public System.Threading.Tasks.Task CancelRegistrationAsync(System.Guid requestId) {
+            return base.Channel.CancelRegistrationAsync(requestId);
         }
     }
 }

@@ -21,9 +21,35 @@ namespace CodenamesGame.Domain.POCO
         public string InstagramUsername { get; set; }
         public string DiscordUsername { get; set; }
 
+        public UserPOCO User { get; set; }
+
         public PlayerPOCO()
         {
 
+        }
+
+        public static AuthenticationService.Player AssembleSvPlayer(PlayerPOCO player)
+        {
+            AuthenticationService.Player svPlayer = new AuthenticationService.Player();
+            svPlayer.Username = player.Username;
+            svPlayer.Name = player.Name;
+            svPlayer.LastName = player.LastName;
+            return svPlayer;
+        }
+
+        public static PlayerPOCO AssemblePlayer(UserService.Player svPlayer)
+        {
+            PlayerPOCO player = new PlayerPOCO();
+            player.PlayerID = svPlayer.PlayerID;
+            player.Username = svPlayer.Username;
+            player.AvatarID = svPlayer.AvatarID;
+            player.Name = svPlayer.Name;
+            player.LastName = svPlayer.LastName;
+            player.FacebookUsername = svPlayer.FacebookUsername;
+            player.InstagramUsername = svPlayer.InstagramUsername;
+            player.DiscordUsername = svPlayer.DiscordUsername;
+            player.User = UserPOCO.AssembleUser(svPlayer.User);
+            return player;
         }
     }
 }

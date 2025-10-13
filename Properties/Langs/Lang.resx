@@ -321,4 +321,10 @@
   <data name="resetPasswordChangeFailed" xml:space="preserve">
     <value>Could not change password</value>
   </data>
+  <data name="loginGuest" xml:space="preserve">
+    <value>Guest</value>
+  </data>
+  <data name="mainMenuGuestCannotAccess" xml:space="preserve">
+    <value>Sorry, guest accounts cannot access this feature</value>
+  </data>
 </root>

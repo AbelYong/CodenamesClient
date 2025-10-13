@@ -1,4 +1,6 @@
 ﻿using CodenamesClient.Properties.Langs;
+using CodenamesGame.Domain.POCO;
+using CodenamesGame.Network;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,7 +13,7 @@ namespace CodenamesClient.GameUI
     public partial class MainMenuWindow : UserControl
     {
         private MediaPlayer mediaPlayer;
-        private Guid? userID;
+        private PlayerPOCO player;
 
         public MainMenuWindow()
         {
@@ -20,6 +22,21 @@ namespace CodenamesClient.GameUI
             mediaPlayer.Open(new Uri("Main Theme (NOT FINAL).mp3", UriKind.Relative));
             mediaPlayer.Play();
             mediaPlayer.MediaEnded += (s, e) => mediaPlayer.Position = TimeSpan.Zero;
+        }
+
+        private void BtnPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            if (player != null)
+            {
+                var w = new ProfileWindow(player);
+                w.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show(Lang.mainMenuGuestCannotAccess);
+            }
+            
+
         }
         private void ShowSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -134,7 +151,17 @@ namespace CodenamesClient.GameUI
 
         public void setPlayer(Guid? userID)
         {
-            this.userID = userID;
+            if (userID != null)
+            {
+                Guid auxUserID = (Guid) userID;
+                PlayerPOCO player = UserOperations.GetPlayer(auxUserID);
+                this.player = player;
+                btnPlayer.Content = player.Username;
+            }
+            else
+            {
+                btnPlayer.Content = Lang.loginGuest;
+            }
         }
     }
 }

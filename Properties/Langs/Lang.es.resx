@@ -321,4 +321,10 @@
   <data name="resetPasswordChangeFailed" xml:space="preserve">
     <value>No se pudo cambiar la contraseña</value>
   </data>
+  <data name="loginGuest" xml:space="preserve">
+    <value>Invitado</value>
+  </data>
+  <data name="mainMenuGuestCannotAccess" xml:space="preserve">
+    <value>Lo sentimos, los invitados no pueden acceder a esta función</value>
+  </data>
 </root>

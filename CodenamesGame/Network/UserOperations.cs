@@ -2,6 +2,7 @@
 using System;
 using System.ServiceModel;
 using CodenamesGame.AuthenticationService;
+using CodenamesGame.UserService;
 
 namespace CodenamesGame.Network
 {
@@ -18,6 +19,21 @@ namespace CodenamesGame.Network
             {
                 SafeClose(client);
             }
+        }
+
+        public static Guid? SignIn(UserPOCO user, PlayerPOCO player)
+        {
+            var client = new AuthenticationService.AuthenticationManagerClient("NetTcpBinding_IAuthenticationManager");
+            AuthenticationService.User svUser = UserPOCO.AssembleSvUser(user);
+            AuthenticationService.Player svPlayer = PlayerPOCO.AssembleSvPlayer(player);
+            return client.SignIn(svUser, svPlayer);
+        }
+
+        public static PlayerPOCO GetPlayer(Guid userID)
+        {
+            var client = new UserService.UserManagerClient("NetTcpBinding_IUserManager");
+            UserService.Player svPlayer = client.GetPlayerByUserID(userID);
+            return PlayerPOCO.AssemblePlayer(svPlayer);
         }
 
         public static void BeginPasswordReset(string username, string email)
@@ -57,31 +73,6 @@ namespace CodenamesGame.Network
             {
                 client.Abort();
             }
-        }
-
-        public static Guid? SignIn(UserPOCO user, PlayerPOCO player)
-        {
-            var client = new AuthenticationService.AuthenticationManagerClient("NetTcpBinding_IAuthenticationManager");
-            AuthenticationService.User svUser = AssembleSvUser(user);
-            AuthenticationService.Player svPlayer = AssembleSvPlayer(player);
-            return client.SignIn(svUser, svPlayer);
-        }
-
-        private static AuthenticationService.User AssembleSvUser(UserPOCO user)
-        {
-            AuthenticationService.User svUser = new AuthenticationService.User();
-            svUser.Email = user.Email;
-            svUser.Password = user.Password;
-            return svUser;
-        }
-
-        private static AuthenticationService.Player AssembleSvPlayer(PlayerPOCO player)
-        {
-            AuthenticationService.Player svPlayer = new AuthenticationService.Player();
-            svPlayer.Username = player.Username;
-            svPlayer.Name = player.Name;
-            svPlayer.LastName = player.LastName;
-            return svPlayer;
         }
     }
 }

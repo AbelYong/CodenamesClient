@@ -214,6 +214,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Guest.
+        /// </summary>
+        public static string loginGuest {
+            get {
+                return ResourceManager.GetString("loginGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Log-In.
         /// </summary>
         public static string loginLogIn {
@@ -291,6 +300,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string loginWrongCredentials {
             get {
                 return ResourceManager.GetString("loginWrongCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, guest accounts cannot access this feature.
+        /// </summary>
+        public static string mainMenuGuestCannotAccess {
+            get {
+                return ResourceManager.GetString("mainMenuGuestCannotAccess", resourceCulture);
             }
         }
         

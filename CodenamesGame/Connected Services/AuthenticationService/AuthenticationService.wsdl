@@ -33,7 +33,8 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services" />
+      <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+      <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IAuthenticationManager_Login_InputMessage">
@@ -60,6 +61,24 @@
   <wsdl:message name="IAuthenticationManager_CompletePasswordReset_OutputMessage">
     <wsdl:part name="parameters" element="tns:CompletePasswordResetResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_BeginRegistration_InputMessage">
+    <wsdl:part name="parameters" element="tns:BeginRegistration" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_BeginRegistration_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BeginRegistrationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_ConfirmRegistration_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmRegistration" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_ConfirmRegistration_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmRegistrationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_CancelRegistration_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelRegistration" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_CancelRegistration_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelRegistrationResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAuthenticationManager">
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/Login" message="tns:IAuthenticationManager_Login_InputMessage" />
@@ -76,6 +95,18 @@
     <wsdl:operation name="CompletePasswordReset">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset" message="tns:IAuthenticationManager_CompletePasswordReset_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse" message="tns:IAuthenticationManager_CompletePasswordReset_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BeginRegistration">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/BeginRegistration" message="tns:IAuthenticationManager_BeginRegistration_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/BeginRegistrationResponse" message="tns:IAuthenticationManager_BeginRegistration_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmRegistration">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/ConfirmRegistration" message="tns:IAuthenticationManager_ConfirmRegistration_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/ConfirmRegistrationResponse" message="tns:IAuthenticationManager_ConfirmRegistration_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelRegistration">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/CancelRegistration" message="tns:IAuthenticationManager_CancelRegistration_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/CancelRegistrationResponse" message="tns:IAuthenticationManager_CancelRegistration_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IAuthenticationManager" type="tns:IAuthenticationManager">
@@ -110,6 +141,33 @@
     </wsdl:operation>
     <wsdl:operation name="CompletePasswordReset">
       <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/CompletePasswordReset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BeginRegistration">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/BeginRegistration" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmRegistration">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/ConfirmRegistration" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelRegistration">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/CancelRegistration" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

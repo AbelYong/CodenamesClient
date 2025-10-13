@@ -96,7 +96,7 @@
                     <!-- User -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="100,0,0,0">
                         <Label Content="{x:Static language:Lang.mainMenuLoggedIn}" Style="{StaticResource subtitle}" VerticalAlignment="Center"/>
-                        <Button Name="btnPlayer" Content="Player" Style="{StaticResource buttonCustomFocus}" Width="250" Height="60" FontSize="24" VerticalAlignment="Center"/>
+                        <Button Name="btnPlayer" Click="BtnPlayer_Click" Content="Player" Style="{StaticResource buttonCustomFocus}" Width="250" Height="60" FontSize="24" VerticalAlignment="Center"/>
                     </StackPanel>
                 </StackPanel>
                 <Label Content="Duet" Foreground="White" FontFamily="Bell MT" FontSize="72"/>

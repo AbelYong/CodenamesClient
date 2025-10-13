@@ -1,0 +1,44 @@
+﻿<Window x:Class="CodenamesClient.GameUI.ProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CodenamesClient.GameUI"
+        mc:Ignorable="d"
+        Title="Profile"
+        Height="450" Width="600" Background="#FF1D1D1D">
+    <Grid>
+        <StackPanel>
+            <Label Content="Profile" Style="{StaticResource title}" />
+            <Button Click="Click_btnProfilePicture" Content="" Style="{StaticResource imageButtonFocus}" Width="75" Height="75">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/GameUI/placeholder_agent1.png"/>
+                </Button.Background>
+            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Margin="0,0,50,0" Width="200">
+                    <Label Content="Username" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxUsername" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <Label Content="Email" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxEmail" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <Label Content="Name" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxName"  Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <Label Content="Last Name" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxLastName" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <Button Click="Click_btnBack" Content="Back" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,20,0,0" />
+                </StackPanel>
+                <StackPanel Margin="50,0,0,0" Width="200">
+                    <Label Content="Facebook" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxFacebook" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <Label Content="Instagram" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxInstagram" Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <Label Content="Discord" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxDiscord"  Text="" Style="{StaticResource textBoxCustomFocus}" />
+                    <Label Content="Address" Style="{StaticResource normal}" />
+                    <TextBox Name="tBxAddress"  Text="" Style="{StaticResource textBoxCustomFocus}" IsEnabled="False" />
+                    <Button Click="Click_btnSave" Content="Save" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,20,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

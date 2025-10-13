@@ -18,5 +18,22 @@ namespace CodenamesGame.Domain.POCO
         {
 
         }
+
+        public static AuthenticationService.User AssembleSvUser(UserPOCO user)
+        {
+            AuthenticationService.User svUser = new AuthenticationService.User();
+            svUser.Email = user.Email;
+            svUser.Password = user.Password;
+            return svUser;
+        }
+
+        public static UserPOCO AssembleUser(UserService.User svUser)
+        {
+            UserPOCO user = new UserPOCO();
+            user.UserID = svUser.UserID;
+            user.Email = svUser.Email;
+            user.Password = "";
+            return user;
+        }
     }
 }

@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\UserService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Domain\POCO\PlayerPOCO.cs" />
     <Compile Include="Domain\POCO\UserPOCO.cs" />
     <Compile Include="Network\UserOperations.cs" />
@@ -63,6 +68,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Connected Services\AuthenticationService\AuthenticationService.wsdl" />
+    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.BeginRegistrationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.ConfirmRegistrationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.ResetResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -72,9 +83,23 @@
     <None Include="Connected Services\AuthenticationService\item1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\UserService\CodenamesGame.UserService.Player.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UserService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AuthenticationService\" />
+    <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\AuthenticationService\item.disco" />
@@ -89,7 +114,25 @@
     <None Include="Connected Services\AuthenticationService\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\AuthenticationService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\AuthenticationService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
