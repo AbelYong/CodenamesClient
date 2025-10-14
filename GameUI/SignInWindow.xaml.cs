@@ -144,7 +144,10 @@ namespace CodenamesClient.GameUI
                     }
                 }
             }
-            catch { /* best effort */ }
+            catch
+            { 
+                /* best effort */ 
+            }
             finally
             {
                 _pendingRequestId = null;

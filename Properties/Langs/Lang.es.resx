@@ -322,7 +322,7 @@
     <value>Cancelar</value>
   </data>
   <data name="globalConfirm" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Confirmar</value>
   </data>
   <data name="loginVerificationCode" xml:space="preserve">
     <value>Código de verificación</value>
@@ -371,5 +371,8 @@
   </data>
   <data name="profileSocialNetwork" xml:space="preserve">
     <value>Los enlaces a redes sociales solo admiten 30 caracteres</value>
+  </data>
+  <data name="profileProfile" xml:space="preserve">
+    <value>Perfil</value>
   </data>
 </root>

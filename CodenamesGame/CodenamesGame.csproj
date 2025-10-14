@@ -86,6 +86,9 @@
     <None Include="Connected Services\UserService\CodenamesGame.UserService.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\UserService\CodenamesGame.UserService.UpdateResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\UserService\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -93,6 +96,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\UserService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\item3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\UserService\UserService.wsdl" />

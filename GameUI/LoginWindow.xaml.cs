@@ -52,7 +52,7 @@ namespace CodenamesClient.GameUI
         {
             stackPanelLogin.Visibility = Visibility.Collapsed;
             CurrentContent.Content = _mainMenuWindow;
-            _mainMenuWindow.setPlayer(userID);
+            _mainMenuWindow.SetPlayer(userID);
         }
 
         private bool ValidateLoginData(string username, string password)

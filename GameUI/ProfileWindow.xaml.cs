@@ -1,4 +1,8 @@
-﻿using CodenamesGame.Domain.POCO;
+﻿using CodenamesClient.Properties.Langs;
+using CodenamesGame.AuthenticationService;
+using CodenamesGame.Domain.POCO;
+using CodenamesGame.Network;
+using CodenamesGame.UserService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +16,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using CodenamesClient.Properties.Langs;
 
 namespace CodenamesClient.GameUI
 {
@@ -23,10 +26,11 @@ namespace CodenamesClient.GameUI
     {
         private PlayerPOCO _player;
         private int _avatarID;
+
         public ProfileWindow(PlayerPOCO player)
         {
             InitializeComponent();
-            this._player = player;
+            _player = player;
             FillProfileFields(player);
         }
 
@@ -49,19 +53,23 @@ namespace CodenamesClient.GameUI
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            this.DialogResult = true;
+            else
+            {
+                PlayerPOCO updatedPlayer = PrepareUpdatedPlayer();
+                UpdateResult result = UserOperations.UpdateProfile(updatedPlayer);
+                MessageBox.Show(result.Message);
+                this.DialogResult = result.Success;
+            }
         }
 
         public void Click_btnProfilePicture(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Not implemented yet");
         }
 
         public void Click_btnBack(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-
         }
 
         private void FillProfileFields(PlayerPOCO player)
@@ -78,6 +86,22 @@ namespace CodenamesClient.GameUI
                 //TODO address handling
                 //TODO profile image handling
             }
+        }
+
+        private PlayerPOCO PrepareUpdatedPlayer()
+        {
+            PlayerPOCO updatedPlayer = new PlayerPOCO();
+            updatedPlayer.User.UserID = _player.User.UserID;
+            updatedPlayer.User.Email = tBxEmail.Text;
+
+            updatedPlayer.PlayerID = _player.PlayerID;
+            updatedPlayer.Username = tBxUsername.Text;
+            updatedPlayer.Name = (!String.IsNullOrEmpty(tBxName.Text) ? tBxName.Text : null);
+            updatedPlayer.LastName = (!String.IsNullOrEmpty(tBxLastName.Text) ? tBxLastName.Text : null);
+            updatedPlayer.FacebookUsername = (!String.IsNullOrEmpty(tBxFacebook.Text) ? tBxFacebook.Text : null);
+            updatedPlayer.InstagramUsername = (!String.IsNullOrEmpty(tBxInstagram.Text) ? tBxInstagram.Text : null);
+            updatedPlayer.DiscordUsername = (!String.IsNullOrEmpty(tBxDiscord.Text) ? tBxDiscord.Text : null);
+            return updatedPlayer;
         }
     }
 }

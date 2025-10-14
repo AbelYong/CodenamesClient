@@ -12,24 +12,27 @@ namespace CodenamesClient.GameUI
 {
     public partial class MainMenuWindow : UserControl
     {
-        private MediaPlayer mediaPlayer;
-        private PlayerPOCO player;
+        private MediaPlayer _mediaPlayer;
+        private PlayerPOCO _player;
 
         public MainMenuWindow()
         {
             InitializeComponent();
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri("Main Theme (NOT FINAL).mp3", UriKind.Relative));
-            mediaPlayer.Play();
-            mediaPlayer.MediaEnded += (s, e) => mediaPlayer.Position = TimeSpan.Zero;
+            _mediaPlayer = new MediaPlayer();
+            _mediaPlayer.Open(new Uri("Main Theme (NOT FINAL).mp3", UriKind.Relative));
+            _mediaPlayer.Play();
+            _mediaPlayer.MediaEnded += (s, e) => _mediaPlayer.Position = TimeSpan.Zero;
         }
 
         private void BtnPlayer_Click(object sender, RoutedEventArgs e)
         {
-            if (player != null)
+            if (_player != null)
             {
-                var w = new ProfileWindow(player);
-                w.ShowDialog();
+                var w = new ProfileWindow(_player);
+                if (w.ShowDialog() == true)
+                {
+                    SetPlayer(_player.User.UserID);
+                }
             }
             else
             {
@@ -149,13 +152,13 @@ namespace CodenamesClient.GameUI
             slideOutAnimation.Begin();
         }
 
-        public void setPlayer(Guid? userID)
+        public void SetPlayer(Guid? userID)
         {
             if (userID != null)
             {
                 Guid auxUserID = (Guid) userID;
                 PlayerPOCO player = UserOperations.GetPlayer(auxUserID);
-                this.player = player;
+                this._player = player;
                 btnPlayer.Content = player.Username;
             }
             else

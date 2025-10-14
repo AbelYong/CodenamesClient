@@ -372,4 +372,7 @@
   <data name="profileSocialNetwork" xml:space="preserve">
     <value>Social media links only support 30 characters</value>
   </data>
+  <data name="profileProfile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
 </root>

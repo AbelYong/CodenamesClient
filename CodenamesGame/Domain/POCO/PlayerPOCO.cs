@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace CodenamesGame.Domain.POCO
 {
@@ -20,23 +22,12 @@ namespace CodenamesGame.Domain.POCO
         public string FacebookUsername { get; set; }
         public string InstagramUsername { get; set; }
         public string DiscordUsername { get; set; }
-
-        public UserPOCO User { get; set; }
+        public UserPOCO User { get; set; } = new UserPOCO();
 
         public PlayerPOCO()
         {
 
         }
-
-        public static AuthenticationService.Player AssembleSvPlayer(PlayerPOCO player)
-        {
-            AuthenticationService.Player svPlayer = new AuthenticationService.Player();
-            svPlayer.Username = player.Username;
-            svPlayer.Name = player.Name;
-            svPlayer.LastName = player.LastName;
-            return svPlayer;
-        }
-
         public static PlayerPOCO AssemblePlayer(UserService.Player svPlayer)
         {
             PlayerPOCO player = new PlayerPOCO();
@@ -50,6 +41,30 @@ namespace CodenamesGame.Domain.POCO
             player.DiscordUsername = svPlayer.DiscordUsername;
             player.User = UserPOCO.AssembleUser(svPlayer.User);
             return player;
+        }
+
+        public static AuthenticationService.Player AssembleAuthSvPlayer(PlayerPOCO player)
+        {
+            AuthenticationService.Player svPlayer = new AuthenticationService.Player();
+            svPlayer.Username = player.Username;
+            svPlayer.Name = player.Name;
+            svPlayer.LastName = player.LastName;
+            return svPlayer;
+        }
+
+        public static UserService.Player AssembleUserSvPlayer(PlayerPOCO player)
+        {
+            UserService.Player svPlayer = new UserService.Player();
+            svPlayer.PlayerID = player.PlayerID;
+            svPlayer.Username = player.Username;
+            svPlayer.AvatarID  = player.AvatarID;
+            svPlayer.Name = player.Name;
+            svPlayer.LastName = player.LastName;
+            svPlayer.FacebookUsername = player.FacebookUsername;
+            svPlayer.InstagramUsername  = player.InstagramUsername;
+            svPlayer.DiscordUsername = player.FacebookUsername;
+            svPlayer.User = UserPOCO.AssembleUserSvUser(player.User);
+            return svPlayer;
         }
     }
 }

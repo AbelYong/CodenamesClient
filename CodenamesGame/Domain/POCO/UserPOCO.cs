@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodenamesGame.AuthenticationService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,6 @@ namespace CodenamesGame.Domain.POCO
 
         }
 
-        public static AuthenticationService.User AssembleSvUser(UserPOCO user)
-        {
-            AuthenticationService.User svUser = new AuthenticationService.User();
-            svUser.Email = user.Email;
-            svUser.Password = user.Password;
-            return svUser;
-        }
-
         public static UserPOCO AssembleUser(UserService.User svUser)
         {
             UserPOCO user = new UserPOCO();
@@ -35,5 +28,21 @@ namespace CodenamesGame.Domain.POCO
             user.Password = "";
             return user;
         }
+
+        public static AuthenticationService.User AssembleAuthSvUser(UserPOCO user)
+        {
+            AuthenticationService.User svUser = new AuthenticationService.User();
+            svUser.Email = user.Email;
+            svUser.Password = user.Password;
+            return svUser;
+        }
+
+        public static UserService.User AssembleUserSvUser(UserPOCO user)
+        {
+            UserService.User svUser = new UserService.User();
+            svUser.UserID = (Guid) user.UserID;
+            svUser.Email = user.Email;
+            return svUser;
+        } 
     }
 }

@@ -263,6 +263,67 @@ namespace CodenamesGame.UserService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.SerializableAttribute()]
+    public partial class UpdateResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MessageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SuccessField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Message {
+            get {
+                return this.MessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
+                    this.MessageField = value;
+                    this.RaisePropertyChanged("Message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Success {
+            get {
+                return this.SuccessField;
+            }
+            set {
+                if ((this.SuccessField.Equals(value) != true)) {
+                    this.SuccessField = value;
+                    this.RaisePropertyChanged("Success");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserService.IUserManager")]
     public interface IUserManager {
@@ -272,6 +333,12 @@ namespace CodenamesGame.UserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/GetPlayerByUserID", ReplyAction="http://tempuri.org/IUserManager/GetPlayerByUserIDResponse")]
         System.Threading.Tasks.Task<CodenamesGame.UserService.Player> GetPlayerByUserIDAsync(System.Guid userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateProfile", ReplyAction="http://tempuri.org/IUserManager/UpdateProfileResponse")]
+        CodenamesGame.UserService.UpdateResult UpdateProfile(CodenamesGame.UserService.Player updatedPlayer);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateProfile", ReplyAction="http://tempuri.org/IUserManager/UpdateProfileResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.UserService.UpdateResult> UpdateProfileAsync(CodenamesGame.UserService.Player updatedPlayer);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -307,6 +374,14 @@ namespace CodenamesGame.UserService {
         
         public System.Threading.Tasks.Task<CodenamesGame.UserService.Player> GetPlayerByUserIDAsync(System.Guid userID) {
             return base.Channel.GetPlayerByUserIDAsync(userID);
+        }
+        
+        public CodenamesGame.UserService.UpdateResult UpdateProfile(CodenamesGame.UserService.Player updatedPlayer) {
+            return base.Channel.UpdateProfile(updatedPlayer);
+        }
+        
+        public System.Threading.Tasks.Task<CodenamesGame.UserService.UpdateResult> UpdateProfileAsync(CodenamesGame.UserService.Player updatedPlayer) {
+            return base.Channel.UpdateProfileAsync(updatedPlayer);
         }
     }
 }
