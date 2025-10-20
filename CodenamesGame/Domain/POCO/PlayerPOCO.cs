@@ -63,7 +63,7 @@ namespace CodenamesGame.Domain.POCO
             svPlayer.LastName = player.LastName;
             svPlayer.FacebookUsername = player.FacebookUsername;
             svPlayer.InstagramUsername  = player.InstagramUsername;
-            svPlayer.DiscordUsername = player.FacebookUsername;
+            svPlayer.DiscordUsername = player.DiscordUsername;
             svPlayer.User = UserPOCO.AssembleUserSvUser(player.User);
             return svPlayer;
         }

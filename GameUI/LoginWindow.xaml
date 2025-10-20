@@ -44,7 +44,7 @@
         <ContentControl x:Name="CurrentContent" />
 
         <!-- ===== Login stack ===== -->
-        <StackPanel x:Name="stackPanelLogin" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel x:Name="stackPanelLogin" HorizontalAlignment="Center" VerticalAlignment="Center" Width="808">
             <!-- Title -->
             <StackPanel Height="110" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Codenames:" Margin="0,0,0,0"  Foreground="White" FontFamily="Consolas" FontSize="72"/>
@@ -54,12 +54,12 @@
             <!-- User -->
             <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
             <TextBox Name="tBxUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,10,0,0" Text="" Width="320" />
-            <Label Name="lblUsernameErrorMessage"  Content="" Style="{StaticResource normal}" Margin="0,10,0,0" Width="438"/>
+            <Label Name="lblUsernameErrorMessage"  Content="" Style="{StaticResource normal}" Margin="0,10,0,0" Width="580"/>
             <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
             <PasswordBox x:Name="pBxPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,10,0,0" Width="320"/>
 
             <!-- Reset password link -->
-            <Grid Margin="0,6,0,0" Width="438">
+            <Grid Margin="0,6,0,0" Width="568">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -68,7 +68,7 @@
                 <Label x:Name="lblPasswordErrorMessage"
                        Grid.Column="0"
                        Content=""
-                       Style="{StaticResource normal}" />
+                       Style="{StaticResource normal}" Width="338" />
                 <TextBlock Grid.Column="1" Style="{StaticResource InlineLinkStyle}"
                            Foreground="{Binding Foreground, ElementName=lblPasswordErrorMessage}"
                            VerticalAlignment="Center" MouseLeftButtonUp="ForgotLink_Click"
