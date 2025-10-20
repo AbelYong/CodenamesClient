@@ -375,4 +375,22 @@
   <data name="profileProfile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="socialDeleteFriend" xml:space="preserve">
+    <value>Delete friend</value>
+  </data>
+  <data name="socialRequests" xml:space="preserve">
+    <value>Requests</value>
+  </data>
+  <data name="socialAccept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="socialReject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="socialSearchResults" xml:space="preserve">
+    <value>Search results</value>
+  </data>
+  <data name="socialAddFriend" xml:space="preserve">
+    <value>Add friend</value>
+  </data>
 </root>

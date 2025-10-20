@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Collections.Generic;
 
 namespace CodenamesClient.GameUI
 {
@@ -14,6 +15,9 @@ namespace CodenamesClient.GameUI
     {
         private MediaPlayer _mediaPlayer;
         private PlayerPOCO _player;
+        private List<PlayerPOCO> _friends = new List<PlayerPOCO>();
+        private List<PlayerPOCO> _requests = new List<PlayerPOCO>();
+        private List<PlayerPOCO> _search = new List<PlayerPOCO>();
 
         public MainMenuWindow()
         {
@@ -74,6 +78,8 @@ namespace CodenamesClient.GameUI
             var slideInAnimation = (Storyboard)FindResource("SlideInFriendsAnimation");
             FriendsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
+
+            RefreshFriendsUi();
         }
 
         private void HideFriends_Click(object sender, RoutedEventArgs e)
@@ -90,6 +96,7 @@ namespace CodenamesClient.GameUI
         {
             SearchBox.Text = string.Empty;
             SearchBox.Focus();
+            SearchResultsList.ItemsSource = null;
         }
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -132,7 +139,6 @@ namespace CodenamesClient.GameUI
             Button clickedButton = (Button)sender;
             string gameMode = clickedButton.Content.ToString();
             MessageBox.Show($"Starting game in {gameMode} mode!");
-            // Aquí podrías agregar la lógica para iniciar el juego real.
         }
 
         private void ShowScoreboards_Click(object sender, RoutedEventArgs e)
@@ -165,6 +171,77 @@ namespace CodenamesClient.GameUI
             {
                 btnPlayer.Content = Lang.loginGuest;
             }
+        }
+
+        private void RefreshFriendsUi()
+        {
+            if (_player?.PlayerID == null) return;
+            var me = _player.PlayerID.Value;
+
+            _friends = SocialOperations.GetFriends(me);
+            _requests = SocialOperations.GetIncomingRequests(me);
+
+            FriendsList.ItemsSource = _friends;
+            RequestsList.ItemsSource = _requests;
+        }
+
+        private static PlayerPOCO ItemFromButton(Button btn) => btn?.DataContext as PlayerPOCO;
+
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+            if (_player?.PlayerID == null) return;
+
+            var q = SearchBox.Text?.Trim();
+            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend) return;
+
+            var me = _player.PlayerID.Value;
+            _search = SocialOperations.SearchPlayers(me, q, 20);
+            SearchResultsList.ItemsSource = _search;
+        }
+
+        private void SendRequest_Click(object sender, RoutedEventArgs e)
+        {
+            if (_player?.PlayerID == null) return;
+            var target = ItemFromButton((Button)sender);
+            if (target?.PlayerID == null) return;
+
+            var (ok, msg) = SocialOperations.SendFriendRequest(_player.PlayerID.Value, target.PlayerID.Value);
+            MessageBox.Show(msg);
+            RefreshFriendsUi();
+        }
+
+        private void AcceptRequest_Click(object sender, RoutedEventArgs e)
+        {
+            if (_player?.PlayerID == null) return;
+            var requester = ItemFromButton((Button)sender);
+            if (requester?.PlayerID == null) return;
+
+            var (ok, msg) = SocialOperations.AcceptFriendRequest(_player.PlayerID.Value, requester.PlayerID.Value);
+            MessageBox.Show(msg);
+            RefreshFriendsUi();
+        }
+
+        private void RejectRequest_Click(object sender, RoutedEventArgs e)
+        {
+            if (_player?.PlayerID == null) return;
+            var requester = ItemFromButton((Button)sender);
+            if (requester?.PlayerID == null) return;
+
+            var (ok, msg) = SocialOperations.RejectFriendRequest(_player.PlayerID.Value, requester.PlayerID.Value);
+            MessageBox.Show(msg);
+            RefreshFriendsUi();
+        }
+
+        private void RemoveFriend_Click(object sender, RoutedEventArgs e)
+        {
+            if (_player?.PlayerID == null) return;
+            var friend = ItemFromButton((Button)sender);
+            if (friend?.PlayerID == null) return;
+
+            var (ok, msg) = SocialOperations.RemoveFriend(_player.PlayerID.Value, friend.PlayerID.Value);
+            MessageBox.Show(msg);
+            RefreshFriendsUi();
         }
     }
 }

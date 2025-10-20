@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\FriendService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\UserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -55,6 +60,7 @@
     </Compile>
     <Compile Include="Domain\POCO\PlayerPOCO.cs" />
     <Compile Include="Domain\POCO\UserPOCO.cs" />
+    <Compile Include="Network\SocialOperations.cs" />
     <Compile Include="Network\UserOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\Message.cs" />
@@ -83,6 +89,25 @@
     <None Include="Connected Services\AuthenticationService\item1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\FriendService\CodenamesGame.FriendService.OperationResultSv.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\FriendService\CodenamesGame.FriendService.Player.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\FriendService\FriendService.wsdl" />
+    <None Include="Connected Services\FriendService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\UserService\CodenamesGame.UserService.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -105,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AuthenticationService\" />
+    <WCFMetadataStorage Include="Connected Services\FriendService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +165,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\UserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\FriendService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\FriendService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\FriendService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

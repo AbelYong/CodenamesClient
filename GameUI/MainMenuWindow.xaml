@@ -212,23 +212,75 @@
                         <TextBox x:Name="SearchBox" Grid.Column="0" 
                          Text="{x:Static language:Lang.socialSearchForAFriend}" Style="{StaticResource textBoxCustomFocus}" 
                                  HorizontalAlignment="Left" BorderThickness="0" VerticalContentAlignment="Center" Margin="15,0,0,0"
-                                 GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
+                                 GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" KeyDown="SearchBox_KeyDown"/>
                         <Button Grid.Column="1" Content="❌" Background="Transparent" BorderThickness="0"
                                 Foreground="White" Width="30" Height="30" VerticalContentAlignment="Center"
                                 HorizontalContentAlignment="Center" Margin="0,0,5,0" Click="ClearSearchBox_Click"/>
                     </Grid>
                 </Border>
-                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="20,15,20,20">
-                    <StackPanel x:Name="FriendsListStackPanel">
-                        <Label Content="Feature not currently available" Foreground="White" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" FontSize="18" Margin="0,100,0,0"/>
+                <Grid Grid.Row="2" Margin="20,15,20,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Mis amigos -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="{x:Static language:Lang.globalFriends}" Margin="0,0,0,8" Foreground="White" FontWeight="Bold"/>
+                        <ListView x:Name="FriendsList" Height="360" Background="#2D2D2D" BorderThickness="0"
+              Foreground="White" SelectionMode="Single">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{Binding Username}" Width="150" VerticalAlignment="Center"/>
+                                        <Button Content="{x:Static language:Lang.socialDeleteFriend}" Margin="8,0,0,0" Width="90"
+                    Click="RemoveFriend_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </StackPanel>
-                </ScrollViewer>
+
+                    <!-- Solicitudes entrantes -->
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="{x:Static language:Lang.socialRequests}" Margin="0,0,0,8" Foreground="White" FontWeight="Bold"/>
+                        <ListView x:Name="RequestsList" Height="360" Background="#2D2D2D" BorderThickness="0"
+              Foreground="White" SelectionMode="Single">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{Binding Username}" Width="150" VerticalAlignment="Center"/>
+                                        <Button Content="{x:Static language:Lang.socialAccept}" Width="90" Click="AcceptRequest_Click"/>
+                                        <Button Content="{x:Static language:Lang.socialReject}" Width="90" Margin="8,0,0,0" Click="RejectRequest_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+
+                    <!-- Resultados de búsqueda -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="{x:Static language:Lang.socialSearchResults}" Margin="0,0,0,8" Foreground="White" FontWeight="Bold"/>
+                        <ListView x:Name="SearchResultsList" Height="360" Background="#2D2D2D" BorderThickness="0"
+              Foreground="White" SelectionMode="Single">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{Binding Username}" Width="150" VerticalAlignment="Center"/>
+                                        <Button Content="{x:Static language:Lang.socialAddFriend}" Width="110" Click="SendRequest_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </Grid>
+
                 <Button Grid.Row="3" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
                         Width="180" Height="40" HorizontalAlignment="Left" Margin="20,0,0,20" Click="HideFriends_Click"/>
             </Grid>
         </Grid>
-
+        
         <!-- ScoreboardsGrid -->
         <Grid x:Name="ScoreboardsGrid" Width="700" Height="600" Background="#272727" HorizontalAlignment="Center"
               VerticalAlignment="Center" Visibility="Collapsed">

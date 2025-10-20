@@ -799,11 +799,65 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Accept.
+        /// </summary>
+        public static string socialAccept {
+            get {
+                return ResourceManager.GetString("socialAccept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Add friend.
+        /// </summary>
+        public static string socialAddFriend {
+            get {
+                return ResourceManager.GetString("socialAddFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Delete friend.
+        /// </summary>
+        public static string socialDeleteFriend {
+            get {
+                return ResourceManager.GetString("socialDeleteFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Reject.
+        /// </summary>
+        public static string socialReject {
+            get {
+                return ResourceManager.GetString("socialReject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Requests.
+        /// </summary>
+        public static string socialRequests {
+            get {
+                return ResourceManager.GetString("socialRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Search for a friend.
         /// </summary>
         public static string socialSearchForAFriend {
             get {
                 return ResourceManager.GetString("socialSearchForAFriend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Search results.
+        /// </summary>
+        public static string socialSearchResults {
+            get {
+                return ResourceManager.GetString("socialSearchResults", resourceCulture);
             }
         }
         

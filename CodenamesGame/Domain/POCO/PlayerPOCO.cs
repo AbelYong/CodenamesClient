@@ -5,6 +5,7 @@ using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using FriendPlayer = CodenamesGame.FriendService.Player;
 
 namespace CodenamesGame.Domain.POCO
 {
@@ -65,6 +66,17 @@ namespace CodenamesGame.Domain.POCO
             svPlayer.DiscordUsername = player.FacebookUsername;
             svPlayer.User = UserPOCO.AssembleUserSvUser(player.User);
             return svPlayer;
+        }
+        public static PlayerPOCO AssemblePlayer(FriendPlayer p)
+        {
+            if (p == null) return null;
+            return new PlayerPOCO
+            {
+                PlayerID = p.PlayerID,
+                Username = p.Username,
+                Name = p.Name,
+                LastName = p.LastName
+            };
         }
     }
 }
