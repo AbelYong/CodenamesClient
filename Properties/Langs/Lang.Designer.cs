@@ -223,6 +223,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Rules.
+        /// </summary>
+        public static string lobbyRules {
+            get {
+                return ResourceManager.GetString("lobbyRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a We&apos;ve sent a 6-digit code to:.
         /// </summary>
         public static string loginCode6DigitsSent {
@@ -381,6 +390,42 @@ namespace CodenamesClient.Properties.Langs {
         public static string mainMenuQuit {
             get {
                 return ResourceManager.GetString("mainMenuQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Bystander tokens.
+        /// </summary>
+        public static string matchBystanderTokens {
+            get {
+                return ResourceManager.GetString("matchBystanderTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Party.
+        /// </summary>
+        public static string matchParty {
+            get {
+                return ResourceManager.GetString("matchParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Timer tokens.
+        /// </summary>
+        public static string matchTimerTokens {
+            get {
+                return ResourceManager.GetString("matchTimerTokens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Turn timer.
+        /// </summary>
+        public static string matchTurnTimer {
+            get {
+                return ResourceManager.GetString("matchTurnTimer", resourceCulture);
             }
         }
         

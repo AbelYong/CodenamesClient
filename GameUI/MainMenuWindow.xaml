@@ -88,8 +88,9 @@
     </UserControl.Resources>
 
     <Grid>
+        <ContentControl x:Name="CurrentContent" />
         <!-- Main menu -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0">
+        <StackPanel x:Name="stackPanelMainMenu" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Codenames:" HorizontalAlignment="Left" Foreground="White" FontFamily="Consolas" FontSize="72" />
@@ -136,11 +137,11 @@
 
                 <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
                     <Button Content="{x:Static language:Lang.gamemodeNormalGame}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60" 
-                            FontSize="24" Margin="10" Click="GameMode_Button_Click"/>
+                            FontSize="24" Margin="10" Click="NormalGameMode_Click"/>
                     <Button Content="{x:Static language:Lang.gamemodeCustomGame}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60"
-                            FontSize="24" Margin="10" Click="GameMode_Button_Click"/>
+                            FontSize="24" Margin="10" Click="CustomGameMode_Click"/>
                     <Button Content="{x:Static language:Lang.gamemodeCounterintelligenceMode}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60" 
-                            FontSize="24" Margin="10" Click="GameMode_Button_Click"/>
+                            FontSize="24" Margin="10" Click="CounterintelligenceMode_Click"/>
                 </StackPanel>
 
                 <Button Grid.Row="2" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" 

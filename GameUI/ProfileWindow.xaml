@@ -49,5 +49,36 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
+        <Grid x:Name="gridProfilePictures" Visibility="Collapsed" Background="#272727" Margin="50,50,50,50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Grid.Column="0" Click="Click_btnProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="0,10,0,0" Height="50" Width="88" BorderBrush="#00707070">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/GameUI/Agents/agent1.png"/>
+                </Button.Background>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="1" Click="Click_btnProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="0,10,0,0" Height="50" Width="88" BorderBrush="#00707070">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/GameUI/Agents/agent2.png"/>
+                </Button.Background>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="2" Click="Click_btnProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="0,10,0,0" Height="50" Width="88" BorderBrush="#00707070">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/GameUI/Agents/agent3.png"/>
+                </Button.Background>
+            </Button>
+        </Grid>
     </Grid>
 </Window>

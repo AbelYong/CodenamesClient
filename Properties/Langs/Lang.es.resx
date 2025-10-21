@@ -393,4 +393,19 @@
   <data name="socialAddFriend" xml:space="preserve">
     <value>Agregar amigo</value>
   </data>
+  <data name="matchTimerTokens" xml:space="preserve">
+    <value>Fichas de tiempo</value>
+  </data>
+  <data name="matchBystanderTokens" xml:space="preserve">
+    <value>Fichas de civiles</value>
+  </data>
+  <data name="matchTurnTimer" xml:space="preserve">
+    <value>Tiempo por turno</value>
+  </data>
+  <data name="lobbyRules" xml:space="preserve">
+    <value>Reglas</value>
+  </data>
+  <data name="matchParty" xml:space="preserve">
+    <value>Grupo</value>
+  </data>
 </root>

@@ -4,16 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodenamesClient.GameUI"
+        xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
+        xmlns:viewmodels="clr-namespace:CodenamesClient.GameUI.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:LobbyViewModel}"
         mc:Ignorable="d"
         Height="640" Width="1024" Background="#FF1D1D1D">
-    <Grid>
-        <DockPanel LastChildFill="False">
-            <StackPanel DockPanel.Dock="Left" Margin="30,30,0,30">
-                <Label Content="Gamemode" Style="{StaticResource title}"
-                       FontSize="72" FontWeight="Normal" Margin="0,0,0,30"/>
-                <Label Content="Rules" Style="{StaticResource subtitle}"
-                       HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="White" Width="320"/>
-                <Grid Margin="0,0,0,200">
+    <Grid Margin="30,30,30,30">
+        <DockPanel LastChildFill="True">
+            <StackPanel DockPanel.Dock="Left">
+                <Label Content="{Binding GamemodeName}" Style="{StaticResource title}"
+                       FontSize="28" FontWeight="Normal"/>
+                <Label Content="{x:Static language:Lang.lobbyRules}" Style="{StaticResource subtitle}"
+                       HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="White"/>
+                <Grid Margin="0,0,0,100">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -23,34 +25,33 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Content="Timer tokens: "
+                    <Label Grid.Row="0" Grid.Column="0" Content="{x:Static language:Lang.matchTimerTokens}"
                            Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="Bystander tokens: " 
+                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}" 
                            Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="Turn timer: " 
+                    <Label Grid.Row="2" Grid.Column="0" Content="{x:Static language:Lang.matchTurnTimer}" 
                            Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="0"
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TimerTokens}"
                              Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0" />
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="0" 
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding BystanderTokens}" 
                              Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0" />
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="0" 
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TurnTimer}" 
                              Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0" />
                 </Grid>
-                <Button Content="Play"
+                <Button Content="{x:Static language:Lang.globalPlay}"
                         Style="{StaticResource buttonCustomFocus}" Height="76" FontSize="48"/>
             </StackPanel>
-            <StackPanel DockPanel.Dock="Right" Margin="0,30,30,30">
-                <Label Content="Party"
+            <StackPanel DockPanel.Dock="Right">
+                <Label Content="{x:Static language:Lang.matchParty}"
                        Style="{StaticResource title}" />
                 <Label Content="Player" Height="40" 
                        Style="{StaticResource subtitle}" Background="White" BorderBrush="White" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" Width="110"/>
                 <Button Content="Friend"
-                        Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
+                        Visibility="Collapsed" Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
                 <Button Content="Invite+" 
                         Style="{StaticResource buttonCustomFocus}" Height="40" />
             </StackPanel>
-            <Image Source="/Assets/GameUI/spyMap.png" Stretch="Fill" Margin="30,150,30,55"/>
-
+            <Image Source="/Assets/GameUI/agent.png" Height="375"/>
         </DockPanel>
     </Grid>
 </UserControl>

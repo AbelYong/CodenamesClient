@@ -134,11 +134,26 @@ namespace CodenamesClient.GameUI
             slideOutAnimation.Begin();
         }
 
-        private void GameMode_Button_Click(object sender, RoutedEventArgs e)
+        private void NormalGameMode_Click(object sender, RoutedEventArgs e)
         {
-            Button clickedButton = (Button)sender;
-            string gameMode = clickedButton.Content.ToString();
-            MessageBox.Show($"Starting game in {gameMode} mode!");
+            Gamemode mode = new Gamemode(Gamemode.GamemodeName.NORMAL);
+            GameModeGrid.Visibility = Visibility.Collapsed;
+            stackPanelMainMenu.Visibility = Visibility.Collapsed;
+            CurrentContent.Content = new LobbyWindow(mode);
+        }
+        private void CustomGameMode_Click(object sender, RoutedEventArgs e)
+        {
+            Gamemode mode = new Gamemode(Gamemode.GamemodeName.CUSTOM);
+            GameModeGrid.Visibility = Visibility.Collapsed;
+            stackPanelMainMenu.Visibility = Visibility.Collapsed;
+            CurrentContent.Content = new LobbyWindow(mode);
+        }
+        private void CounterintelligenceMode_Click(object sender, RoutedEventArgs e)
+        {
+            Gamemode mode = new Gamemode(Gamemode.GamemodeName.COUNTERINTELLIGENCE);
+            GameModeGrid.Visibility = Visibility.Collapsed;
+            stackPanelMainMenu.Visibility = Visibility.Collapsed;
+            CurrentContent.Content = new LobbyWindow(mode);
         }
 
         private void ShowScoreboards_Click(object sender, RoutedEventArgs e)
