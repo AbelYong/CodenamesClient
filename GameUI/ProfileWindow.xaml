@@ -30,7 +30,7 @@
         </Storyboard>
     </Window.Resources>
     <Grid>
-        <StackPanel>
+        <StackPanel x:Name="stackPanelProfileForm">
             <Label Content="{x:Static language:Lang.profileProfile}" Style="{StaticResource title}" />
             <Button x:Name="btnProfilePicture" Click="Click_btnProfilePicture" Content="" Style="{StaticResource imageButtonFocus}" Width="75" Height="75">
                 <Button.Background>
@@ -51,7 +51,7 @@
                     <Label Content="{x:Static language:Lang.profileLastName}" Style="{StaticResource normal}" />
                     <TextBox Name="tBxLastName" Text="" 
                              Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
-                    <Button Click="Click_btnBack" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,20,0,0" />
+                    <Button Click="Click_btnBack" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="200">
                     <Label Content="Facebook" Style="{StaticResource normal}" />
@@ -66,13 +66,13 @@
                     <Label Content="Address" Style="{StaticResource normal}" />
                     <TextBox Name="tBxAddress"  Text="Not implemented yet" 
                              Style="{StaticResource textBoxCustomFocus}" FontSize="16" IsEnabled="False" />
-                    <Button Click="Click_btnSave" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,20,0,0" />
+                    <Button Click="Click_btnSave" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-        <Grid x:Name="gridProfilePictures" Visibility="Collapsed" Background="#272727" Margin="40,50,40,50">
+        <Grid x:Name="gridProfilePictures" Visibility="Collapsed" Background="#272727" Margin="30,30,30,30">
             <Grid.RenderTransform>
-                <TranslateTransform Y="640"/>
+                <TranslateTransform Y="0"/>
             </Grid.RenderTransform>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

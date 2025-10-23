@@ -58,6 +58,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Domain\POCO\Gamemode.cs" />
     <Compile Include="Domain\POCO\PlayerPOCO.cs" />
     <Compile Include="Domain\POCO\UserPOCO.cs" />
     <Compile Include="Network\SocialOperations.cs" />

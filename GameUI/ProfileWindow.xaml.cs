@@ -62,6 +62,7 @@ namespace CodenamesClient.GameUI
 
         private void Click_btnProfilePicture(object sender, RoutedEventArgs e)
         {
+            stackPanelProfileForm.Visibility = Visibility.Hidden;
             var slideInAnimation = (Storyboard)FindResource("SlideInAnimation");
             gridProfilePictures.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
@@ -84,6 +85,7 @@ namespace CodenamesClient.GameUI
             slideOutAnimation.Completed += (s, ev) =>
             {
                 gridProfilePictures.Visibility = Visibility.Collapsed;
+                stackPanelProfileForm.Visibility = Visibility.Visible;
             };
             slideOutAnimation.Begin();
         }

@@ -56,13 +56,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameUI\LobbyWindow.xaml.cs">
+      <DependentUpon>LobbyWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameUI\ProfileWindow.xaml.cs">
       <DependentUpon>ProfileWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameUI\ViewModels\LobbyViewModel.cs" />
     <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />
-    <Compile Include="Validation\LoginValidation.cs" />
-    <Compile Include="Validation\ProfileValidation.cs" />
-    <Compile Include="Validation\SignInValidation.cs" />
+    <Compile Include="Operation\PictureHandler.cs" />
+    <Compile Include="Operation\Validation\LoginValidation.cs" />
+    <Compile Include="Operation\Validation\ProfileValidation.cs" />
+    <Compile Include="Operation\Validation\SignInValidation.cs" />
+    <Page Include="GameUI\LobbyWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GameUI\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,16 +146,39 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Assets\BoardUI\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Assets\BoardUI\Agents\agent10.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent11.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent12.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent13.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent14.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent15.png" />
+    <Resource Include="Assets\BoardUI\Neutrals\neutral06.png" />
+    <Resource Include="Assets\BoardUI\Neutrals\neutral07.png" />
     <Resource Include="Assets\GameUI\mexicoFlag.png" />
     <Resource Include="Assets\GameUI\usFlag.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\GameUI\spyMap.png" />
-    <Resource Include="Assets\GameUI\Agents\placeholder_agent1.png" />
+    <Resource Include="Assets\GameUI\agent.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent01.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent02.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent03.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent04.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent05.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent06.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent07.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent08.png" />
+    <Resource Include="Assets\BoardUI\Agents\agent09.png" />
+    <Resource Include="Assets\BoardUI\Assassins\assassin01.png" />
+    <Resource Include="Assets\BoardUI\Assassins\assassin02.png" />
+    <Resource Include="Assets\BoardUI\Assassins\assassin03.png" />
+    <Resource Include="Assets\BoardUI\Neutrals\neutral01.png" />
+    <Resource Include="Assets\BoardUI\Neutrals\neutral02.png" />
+    <Resource Include="Assets\BoardUI\Neutrals\neutral03.png" />
+    <Resource Include="Assets\BoardUI\Neutrals\neutral04.png" />
+    <Resource Include="Assets\BoardUI\Neutrals\neutral05.png" />
     <Content Include="Main Theme %28NOT FINAL%29.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
