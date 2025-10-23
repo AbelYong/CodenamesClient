@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CodenamesClient.Validation
 {
-    public class LoginValidation
+    public static class LoginValidation
     {
         public static String ValidateUsername(string username)
         {

@@ -408,4 +408,7 @@
   <data name="matchParty" xml:space="preserve">
     <value>Grupo</value>
   </data>
+  <data name="globalProfilePictureError" xml:space="preserve">
+    <value>No pudimos cargar tu foto de perfil. es posible que tu instalación este dañada</value>
+  </data>
 </root>

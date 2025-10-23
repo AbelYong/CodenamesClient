@@ -58,13 +58,13 @@ namespace CodenamesClient.GameUI
         private bool ValidateLoginData(string username, string password)
         {
             ClearFields();
-            var uMsg = LoginValidation.ValidateUsername(username);
-            if (uMsg != "OK") lblUsernameErrorMessage.Content = uMsg;
+            string usernameMessage = LoginValidation.ValidateUsername(username);
+            lblUsernameErrorMessage.Content = (usernameMessage.Equals("OK") ? "" : usernameMessage);
 
-            var pMsg = LoginValidation.ValidatePassword(password);
-            if (pMsg != "OK") lblPasswordErrorMessage.Content = pMsg;
+            string passwordMessage = LoginValidation.ValidatePassword(password);
+            lblPasswordErrorMessage.Content = (passwordMessage.Equals("OK") ? "" :  passwordMessage);
 
-            return uMsg == "OK" && pMsg == "OK";
+            return usernameMessage.Equals("OK") && passwordMessage.Equals("OK");
         }
 
         private void ClearFields()

@@ -42,8 +42,6 @@ namespace CodenamesClient.GameUI
             {
                 MessageBox.Show(Lang.mainMenuGuestCannotAccess);
             }
-            
-
         }
         private void ShowSettings_Click(object sender, RoutedEventArgs e)
         {

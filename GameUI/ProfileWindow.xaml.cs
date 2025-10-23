@@ -1,21 +1,13 @@
-﻿using CodenamesClient.Properties.Langs;
-using CodenamesGame.AuthenticationService;
+﻿using CodenamesClient.Operation;
+using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
 using CodenamesGame.UserService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 
 namespace CodenamesClient.GameUI
 {
@@ -25,12 +17,13 @@ namespace CodenamesClient.GameUI
     public partial class ProfileWindow : Window
     {
         private PlayerPOCO _player;
-        private int _avatarID;
+        private int _tempAvatarID;
 
         public ProfileWindow(PlayerPOCO player)
         {
             InitializeComponent();
             _player = player;
+            _tempAvatarID = player.AvatarID;
             FillProfileFields(player);
         }
 
@@ -62,14 +55,42 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        public void Click_btnProfilePicture(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Not implemented yet");
-        }
-
         public void Click_btnBack(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
+        }
+
+        private void Click_btnProfilePicture(object sender, RoutedEventArgs e)
+        {
+            var slideInAnimation = (Storyboard)FindResource("SlideInAnimation");
+            gridProfilePictures.Visibility = Visibility.Visible;
+            slideInAnimation.Begin();
+        }
+
+        private void Click_btnSelectProfilePicture(object sender, RoutedEventArgs e)
+        {
+            const int NUM_ROWS = 5;
+            if (sender is Button clickedButton)
+            {
+                int row = Grid.GetRow(clickedButton);
+                int column = Grid.GetColumn(clickedButton);
+
+                int imageIndex = (row * NUM_ROWS) + (column);
+
+                _tempAvatarID = imageIndex;
+                SetProfilePicture(_tempAvatarID);
+            }
+            var slideOutAnimation = (Storyboard)FindResource("SlideOutAnimation");
+            slideOutAnimation.Completed += (s, ev) =>
+            {
+                gridProfilePictures.Visibility = Visibility.Collapsed;
+            };
+            slideOutAnimation.Begin();
+        }
+
+        private void SetProfilePicture(int avatarID)
+        {
+            btnProfilePicture.Background = PictureHandler.GetImage(avatarID);
         }
 
         private void FillProfileFields(PlayerPOCO player)
@@ -84,7 +105,7 @@ namespace CodenamesClient.GameUI
                 tBxInstagram.Text = player.InstagramUsername;
                 tBxDiscord.Text = player.DiscordUsername;
                 //TODO address handling
-                //TODO profile image handling
+                SetProfilePicture(player.AvatarID);
             }
         }
 
@@ -96,6 +117,7 @@ namespace CodenamesClient.GameUI
 
             updatedPlayer.PlayerID = _player.PlayerID;
             updatedPlayer.Username = tBxUsername.Text;
+            updatedPlayer.AvatarID = _tempAvatarID;
             updatedPlayer.Name = (!String.IsNullOrEmpty(tBxName.Text) ? tBxName.Text : null);
             updatedPlayer.LastName = (!String.IsNullOrEmpty(tBxLastName.Text) ? tBxLastName.Text : null);
             updatedPlayer.FacebookUsername = (!String.IsNullOrEmpty(tBxFacebook.Text) ? tBxFacebook.Text : null);

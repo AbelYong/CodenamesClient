@@ -151,6 +151,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t load your profile picture, is possible your game installation is corrupted.
+        /// </summary>
+        public static string globalProfilePictureError {
+            get {
+                return ResourceManager.GetString("globalProfilePictureError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Save.
         /// </summary>
         public static string globalSave {

@@ -408,4 +408,7 @@
   <data name="matchParty" xml:space="preserve">
     <value>Party</value>
   </data>
+  <data name="globalProfilePictureError" xml:space="preserve">
+    <value>We couldn't load your profile picture, is possible your game installation is corrupted</value>
+  </data>
 </root>
