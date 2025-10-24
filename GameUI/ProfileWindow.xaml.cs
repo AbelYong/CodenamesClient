@@ -17,10 +17,10 @@ namespace CodenamesClient.GameUI
     /// </summary>
     public partial class ProfileWindow : Window
     {
-        private PlayerPOCO _player;
+        private PlayerDM _player;
         private int _tempAvatarID;
 
-        public ProfileWindow(PlayerPOCO player)
+        public ProfileWindow(PlayerDM player)
         {
             InitializeComponent();
             _player = player;
@@ -62,8 +62,8 @@ namespace CodenamesClient.GameUI
 
         private void SaveProfile()
         {
-            PlayerPOCO updatedPlayer = PrepareUpdatedPlayer();
-            UpdateResult result = UserOperations.UpdateProfile(updatedPlayer);
+            PlayerDM updatedPlayer = PrepareUpdatedPlayer();
+            UpdateResult result = UserOperation.UpdateProfile(updatedPlayer);
             MessageBox.Show(result.Message);
             this.DialogResult = result.Success;
         }
@@ -79,7 +79,7 @@ namespace CodenamesClient.GameUI
 
         private bool SendVerificationCode(string email)
         {
-            RequestResult result = EmailOperations.SendVerificationEmail(email);
+            RequestResult result = EmailOperation.SendVerificationEmail(email);
             if (!result.IsSuccess)
             {
                 MessageBox.Show(result.Message);
@@ -91,7 +91,7 @@ namespace CodenamesClient.GameUI
         {
             string newEmail = tBxEmail.Text;
             string code = tbxVerifyCode.Text;
-            RequestResult result = EmailOperations.SendVerificationCode(newEmail, code);
+            RequestResult result = EmailOperation.SendVerificationCode(newEmail, code);
             if (result.IsSuccess)
             {
                 SaveProfile();
@@ -166,7 +166,7 @@ namespace CodenamesClient.GameUI
             btnProfilePicture.Background = PictureHandler.GetImage(avatarID);
         }
 
-        private void FillProfileFields(PlayerPOCO player)
+        private void FillProfileFields(PlayerDM player)
         {
             if (player != null)
             {
@@ -182,9 +182,9 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        private PlayerPOCO PrepareUpdatedPlayer()
+        private PlayerDM PrepareUpdatedPlayer()
         {
-            PlayerPOCO updatedPlayer = new PlayerPOCO();
+            PlayerDM updatedPlayer = new PlayerDM();
             updatedPlayer.User.UserID = _player.User.UserID;
             updatedPlayer.User.Email = tBxEmail.Text;
 

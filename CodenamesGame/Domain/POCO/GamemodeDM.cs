@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace CodenamesGame.Domain.POCO
 {
-    public class Gamemode
+    public class GamemodeDM
     {
         public int timerTokens {  get; set; }
         public int bystanderTokens { get; set; }
         public int turnTimer {  get; set; }
         public GamemodeName name { get; set; }
 
-        public Gamemode(GamemodeName name)
+        public GamemodeDM(GamemodeName name)
         {
             this.name = name;
         }

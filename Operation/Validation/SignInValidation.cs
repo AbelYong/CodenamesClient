@@ -71,7 +71,7 @@ namespace CodenamesClient.Validation
             if (!IsLettersAndSpacesOnly(name))
                 yield return Lang.signInFirstNameOnlyLettersSpacesAccents;
 
-            if (name.Length > PlayerPOCO.NAME_MAX_LENGTH)
+            if (name.Length > PlayerDM.NAME_MAX_LENGTH)
                 yield return Lang.signInFirstNameMaxLength;
         }
 
@@ -83,7 +83,7 @@ namespace CodenamesClient.Validation
             if (!IsLettersAndSpacesOnly(lastName))
                 yield return Lang.signInLastNameOnlyLettersSpacesAccents;
 
-            if (lastName.Length > PlayerPOCO.LASTNAME_MAX_LENGTH)
+            if (lastName.Length > PlayerDM.LASTNAME_MAX_LENGTH)
                 yield return Lang.signInLastNameMaxLength;
         }
 

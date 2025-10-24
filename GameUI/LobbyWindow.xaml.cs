@@ -19,11 +19,11 @@ namespace CodenamesClient.GameUI
     public partial class LobbyWindow : UserControl
     {
         private LobbyViewModel _viewModel;
-        public LobbyWindow(Gamemode gamemode)
+        public LobbyWindow(GamemodeDM gamemode)
         {
             InitializeComponent();
             this._viewModel = new LobbyViewModel(gamemode);
-            this.DataContext = this._viewModel;
+            this.DataContext = _viewModel;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace CodenamesGame.Util
 {
     public class Message
     {
-        public bool IsError { get; set; }
+        public bool IsSuccess { get; set; }
         public string Content { get; set; }
 
         public Message()
@@ -17,7 +17,7 @@ namespace CodenamesGame.Util
         }
         public Message(bool isError, string content)
         {
-            IsError = isError;
+            IsSuccess = isError;
             Content = content;
         }
     }

@@ -9,7 +9,7 @@ using FriendPlayer = CodenamesGame.FriendService.Player;
 
 namespace CodenamesGame.Domain.POCO
 {
-    public class PlayerPOCO
+    public class PlayerDM
     {
         public const int USERNAME_MAX_LENGTH = 20;
         public const int NAME_MAX_LENGTH = 20;
@@ -23,15 +23,15 @@ namespace CodenamesGame.Domain.POCO
         public string FacebookUsername { get; set; }
         public string InstagramUsername { get; set; }
         public string DiscordUsername { get; set; }
-        public UserPOCO User { get; set; } = new UserPOCO();
+        public UserDM User { get; set; } = new UserDM();
 
-        public PlayerPOCO()
+        public PlayerDM()
         {
 
         }
-        public static PlayerPOCO AssemblePlayer(UserService.Player svPlayer)
+        public static PlayerDM AssemblePlayer(UserService.Player svPlayer)
         {
-            PlayerPOCO player = new PlayerPOCO();
+            PlayerDM player = new PlayerDM();
             player.PlayerID = svPlayer.PlayerID;
             player.Username = svPlayer.Username;
             player.AvatarID = svPlayer.AvatarID;
@@ -40,11 +40,11 @@ namespace CodenamesGame.Domain.POCO
             player.FacebookUsername = svPlayer.FacebookUsername;
             player.InstagramUsername = svPlayer.InstagramUsername;
             player.DiscordUsername = svPlayer.DiscordUsername;
-            player.User = UserPOCO.AssembleUser(svPlayer.User);
+            player.User = UserDM.AssembleUser(svPlayer.User);
             return player;
         }
 
-        public static AuthenticationService.Player AssembleAuthSvPlayer(PlayerPOCO player)
+        public static AuthenticationService.Player AssembleAuthSvPlayer(PlayerDM player)
         {
             AuthenticationService.Player svPlayer = new AuthenticationService.Player();
             svPlayer.Username = player.Username;
@@ -53,7 +53,7 @@ namespace CodenamesGame.Domain.POCO
             return svPlayer;
         }
 
-        public static UserService.Player AssembleUserSvPlayer(PlayerPOCO player)
+        public static UserService.Player AssembleUserSvPlayer(PlayerDM player)
         {
             UserService.Player svPlayer = new UserService.Player();
             svPlayer.PlayerID = player.PlayerID;
@@ -64,13 +64,13 @@ namespace CodenamesGame.Domain.POCO
             svPlayer.FacebookUsername = player.FacebookUsername;
             svPlayer.InstagramUsername  = player.InstagramUsername;
             svPlayer.DiscordUsername = player.DiscordUsername;
-            svPlayer.User = UserPOCO.AssembleUserSvUser(player.User);
+            svPlayer.User = UserDM.AssembleUserSvUser(player.User);
             return svPlayer;
         }
-        public static PlayerPOCO AssemblePlayer(FriendPlayer p)
+        public static PlayerDM AssemblePlayer(FriendPlayer p)
         {
             if (p == null) return null;
-            return new PlayerPOCO
+            return new PlayerDM
             {
                 PlayerID = p.PlayerID,
                 Username = p.Username,

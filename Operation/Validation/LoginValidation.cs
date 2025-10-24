@@ -16,7 +16,7 @@ namespace CodenamesClient.Validation
             {
                 return Lang.loginUsernameRequired;
             }
-            if (username.Length > PlayerPOCO.USERNAME_MAX_LENGTH)
+            if (username.Length > PlayerDM.USERNAME_MAX_LENGTH)
             {
                 return Lang.loginUsernameTooLong;
             }
@@ -29,7 +29,7 @@ namespace CodenamesClient.Validation
             {
                 return Lang.loginPasswordRequired;
             }
-            if (password.Length > UserPOCO.PASSWORD_MAX_LENGTH)
+            if (password.Length > UserDM.PASSWORD_MAX_LENGTH)
             {
                 return Lang.loginPasswordTooLong;
             }

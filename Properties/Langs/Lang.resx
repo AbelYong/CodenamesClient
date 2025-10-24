@@ -411,4 +411,7 @@
   <data name="resetCodeSendFailed" xml:space="preserve">
     <value>Could not send code</value>
   </data>
+  <data name="globalConnectionLost" xml:space="preserve">
+    <value>We couldn't connect you to the Codenames: Duet Server. Please try again later</value>
+  </data>
 </root>

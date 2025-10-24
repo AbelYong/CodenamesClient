@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodenamesGame.Domain.POCO
 {
-    public class UserPOCO
+    public class UserDM
     {
         public const int EMAIL_MAX_LENGTH = 30;
         public const int PASSWORD_MAX_LENGTH = 16;
@@ -15,21 +15,21 @@ namespace CodenamesGame.Domain.POCO
         public string Email { get; set; }
         public string Password {  get; set; }
 
-        public UserPOCO()
+        public UserDM()
         {
 
         }
 
-        public static UserPOCO AssembleUser(UserService.User svUser)
+        public static UserDM AssembleUser(UserService.User svUser)
         {
-            UserPOCO user = new UserPOCO();
+            UserDM user = new UserDM();
             user.UserID = svUser.UserID;
             user.Email = svUser.Email;
             user.Password = "";
             return user;
         }
 
-        public static AuthenticationService.User AssembleAuthSvUser(UserPOCO user)
+        public static AuthenticationService.User AssembleAuthSvUser(UserDM user)
         {
             AuthenticationService.User svUser = new AuthenticationService.User();
             svUser.Email = user.Email;
@@ -37,7 +37,7 @@ namespace CodenamesGame.Domain.POCO
             return svUser;
         }
 
-        public static UserService.User AssembleUserSvUser(UserPOCO user)
+        public static UserService.User AssembleUserSvUser(UserDM user)
         {
             UserService.User svUser = new UserService.User();
             svUser.UserID = (Guid) user.UserID;

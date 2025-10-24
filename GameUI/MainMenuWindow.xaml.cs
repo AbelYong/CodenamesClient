@@ -14,10 +14,10 @@ namespace CodenamesClient.GameUI
     public partial class MainMenuWindow : UserControl
     {
         private MediaPlayer _mediaPlayer;
-        private PlayerPOCO _player;
-        private List<PlayerPOCO> _friends = new List<PlayerPOCO>();
-        private List<PlayerPOCO> _requests = new List<PlayerPOCO>();
-        private List<PlayerPOCO> _search = new List<PlayerPOCO>();
+        private PlayerDM _player;
+        private List<PlayerDM> _friends = new List<PlayerDM>();
+        private List<PlayerDM> _requests = new List<PlayerDM>();
+        private List<PlayerDM> _search = new List<PlayerDM>();
 
         public MainMenuWindow()
         {
@@ -134,21 +134,21 @@ namespace CodenamesClient.GameUI
 
         private void NormalGameMode_Click(object sender, RoutedEventArgs e)
         {
-            Gamemode mode = new Gamemode(Gamemode.GamemodeName.NORMAL);
+            GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.NORMAL);
             GameModeGrid.Visibility = Visibility.Collapsed;
             stackPanelMainMenu.Visibility = Visibility.Collapsed;
             CurrentContent.Content = new LobbyWindow(mode);
         }
         private void CustomGameMode_Click(object sender, RoutedEventArgs e)
         {
-            Gamemode mode = new Gamemode(Gamemode.GamemodeName.CUSTOM);
+            GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.CUSTOM);
             GameModeGrid.Visibility = Visibility.Collapsed;
             stackPanelMainMenu.Visibility = Visibility.Collapsed;
             CurrentContent.Content = new LobbyWindow(mode);
         }
         private void CounterintelligenceMode_Click(object sender, RoutedEventArgs e)
         {
-            Gamemode mode = new Gamemode(Gamemode.GamemodeName.COUNTERINTELLIGENCE);
+            GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.COUNTERINTELLIGENCE);
             GameModeGrid.Visibility = Visibility.Collapsed;
             stackPanelMainMenu.Visibility = Visibility.Collapsed;
             CurrentContent.Content = new LobbyWindow(mode);
@@ -176,7 +176,7 @@ namespace CodenamesClient.GameUI
             if (userID != null)
             {
                 Guid auxUserID = (Guid) userID;
-                PlayerPOCO player = UserOperations.GetPlayer(auxUserID);
+                PlayerDM player = UserOperation.GetPlayer(auxUserID);
                 this._player = player;
                 btnPlayer.Content = player.Username;
             }
@@ -191,14 +191,14 @@ namespace CodenamesClient.GameUI
             if (_player?.PlayerID == null) return;
             var me = _player.PlayerID.Value;
 
-            _friends = SocialOperations.GetFriends(me);
-            _requests = SocialOperations.GetIncomingRequests(me);
+            _friends = SocialOperation.GetFriends(me);
+            _requests = SocialOperation.GetIncomingRequests(me);
 
             FriendsList.ItemsSource = _friends;
             RequestsList.ItemsSource = _requests;
         }
 
-        private static PlayerPOCO ItemFromButton(Button btn) => btn?.DataContext as PlayerPOCO;
+        private static PlayerDM ItemFromButton(Button btn) => btn?.DataContext as PlayerDM;
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -209,7 +209,7 @@ namespace CodenamesClient.GameUI
             if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend) return;
 
             var me = _player.PlayerID.Value;
-            _search = SocialOperations.SearchPlayers(me, q, 20);
+            _search = SocialOperation.SearchPlayers(me, q, 20);
             SearchResultsList.ItemsSource = _search;
         }
 
@@ -219,7 +219,7 @@ namespace CodenamesClient.GameUI
             var target = ItemFromButton((Button)sender);
             if (target?.PlayerID == null) return;
 
-            var (ok, msg) = SocialOperations.SendFriendRequest(_player.PlayerID.Value, target.PlayerID.Value);
+            var (ok, msg) = SocialOperation.SendFriendRequest(_player.PlayerID.Value, target.PlayerID.Value);
             MessageBox.Show(msg);
             RefreshFriendsUi();
         }
@@ -230,7 +230,7 @@ namespace CodenamesClient.GameUI
             var requester = ItemFromButton((Button)sender);
             if (requester?.PlayerID == null) return;
 
-            var (ok, msg) = SocialOperations.AcceptFriendRequest(_player.PlayerID.Value, requester.PlayerID.Value);
+            var (ok, msg) = SocialOperation.AcceptFriendRequest(_player.PlayerID.Value, requester.PlayerID.Value);
             MessageBox.Show(msg);
             RefreshFriendsUi();
         }
@@ -241,7 +241,7 @@ namespace CodenamesClient.GameUI
             var requester = ItemFromButton((Button)sender);
             if (requester?.PlayerID == null) return;
 
-            var (ok, msg) = SocialOperations.RejectFriendRequest(_player.PlayerID.Value, requester.PlayerID.Value);
+            var (ok, msg) = SocialOperation.RejectFriendRequest(_player.PlayerID.Value, requester.PlayerID.Value);
             MessageBox.Show(msg);
             RefreshFriendsUi();
         }
@@ -252,7 +252,7 @@ namespace CodenamesClient.GameUI
             var friend = ItemFromButton((Button)sender);
             if (friend?.PlayerID == null) return;
 
-            var (ok, msg) = SocialOperations.RemoveFriend(_player.PlayerID.Value, friend.PlayerID.Value);
+            var (ok, msg) = SocialOperation.RemoveFriend(_player.PlayerID.Value, friend.PlayerID.Value);
             MessageBox.Show(msg);
             RefreshFriendsUi();
         }

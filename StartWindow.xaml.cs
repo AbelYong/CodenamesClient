@@ -33,7 +33,7 @@ namespace CodenamesClient
         {
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
-            this.Close();
+            Close();
         }
 
         private static void Restart()

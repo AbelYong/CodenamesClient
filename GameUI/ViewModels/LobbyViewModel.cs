@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CodenamesClient.Properties.Langs;
-using System.Windows.Input;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -79,19 +78,19 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public LobbyViewModel(Gamemode gamemode)
+        public LobbyViewModel(GamemodeDM gamemode)
         {
             switch (gamemode.name)
             {
-                case (Gamemode.GamemodeName.NORMAL):
+                case (GamemodeDM.GamemodeName.NORMAL):
                     GamemodeName = Lang.gamemodeNormalGame;
                     LoadDefaultRules();
                     break;
-                case (Gamemode.GamemodeName.CUSTOM):
+                case (GamemodeDM.GamemodeName.CUSTOM):
                     GamemodeName = Lang.gamemodeCustomGame;
                     LoadDefaultRules();
                     break;
-                case (Gamemode.GamemodeName.COUNTERINTELLIGENCE):
+                case (GamemodeDM.GamemodeName.COUNTERINTELLIGENCE):
                     GamemodeName = Lang.gamemodeCounterintelligenceMode;
                     LoadDefaultRules();
                     break;

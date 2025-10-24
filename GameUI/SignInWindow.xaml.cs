@@ -155,7 +155,22 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        private UserPOCO AssembleDmUser() => new UserPOCO { Email = _vm.Email, Password = _vm.Password };
-        private PlayerPOCO AssembleDmPlayer() => new PlayerPOCO { Username = _vm.Username, Name = _vm.FirstName, LastName = _vm.LastName };
+        private UserDM AssembleDmUser() 
+        {
+            return new UserDM
+            { 
+                Email = _vm.Email,
+                Password = _vm.Password
+            };
+        }
+        private PlayerDM AssembleDmPlayer()
+        {
+            return new PlayerDM
+            { 
+                Username = _vm.Username, 
+                Name = _vm.FirstName, 
+                LastName = _vm.LastName 
+            };
+        } 
     }
 }

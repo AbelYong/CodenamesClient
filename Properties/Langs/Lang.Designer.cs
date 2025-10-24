@@ -124,6 +124,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t connect you to the Codenames: Duet Server. Please try again later.
+        /// </summary>
+        public static string globalConnectionLost {
+            get {
+                return ResourceManager.GetString("globalConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Friends.
         /// </summary>
         public static string globalFriends {

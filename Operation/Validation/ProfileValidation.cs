@@ -44,7 +44,7 @@ namespace CodenamesClient.Validation
             if (!IsLettersAndSpacesOnly(name))
                 yield return Lang.signInFirstNameOnlyLettersSpacesAccents;
 
-            if (name.Length > PlayerPOCO.NAME_MAX_LENGTH)
+            if (name.Length > PlayerDM.NAME_MAX_LENGTH)
                 yield return Lang.signInFirstNameMaxLength;
         }
 
@@ -56,28 +56,28 @@ namespace CodenamesClient.Validation
             if (!IsLettersAndSpacesOnly(lastName))
                 yield return Lang.signInLastNameOnlyLettersSpacesAccents;
 
-            if (lastName.Length > PlayerPOCO.LASTNAME_MAX_LENGTH)
+            if (lastName.Length > PlayerDM.LASTNAME_MAX_LENGTH)
                 yield return Lang.signInLastNameMaxLength;
         }
 
         public static IEnumerable<string> ValidateFacebook(string facebook)
         {
             if (!string.IsNullOrWhiteSpace(facebook) &&
-                facebook.Trim().Length > PlayerPOCO.SOCIALMEDIA_MAX_LENGTH)
+                facebook.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
                 yield return Lang.profileSocialNetwork;
         }
 
         public static IEnumerable<string> ValidateInstagram(string instagram)
         {
             if (!string.IsNullOrWhiteSpace(instagram) &&
-                instagram.Trim().Length > PlayerPOCO.SOCIALMEDIA_MAX_LENGTH)
+                instagram.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
                 yield return Lang.profileSocialNetwork;
         }
 
         public static IEnumerable<string> ValidateDiscord(string discord)
         {
             if (!string.IsNullOrWhiteSpace(discord) &&
-                discord.Trim().Length > PlayerPOCO.SOCIALMEDIA_MAX_LENGTH)
+                discord.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
                 yield return Lang.profileSocialNetwork;
         }
 
