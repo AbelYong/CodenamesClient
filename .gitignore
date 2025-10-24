@@ -365,3 +365,4 @@ FodyWeavers.xsd
 
 # Sonarqube generated files
 ./Sonarqube
+/.sonarqube/conf
