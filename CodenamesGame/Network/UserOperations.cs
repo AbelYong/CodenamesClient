@@ -3,27 +3,31 @@ using System;
 using System.ServiceModel;
 using CodenamesGame.AuthenticationService;
 using CodenamesGame.UserService;
+using CodenamesGame.Util;
 
 namespace CodenamesGame.Network
 {
     public static class UserOperations
     {
+        private const string _authenticationEndpointName = "NetTcpBinding_IAuthenticationManager";
+        private const string _userEndpointName = "NetTcpBinding_IUserManager";
+
         public static Guid? Authenticate(string username, string password)
         {
-            var client = new AuthenticationManagerClient("NetTcpBinding_IAuthenticationManager");
+            var client = new AuthenticationManagerClient(_authenticationEndpointName);
             try
             {
                 return client.Login(username, password);
             }
             finally
             {
-                SafeClose(client);
+                NetworkUtil.SafeClose(client);
             }
         }
 
         public static Guid? SignIn(UserPOCO user, PlayerPOCO player)
         {
-            var client = new AuthenticationService.AuthenticationManagerClient("NetTcpBinding_IAuthenticationManager");
+            var client = new AuthenticationManagerClient(_authenticationEndpointName);
             try
             {
                 AuthenticationService.User svUser = UserPOCO.AssembleAuthSvUser(user);
@@ -32,13 +36,13 @@ namespace CodenamesGame.Network
             }
             finally
             {
-                SafeClose(client);
+                NetworkUtil.SafeClose(client);
             }
         }
 
         public static PlayerPOCO GetPlayer(Guid userID)
         {
-            var client = new UserService.UserManagerClient("NetTcpBinding_IUserManager");
+            var client = new UserManagerClient(_userEndpointName);
             try
             {
                 UserService.Player svPlayer = client.GetPlayerByUserID(userID);
@@ -46,39 +50,39 @@ namespace CodenamesGame.Network
             }
             finally
             {
-                SafeClose(client);
+                NetworkUtil.SafeClose(client);
             }
         }
 
         public static void BeginPasswordReset(string username, string email)
         {
-            var client = new AuthenticationManagerClient("NetTcpBinding_IAuthenticationManager");
+            var client = new AuthenticationManagerClient(_authenticationEndpointName);
             try
             {
                 client.BeginPasswordReset(username, email);
             }
             finally
             {
-                SafeClose(client);
+                NetworkUtil.SafeClose(client);
             }
         }
 
         public static ResetResult CompletePasswordReset(string username, string code, string newPassword)
         {
-            var client = new AuthenticationManagerClient("NetTcpBinding_IAuthenticationManager");
+            var client = new AuthenticationManagerClient(_authenticationEndpointName);
             try
             {
                 return client.CompletePasswordReset(username, code, newPassword);
             }
             finally
             {
-                SafeClose(client);
+                NetworkUtil.SafeClose(client);
             }
         }
 
         public static UpdateResult UpdateProfile(PlayerPOCO player)
         {
-            var client = new UserManagerClient("NetTcpBinding_IUserManager");
+            var client = new UserManagerClient(_userEndpointName);
             try
             {
                 UserService.Player svPlayer = PlayerPOCO.AssembleUserSvPlayer(player);
@@ -86,26 +90,7 @@ namespace CodenamesGame.Network
             }
             finally
             {
-                SafeClose(client);
-            }
-        }
-
-        private static void SafeClose(ICommunicationObject client)
-        {
-            try
-            {
-                if (client.State == CommunicationState.Faulted)
-                {
-                    client.Abort();
-                }
-                else
-                {
-                    client.Close();
-                }
-            }
-            catch
-            {
-                client.Abort();
+                NetworkUtil.SafeClose(client);
             }
         }
     }

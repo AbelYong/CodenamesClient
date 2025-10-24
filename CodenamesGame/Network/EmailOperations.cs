@@ -1,4 +1,5 @@
 ﻿using CodenamesGame.EmailService;
+using CodenamesGame.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,8 @@ namespace CodenamesGame.Network
                 return client.SendVerificationCode(email);
             }
             finally
-            { 
-                client.Close();
+            {
+                NetworkUtil.SafeClose(client);
             }
         }
 
@@ -32,7 +33,7 @@ namespace CodenamesGame.Network
             }
             finally
             {
-                client.Close();
+                NetworkUtil.SafeClose(client);
             }
         }
     }
