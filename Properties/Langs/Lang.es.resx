@@ -303,12 +303,6 @@
   <data name="resetMissingUserOrEmail" xml:space="preserve">
     <value>Por favor ingrese usuario y correo</value>
   </data>
-  <data name="resetCodeSend" xml:space="preserve">
-    <value>Te enviamos un código al correo. Verifica tu bandeja de entrada e ingrésalo donde se solicita.</value>
-  </data>
-  <data name="resetCodeSendFailed" xml:space="preserve">
-    <value>No se pudo enviar el código</value>
-  </data>
   <data name="resetPasswordsDoNotMatch" xml:space="preserve">
     <value>Las contraseñas no coinciden</value>
   </data>
@@ -410,5 +404,11 @@
   </data>
   <data name="globalProfilePictureError" xml:space="preserve">
     <value>No pudimos cargar tu foto de perfil. es posible que tu instalación este dañada</value>
+  </data>
+  <data name="resetCodeSend" xml:space="preserve">
+    <value>Te enviamos un código al correo. Verifica tu bandeja de entrada e ingrésalo donde se solicita.</value>
+  </data>
+  <data name="resetCodeSendFailed" xml:space="preserve">
+    <value>No se pudo enviar el código</value>
   </data>
 </root>

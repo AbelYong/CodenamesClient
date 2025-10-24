@@ -7,13 +7,14 @@
         xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
         mc:Ignorable="d"
         Title="Profile"
-        Height="450" Width="600" Background="#FF1D1D1D">
-    <!-- Profile picture animations -->
+        Height="450" Width="600" Background="#FF1D1D1D"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <!-- Profile picture animations -->
         <Storyboard x:Key="SlideInAnimation">
             <DoubleAnimation Storyboard.TargetName="gridProfilePictures"
-                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                 From="640" To="0" Duration="0:0:0.2">
+         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+         From="640" To="0" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -21,8 +22,28 @@
         </Storyboard>
         <Storyboard x:Key="SlideOutAnimation">
             <DoubleAnimation Storyboard.TargetName="gridProfilePictures"
-                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                 From="0" To="640" Duration="0:0:0.2">
+         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+         From="0" To="640" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <!-- Verification overlay animations -->
+        <Storyboard x:Key="SlideInVerifyAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridVerify"
+     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+     From="640" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Key="SlideOutVerifyAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridVerify"
+     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+     From="0" To="800" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -41,31 +62,31 @@
                 <StackPanel Margin="0,0,50,0" Width="200">
                     <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource normal}" />
                     <TextBox Name="tBxUsername" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="20"/>
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="20"/>
                     <Label Content="{x:Static language:Lang.profileEmail}" Style="{StaticResource normal}" />
                     <TextBox Name="tBxEmail" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16"/>
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16"/>
                     <Label Content="{x:Static language:Lang.profileName}" Style="{StaticResource normal}" />
                     <TextBox Name="tBxName"  Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="20"/>
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="20"/>
                     <Label Content="{x:Static language:Lang.profileLastName}" Style="{StaticResource normal}" />
                     <TextBox Name="tBxLastName" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Button Click="Click_btnBack" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="200">
                     <Label Content="Facebook" Style="{StaticResource normal}" />
                     <TextBox Name="tBxFacebook" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Label Content="Instagram" Style="{StaticResource normal}" />
                     <TextBox Name="tBxInstagram" Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Label Content="Discord" Style="{StaticResource normal}" />
                     <TextBox Name="tBxDiscord"  Text="" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
                     <Label Content="Address" Style="{StaticResource normal}" />
                     <TextBox Name="tBxAddress"  Text="Not implemented yet" 
-                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" IsEnabled="False" />
+                     Style="{StaticResource textBoxCustomFocus}" FontSize="16" IsEnabled="False" />
                     <Button Click="Click_btnSave" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
             </StackPanel>
@@ -213,6 +234,49 @@
                     <ImageBrush ImageSource="/Assets/BoardUI/Assassins/assassin03.png"/>
                 </Button.Background>
             </Button>
+        </Grid>
+        <!-- ===== Verification overlay ===== -->
+        <Grid x:Name="gridVerify"
+              Width="540" Height="300"
+              Background="#272727"
+              Visibility="Collapsed"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Panel.ZIndex="10">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="640"/>
+            </Grid.RenderTransform>
+
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                       Content="{x:Static language:Lang.loginVerifyEmail}"
+                       Style="{StaticResource subtitle}" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="{x:Static language:Lang.loginCode6DigitsSent}" Style="{StaticResource normal}"/>
+                    <TextBlock x:Name="VerifyEmailLabel" Style="{StaticResource normal}" FontWeight="Bold" Margin="0,0,0,8"/>
+
+                    <TextBlock Text="{x:Static language:Lang.loginVerificationCode}" Style="{StaticResource normal}"/>
+                    <TextBox x:Name="tbxVerifyCode" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320" MaxLength="6"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                            Click="Click_btnHideVerify"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                            Click="Click_btnConfirmVerify"/>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

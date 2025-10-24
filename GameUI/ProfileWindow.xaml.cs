@@ -1,6 +1,7 @@
 ﻿using CodenamesClient.Operation;
 using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
+using CodenamesGame.EmailService;
 using CodenamesGame.Network;
 using CodenamesGame.UserService;
 using System;
@@ -48,11 +49,81 @@ namespace CodenamesClient.GameUI
             }
             else
             {
-                PlayerPOCO updatedPlayer = PrepareUpdatedPlayer();
-                UpdateResult result = UserOperations.UpdateProfile(updatedPlayer);
-                MessageBox.Show(result.Message);
-                this.DialogResult = result.Success;
+                if (_player.User.Email.Equals(tBxEmail.Text))
+                {
+                    SaveProfile();
+                }
+                else
+                {
+                    VerifyEmail();
+                }
             }
+        }
+
+        private void SaveProfile()
+        {
+            PlayerPOCO updatedPlayer = PrepareUpdatedPlayer();
+            UpdateResult result = UserOperations.UpdateProfile(updatedPlayer);
+            MessageBox.Show(result.Message);
+            this.DialogResult = result.Success;
+        }
+
+        private void VerifyEmail()
+        {
+            bool wasCodeSent = SendVerificationCode(tBxEmail.Text);
+            if (wasCodeSent)
+            {
+                ShowgGridVerify();
+            }
+        }
+
+        private bool SendVerificationCode(string email)
+        {
+            RequestResult result = EmailOperations.SendVerificationEmail(email);
+            if (!result.IsSuccess)
+            {
+                MessageBox.Show(result.Message);
+            }
+            return result.IsSuccess;
+        }
+
+        private void Click_btnConfirmVerify(object sender, EventArgs e)
+        {
+            string newEmail = tBxEmail.Text;
+            string code = tbxVerifyCode.Text;
+            RequestResult result = EmailOperations.SendVerificationCode(newEmail, code);
+            if (result.IsSuccess)
+            {
+                SaveProfile();
+            }
+            else
+            {
+                MessageBox.Show(result.Message);
+            }
+        }
+
+        private void ShowgGridVerify()
+        {
+            stackPanelProfileForm.Visibility = Visibility.Hidden;
+            var slideInAnimation = (Storyboard)FindResource("SlideInVerifyAnimation");
+            gridVerify.Visibility = Visibility.Visible;
+            slideInAnimation.Begin();
+        }
+
+        private void Click_btnHideVerify(object sender, RoutedEventArgs e)
+        {
+            HideGridVerify();
+        }
+
+        private void HideGridVerify()
+        {
+            var slideOutAnimation = (Storyboard)FindResource("SlideOutVerifyAnimation");
+            slideOutAnimation.Completed += (s, ev) =>
+            {
+                gridVerify.Visibility = Visibility.Collapsed;
+                stackPanelProfileForm.Visibility = Visibility.Visible;
+            };
+            slideOutAnimation.Begin();
         }
 
         public void Click_btnBack(object sender, RoutedEventArgs e)

@@ -303,12 +303,6 @@
   <data name="resetMissingUserOrEmail" xml:space="preserve">
     <value>Please enter username and email</value>
   </data>
-  <data name="resetCodeSend" xml:space="preserve">
-    <value>We've sent a code to your email. Please check your inbox and enter it where requested.</value>
-  </data>
-  <data name="resetCodeSendFailed" xml:space="preserve">
-    <value>Could not send code</value>
-  </data>
   <data name="resetPasswordsDoNotMatch" xml:space="preserve">
     <value>Passwords do not match</value>
   </data>
@@ -410,5 +404,11 @@
   </data>
   <data name="globalProfilePictureError" xml:space="preserve">
     <value>We couldn't load your profile picture, is possible your game installation is corrupted</value>
+  </data>
+  <data name="resetCodeSend" xml:space="preserve">
+    <value>We've sent a code to your email. Please check your inbox and enter it where requested.</value>
+  </data>
+  <data name="resetCodeSendFailed" xml:space="preserve">
+    <value>Could not send code</value>
   </data>
 </root>

@@ -48,6 +48,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\EmailService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\FriendService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -61,6 +66,7 @@
     <Compile Include="Domain\POCO\Gamemode.cs" />
     <Compile Include="Domain\POCO\PlayerPOCO.cs" />
     <Compile Include="Domain\POCO\UserPOCO.cs" />
+    <Compile Include="Network\EmailOperations.cs" />
     <Compile Include="Network\SocialOperations.cs" />
     <Compile Include="Network\UserOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +94,19 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\AuthenticationService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\CodenamesGame.EmailService.RequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EmailService\EmailService.wsdl" />
+    <None Include="Connected Services\EmailService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\item2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendService\CodenamesGame.FriendService.OperationResultSv.datasource">
@@ -131,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AuthenticationService\" />
+    <WCFMetadataStorage Include="Connected Services\EmailService\" />
     <WCFMetadataStorage Include="Connected Services\FriendService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
@@ -178,6 +198,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\FriendService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EmailService\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EmailService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EmailService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EmailService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
