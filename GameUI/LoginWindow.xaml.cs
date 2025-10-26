@@ -28,10 +28,11 @@ namespace CodenamesClient.GameUI
 
             if (ValidateLoginData(username, password))
             {
-                Guid? userID = CodenamesGame.Network.UserOperations.Authenticate(username, password);
+                Guid? userID = CodenamesGame.Network.UserOperation.Authenticate(username, password);
                 if (userID != null)
                 {
                     GoToMainMenuWindow(userID);
+                    
                 }
                 else
                 {
@@ -146,7 +147,7 @@ namespace CodenamesClient.GameUI
                 }
 
                 await Task.Run(() =>
-                    CodenamesGame.Network.UserOperations.BeginPasswordReset(user, email)
+                    CodenamesGame.Network.UserOperation.BeginPasswordReset(user, email)
                 );
 
                 MessageBox.Show(Lang.resetCodeSend);
@@ -185,7 +186,7 @@ namespace CodenamesClient.GameUI
                 }
 
                 var result = await Task.Run(() =>
-                    CodenamesGame.Network.UserOperations.CompletePasswordReset(user, code, p1)
+                    CodenamesGame.Network.UserOperation.CompletePasswordReset(user, code, p1)
                 );
 
                 MessageBox.Show(result.Message);
