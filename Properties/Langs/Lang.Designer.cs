@@ -187,6 +187,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t process your request due to an error on our end, please try again later.
+        /// </summary>
+        public static string globalServerError {
+            get {
+                return ResourceManager.GetString("globalServerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Settings.
         /// </summary>
         public static string globalSettings {
@@ -201,6 +210,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalStart {
             get {
                 return ResourceManager.GetString("globalStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t process your request due to an unknown error.
+        /// </summary>
+        public static string globalUnknownServerError {
+            get {
+                return ResourceManager.GetString("globalUnknownServerError", resourceCulture);
             }
         }
         

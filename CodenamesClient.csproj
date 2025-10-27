@@ -68,6 +68,8 @@
     <Compile Include="Operation\Validation\LoginValidation.cs" />
     <Compile Include="Operation\Validation\ProfileValidation.cs" />
     <Compile Include="Operation\Validation\SignInValidation.cs" />
+    <Compile Include="Util\ServiceType.cs" />
+    <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\LobbyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

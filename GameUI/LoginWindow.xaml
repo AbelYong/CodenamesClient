@@ -54,10 +54,10 @@
             <!-- User -->
             <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
             <TextBox Name="tBxUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,10,0,0" Text="" Width="320" />
-            <Label Name="lblUsernameErrorMessage"  Content="" Style="{StaticResource normal}" Margin="0,10,0,0" Width="580"/>
+            <Label Name="lblUsernameErrorMessage"  Content="" Style="{StaticResource normal}" Margin="0,10,0,0" HorizontalContentAlignment="Center" Width="600"/>
             <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
             <PasswordBox x:Name="pBxPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,10,0,0" Width="320"/>
-            <Label x:Name="lblPasswordErrorMessage" Content="" Style="{StaticResource normal}" Width="320" />
+            <Label x:Name="lblPasswordErrorMessage" Content="" Style="{StaticResource normal}" HorizontalContentAlignment="Center" Width="600" />
 
             <!-- Reset password link -->
             <TextBlock Style="{StaticResource InlineLinkStyle}" Foreground="{Binding Foreground, ElementName=lblPasswordErrorMessage}"

@@ -15,6 +15,120 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.LoginRequest))]
+    public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSuccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.AuthenticationService.StatusCode StatusCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSuccess {
+            get {
+                return this.IsSuccessField;
+            }
+            set {
+                if ((this.IsSuccessField.Equals(value) != true)) {
+                    this.IsSuccessField = value;
+                    this.RaisePropertyChanged("IsSuccess");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.AuthenticationService.StatusCode StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class LoginRequest : CodenamesGame.AuthenticationService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> UserIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    public enum StatusCode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OK = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CREATED = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UPDATED = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        MISSING_DATA = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WRONG_DATA = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNAUTHORIZED = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_ERROR = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNAVAIBLE = 7,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
     [System.SerializableAttribute()]
     public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -483,10 +597,10 @@ namespace CodenamesGame.AuthenticationService {
     public interface IAuthenticationManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Login", ReplyAction="http://tempuri.org/IAuthenticationManager/LoginResponse")]
-        System.Nullable<System.Guid> Login(string username, string password);
+        CodenamesGame.AuthenticationService.LoginRequest Login(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Login", ReplyAction="http://tempuri.org/IAuthenticationManager/LoginResponse")]
-        System.Threading.Tasks.Task<System.Nullable<System.Guid>> LoginAsync(string username, string password);
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.LoginRequest> LoginAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/SignIn", ReplyAction="http://tempuri.org/IAuthenticationManager/SignInResponse")]
         System.Nullable<System.Guid> SignIn(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer);
@@ -552,11 +666,11 @@ namespace CodenamesGame.AuthenticationService {
                 base(binding, remoteAddress) {
         }
         
-        public System.Nullable<System.Guid> Login(string username, string password) {
+        public CodenamesGame.AuthenticationService.LoginRequest Login(string username, string password) {
             return base.Channel.Login(username, password);
         }
         
-        public System.Threading.Tasks.Task<System.Nullable<System.Guid>> LoginAsync(string username, string password) {
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.LoginRequest> LoginAsync(string username, string password) {
             return base.Channel.LoginAsync(username, password);
         }
         

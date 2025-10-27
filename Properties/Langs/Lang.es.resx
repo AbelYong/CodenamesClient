@@ -414,4 +414,10 @@
   <data name="globalConnectionLost" xml:space="preserve">
     <value>No te pudimos conectar al servidor de Codenames: Duet, por favor inténtalo más tarde</value>
   </data>
+  <data name="globalServerError" xml:space="preserve">
+    <value>Lo sentimos, no pudimos procesar tu solicitud debido a un error de nuestra parte, por favor inténtalo más tarde</value>
+  </data>
+  <data name="globalUnknownServerError" xml:space="preserve">
+    <value>Lo sentimos, no pudimos procesar tu solicitud debido a un error desconocido</value>
+  </data>
 </root>

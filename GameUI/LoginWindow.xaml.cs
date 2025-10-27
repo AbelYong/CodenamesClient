@@ -1,5 +1,6 @@
 ﻿using CodenamesClient.Properties.Langs;
 using CodenamesClient.Validation;
+using CodenamesGame.AuthenticationService;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,15 +29,21 @@ namespace CodenamesClient.GameUI
 
             if (ValidateLoginData(username, password))
             {
-                Guid? userID = CodenamesGame.Network.UserOperation.Authenticate(username, password);
-                if (userID != null)
+                LoginRequest request = CodenamesGame.Network.UserOperation.Authenticate(username, password);
+                if (request.IsSuccess)
                 {
-                    GoToMainMenuWindow(userID);
-                    
+                    GoToMainMenuWindow(request.UserID);
                 }
                 else
                 {
-                    ShowFailedLoginMessage();
+                    if (request.StatusCode == StatusCode.UNAUTHORIZED)
+                    {
+                        ShowFailedLoginMessage();
+                    }
+                    else
+                    {
+                        MessageBox.Show(Util.StatusToMessageMapper.AuthCodeToMessage(request.StatusCode));
+                    }
                 }
             }
         }

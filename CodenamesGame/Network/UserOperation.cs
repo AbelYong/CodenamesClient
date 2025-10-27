@@ -12,22 +12,27 @@ namespace CodenamesGame.Network
         private const string _AUTHENTICATION_ENDPOINT_NAME = "NetTcpBinding_IAuthenticationManager";
         private const string _USER_ENDPOINT_NAME = "NetTcpBinding_IUserManager";
 
-        public static Guid? Authenticate(string username, string password)
+        public static LoginRequest Authenticate(string username, string password)
         {
+            LoginRequest request = new LoginRequest();
             var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
             try
             {
-                return client.Login(username, password);
+                request = client.Login(username, password);
             }
-            catch (EndpointNotFoundException ex)
+            catch (EndpointNotFoundException)
             {
-                //TODO turn this into a request
-                return new Guid("-2");
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            }
+            catch (TimeoutException)
+            {
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
             }
             finally
             {
                 NetworkUtil.SafeClose(client);
             }
+            return request;
         }
 
         public static Guid? SignIn(UserDM user, PlayerDM player)
