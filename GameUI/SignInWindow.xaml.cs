@@ -85,7 +85,7 @@ namespace CodenamesClient.GameUI
             sb.Begin(VerifyGrid, true);
         }
 
-        private async void ConfirmVerify_Click(object sender, RoutedEventArgs e)
+        private async void Click_ConfirmVerify(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn != null) btn.IsEnabled = false;
@@ -132,7 +132,7 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        private async void HideVerify_Click(object sender, RoutedEventArgs e)
+        private async void Click_HideVerify(object sender, RoutedEventArgs e)
         {
             try
             {

@@ -87,14 +87,14 @@ namespace CodenamesClient.GameUI
         }
 
         // ========= RESET PASSWORD (overlay) =========
-        private void ForgotLink_Click(object sender, MouseButtonEventArgs e)
+        private void Click_ForgotLink(object sender, MouseButtonEventArgs e)
         {
             PrefillResetFields();
             ShowResetOverlay();
         }
 
-        private void HideReset_Click(object sender, RoutedEventArgs e) => HideResetOverlay();
-        private void HideReset_Backdrop(object sender, MouseButtonEventArgs e) => HideResetOverlay();
+        private void Click_HideReset(object sender, RoutedEventArgs e) => HideResetOverlay();
+        private void Backdrop_HideReset(object sender, MouseButtonEventArgs e) => HideResetOverlay();
 
         private void PrefillResetFields()
         {
@@ -137,7 +137,7 @@ namespace CodenamesClient.GameUI
             sb.Begin(ResetGrid, true);
         }
 
-        private async void SendCode_Click(object sender, RoutedEventArgs e)
+        private async void Click_SendCode(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn != null) btn.IsEnabled = false;
@@ -169,7 +169,7 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        private async void ConfirmReset_Click(object sender, RoutedEventArgs e)
+        private async void Click_ConfirmReset(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn != null) btn.IsEnabled = false;

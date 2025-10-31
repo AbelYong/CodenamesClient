@@ -158,7 +158,7 @@
            Panel.ZIndex="9"
            HorizontalAlignment="Stretch"
            VerticalAlignment="Stretch"
-           MouseLeftButtonUp="HideVerify_Click"/>
+           MouseLeftButtonUp="Click_HideVerify"/>
 
         <!-- ===== Verification overlay ===== -->
         <Grid x:Name="VerifyGrid"
@@ -206,10 +206,10 @@
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}"
                     Style="{StaticResource buttonCustomFocus}"
-                    Width="180" Height="40" Click="HideVerify_Click"/>
+                    Width="180" Height="40" Click="Click_HideVerify"/>
                     <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}"
                     Style="{StaticResource buttonCustomFocus}"
-                    Width="180" Height="40" Click="ConfirmVerify_Click"/>
+                    Width="180" Height="40" Click="Click_ConfirmVerify"/>
                 </Grid>
             </Grid>
         </Grid>
