@@ -13,10 +13,19 @@ namespace CodenamesGame.Util
         {
             try
             {
-                if (client.State == CommunicationState.Faulted) client.Abort();
-                else client.Close();
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
             }
-            catch { client.Abort(); }
+            catch
+            {
+                client.Abort();
+            }
         }
     }
 }

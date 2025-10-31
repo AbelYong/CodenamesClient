@@ -70,15 +70,15 @@ namespace CodenamesClient.Operation
                 BitmapImage profilePicture = new BitmapImage(imageUri);
                 return new ImageBrush(profilePicture);
             }
-            catch (UriFormatException ufex)
+            catch (UriFormatException)
             {
                 MessageBox.Show(Lang.globalProfilePictureError);
             }
-            catch (ArgumentNullException anex)
+            catch (ArgumentNullException)
             {
                 MessageBox.Show(Lang.globalProfilePictureError);
             }
-            catch (FileNotFoundException finex)
+            catch (FileNotFoundException)
             {
                 MessageBox.Show(Lang.globalProfilePictureError);
             }

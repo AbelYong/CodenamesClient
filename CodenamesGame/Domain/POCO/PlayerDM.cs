@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using FriendPlayer = CodenamesGame.FriendService.Player;
 
 namespace CodenamesGame.Domain.POCO
@@ -53,6 +47,21 @@ namespace CodenamesGame.Domain.POCO
             return svPlayer;
         }
 
+        public static PlayerDM AssemblePlayer(FriendPlayer player)
+        {
+            if (player == null)
+            {
+                return null;
+            }
+            return new PlayerDM
+            {
+                PlayerID = player.PlayerID,
+                Username = player.Username,
+                Name = player.Name,
+                LastName = player.LastName
+            };
+        }
+
         public static UserService.Player AssembleUserSvPlayer(PlayerDM player)
         {
             UserService.Player svPlayer = new UserService.Player();
@@ -67,16 +76,19 @@ namespace CodenamesGame.Domain.POCO
             svPlayer.User = UserDM.AssembleUserSvUser(player.User);
             return svPlayer;
         }
-        public static PlayerDM AssemblePlayer(FriendPlayer p)
+
+        public static SessionService.Player AssembleSessionSvPlayer(PlayerDM player)
         {
-            if (p == null) return null;
-            return new PlayerDM
-            {
-                PlayerID = p.PlayerID,
-                Username = p.Username,
-                Name = p.Name,
-                LastName = p.LastName
-            };
+            SessionService.Player svPlayer = new SessionService.Player();
+            svPlayer.PlayerID = player.PlayerID;
+            svPlayer.Username = player.Username;
+            svPlayer.AvatarID = player.AvatarID;
+            svPlayer.Name = player.Name;
+            svPlayer.LastName = player.LastName;
+            svPlayer.FacebookUsername = player.FacebookUsername;
+            svPlayer.InstagramUsername = player.InstagramUsername;
+            svPlayer.DiscordUsername = player.DiscordUsername;
+            return svPlayer;
         }
     }
 }
