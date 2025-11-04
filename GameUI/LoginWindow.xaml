@@ -61,7 +61,7 @@
 
             <!-- Reset password link -->
             <TextBlock Style="{StaticResource InlineLinkStyle}" Foreground="{Binding Foreground, ElementName=lblPasswordErrorMessage}"
-                       VerticalAlignment="Center" MouseLeftButtonUp="ForgotLink_Click" Text="{x:Static language:Lang.loginForgotPassword}" />
+                       VerticalAlignment="Center" MouseLeftButtonUp="Click_ForgotLink" Text="{x:Static language:Lang.loginForgotPassword}" />
 
             <!-- Action buttons -->
             <Button Click="Click_btnLogin"
@@ -90,7 +90,7 @@
                    Panel.ZIndex="9"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
-                   MouseLeftButtonUp="HideReset_Click"/>
+                   MouseLeftButtonUp="Click_HideReset"/>
 
         <!-- ===== Sliding overlay for password reset ===== -->
         <Grid x:Name="ResetGrid"
@@ -126,7 +126,7 @@
 
                     <Button x:Name="SendCodeBtn" Content="{x:Static language:Lang.resetSendCode}"
                             Style="{StaticResource buttonCustomFocus}"
-                            Click="SendCode_Click"
+                            Click="Click_SendCode"
                             Width="316" Height="40" Margin="0,0,0,12"/>
 
                     <TextBlock Text="{x:Static language:Lang.resetReceivedCode}" Style="{StaticResource normal}" />
@@ -144,10 +144,10 @@
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}"
                             Style="{StaticResource buttonCustomFocus}"
-                            Width="180" Height="40" Click="HideReset_Click"/>
+                            Width="180" Height="40" Click="Click_HideReset"/>
                     <Button Grid.Column="1" Content="{x:Static language:Lang.resetChangePassword}"
                             Style="{StaticResource buttonCustomFocus}"
-                            Width="180" Height="40" Click="ConfirmReset_Click"/>
+                            Width="180" Height="40" Click="Click_ConfirmReset"/>
                 </Grid>
             </Grid>
         </Grid>

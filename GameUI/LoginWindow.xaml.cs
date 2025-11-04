@@ -85,7 +85,8 @@ namespace CodenamesClient.GameUI
             lblPasswordErrorMessage.Content = Lang.loginWrongCredentials;
         }
 
-        private void ForgotLink_Click(object sender, MouseButtonEventArgs e)
+        // ========= RESET PASSWORD (overlay) =========
+        private void Click_ForgotLink(object sender, MouseButtonEventArgs e)
         {
             PrefillResetFields();
             ShowResetOverlay();
@@ -141,7 +142,7 @@ namespace CodenamesClient.GameUI
             sb.Begin(ResetGrid, true);
         }
 
-        private async void SendCode_Click(object sender, RoutedEventArgs e)
+        private async void Click_SendCode(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn != null) btn.IsEnabled = false;
@@ -173,7 +174,7 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        private async void ConfirmReset_Click(object sender, RoutedEventArgs e)
+        private async void Click_ConfirmReset(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn != null)
