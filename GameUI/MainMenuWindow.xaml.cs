@@ -86,8 +86,8 @@ namespace CodenamesClient.GameUI
             slideOutAnimation.Completed += (s, ev) =>
             {
                 FriendsGrid.Visibility = Visibility.Collapsed;
-                FriendsAndRequestsView.Visibility = Visibility.Visible;
-                SearchView.Visibility = Visibility.Collapsed;
+                //FriendsAndRequestsView.Visibility = Visibility.Visible;
+                //SearchView.Visibility = Visibility.Collapsed;
                 SearchBox.Text = Lang.socialSearchForAFriend;
                 SearchBox.FontStyle = FontStyles.Italic;
                 SearchResultsList.ItemsSource = null;
@@ -101,8 +101,8 @@ namespace CodenamesClient.GameUI
             SearchBox.Focus();
             SearchResultsList.ItemsSource = null;
 
-            FriendsAndRequestsView.Visibility = Visibility.Visible;
-            SearchView.Visibility = Visibility.Collapsed;
+            //FriendsAndRequestsView.Visibility = Visibility.Visible;
+            //SearchView.Visibility = Visibility.Collapsed;
         }
 
         private void GotFocus_SearchBox(object sender, RoutedEventArgs e)
@@ -220,8 +220,8 @@ namespace CodenamesClient.GameUI
             _search = SocialOperation.SearchPlayers(me, q, 20);
             SearchResultsList.ItemsSource = _search;
 
-            FriendsAndRequestsView.Visibility = Visibility.Collapsed;
-            SearchView.Visibility = Visibility.Visible;
+            //FriendsAndRequestsView.Visibility = Visibility.Collapsed;
+            //SearchView.Visibility = Visibility.Visible;
         }
 
         private void Click_SendRequest(object sender, RoutedEventArgs e)

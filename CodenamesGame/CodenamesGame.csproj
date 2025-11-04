@@ -72,6 +72,7 @@
     <Compile Include="Domain\POCO\PlayerDM.cs" />
     <Compile Include="Domain\POCO\UserDM.cs" />
     <Compile Include="Network\EmailOperation.cs" />
+    <Compile Include="Network\SessionOperation.cs" />
     <Compile Include="Network\SocialOperation.cs" />
     <Compile Include="Network\UserOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

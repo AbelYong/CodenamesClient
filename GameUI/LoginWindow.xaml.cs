@@ -92,7 +92,7 @@ namespace CodenamesClient.GameUI
             ShowResetOverlay();
         }
 
-        private void HideReset_Click(object sender, RoutedEventArgs e)
+        private void Click_HideReset(object sender, RoutedEventArgs e)
         {
             HideResetOverlay();
         }
