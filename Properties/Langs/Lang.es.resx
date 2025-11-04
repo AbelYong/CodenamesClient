@@ -420,4 +420,7 @@
   <data name="globalUnknownServerError" xml:space="preserve">
     <value>Lo sentimos, no pudimos procesar tu solicitud debido a un error desconocido</value>
   </data>
+  <data name="globalGuest" xml:space="preserve">
+    <value>Invitado</value>
+  </data>
 </root>

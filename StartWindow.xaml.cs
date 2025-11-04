@@ -31,8 +31,8 @@ namespace CodenamesClient
 
         private void Click_btnStart(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             Close();
         }
 

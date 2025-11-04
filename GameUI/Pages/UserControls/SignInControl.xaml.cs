@@ -1,27 +1,26 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
-using CodenamesGame.Domain.POCO;
-using CodenamesGame.Network;
+using CodenamesClient.Properties.Langs;
 using System;
+using Sv = CodenamesGame.AuthenticationService;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using Sv = CodenamesGame.AuthenticationService;
-using CodenamesClient.Properties.Langs;
 
-namespace CodenamesClient.GameUI
+namespace CodenamesClient.GameUI.Pages.UserControls
 {
-    public partial class SignInWindow : Window
+    public partial class SignInControl : UserControl
     {
-        private readonly SignInViewModel _vm = new SignInViewModel();
-
+        private readonly SignInViewModel _vm;
         private Guid? _pendingRequestId = null;
+        public event RoutedEventHandler ClickClose;
 
-        public SignInWindow()
+        public SignInControl()
         {
             InitializeComponent();
+            _vm = new SignInViewModel();
             DataContext = _vm;
         }
 
@@ -34,10 +33,19 @@ namespace CodenamesClient.GameUI
             {
                 using (var client = new Sv.AuthenticationManagerClient())
                 {
-                    var svUser = new Sv.User { Email = _vm.Email, Password = _vm.Password };
-                    var svPlay = new Sv.Player { Username = _vm.Username, Name = _vm.FirstName, LastName = _vm.LastName };
+                    var svUser = new Sv.User
+                    { 
+                        Email = _vm.Email,
+                        Password = _vm.Password 
+                    };
+                    var svPlayer = new Sv.Player
+                    { 
+                        Username = _vm.Username, 
+                        Name = _vm.FirstName, 
+                        LastName = _vm.LastName 
+                    };
 
-                    var begin = await Task.Run(() => client.BeginRegistration(svUser, svPlay, _vm.Password));
+                    var begin = await Task.Run(() => client.BeginRegistration(svUser, svPlayer, _vm.Password));
 
                     if (begin == null || !begin.Success || !begin.RequestId.HasValue)
                     {
@@ -114,12 +122,6 @@ namespace CodenamesClient.GameUI
                                     Lang.signInRegister,
                                     MessageBoxButton.OK,
                                     result.Success ? MessageBoxImage.Information : MessageBoxImage.Warning);
-
-                    if (result.Success)
-                    {
-                        DialogResult = true;
-                        Close();
-                    }
                 }
             }
             catch (Exception ex)
@@ -145,8 +147,8 @@ namespace CodenamesClient.GameUI
                 }
             }
             catch
-            { 
-                /* best effort */ 
+            {
+                /* best effort */
             }
             finally
             {
@@ -155,22 +157,9 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        private UserDM AssembleDmUser() 
+        private void Click_btnClose(object sender, RoutedEventArgs e)
         {
-            return new UserDM
-            { 
-                Email = _vm.Email,
-                Password = _vm.Password
-            };
+            ClickClose?.Invoke(this, e);
         }
-        private PlayerDM AssembleDmPlayer()
-        {
-            return new PlayerDM
-            { 
-                Username = _vm.Username, 
-                Name = _vm.FirstName, 
-                LastName = _vm.LastName 
-            };
-        } 
     }
 }

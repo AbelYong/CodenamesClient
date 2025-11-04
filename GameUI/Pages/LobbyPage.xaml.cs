@@ -12,20 +12,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CodenamesClient.GameUI
+namespace CodenamesClient.GameUI.Pages
 {
-    public partial class LobbyWindow : UserControl
+    /// <summary>
+    /// Lógica de interacción para LobbyPage.xaml
+    /// </summary>
+    public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
-        public LobbyWindow(GamemodeDM gamemode)
+        public LobbyPage(GamemodeDM gamemode)
         {
             InitializeComponent();
             this._viewModel = new LobbyViewModel(gamemode);
             this.DataContext = _viewModel;
         }
 
-        
+        private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
     }
 }

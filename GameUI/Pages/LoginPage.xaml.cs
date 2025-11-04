@@ -1,6 +1,9 @@
-﻿using CodenamesClient.Properties.Langs;
+﻿using CodenamesClient.GameUI.Pages.UserControls;
+using CodenamesClient.Properties.Langs;
 using CodenamesClient.Validation;
 using CodenamesGame.AuthenticationService;
+using CodenamesGame.Domain.POCO;
+using CodenamesGame.Network;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,16 +12,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace CodenamesClient.GameUI
+namespace CodenamesClient.GameUI.Pages
 {
-    public partial class LoginWindow : Window
+    public partial class LoginPage : Page
     {
-        private MainMenuWindow _mainMenuWindow;
-
-        public LoginWindow()
+        
+        public LoginPage()
         {
             InitializeComponent();
-            _mainMenuWindow = new MainMenuWindow();
         }
 
         private void Click_btnLogin(object sender, RoutedEventArgs e)
@@ -49,17 +50,36 @@ namespace CodenamesClient.GameUI
 
         private void Click_btnSignIn(object sender, RoutedEventArgs e)
         {
-            var w = new SignInWindow { Owner = this };
-            w.ShowDialog();
+            Overlay.Visibility = Visibility.Visible;
+            SignInControl.Visibility = Visibility.Visible;
         }
 
-        private void Click_btnPlayAsGuest(object sender, RoutedEventArgs e) => GoToMainMenuWindow(null);
+        private void Click_SignInClose(object sender, RoutedEventArgs e)
+        {
+            Overlay.Visibility = Visibility.Collapsed;
+            SignInControl.Visibility = Visibility.Collapsed;
+        }
+
+        private void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
+        {
+            GoToMainMenuWindow(null);
+        }
 
         private void GoToMainMenuWindow(Guid? userID)
         {
-            stackPanelLogin.Visibility = Visibility.Collapsed;
-            CurrentContent.Content = _mainMenuWindow;
-            _mainMenuWindow.SetPlayer(userID);
+            MainMenuPage mainMenu;
+            if (userID != null)
+            {
+                Guid auxUserID = userID.Value;
+                PlayerDM player = UserOperation.GetPlayer(auxUserID);
+                mainMenu = new MainMenuPage(player);
+                NavigationService.Navigate(mainMenu);
+            }
+            else
+            {
+                mainMenu = new MainMenuPage(null);
+                NavigationService.Navigate(mainMenu);
+            }
         }
 
         private bool ValidateLoginData(string username, string password)
@@ -69,7 +89,7 @@ namespace CodenamesClient.GameUI
             lblUsernameErrorMessage.Content = (usernameMessage.Equals("OK") ? "" : usernameMessage);
 
             string passwordMessage = LoginValidation.ValidatePassword(password);
-            lblPasswordErrorMessage.Content = (passwordMessage.Equals("OK") ? "" :  passwordMessage);
+            lblPasswordErrorMessage.Content = (passwordMessage.Equals("OK") ? "" : passwordMessage);
 
             return usernameMessage.Equals("OK") && passwordMessage.Equals("OK");
         }
@@ -98,12 +118,14 @@ namespace CodenamesClient.GameUI
         private void HideReset_Backdrop(object sender, MouseButtonEventArgs e)
         {
             HideResetOverlay();
-        }
+        } 
 
         private void PrefillResetFields()
         {
             if (string.IsNullOrWhiteSpace(ResetUsername.Text))
+            {
                 ResetUsername.Text = tBxUsername.Text;
+            }
 
             ResetEmail.Text = "";
             ResetCode.Text = "";
@@ -144,7 +166,10 @@ namespace CodenamesClient.GameUI
         private async void SendCode_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn != null) btn.IsEnabled = false;
+            if (btn != null)
+            {
+                btn.IsEnabled = false;
+            }
 
             try
             {
@@ -176,10 +201,7 @@ namespace CodenamesClient.GameUI
         private async void ConfirmReset_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
-            if (btn != null)
-            {
-                btn.IsEnabled = false;
-            }
+            if (btn != null) btn.IsEnabled = false;
 
             try
             {
@@ -204,10 +226,7 @@ namespace CodenamesClient.GameUI
                 );
 
                 MessageBox.Show(result.Message);
-                if (result.Success)
-                {
-                    HideResetOverlay();
-                }
+                if (result.Success) HideResetOverlay();
             }
             catch (Exception ex)
             {

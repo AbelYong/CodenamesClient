@@ -1,6 +1,4 @@
-﻿using CodenamesClient.GameUI.ViewModels;
-using CodenamesGame.Domain.POCO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,16 +14,14 @@ using System.Windows.Shapes;
 
 namespace CodenamesClient.GameUI
 {
-    public partial class LobbyWindow : UserControl
+    /// <summary>
+    /// Lógica de interacción para MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-        private LobbyViewModel _viewModel;
-        public LobbyWindow(GamemodeDM gamemode)
+        public MainWindow()
         {
             InitializeComponent();
-            this._viewModel = new LobbyViewModel(gamemode);
-            this.DataContext = _viewModel;
         }
-
-        
     }
 }

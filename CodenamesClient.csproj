@@ -59,16 +59,34 @@
     <Compile Include="GameUI\LobbyWindow.xaml.cs">
       <DependentUpon>LobbyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameUI\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameUI\Pages\LobbyPage.xaml.cs">
+      <DependentUpon>LobbyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameUI\Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameUI\Pages\MainMenuPage.xaml.cs">
+      <DependentUpon>MainMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameUI\Pages\UserControls\ProfileControl.xaml.cs">
+      <DependentUpon>ProfileControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameUI\Pages\UserControls\SignInControl.xaml.cs">
+      <DependentUpon>SignInControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameUI\ProfileWindow.xaml.cs">
       <DependentUpon>ProfileWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameUI\ViewModels\LobbyViewModel.cs" />
+    <Compile Include="GameUI\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />
     <Compile Include="Operation\PictureHandler.cs" />
     <Compile Include="Operation\Validation\LoginValidation.cs" />
     <Compile Include="Operation\Validation\ProfileValidation.cs" />
     <Compile Include="Operation\Validation\SignInValidation.cs" />
-    <Compile Include="Util\ServiceType.cs" />
     <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\LobbyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -79,6 +97,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GameUI\MainMenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameUI\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameUI\Pages\LobbyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameUI\Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameUI\Pages\MainMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameUI\Pages\UserControls\ProfileControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameUI\Pages\UserControls\SignInControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,6 +200,7 @@
     <Resource Include="Assets\BoardUI\Agents\agent15.png" />
     <Resource Include="Assets\BoardUI\Neutrals\neutral06.png" />
     <Resource Include="Assets\BoardUI\Neutrals\neutral07.png" />
+    <Resource Include="Assets\GameUI\logout.png" />
     <Resource Include="Assets\GameUI\mexicoFlag.png" />
     <Resource Include="Assets\GameUI\usFlag.png" />
   </ItemGroup>
@@ -181,6 +224,7 @@
     <Resource Include="Assets\BoardUI\Neutrals\neutral03.png" />
     <Resource Include="Assets\BoardUI\Neutrals\neutral04.png" />
     <Resource Include="Assets\BoardUI\Neutrals\neutral05.png" />
+    <Resource Include="Assets\GameUI\returnArrow.png" />
     <Content Include="Main Theme %28NOT FINAL%29.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

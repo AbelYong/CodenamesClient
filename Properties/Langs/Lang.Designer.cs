@@ -142,6 +142,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Guest.
+        /// </summary>
+        public static string globalGuest {
+            get {
+                return ResourceManager.GetString("globalGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Invalid data.
         /// </summary>
         public static string globalInvalidData {
