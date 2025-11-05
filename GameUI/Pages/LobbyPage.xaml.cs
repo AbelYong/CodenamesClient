@@ -1,4 +1,5 @@
-﻿using CodenamesClient.GameUI.ViewModels;
+﻿using CodenamesClient.GameUI.BoardUI;
+using CodenamesClient.GameUI.ViewModels;
 using CodenamesGame.Domain.POCO;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,12 @@ namespace CodenamesClient.GameUI.Pages
             InitializeComponent();
             this._viewModel = new LobbyViewModel(gamemode);
             this.DataContext = _viewModel;
+        }
+
+        private void Click_StartGame(object sender, RoutedEventArgs e)
+        {
+            BoardPage board = new BoardPage();
+            NavigationService.Navigate(board);
         }
 
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)

@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameUI\BoardUI\BoardPage.xaml.cs">
+      <DependentUpon>BoardPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameUI\LobbyWindow.xaml.cs">
       <DependentUpon>LobbyWindow.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
     <Compile Include="Operation\Validation\ProfileValidation.cs" />
     <Compile Include="Operation\Validation\SignInValidation.cs" />
     <Compile Include="Util\StatusToMessageMapper.cs" />
+    <Page Include="GameUI\BoardUI\BoardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameUI\LobbyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -225,6 +232,8 @@
     <Resource Include="Assets\BoardUI\Neutrals\neutral04.png" />
     <Resource Include="Assets\BoardUI\Neutrals\neutral05.png" />
     <Resource Include="Assets\GameUI\returnArrow.png" />
+    <Resource Include="Assets\BoardUI\sendIcon.png" />
+    <Resource Include="Assets\BoardUI\exit.png" />
     <Content Include="Main Theme %28NOT FINAL%29.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
