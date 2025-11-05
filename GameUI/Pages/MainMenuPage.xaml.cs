@@ -18,6 +18,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CodenamesClient.GameUI.Pages
 {
@@ -100,14 +101,14 @@ namespace CodenamesClient.GameUI.Pages
             NavigationService.Navigate(login);
         }
 
-        private void ShowSettings_Click(object sender, RoutedEventArgs e)
+        private void Click_ShowSettings(object sender, RoutedEventArgs e)
         {
             var slideInAnimation = (Storyboard)FindResource("SlideInAnimation");
             SettingsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
         }
 
-        private void HideSettings_Click(object sender, RoutedEventArgs e)
+        private void Click_HideSettings(object sender, RoutedEventArgs e)
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutAnimation");
             slideOutAnimation.Completed += (s, ev) =>
@@ -117,18 +118,18 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void Click_btnSave(object sender, RoutedEventArgs e)
         {
             // TODO
-            HideSettings_Click(sender, e);
+            Click_HideSettings(sender, e);
         }
 
-        private void btnQuit_Click(object sender, RoutedEventArgs e)
+        private void Click_btnQuit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-        private void ShowFriends_Click(object sender, RoutedEventArgs e)
+        private void Click_ShowFriends(object sender, RoutedEventArgs e)
         {
             var slideInAnimation = (Storyboard)FindResource("SlideInFriendsAnimation");
             FriendsGrid.Visibility = Visibility.Visible;
@@ -137,21 +138,29 @@ namespace CodenamesClient.GameUI.Pages
             RefreshFriendsUi();
         }
 
-        private void HideFriends_Click(object sender, RoutedEventArgs e)
+        private void Click_HideFriends(object sender, RoutedEventArgs e)
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutFriendsAnimation");
             slideOutAnimation.Completed += (s, ev) =>
             {
                 FriendsGrid.Visibility = Visibility.Collapsed;
+                FriendsAndRequestsView.Visibility = Visibility.Visible;
+                SearchView.Visibility = Visibility.Collapsed;
+                SearchBox.Text = Lang.socialSearchForAFriend;
+                SearchBox.FontStyle = FontStyles.Italic;
+                SearchResultsList.ItemsSource = null;
             };
             slideOutAnimation.Begin();
         }
 
-        private void ClearSearchBox_Click(object sender, RoutedEventArgs e)
+        private void Click_ClearSearchBox(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = string.Empty;
             SearchBox.Focus();
             SearchResultsList.ItemsSource = null;
+
+            FriendsAndRequestsView.Visibility = Visibility.Visible;
+            SearchView.Visibility = Visibility.Collapsed;
         }
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -172,14 +181,14 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void ShowGameMode_Click(object sender, RoutedEventArgs e)
+        private void Click_ShowGameMode(object sender, RoutedEventArgs e)
         {
             var slideInAnimation = (Storyboard)FindResource("SlideInGameModeAnimation");
             GameModeGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
         }
 
-        private void HideGameMode_Click(object sender, RoutedEventArgs e)
+        private void Click_HideGameMode(object sender, RoutedEventArgs e)
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutGameModeAnimation");
             slideOutAnimation.Completed += (s, ev) =>
@@ -189,17 +198,17 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void NormalGameMode_Click(object sender, RoutedEventArgs e)
+        private void Click_NormalGameMode(object sender, RoutedEventArgs e)
         {
             GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.NORMAL);
             GoToLobby(mode);
         }
-        private void CustomGameMode_Click(object sender, RoutedEventArgs e)
+        private void Click_CustomGameMode(object sender, RoutedEventArgs e)
         {
             GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.CUSTOM);
             GoToLobby(mode);
         }
-        private void CounterintelligenceMode_Click(object sender, RoutedEventArgs e)
+        private void Click_CounterintelligenceMode(object sender, RoutedEventArgs e)
         {
             GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.COUNTERINTELLIGENCE);
             GoToLobby(mode);
@@ -212,14 +221,14 @@ namespace CodenamesClient.GameUI.Pages
             GameModeGrid.Visibility = Visibility.Collapsed;
         }
 
-        private void ShowScoreboards_Click(object sender, RoutedEventArgs e)
+        private void Click_ShowScoreboards(object sender, RoutedEventArgs e)
         {
             var slideInAnimation = (Storyboard)FindResource("SlideInScoreboardsAnimation");
             ScoreboardsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
         }
 
-        private void HideScoreboards_Click(object sender, RoutedEventArgs e)
+        private void Click_HideScoreboards(object sender, RoutedEventArgs e)
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutScoreboardsAnimation");
             slideOutAnimation.Completed += (s, ev) =>
@@ -265,9 +274,12 @@ namespace CodenamesClient.GameUI.Pages
             var me = _viewModel.Player.PlayerID.Value;
             _search = SocialOperation.SearchPlayers(me, q, 20);
             SearchResultsList.ItemsSource = _search;
+
+            FriendsAndRequestsView.Visibility = Visibility.Collapsed;
+            SearchView.Visibility = Visibility.Visible;
         }
 
-        private void SendRequest_Click(object sender, RoutedEventArgs e)
+        private void Click_SendRequest(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null) return;
             var target = ItemFromButton((Button)sender);
@@ -278,7 +290,7 @@ namespace CodenamesClient.GameUI.Pages
             RefreshFriendsUi();
         }
 
-        private void AcceptRequest_Click(object sender, RoutedEventArgs e)
+        private void Click_AcceptRequest(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null) return;
             var requester = ItemFromButton((Button)sender);
@@ -289,7 +301,7 @@ namespace CodenamesClient.GameUI.Pages
             RefreshFriendsUi();
         }
 
-        private void RejectRequest_Click(object sender, RoutedEventArgs e)
+        private void Click_RejectRequest(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null) return;
             var requester = ItemFromButton((Button)sender);
@@ -300,7 +312,7 @@ namespace CodenamesClient.GameUI.Pages
             RefreshFriendsUi();
         }
 
-        private void RemoveFriend_Click(object sender, RoutedEventArgs e)
+        private void Click_RemoveFriend(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null) return;
             var friend = ItemFromButton((Button)sender);

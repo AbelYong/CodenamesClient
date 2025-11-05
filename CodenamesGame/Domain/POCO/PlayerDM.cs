@@ -1,5 +1,4 @@
 ﻿using System;
-using FriendPlayer = CodenamesGame.FriendService.Player;
 
 namespace CodenamesGame.Domain.POCO
 {
@@ -47,7 +46,7 @@ namespace CodenamesGame.Domain.POCO
             return svPlayer;
         }
 
-        public static PlayerDM AssemblePlayer(FriendPlayer player)
+        public static PlayerDM AssemblePlayer(FriendService.Player player)
         {
             if (player == null)
             {
