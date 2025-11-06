@@ -91,6 +91,11 @@
     <Compile Include="Operation\Validation\LoginValidation.cs" />
     <Compile Include="Operation\Validation\ProfileValidation.cs" />
     <Compile Include="Operation\Validation\SignInValidation.cs" />
+    <Compile Include="Properties\Langs\GameWords.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameWords.resx</DependentUpon>
+    </Compile>
     <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\BoardUI\BoardPage.xaml">
       <SubType>Designer</SubType>
@@ -181,6 +186,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Langs\GameWords.es.resx" />
+    <EmbeddedResource Include="Properties\Langs\GameWords.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameWords.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Langs\Lang.es.resx" />
     <EmbeddedResource Include="Properties\Langs\Lang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -1,0 +1,1320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="wordAfrica" xml:space="preserve">
+    <value>África</value>
+  </data>
+  <data name="wordAgent" xml:space="preserve">
+    <value>Agente</value>
+  </data>
+  <data name="wordAir" xml:space="preserve">
+    <value>Aire</value>
+  </data>
+  <data name="wordAlien" xml:space="preserve">
+    <value>Alien</value>
+  </data>
+  <data name="wordAlps" xml:space="preserve">
+    <value>Alpes</value>
+  </data>
+  <data name="wordAmazon" xml:space="preserve">
+    <value>Amazonia</value>
+  </data>
+  <data name="wordAmbulance" xml:space="preserve">
+    <value>Ambulancia</value>
+  </data>
+  <data name="wordAmerica" xml:space="preserve">
+    <value>América</value>
+  </data>
+  <data name="wordAngel" xml:space="preserve">
+    <value>Ángel</value>
+  </data>
+  <data name="wordAntarctica" xml:space="preserve">
+    <value>Antártida</value>
+  </data>
+  <data name="wordApple" xml:space="preserve">
+    <value>Manzana</value>
+  </data>
+  <data name="wordArm" xml:space="preserve">
+    <value>Brazo</value>
+  </data>
+  <data name="wordAtlantis" xml:space="preserve">
+    <value>Atlántida</value>
+  </data>
+  <data name="wordAustralia" xml:space="preserve">
+    <value>Australia</value>
+  </data>
+  <data name="wordAztec" xml:space="preserve">
+    <value>Azteca</value>
+  </data>
+  <data name="wordBack" xml:space="preserve">
+    <value>Espalda</value>
+  </data>
+  <data name="wordBall" xml:space="preserve">
+    <value>Esfera</value>
+  </data>
+  <data name="wordBand" xml:space="preserve">
+    <value>Banda</value>
+  </data>
+  <data name="wordBank" xml:space="preserve">
+    <value>Banco</value>
+  </data>
+  <data name="wordBar" xml:space="preserve">
+    <value>Bar</value>
+  </data>
+  <data name="wordBark" xml:space="preserve">
+    <value>Ladrido</value>
+  </data>
+  <data name="wordBat" xml:space="preserve">
+    <value>Murciélago</value>
+  </data>
+  <data name="wordBattery" xml:space="preserve">
+    <value>Batería</value>
+  </data>
+  <data name="wordBeach" xml:space="preserve">
+    <value>Playa</value>
+  </data>
+  <data name="wordBear" xml:space="preserve">
+    <value>Oso</value>
+  </data>
+  <data name="wordBeat" xml:space="preserve">
+    <value>Ritmo</value>
+  </data>
+  <data name="wordBed" xml:space="preserve">
+    <value>Cama</value>
+  </data>
+  <data name="wordBeijing" xml:space="preserve">
+    <value>Pekín</value>
+  </data>
+  <data name="wordBell" xml:space="preserve">
+    <value>Campana</value>
+  </data>
+  <data name="wordBelt" xml:space="preserve">
+    <value>Cinturón</value>
+  </data>
+  <data name="wordBerlin" xml:space="preserve">
+    <value>Berlín</value>
+  </data>
+  <data name="wordBermuda" xml:space="preserve">
+    <value>Bermuda</value>
+  </data>
+  <data name="wordBerry" xml:space="preserve">
+    <value>Baya</value>
+  </data>
+  <data name="wordBill" xml:space="preserve">
+    <value>Billete</value>
+  </data>
+  <data name="wordBlock" xml:space="preserve">
+    <value>Bloque</value>
+  </data>
+  <data name="wordBoard" xml:space="preserve">
+    <value>Tabla</value>
+  </data>
+  <data name="wordBolt" xml:space="preserve">
+    <value>Tornillo</value>
+  </data>
+  <data name="wordBomb" xml:space="preserve">
+    <value>Bomba</value>
+  </data>
+  <data name="wordBond" xml:space="preserve">
+    <value>Unión</value>
+  </data>
+  <data name="wordBoom" xml:space="preserve">
+    <value>Bum</value>
+  </data>
+  <data name="wordBoot" xml:space="preserve">
+    <value>Bota</value>
+  </data>
+  <data name="wordBottle" xml:space="preserve">
+    <value>Botella</value>
+  </data>
+  <data name="wordBow" xml:space="preserve">
+    <value>Arco</value>
+  </data>
+  <data name="wordBox" xml:space="preserve">
+    <value>Caja</value>
+  </data>
+  <data name="wordBridge" xml:space="preserve">
+    <value>Puente</value>
+  </data>
+  <data name="wordBrush" xml:space="preserve">
+    <value>Cepillo</value>
+  </data>
+  <data name="wordBuck" xml:space="preserve">
+    <value>Venado</value>
+  </data>
+  <data name="wordBuffalo" xml:space="preserve">
+    <value>Búfalo</value>
+  </data>
+  <data name="wordBug" xml:space="preserve">
+    <value>Insecto</value>
+  </data>
+  <data name="wordBugle" xml:space="preserve">
+    <value>Corneta</value>
+  </data>
+  <data name="wordButton" xml:space="preserve">
+    <value>Botón</value>
+  </data>
+  <data name="wordCalf" xml:space="preserve">
+    <value>Becerro</value>
+  </data>
+  <data name="wordCanada" xml:space="preserve">
+    <value>Canadá</value>
+  </data>
+  <data name="wordCap" xml:space="preserve">
+    <value>Gorra</value>
+  </data>
+  <data name="wordCapital" xml:space="preserve">
+    <value>Capital</value>
+  </data>
+  <data name="wordCar" xml:space="preserve">
+    <value>Carro</value>
+  </data>
+  <data name="wordCard" xml:space="preserve">
+    <value>Carta</value>
+  </data>
+  <data name="wordCarrot" xml:space="preserve">
+    <value>Zanahoria</value>
+  </data>
+  <data name="wordCasino" xml:space="preserve">
+    <value>Casino</value>
+  </data>
+  <data name="wordCast" xml:space="preserve">
+    <value>Audición</value>
+  </data>
+  <data name="wordCat" xml:space="preserve">
+    <value>Gato</value>
+  </data>
+  <data name="wordCell" xml:space="preserve">
+    <value>Célula</value>
+  </data>
+  <data name="wordCentaur" xml:space="preserve">
+    <value>Centauro</value>
+  </data>
+  <data name="wordCenter" xml:space="preserve">
+    <value>Centro</value>
+  </data>
+  <data name="wordChair" xml:space="preserve">
+    <value>Silla</value>
+  </data>
+  <data name="wordChange" xml:space="preserve">
+    <value>Cambio</value>
+  </data>
+  <data name="wordCharge" xml:space="preserve">
+    <value>Carga</value>
+  </data>
+  <data name="wordCheck" xml:space="preserve">
+    <value>Chequeo</value>
+  </data>
+  <data name="wordChest" xml:space="preserve">
+    <value>Torso</value>
+  </data>
+  <data name="wordChick" xml:space="preserve">
+    <value>Polluelo</value>
+  </data>
+  <data name="wordChina" xml:space="preserve">
+    <value>China</value>
+  </data>
+  <data name="wordChocolate" xml:space="preserve">
+    <value>Chocolate</value>
+  </data>
+  <data name="wordChurch" xml:space="preserve">
+    <value>Iglesia</value>
+  </data>
+  <data name="wordCircle" xml:space="preserve">
+    <value>Círculo</value>
+  </data>
+  <data name="wordCliff" xml:space="preserve">
+    <value>Acantilado</value>
+  </data>
+  <data name="wordCloak" xml:space="preserve">
+    <value>Manto</value>
+  </data>
+  <data name="wordClub" xml:space="preserve">
+    <value>Club</value>
+  </data>
+  <data name="wordCode" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="wordCold" xml:space="preserve">
+    <value>Frío</value>
+  </data>
+  <data name="wordComic" xml:space="preserve">
+    <value>Historieta</value>
+  </data>
+  <data name="wordCompound" xml:space="preserve">
+    <value>Compuesto</value>
+  </data>
+  <data name="wordConcert" xml:space="preserve">
+    <value>Concierto</value>
+  </data>
+  <data name="wordConductor" xml:space="preserve">
+    <value>Chófer</value>
+  </data>
+  <data name="wordContract" xml:space="preserve">
+    <value>Contrato</value>
+  </data>
+  <data name="wordCook" xml:space="preserve">
+    <value>Cocinero</value>
+  </data>
+  <data name="wordCopper" xml:space="preserve">
+    <value>Cobre</value>
+  </data>
+  <data name="wordCotton" xml:space="preserve">
+    <value>Algodón</value>
+  </data>
+  <data name="wordCourt" xml:space="preserve">
+    <value>Corte</value>
+  </data>
+  <data name="wordCover" xml:space="preserve">
+    <value>Cobertura</value>
+  </data>
+  <data name="wordCrane" xml:space="preserve">
+    <value>Grúa</value>
+  </data>
+  <data name="wordCrash" xml:space="preserve">
+    <value>Choque</value>
+  </data>
+  <data name="wordCricket" xml:space="preserve">
+    <value>Críquet</value>
+  </data>
+  <data name="wordCross" xml:space="preserve">
+    <value>Cruz</value>
+  </data>
+  <data name="wordCrown" xml:space="preserve">
+    <value>Corona</value>
+  </data>
+  <data name="wordCycle" xml:space="preserve">
+    <value>Ciclo</value>
+  </data>
+  <data name="wordCzech" xml:space="preserve">
+    <value>Checa</value>
+  </data>
+  <data name="wordDance" xml:space="preserve">
+    <value>Baile</value>
+  </data>
+  <data name="wordDate" xml:space="preserve">
+    <value>Cita</value>
+  </data>
+  <data name="wordDay" xml:space="preserve">
+    <value>Día</value>
+  </data>
+  <data name="wordDeath" xml:space="preserve">
+    <value>Muerte</value>
+  </data>
+  <data name="wordDeck" xml:space="preserve">
+    <value>Mazo</value>
+  </data>
+  <data name="wordDegree" xml:space="preserve">
+    <value>Grado</value>
+  </data>
+  <data name="wordDiamond" xml:space="preserve">
+    <value>Diamante</value>
+  </data>
+  <data name="wordDice" xml:space="preserve">
+    <value>Dado</value>
+  </data>
+  <data name="wordDinosaur" xml:space="preserve">
+    <value>Dinosaurio</value>
+  </data>
+  <data name="wordDisease" xml:space="preserve">
+    <value>Enfermedad</value>
+  </data>
+  <data name="wordDoctor" xml:space="preserve">
+    <value>Doctor</value>
+  </data>
+  <data name="wordDog" xml:space="preserve">
+    <value>Perro</value>
+  </data>
+  <data name="wordDraft" xml:space="preserve">
+    <value>Bosquejo</value>
+  </data>
+  <data name="wordDragon" xml:space="preserve">
+    <value>Dragón</value>
+  </data>
+  <data name="wordDress" xml:space="preserve">
+    <value>Vestido</value>
+  </data>
+  <data name="wordDrill" xml:space="preserve">
+    <value>Taladro</value>
+  </data>
+  <data name="wordDrop" xml:space="preserve">
+    <value>Tirar</value>
+  </data>
+  <data name="wordDuck" xml:space="preserve">
+    <value>Pato</value>
+  </data>
+  <data name="wordDwarf" xml:space="preserve">
+    <value>Enano</value>
+  </data>
+  <data name="wordEagle" xml:space="preserve">
+    <value>Águila</value>
+  </data>
+  <data name="wordEgypt" xml:space="preserve">
+    <value>Egipto</value>
+  </data>
+  <data name="wordEmbassy" xml:space="preserve">
+    <value>Embajada</value>
+  </data>
+  <data name="wordEngine" xml:space="preserve">
+    <value>Motor</value>
+  </data>
+  <data name="wordEngland" xml:space="preserve">
+    <value>Inglaterra</value>
+  </data>
+  <data name="wordEurope" xml:space="preserve">
+    <value>Europa</value>
+  </data>
+  <data name="wordEye" xml:space="preserve">
+    <value>Ojo</value>
+  </data>
+  <data name="wordFace" xml:space="preserve">
+    <value>Rostro</value>
+  </data>
+  <data name="wordFair" xml:space="preserve">
+    <value>Justo</value>
+  </data>
+  <data name="wordFall" xml:space="preserve">
+    <value>Caída</value>
+  </data>
+  <data name="wordFan" xml:space="preserve">
+    <value>Ventilador</value>
+  </data>
+  <data name="wordFence" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="wordField" xml:space="preserve">
+    <value>Campo</value>
+  </data>
+  <data name="wordFighter" xml:space="preserve">
+    <value>Luchador</value>
+  </data>
+  <data name="wordFigure" xml:space="preserve">
+    <value>Figura</value>
+  </data>
+  <data name="wordFile" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="wordFilm" xml:space="preserve">
+    <value>Cinta</value>
+  </data>
+  <data name="wordFire" xml:space="preserve">
+    <value>Fuego</value>
+  </data>
+  <data name="wordFish" xml:space="preserve">
+    <value>Pez</value>
+  </data>
+  <data name="wordFlute" xml:space="preserve">
+    <value>Flauta</value>
+  </data>
+  <data name="wordFly" xml:space="preserve">
+    <value>Mosca</value>
+  </data>
+  <data name="wordFoot" xml:space="preserve">
+    <value>Pie</value>
+  </data>
+  <data name="wordForce" xml:space="preserve">
+    <value>Fuerza</value>
+  </data>
+  <data name="wordForest" xml:space="preserve">
+    <value>Bosque</value>
+  </data>
+  <data name="wordFork" xml:space="preserve">
+    <value>Tenedor</value>
+  </data>
+  <data name="wordFrance" xml:space="preserve">
+    <value>Francia</value>
+  </data>
+  <data name="wordGame" xml:space="preserve">
+    <value>Juego</value>
+  </data>
+  <data name="wordGas" xml:space="preserve">
+    <value>Gas</value>
+  </data>
+  <data name="wordGenius" xml:space="preserve">
+    <value>Genio</value>
+  </data>
+  <data name="wordGermany" xml:space="preserve">
+    <value>Alemania</value>
+  </data>
+  <data name="wordGhost" xml:space="preserve">
+    <value>Fantasma</value>
+  </data>
+  <data name="wordGiant" xml:space="preserve">
+    <value>Gigante</value>
+  </data>
+  <data name="wordGlass" xml:space="preserve">
+    <value>Vidrio</value>
+  </data>
+  <data name="wordGlove" xml:space="preserve">
+    <value>Guante</value>
+  </data>
+  <data name="wordGold" xml:space="preserve">
+    <value>Oro</value>
+  </data>
+  <data name="wordGrace" xml:space="preserve">
+    <value>Gracia</value>
+  </data>
+  <data name="wordGrass" xml:space="preserve">
+    <value>Pasto</value>
+  </data>
+  <data name="wordGreece" xml:space="preserve">
+    <value>Grecia</value>
+  </data>
+  <data name="wordGreen" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="wordGround" xml:space="preserve">
+    <value>Suelo</value>
+  </data>
+  <data name="wordHam" xml:space="preserve">
+    <value>Jamón</value>
+  </data>
+  <data name="wordHand" xml:space="preserve">
+    <value>Mano</value>
+  </data>
+  <data name="wordHawk" xml:space="preserve">
+    <value>Halcón</value>
+  </data>
+  <data name="wordHead" xml:space="preserve">
+    <value>Cabeza</value>
+  </data>
+  <data name="wordHeart" xml:space="preserve">
+    <value>Corazón</value>
+  </data>
+  <data name="wordHelicopter" xml:space="preserve">
+    <value>Helicóptero</value>
+  </data>
+  <data name="wordHimalayas" xml:space="preserve">
+    <value>Himalaya</value>
+  </data>
+  <data name="wordHole" xml:space="preserve">
+    <value>Agujero</value>
+  </data>
+  <data name="wordHollywood" xml:space="preserve">
+    <value>Hollywood</value>
+  </data>
+  <data name="wordHoney" xml:space="preserve">
+    <value>Miel</value>
+  </data>
+  <data name="wordHood" xml:space="preserve">
+    <value>Capucha</value>
+  </data>
+  <data name="wordHook" xml:space="preserve">
+    <value>Gancho</value>
+  </data>
+  <data name="wordHorn" xml:space="preserve">
+    <value>Cuerno</value>
+  </data>
+  <data name="wordHorse" xml:space="preserve">
+    <value>Caballo</value>
+  </data>
+  <data name="wordHorseshoe" xml:space="preserve">
+    <value>Herradura</value>
+  </data>
+  <data name="wordHospital" xml:space="preserve">
+    <value>Hospital</value>
+  </data>
+  <data name="wordHotel" xml:space="preserve">
+    <value>Hotel</value>
+  </data>
+  <data name="wordIce" xml:space="preserve">
+    <value>Hielo</value>
+  </data>
+  <data name="wordIceCream" xml:space="preserve">
+    <value>Helado</value>
+  </data>
+  <data name="wordIndia" xml:space="preserve">
+    <value>India</value>
+  </data>
+  <data name="wordIron" xml:space="preserve">
+    <value>Hierro</value>
+  </data>
+  <data name="wordIvory" xml:space="preserve">
+    <value>Marfil</value>
+  </data>
+  <data name="wordJack" xml:space="preserve">
+    <value>Enchufe</value>
+  </data>
+  <data name="wordJam" xml:space="preserve">
+    <value>Mermelada</value>
+  </data>
+  <data name="wordJet" xml:space="preserve">
+    <value>Jet</value>
+  </data>
+  <data name="wordJupiter" xml:space="preserve">
+    <value>Júpiter</value>
+  </data>
+  <data name="wordKangaroo" xml:space="preserve">
+    <value>Canguro</value>
+  </data>
+  <data name="wordKetchup" xml:space="preserve">
+    <value>Kétchup</value>
+  </data>
+  <data name="wordKey" xml:space="preserve">
+    <value>Llave</value>
+  </data>
+  <data name="wordKid" xml:space="preserve">
+    <value>Niño</value>
+  </data>
+  <data name="wordKing" xml:space="preserve">
+    <value>Rey</value>
+  </data>
+  <data name="wordKiwi" xml:space="preserve">
+    <value>Kiwi</value>
+  </data>
+  <data name="wordKnife" xml:space="preserve">
+    <value>Cuchillo</value>
+  </data>
+  <data name="wordKnight" xml:space="preserve">
+    <value>Caballero</value>
+  </data>
+  <data name="wordLab" xml:space="preserve">
+    <value>Laboratorio</value>
+  </data>
+  <data name="wordLap" xml:space="preserve">
+    <value>Vuelta</value>
+  </data>
+  <data name="wordLaser" xml:space="preserve">
+    <value>Láser</value>
+  </data>
+  <data name="wordLawyer" xml:space="preserve">
+    <value>Abogado</value>
+  </data>
+  <data name="wordLead" xml:space="preserve">
+    <value>Plomo</value>
+  </data>
+  <data name="wordLemon" xml:space="preserve">
+    <value>Limón</value>
+  </data>
+  <data name="wordLeprechaun" xml:space="preserve">
+    <value>Duende</value>
+  </data>
+  <data name="wordLife" xml:space="preserve">
+    <value>Vida</value>
+  </data>
+  <data name="wordLight" xml:space="preserve">
+    <value>Luz</value>
+  </data>
+  <data name="wordLimousine" xml:space="preserve">
+    <value>Limusina</value>
+  </data>
+  <data name="wordLine" xml:space="preserve">
+    <value>Línea</value>
+  </data>
+  <data name="wordLink" xml:space="preserve">
+    <value>Enlace</value>
+  </data>
+  <data name="wordLion" xml:space="preserve">
+    <value>León</value>
+  </data>
+  <data name="wordLitter" xml:space="preserve">
+    <value>Basura</value>
+  </data>
+  <data name="wordLochNess" xml:space="preserve">
+    <value>Lago Ness</value>
+  </data>
+  <data name="wordLock" xml:space="preserve">
+    <value>Cerradura</value>
+  </data>
+  <data name="wordLog" xml:space="preserve">
+    <value>Tronco</value>
+  </data>
+  <data name="wordLondon" xml:space="preserve">
+    <value>Londres</value>
+  </data>
+  <data name="wordLuck" xml:space="preserve">
+    <value>Suerte</value>
+  </data>
+  <data name="wordMail" xml:space="preserve">
+    <value>Correo</value>
+  </data>
+  <data name="wordMammoth" xml:space="preserve">
+    <value>Mamut</value>
+  </data>
+  <data name="wordMaple" xml:space="preserve">
+    <value>Maple</value>
+  </data>
+  <data name="wordMarble" xml:space="preserve">
+    <value>Mármol</value>
+  </data>
+  <data name="wordMarch" xml:space="preserve">
+    <value>Marzo</value>
+  </data>
+  <data name="wordMass" xml:space="preserve">
+    <value>Masa</value>
+  </data>
+  <data name="wordMatch" xml:space="preserve">
+    <value>Cerillo</value>
+  </data>
+  <data name="wordMercury" xml:space="preserve">
+    <value>Mercurio</value>
+  </data>
+  <data name="wordMexico" xml:space="preserve">
+    <value>México</value>
+  </data>
+  <data name="wordMicroscope" xml:space="preserve">
+    <value>Microscopio</value>
+  </data>
+  <data name="wordMillionaire" xml:space="preserve">
+    <value>Millonario</value>
+  </data>
+  <data name="wordMine" xml:space="preserve">
+    <value>Mina</value>
+  </data>
+  <data name="wordMint" xml:space="preserve">
+    <value>Menta</value>
+  </data>
+  <data name="wordMissile" xml:space="preserve">
+    <value>Misil</value>
+  </data>
+  <data name="wordModel" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="wordMole" xml:space="preserve">
+    <value>Topo</value>
+  </data>
+  <data name="wordMoon" xml:space="preserve">
+    <value>Luna</value>
+  </data>
+  <data name="wordMoscow" xml:space="preserve">
+    <value>Moscú</value>
+  </data>
+  <data name="wordMount" xml:space="preserve">
+    <value>Monte</value>
+  </data>
+  <data name="wordMouse" xml:space="preserve">
+    <value>Ratón</value>
+  </data>
+  <data name="wordMouth" xml:space="preserve">
+    <value>Boca</value>
+  </data>
+  <data name="wordMug" xml:space="preserve">
+    <value>Taza</value>
+  </data>
+  <data name="wordNail" xml:space="preserve">
+    <value>Clavo</value>
+  </data>
+  <data name="wordNeedle" xml:space="preserve">
+    <value>Aguja</value>
+  </data>
+  <data name="wordNet" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="wordNewYork" xml:space="preserve">
+    <value>Nueva York</value>
+  </data>
+  <data name="wordNight" xml:space="preserve">
+    <value>Noche</value>
+  </data>
+  <data name="wordNinja" xml:space="preserve">
+    <value>Ninja</value>
+  </data>
+  <data name="wordNote" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="wordNovel" xml:space="preserve">
+    <value>Novela</value>
+  </data>
+  <data name="wordNurse" xml:space="preserve">
+    <value>Enfermera</value>
+  </data>
+  <data name="wordNut" xml:space="preserve">
+    <value>Nuez</value>
+  </data>
+  <data name="wordOctopus" xml:space="preserve">
+    <value>Pulpo</value>
+  </data>
+  <data name="wordOil" xml:space="preserve">
+    <value>Aceite</value>
+  </data>
+  <data name="wordOlive" xml:space="preserve">
+    <value>Oliva</value>
+  </data>
+  <data name="wordOlympus" xml:space="preserve">
+    <value>Olimpo</value>
+  </data>
+  <data name="wordOpera" xml:space="preserve">
+    <value>Ópera</value>
+  </data>
+  <data name="wordOrange" xml:space="preserve">
+    <value>Naranja</value>
+  </data>
+  <data name="wordOrgan" xml:space="preserve">
+    <value>Organ</value>
+  </data>
+  <data name="wordPalm" xml:space="preserve">
+    <value>Palma</value>
+  </data>
+  <data name="wordPan" xml:space="preserve">
+    <value>Sartén</value>
+  </data>
+  <data name="wordPants" xml:space="preserve">
+    <value>Pantalón</value>
+  </data>
+  <data name="wordPaper" xml:space="preserve">
+    <value>Papel</value>
+  </data>
+  <data name="wordParachute" xml:space="preserve">
+    <value>Paracaídas</value>
+  </data>
+  <data name="wordPark" xml:space="preserve">
+    <value>Parque</value>
+  </data>
+  <data name="wordPart" xml:space="preserve">
+    <value>Parte</value>
+  </data>
+  <data name="wordPass" xml:space="preserve">
+    <value>Pase</value>
+  </data>
+  <data name="wordPaste" xml:space="preserve">
+    <value>Pasta</value>
+  </data>
+  <data name="wordPenguin" xml:space="preserve">
+    <value>Pingüino</value>
+  </data>
+  <data name="wordPhoenix" xml:space="preserve">
+    <value>Fénix</value>
+  </data>
+  <data name="wordPiano" xml:space="preserve">
+    <value>Piano</value>
+  </data>
+  <data name="wordPie" xml:space="preserve">
+    <value>Pay</value>
+  </data>
+  <data name="wordPilot" xml:space="preserve">
+    <value>Piloto</value>
+  </data>
+  <data name="wordPin" xml:space="preserve">
+    <value>Alfiler</value>
+  </data>
+  <data name="wordPipe" xml:space="preserve">
+    <value>Tubería</value>
+  </data>
+  <data name="wordPirate" xml:space="preserve">
+    <value>Pirata</value>
+  </data>
+  <data name="wordPistol" xml:space="preserve">
+    <value>Pistola</value>
+  </data>
+  <data name="wordPit" xml:space="preserve">
+    <value>Fosa</value>
+  </data>
+  <data name="wordPitch" xml:space="preserve">
+    <value>Paso</value>
+  </data>
+  <data name="wordPlane" xml:space="preserve">
+    <value>Avión</value>
+  </data>
+  <data name="wordPlastic" xml:space="preserve">
+    <value>Plástico</value>
+  </data>
+  <data name="wordPlate" xml:space="preserve">
+    <value>Placa</value>
+  </data>
+  <data name="wordPlatypus" xml:space="preserve">
+    <value>Ornitorrinco</value>
+  </data>
+  <data name="wordPlay" xml:space="preserve">
+    <value>Jugar</value>
+  </data>
+  <data name="wordPlot" xml:space="preserve">
+    <value>Trama</value>
+  </data>
+  <data name="wordPoint" xml:space="preserve">
+    <value>Punto</value>
+  </data>
+  <data name="wordPoison" xml:space="preserve">
+    <value>Veneno</value>
+  </data>
+  <data name="wordPole" xml:space="preserve">
+    <value>Tubo</value>
+  </data>
+  <data name="wordPolice" xml:space="preserve">
+    <value>Policía</value>
+  </data>
+  <data name="wordPool" xml:space="preserve">
+    <value>Piscina</value>
+  </data>
+  <data name="wordPort" xml:space="preserve">
+    <value>Puerto</value>
+  </data>
+  <data name="wordPost" xml:space="preserve">
+    <value>Puesto</value>
+  </data>
+  <data name="wordPond" xml:space="preserve">
+    <value>Estanque</value>
+  </data>
+  <data name="wordPress" xml:space="preserve">
+    <value>Prensa</value>
+  </data>
+  <data name="wordPrincess" xml:space="preserve">
+    <value>Princesa</value>
+  </data>
+  <data name="wordPumpkin" xml:space="preserve">
+    <value>Calabaza</value>
+  </data>
+  <data name="wordPupil" xml:space="preserve">
+    <value>Pupila</value>
+  </data>
+  <data name="wordPyramid" xml:space="preserve">
+    <value>Pirámide</value>
+  </data>
+  <data name="wordQueen" xml:space="preserve">
+    <value>Reina</value>
+  </data>
+  <data name="wordRabbit" xml:space="preserve">
+    <value>Conejo</value>
+  </data>
+  <data name="wordRacket" xml:space="preserve">
+    <value>Raqueta</value>
+  </data>
+  <data name="wordRay" xml:space="preserve">
+    <value>Rayo</value>
+  </data>
+  <data name="wordRevolution" xml:space="preserve">
+    <value>Revolución</value>
+  </data>
+  <data name="wordRing" xml:space="preserve">
+    <value>Anillo</value>
+  </data>
+  <data name="wordRobin" xml:space="preserve">
+    <value>Robin</value>
+  </data>
+  <data name="wordRobot" xml:space="preserve">
+    <value>Robot</value>
+  </data>
+  <data name="wordRock" xml:space="preserve">
+    <value>Roca</value>
+  </data>
+  <data name="wordRome" xml:space="preserve">
+    <value>Roma</value>
+  </data>
+  <data name="wordRoot" xml:space="preserve">
+    <value>Raíz</value>
+  </data>
+  <data name="wordRose" xml:space="preserve">
+    <value>Rosa</value>
+  </data>
+  <data name="wordRoulette" xml:space="preserve">
+    <value>Ruleta</value>
+  </data>
+  <data name="wordRound" xml:space="preserve">
+    <value>Ronda</value>
+  </data>
+  <data name="wordRow" xml:space="preserve">
+    <value>Fila</value>
+  </data>
+  <data name="wordRuler" xml:space="preserve">
+    <value>Regla</value>
+  </data>
+  <data name="wordSatellite" xml:space="preserve">
+    <value>Satélite</value>
+  </data>
+  <data name="wordSaturn" xml:space="preserve">
+    <value>Saturno</value>
+  </data>
+  <data name="wordScale" xml:space="preserve">
+    <value>Escala</value>
+  </data>
+  <data name="wordSchool" xml:space="preserve">
+    <value>Escuela</value>
+  </data>
+  <data name="wordScientist" xml:space="preserve">
+    <value>Científico</value>
+  </data>
+  <data name="wordScorpion" xml:space="preserve">
+    <value>Escorpión</value>
+  </data>
+  <data name="wordScreen" xml:space="preserve">
+    <value>Pantalla</value>
+  </data>
+  <data name="wordScubaDiver" xml:space="preserve">
+    <value>Buzo</value>
+  </data>
+  <data name="wordSeal" xml:space="preserve">
+    <value>Foca</value>
+  </data>
+  <data name="wordServer" xml:space="preserve">
+    <value>Servidor</value>
+  </data>
+  <data name="wordShadow" xml:space="preserve">
+    <value>Sombra</value>
+  </data>
+  <data name="wordShakespeare" xml:space="preserve">
+    <value>Shakespeare</value>
+  </data>
+  <data name="wordShark" xml:space="preserve">
+    <value>Tiburón</value>
+  </data>
+  <data name="wordShip" xml:space="preserve">
+    <value>Barco</value>
+  </data>
+  <data name="wordShoe" xml:space="preserve">
+    <value>Zapato</value>
+  </data>
+  <data name="wordShot" xml:space="preserve">
+    <value>Disparo</value>
+  </data>
+  <data name="wordSink" xml:space="preserve">
+    <value>Lavabo</value>
+  </data>
+  <data name="wordSkyscraper" xml:space="preserve">
+    <value>Rascacielos</value>
+  </data>
+  <data name="wordSlip" xml:space="preserve">
+    <value>Desliz</value>
+  </data>
+  <data name="wordSlug" xml:space="preserve">
+    <value>Babosa</value>
+  </data>
+  <data name="wordSmuggler" xml:space="preserve">
+    <value>Contrabandista</value>
+  </data>
+  <data name="wordSnow" xml:space="preserve">
+    <value>Nieve</value>
+  </data>
+  <data name="wordSnowman" xml:space="preserve">
+    <value>Yeti</value>
+  </data>
+  <data name="wordSock" xml:space="preserve">
+    <value>Calcetín</value>
+  </data>
+  <data name="wordSoldier" xml:space="preserve">
+    <value>Soldado</value>
+  </data>
+  <data name="wordSoul" xml:space="preserve">
+    <value>Alma</value>
+  </data>
+  <data name="wordSound" xml:space="preserve">
+    <value>Sonido</value>
+  </data>
+  <data name="wordSpace" xml:space="preserve">
+    <value>Espacio</value>
+  </data>
+  <data name="wordSpell" xml:space="preserve">
+    <value>Hechizo</value>
+  </data>
+  <data name="wordSpider" xml:space="preserve">
+    <value>Araña</value>
+  </data>
+  <data name="wordSpike" xml:space="preserve">
+    <value>Pincho</value>
+  </data>
+  <data name="wordSpine" xml:space="preserve">
+    <value>Espina</value>
+  </data>
+  <data name="wordSpot" xml:space="preserve">
+    <value>Sitio</value>
+  </data>
+  <data name="wordSpring" xml:space="preserve">
+    <value>Primavera</value>
+  </data>
+  <data name="wordSpy" xml:space="preserve">
+    <value>Espía</value>
+  </data>
+  <data name="wordSquare" xml:space="preserve">
+    <value>Cuadrado</value>
+  </data>
+  <data name="wordStadium" xml:space="preserve">
+    <value>Estadio</value>
+  </data>
+  <data name="wordStaff" xml:space="preserve">
+    <value>Personal</value>
+  </data>
+  <data name="wordStar" xml:space="preserve">
+    <value>Estrella</value>
+  </data>
+  <data name="wordState" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="wordStick" xml:space="preserve">
+    <value>Palo</value>
+  </data>
+  <data name="wordStock" xml:space="preserve">
+    <value>Ganado</value>
+  </data>
+  <data name="wordStraw" xml:space="preserve">
+    <value>Paja</value>
+  </data>
+  <data name="wordStream" xml:space="preserve">
+    <value>Arrollo</value>
+  </data>
+  <data name="wordStrike" xml:space="preserve">
+    <value>Ataque</value>
+  </data>
+  <data name="wordString" xml:space="preserve">
+    <value>Cuerda</value>
+  </data>
+  <data name="wordSub" xml:space="preserve">
+    <value>Sub</value>
+  </data>
+  <data name="wordSuit" xml:space="preserve">
+    <value>Traje</value>
+  </data>
+  <data name="wordSuperhero" xml:space="preserve">
+    <value>Superhéroe</value>
+  </data>
+  <data name="wordSwing" xml:space="preserve">
+    <value>Balanceo</value>
+  </data>
+  <data name="wordSwitch" xml:space="preserve">
+    <value>Alternador</value>
+  </data>
+  <data name="wordTable" xml:space="preserve">
+    <value>Mesa</value>
+  </data>
+  <data name="wordTablet" xml:space="preserve">
+    <value>Tableta</value>
+  </data>
+  <data name="wordTag" xml:space="preserve">
+    <value>Etiqueta</value>
+  </data>
+  <data name="wordTail" xml:space="preserve">
+    <value>Cola</value>
+  </data>
+  <data name="wordTap" xml:space="preserve">
+    <value>Grifo</value>
+  </data>
+  <data name="wordTeacher" xml:space="preserve">
+    <value>Profesor</value>
+  </data>
+  <data name="wordTelescope" xml:space="preserve">
+    <value>Telescopio</value>
+  </data>
+  <data name="wordTemple" xml:space="preserve">
+    <value>Templo</value>
+  </data>
+  <data name="wordTheater" xml:space="preserve">
+    <value>Teatro</value>
+  </data>
+  <data name="wordThief" xml:space="preserve">
+    <value>Ladrón</value>
+  </data>
+  <data name="wordThumb" xml:space="preserve">
+    <value>Pulgar</value>
+  </data>
+  <data name="wordTick" xml:space="preserve">
+    <value>Garrapata</value>
+  </data>
+  <data name="wordTie" xml:space="preserve">
+    <value>Corbata</value>
+  </data>
+  <data name="wordTime" xml:space="preserve">
+    <value>Tiempo</value>
+  </data>
+  <data name="wordTokyo" xml:space="preserve">
+    <value>Tokyo</value>
+  </data>
+  <data name="wordTooth" xml:space="preserve">
+    <value>Diente</value>
+  </data>
+  <data name="wordTorch" xml:space="preserve">
+    <value>Antorcha</value>
+  </data>
+  <data name="wordTower" xml:space="preserve">
+    <value>Torre</value>
+  </data>
+  <data name="wordTrack" xml:space="preserve">
+    <value>Pista</value>
+  </data>
+  <data name="wordTrain" xml:space="preserve">
+    <value>Tren</value>
+  </data>
+  <data name="wordTriangle" xml:space="preserve">
+    <value>Triángulo</value>
+  </data>
+  <data name="wordTrip" xml:space="preserve">
+    <value>Viaje</value>
+  </data>
+  <data name="wordTrunk" xml:space="preserve">
+    <value>Baúl</value>
+  </data>
+  <data name="wordTube" xml:space="preserve">
+    <value>Metro</value>
+  </data>
+  <data name="wordTurkey" xml:space="preserve">
+    <value>Pavo</value>
+  </data>
+  <data name="wordUndertaker" xml:space="preserve">
+    <value>Sepulturero</value>
+  </data>
+  <data name="wordUnicorn" xml:space="preserve">
+    <value>Unicornio</value>
+  </data>
+  <data name="wordVan" xml:space="preserve">
+    <value>Van</value>
+  </data>
+  <data name="wordVet" xml:space="preserve">
+    <value>Veterano</value>
+  </data>
+  <data name="wordVoid" xml:space="preserve">
+    <value>Vacío</value>
+  </data>
+  <data name="wordWake" xml:space="preserve">
+    <value>Despertar</value>
+  </data>
+  <data name="wordWall" xml:space="preserve">
+    <value>Muro</value>
+  </data>
+  <data name="wordWar" xml:space="preserve">
+    <value>Guerra</value>
+  </data>
+  <data name="wordWasher" xml:space="preserve">
+    <value>Lavadora</value>
+  </data>
+  <data name="wordWashington" xml:space="preserve">
+    <value>Washington</value>
+  </data>
+  <data name="wordWatch" xml:space="preserve">
+    <value>Reloj</value>
+  </data>
+  <data name="wordWater" xml:space="preserve">
+    <value>Agua</value>
+  </data>
+  <data name="wordWave" xml:space="preserve">
+    <value>Ola</value>
+  </data>
+  <data name="wordWeb" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="wordWell" xml:space="preserve">
+    <value>Pozo</value>
+  </data>
+  <data name="wordWhale" xml:space="preserve">
+    <value>Ballena</value>
+  </data>
+  <data name="wordWhip" xml:space="preserve">
+    <value>Látigo</value>
+  </data>
+  <data name="wordWind" xml:space="preserve">
+    <value>Viento</value>
+  </data>
+  <data name="wordWitch" xml:space="preserve">
+    <value>Bruja</value>
+  </data>
+  <data name="wordWorm" xml:space="preserve">
+    <value>Gusano</value>
+  </data>
+  <data name="wordYard" xml:space="preserve">
+    <value>Patio</value>
+  </data>
+  <data name="wordShop" xml:space="preserve">
+    <value>Tienda</value>
+  </data>
+</root>
