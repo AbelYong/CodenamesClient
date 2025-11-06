@@ -5,25 +5,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodenamesGame.Network
 {
     public class SessionOperation : ISessionManagerCallback
     {
         private const string _ENDPOINT_NAME = "NetTcpBinding_ISessionManager";
-        private readonly InstanceContext _context;
-        private readonly SessionManagerClient _client;
+        private SessionManagerClient _client;
+        private List<PlayerDM> _onlineFriends { get; set; }
 
         public SessionOperation()
         {
-            _context = new InstanceContext(this);
-            _client = new SessionManagerClient(_context, _ENDPOINT_NAME);
+            InitializeCallbackChannel();
+        }
+
+        private void InitializeCallbackChannel()
+        {
+            InstanceContext context = new InstanceContext(this);
+            _client = new SessionManagerClient(context, _ENDPOINT_NAME);
         }
 
         public bool Connect(PlayerDM player)
         {
+            if (_client == null)
+            {
+                InitializeCallbackChannel();
+            }
+
             Player svPlayer = PlayerDM.AssembleSessionSvPlayer(player);
             try
             {
@@ -32,6 +40,7 @@ namespace CodenamesGame.Network
             }
             catch (EndpointNotFoundException)
             {
+                Util.NetworkUtil.SafeClose(_client);
                 return false;
             }
         }
@@ -41,27 +50,45 @@ namespace CodenamesGame.Network
             Player svPlayer = PlayerDM.AssembleSessionSvPlayer(player);
             try
             {
-                _client.Disconnect(svPlayer);
+                _client.DisconnectAsync(svPlayer);
             }
             catch (EndpointNotFoundException)
             {
-                //TODO log
+                Util.NetworkUtil.SafeClose(_client);
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+                Util.NetworkUtil.SafeClose(_client);
             }
         }
 
         public void NotifyFriendOffline(Guid playerId)
         {
-            //TODO
+            Guid? auxFriendId = playerId;
+            _onlineFriends.RemoveAll((friend) => friend.PlayerID == auxFriendId);
         }
 
         public void NotifyFriendOnline(Player player)
         {
-            //TODO
+            PlayerDM auxFriend = PlayerDM.AssemblePlayer(player);
+            if (auxFriend != null)
+            {
+                _onlineFriends.Add(auxFriend);
+            }
         }
 
         public void ReceiveOnlineFriends(Player[] friends)
         {
-            //TODO
+            List<PlayerDM> auxFriends = new List<PlayerDM>();
+            foreach (Player friend in friends)
+            {
+                PlayerDM auxFriend = PlayerDM.AssemblePlayer(friend);
+                if (auxFriend != null)
+                {
+                    auxFriends.Add(auxFriend);
+                }
+            }
+            _onlineFriends = auxFriends;
         }
     }
 }

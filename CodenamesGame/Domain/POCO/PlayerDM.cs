@@ -22,28 +22,22 @@ namespace CodenamesGame.Domain.POCO
         {
 
         }
+
         public static PlayerDM AssemblePlayer(UserService.Player svPlayer)
         {
-            PlayerDM player = new PlayerDM();
-            player.PlayerID = svPlayer.PlayerID;
-            player.Username = svPlayer.Username;
-            player.AvatarID = svPlayer.AvatarID;
-            player.Name = svPlayer.Name;
-            player.LastName = svPlayer.LastName;
-            player.FacebookUsername = svPlayer.FacebookUsername;
-            player.InstagramUsername = svPlayer.InstagramUsername;
-            player.DiscordUsername = svPlayer.DiscordUsername;
-            player.User = UserDM.AssembleUser(svPlayer.User);
+            PlayerDM player = new PlayerDM
+            {
+                PlayerID = svPlayer.PlayerID,
+                Username = svPlayer.Username,
+                AvatarID = svPlayer.AvatarID,
+                Name = svPlayer.Name,
+                LastName = svPlayer.LastName,
+                FacebookUsername = svPlayer.FacebookUsername,
+                InstagramUsername = svPlayer.InstagramUsername,
+                DiscordUsername = svPlayer.DiscordUsername,
+                User = UserDM.AssembleUser(svPlayer.User)
+            };
             return player;
-        }
-
-        public static AuthenticationService.Player AssembleAuthSvPlayer(PlayerDM player)
-        {
-            AuthenticationService.Player svPlayer = new AuthenticationService.Player();
-            svPlayer.Username = player.Username;
-            svPlayer.Name = player.Name;
-            svPlayer.LastName = player.LastName;
-            return svPlayer;
         }
 
         public static PlayerDM AssemblePlayer(FriendService.Player player)
@@ -59,6 +53,34 @@ namespace CodenamesGame.Domain.POCO
                 Name = player.Name,
                 LastName = player.LastName
             };
+        }
+
+        public static PlayerDM AssemblePlayer(SessionService.Player player)
+        {
+            if (player == null)
+            {
+                return null;
+            }
+            return new PlayerDM
+            {
+                PlayerID = player.PlayerID,
+                Username = player.Username,
+                AvatarID = player.AvatarID,
+                Name = player.Name,
+                LastName = player.LastName,
+                FacebookUsername = player.FacebookUsername,
+                InstagramUsername = player.InstagramUsername,
+                DiscordUsername = player.DiscordUsername,
+            };
+        }
+
+        public static AuthenticationService.Player AssembleAuthSvPlayer(PlayerDM player)
+        {
+            AuthenticationService.Player svPlayer = new AuthenticationService.Player();
+            svPlayer.Username = player.Username;
+            svPlayer.Name = player.Name;
+            svPlayer.LastName = player.LastName;
+            return svPlayer;
         }
 
         public static UserService.Player AssembleUserSvPlayer(PlayerDM player)
