@@ -17,6 +17,7 @@ namespace CodenamesClient.GameUI.ViewModels
         private readonly SessionOperation _session;
         private PlayerDM _player;
         private string _username;
+        private bool _hasPlayerConnection;
         private bool _isPlayerGuest;
 
         public MainMenuViewModel(PlayerDM player)
@@ -82,7 +83,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (player != null)
             {
-                _session.Connect(player);
+                _hasPlayerConnection = _session.Connect(player);
             }
         }
 

@@ -83,6 +83,7 @@
     <Compile Include="GameUI\ProfileWindow.xaml.cs">
       <DependentUpon>ProfileWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameUI\ViewModels\BoardViewModel.cs" />
     <Compile Include="GameUI\ViewModels\LobbyViewModel.cs" />
     <Compile Include="GameUI\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />

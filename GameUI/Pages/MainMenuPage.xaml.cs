@@ -47,7 +47,7 @@ namespace CodenamesClient.GameUI.Pages
         }
 
         /*
-         * ProfileControl is created in code, instead of the XAML, because WPF cannot find
+         * ProfileControl is created in code instead of the XAML, because WPF cannot find
          * the resources needed to generate ProfileControl in design time, so we instantiate it
          * directly in code, thus event handling logic (close, save profile) is more code reliant 
          */
@@ -126,6 +126,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_btnQuit(object sender, RoutedEventArgs e)
         {
+            _viewModel.Disconnect(_viewModel.Player);
             Application.Current.Shutdown();
         }
 

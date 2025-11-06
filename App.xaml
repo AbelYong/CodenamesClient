@@ -228,5 +228,46 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <!-- toggle button that keeps background while disabed-->
+        <Style x:Key="dynamicImageToggleButton" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+
+                            <ContentPresenter x:Name="contentPresenter"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Content="{TemplateBinding Content}" />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FFE0E0E0" />
+                                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.5" />
+                            </Trigger>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True" />
+                                    <Condition Property="IsEnabled" Value="False" />
+                                </MultiTrigger.Conditions>
+
+                                <Setter TargetName="border" 
+                                Property="Background" 
+                                Value="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                                <Setter TargetName="border" Property="Opacity" Value="0.7" />
+                                <Setter TargetName="contentPresenter" Property="Opacity" Value="0.5" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

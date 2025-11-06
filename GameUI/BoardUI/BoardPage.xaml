@@ -4,6 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CodenamesClient.GameUI.BoardUI"
+      xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
+      xmlns:viewmodels="clr-namespace:CodenamesClient.GameUI.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodels:BoardViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="640" d:DesignWidth="1024"
       Title="BoardPage" Background="LightGray">
@@ -13,7 +16,7 @@
             <!-- Instructions, keycard and party-->
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" MinHeight="150">
                 <!-- Turn stackpanel-->
-                <StackPanel MinWidth="400" HorizontalAlignment="Left">
+                <StackPanel MinWidth="365" HorizontalAlignment="Left">
                     <Label Content="Player's turn"
                            Style="{StaticResource title}" Foreground="Black" />
                     <TextBlock Text="Instructions" IsEnabled="False"
@@ -122,38 +125,40 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <!-- first row-->
-                    <ToggleButton Grid.Row="0" Grid.Column="0" Background="Beige" />
-                    <ToggleButton Grid.Row="0" Grid.Column="1" Background="Beige" />
-                    <ToggleButton Grid.Row="0" Grid.Column="2" Background="Beige" />
-                    <ToggleButton Grid.Row="0" Grid.Column="3" Background="Beige" />
-                    <ToggleButton Grid.Row="0" Grid.Column="4" Background="Beige" />
+                    <ToggleButton Grid.Row="0" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="0" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="0" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="0" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="0" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
                     <!-- second row-->
-                    <ToggleButton Grid.Row="1" Grid.Column="0" Background="Beige" />
-                    <ToggleButton Grid.Row="1" Grid.Column="1" Background="Beige" />
-                    <ToggleButton Grid.Row="1" Grid.Column="2" Background="Beige" />
-                    <ToggleButton Grid.Row="1" Grid.Column="3" Background="Beige" />
-                    <ToggleButton Grid.Row="1" Grid.Column="4" Background="Beige" />
+                    <ToggleButton Grid.Row="1" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="1" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="1" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="1" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="1" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
                     <!-- third row-->
-                    <ToggleButton Grid.Row="2" Grid.Column="0" Background="Beige" />
-                    <ToggleButton Grid.Row="2" Grid.Column="1" Background="Beige" />
-                    <ToggleButton Grid.Row="2" Grid.Column="2" Background="Beige" />
-                    <ToggleButton Grid.Row="2" Grid.Column="3" Background="Beige" />
-                    <ToggleButton Grid.Row="2" Grid.Column="4" Background="Beige" />
+                    <ToggleButton Grid.Row="2" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="2" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="2" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="2" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="2" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
                     <!-- forth row-->
-                    <ToggleButton Grid.Row="3" Grid.Column="0" Background="Beige" />
-                    <ToggleButton Grid.Row="3" Grid.Column="1" Background="Beige" />
-                    <ToggleButton Grid.Row="3" Grid.Column="2" Background="Beige" />
-                    <ToggleButton Grid.Row="3" Grid.Column="3" Background="Beige" />
-                    <ToggleButton Grid.Row="3" Grid.Column="4" Background="Beige" />
+                    <ToggleButton Grid.Row="3" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="3" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="3" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="3" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="3" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
                     <!-- fifth row-->
-                    <ToggleButton Grid.Row="4" Grid.Column="0" Background="Beige" />
-                    <ToggleButton Grid.Row="4" Grid.Column="1" Background="Beige" />
-                    <ToggleButton Grid.Row="4" Grid.Column="2" Background="Beige" />
-                    <ToggleButton Grid.Row="4" Grid.Column="3" Background="Beige" />
-                    <ToggleButton Grid.Row="4" Grid.Column="4" Background="Beige" />
+                    <ToggleButton Grid.Row="4" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="4" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="4" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="4" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
+                    <ToggleButton Grid.Row="4" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" />
                 </Grid>
                 <!-- Token stack panel-->
                 <StackPanel VerticalAlignment="Center">
+                    <Label Content="Timer" Style="{StaticResource subtitle}" Foreground="Black" />
+                    <Label Content="30" Style="{StaticResource title}" Foreground="Black" />
                     <Label Content="Timer Tokens" Style="{StaticResource normal}" Foreground="Black"/>
                     <Label Content="x0" Style="{StaticResource title}" Background="Gray" MinWidth="100" MinHeight="50" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Foreground="Black" />
                     <Label Content="Bystander Tokens" Style="{StaticResource normal}" Foreground="Black"/>
