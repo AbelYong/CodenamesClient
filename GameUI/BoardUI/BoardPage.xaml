@@ -11,7 +11,7 @@
       d:DesignHeight="640" d:DesignWidth="1024"
       Title="BoardPage" Background="LightGray">
 
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,10,0">
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10">
         <DockPanel LastChildFill="False">
             <!-- Instructions, keycard and party-->
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" MinHeight="150">
@@ -24,7 +24,7 @@
                 </StackPanel>
                 <!-- Keycard stackpanel-->
                 <StackPanel>
-                    <Label Content="Your keycard"
+                    <Label Content="{x:Static language:Lang.matchYourkeycard}"
                            Style="{StaticResource subtitle}" Foreground="Black" />
                     <Grid x:Name="gridKeycard" MinHeight="150" MinWidth="250" Margin="50,0,50,0">
                         <Grid.ColumnDefinitions>
@@ -74,13 +74,19 @@
                     </Grid>
                 </StackPanel>
                 <!-- Party stackpanel-->
-                <StackPanel MinWidth="255" HorizontalAlignment="Right">
-                    <Button Click="Click_QuitMatch" Style="{StaticResource imageButtonFocus}" Height="50" Width="150">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/Assets/BoardUI/exit.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Label Content="Party"
+                <StackPanel MinWidth="255">
+                    <StackPanel MinWidth="255" Orientation="Horizontal">
+                        <StackPanel>
+                            <TextBlock Grid.Row="0" Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="Black"/>
+                            <TextBlock Grid.Row="1" Text="00:00" Style="{StaticResource subtitle}" Foreground="Black" HorizontalAlignment="Center" />
+                        </StackPanel>
+                        <Button Click="Click_QuitMatch" Style="{StaticResource imageButtonFocus}" MinHeight="60" MinWidth="125">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/Assets/BoardUI/exit.png"/>
+                            </Button.Background>
+                        </Button>
+                    </StackPanel>
+                    <Label Content="{x:Static language:Lang.matchParty}"
                            Style="{StaticResource title}" Foreground="Black" />
                     <Label Content="Player" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
                            Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="Black" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
@@ -94,11 +100,11 @@
                 <Grid Background="#333333" VerticalAlignment="Center">
                     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel DockPanel.Dock="Top" Margin="10,10,10,10">
-                            <Label Content="Cross-Talker™" Style="{StaticResource normal}"/>
-                            <ListView Height="290" Background="#225E08"/>
+                            <Label Content="Cross-Talker™" Style="{StaticResource normal}" FontSize="20" Foreground="Gray"/>
+                            <ListView Height="250" Background="#225E08"/>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,10,10">
-                            <TextBox Text="Type a clue" FontStyle="Italic" MinWidth="150" VerticalContentAlignment="Center" >
+                            <TextBox Text="Type a clue" FontSize="16" FontFamily="Consolas" FontStyle="Italic" MinWidth="125" VerticalContentAlignment="Center" >
                             </TextBox>
                             <Button MinWidth="40" MinHeight="30" Style="{StaticResource imageButtonFocus}" Margin="30,0,0,0">
                                 <Button.Background>
@@ -109,7 +115,7 @@
                     </DockPanel>
                 </Grid>
                 <!-- Board-->
-                <Grid x:Name="gridBoard" MinWidth="550" Margin="30,35,30,35">
+                <Grid x:Name="gridBoard" MinWidth="550" MinHeight="350" Margin="30,0,30,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -157,12 +163,14 @@
                 </Grid>
                 <!-- Token stack panel-->
                 <StackPanel VerticalAlignment="Center">
-                    <Label Content="Timer" Style="{StaticResource subtitle}" Foreground="Black" />
-                    <Label Content="30" Style="{StaticResource title}" Foreground="Black" />
-                    <Label Content="Timer Tokens" Style="{StaticResource normal}" Foreground="Black"/>
-                    <Label Content="x0" Style="{StaticResource title}" Background="Gray" MinWidth="100" MinHeight="50" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Foreground="Black" />
-                    <Label Content="Bystander Tokens" Style="{StaticResource normal}" Foreground="Black"/>
-                    <Label Content="x0" Style="{StaticResource title}" Background="Khaki" Foreground="Black" MinWidth="100" MinHeight="50" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                    <Label Content="{x:Static language:Lang.matchTimer}" Style="{StaticResource subtitle}" Foreground="Black" />
+                    <Label Content="{Binding TurnTimer, StringFormat='s{0}'}" Style="{StaticResource title}" Foreground="Black" />
+                    <Label Content="{x:Static language:Lang.matchTimerTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="Black"/>
+                    <Label Content="{Binding TimerTokens, StringFormat='x{0}'}" Background="Gray" MinWidth="100" MinHeight="50"
+                           Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" />
+                    <Label Content="{x:Static language:Lang.matchBystanderTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="Black"/>
+                    <Label Content="{Binding BystanderTokens, StringFormat='x{0}'}" Background="Khaki"  MinWidth="100" MinHeight="50" 
+                           Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                 </StackPanel>
             </StackPanel>
         </DockPanel>

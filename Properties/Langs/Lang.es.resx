@@ -423,4 +423,13 @@
   <data name="globalGuest" xml:space="preserve">
     <value>Invitado</value>
   </data>
+  <data name="matchYourkeycard" xml:space="preserve">
+    <value>Tu tarjeta clave</value>
+  </data>
+  <data name="matchChronometer" xml:space="preserve">
+    <value>Cronómetro</value>
+  </data>
+  <data name="matchTimer" xml:space="preserve">
+    <value>Temporizador</value>
+  </data>
 </root>

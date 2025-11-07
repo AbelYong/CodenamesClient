@@ -10,6 +10,9 @@ namespace CodenamesClient.Operation
 {
     public static class PictureHandler
     {
+        public const int NUMBER_OF_AGENT_PICTURES = 15;
+        public const int NUMBER_OF_BYSTANDER_PICTURES = 7;
+        public const int NUMBER_OF_ASSASSIN_PICTURES = 3;
         private static readonly List<String> _agentPicturePaths = new List<string>
         {
             //Agents

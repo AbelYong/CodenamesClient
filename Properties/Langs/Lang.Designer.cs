@@ -448,11 +448,29 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Chronometer.
+        /// </summary>
+        public static string matchChronometer {
+            get {
+                return ResourceManager.GetString("matchChronometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Party.
         /// </summary>
         public static string matchParty {
             get {
                 return ResourceManager.GetString("matchParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Timer.
+        /// </summary>
+        public static string matchTimer {
+            get {
+                return ResourceManager.GetString("matchTimer", resourceCulture);
             }
         }
         
@@ -471,6 +489,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string matchTurnTimer {
             get {
                 return ResourceManager.GetString("matchTurnTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your keycard.
+        /// </summary>
+        public static string matchYourkeycard {
+            get {
+                return ResourceManager.GetString("matchYourkeycard", resourceCulture);
             }
         }
         

@@ -1,36 +1,50 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
     public class BoardViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public const int MAX_AGENTS = 15;
-        public const int MAX_ASSASSINS = 3;
-        public const int MAX_BYSTANDERS = 7;
+        private readonly Random random = new Random();
+        private DispatcherTimer _timer;
+        private readonly int[,] _agentsMatrix = new int[5, 5];
+        private readonly Dictionary<int, string> _keywords = new Dictionary<int, string>();
+        public const int MAX_GLOBAL_AGENTS = 15;
+        public const int MAX_GLOBAL_ASSASSINS = 3;
+        public const int MAX_GLOBAL_BYSTANDERS = 7;
+        public const int MAX_LOCAL_BYSTANDERS = 13;
         private int _turnTimer;
         private int _timerTokens;
         private int _bystanderTokens;
-        private readonly int[,] _agentsMatrix = new int[5, 5];
-        private readonly Random random = new Random();
         
         public List<int> AgentNumbers { get; set; }
-        public List<int> BystanderNumbers { get; set; }
 
         public BoardViewModel()
         {
             GenerateMockBoard();
+            GenerateMockWordList();
             InitializeAgents();
-            InitializeBystanders();
         }
 
         public int[,] AgentsMatrix { get; set; }
+
+        public Dictionary<int, string> Keywords
+        {
+            get
+            {
+                return _keywords;
+            }
+        }
 
         public int TurnTimer
         {
@@ -45,28 +59,28 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public string TimerTokens
+        public int TimerTokens
         {
             get
             {
-                return string.Format("x{0}", _timerTokens);
+                return _timerTokens;
             }
             set
             {
-                _timerTokens = int.Parse(value);
+                _timerTokens = value;
                 OnPropertyChanged(nameof(TimerTokens));
             }
         }
 
-        public string BystanderTokens
+        public int BystanderTokens
         {
             get
             {
-                return string.Format("x{0}", _bystanderTokens);
+                return _bystanderTokens;
             }
             set
             {
-                _bystanderTokens = int.Parse(value);
+                _bystanderTokens = value;
                 OnPropertyChanged(nameof(BystanderTokens));
             }
         }
@@ -86,10 +100,41 @@ namespace CodenamesClient.GameUI.ViewModels
             AgentsMatrix = _agentsMatrix;
         }
 
+        private void GenerateMockWordList()
+        {
+            _keywords.Clear();
+            const int numberOfWords = 400;
+            List<int> selectedWords = Enumerable.Range(0, numberOfWords).ToList();
+            Shuffle(selectedWords);
+
+            List<string> allWords = GetCurrentCultureWords();
+            int totalKeycards = MAX_GLOBAL_AGENTS + MAX_GLOBAL_BYSTANDERS + MAX_GLOBAL_ASSASSINS;
+            for (int i = 0; i < totalKeycards; i++)
+            {
+                _keywords.Add(i, allWords[selectedWords[i]]);
+            }
+        }
+
+        private List<string> GetCurrentCultureWords()
+        {
+            ResourceManager manager = Properties.Langs.GameWords.ResourceManager;
+            CultureInfo currentCulture = CultureInfo.CurrentUICulture;
+            ResourceSet resourceSet = manager.GetResourceSet(currentCulture, true, true);
+
+            if (resourceSet == null)
+            {
+                return new List<string>();
+                //TODO: Notify world list could not be found, end match
+            }
+            List<string> allWords = resourceSet.OfType<DictionaryEntry>()
+                .Where(entry => entry.Value is string).Select(entry => (string)entry.Value).ToList();
+            return allWords;
+        }
+
         private void SetAssassins(List<int> positions, int numberOfColumns)
         {
             const int ASSASSIN_CODE = 2;
-            for (int i = 0; i < MAX_ASSASSINS; i++)
+            for (int i = 0; i < MAX_GLOBAL_ASSASSINS; i++)
             {
                 int flatIndex = positions[i];
                 int row = flatIndex / numberOfColumns;
@@ -101,8 +146,8 @@ namespace CodenamesClient.GameUI.ViewModels
         private void SetBystanders(List<int> positions, int numberOfColumns)
         {
             const int BYSTANDER_CODE = 1;
-            int startIndex = MAX_ASSASSINS;
-            int endIndex = startIndex + MAX_BYSTANDERS;
+            int startIndex = MAX_GLOBAL_ASSASSINS;
+            int endIndex = startIndex + MAX_LOCAL_BYSTANDERS;
             for (int i = startIndex; i < endIndex; i++)
             {
                 int flatIndex = positions[i];
@@ -130,18 +175,9 @@ namespace CodenamesClient.GameUI.ViewModels
         private void InitializeAgents()
         {
             AgentNumbers = new List<int>();
-            for (int i = 0; i < MAX_AGENTS; i++)
+            for (int i = 0; i < MAX_GLOBAL_AGENTS; i++)
             {
                 AgentNumbers.Add(i);
-            }
-        }
-
-        private void InitializeBystanders()
-        {
-            BystanderNumbers = new List<int>();
-            for (int i = 0; i < MAX_BYSTANDERS; i++)
-            {
-                BystanderNumbers.Add(i);
             }
         }
 
