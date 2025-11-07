@@ -7,6 +7,7 @@ namespace CodenamesClient.GameUI.ViewModels
 {
     public class LobbyViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         private string _gamemodeName;
         private int _timerTokens;
         private int _bystanderTokens;
@@ -15,10 +16,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public string GamemodeName
         {
-            get
-            {
-                return _gamemodeName;
-            }
+            get => _gamemodeName;
             set
             {
                 _gamemodeName = value;
@@ -28,10 +26,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public int TimerTokens
         {
-            get
-            {
-                return _timerTokens;
-            }
+            get => _timerTokens;
             set
             {
                 _timerTokens = value;
@@ -41,10 +36,7 @@ namespace CodenamesClient.GameUI.ViewModels
         
         public int BystanderTokens
         {
-            get
-            {
-                return _bystanderTokens;
-            }
+            get => _bystanderTokens;
             set
             {
                 _bystanderTokens = value;
@@ -54,10 +46,7 @@ namespace CodenamesClient.GameUI.ViewModels
         
         public int TurnTimer
         {
-            get
-            {
-                return _turnTimer;
-            }
+            get => _turnTimer;
             set
             {
                 _turnTimer = value;
@@ -67,10 +56,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public bool IsCustomGame
         {
-            get
-            {
-                return _isCustomGame;
-            }
+            get => _isCustomGame;
             set
             {
                 _isCustomGame = value;
@@ -110,8 +96,6 @@ namespace CodenamesClient.GameUI.ViewModels
             BystanderTokens = NORMAL_BYSTANDER_TOKENS;
             TurnTimer = NORMAL_TIMER;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {

@@ -217,7 +217,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void GoToLobby(GamemodeDM mode)
         {
-            LobbyPage lobby = new LobbyPage(mode);
+            LobbyPage lobby = new LobbyPage(_viewModel.Player, mode);
             NavigationService.Navigate(lobby);
             GameModeGrid.Visibility = Visibility.Collapsed;
         }

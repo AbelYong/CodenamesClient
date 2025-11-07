@@ -59,9 +59,6 @@
     <Compile Include="GameUI\BoardUI\BoardPage.xaml.cs">
       <DependentUpon>BoardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameUI\LobbyWindow.xaml.cs">
-      <DependentUpon>LobbyWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GameUI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -80,9 +77,6 @@
     <Compile Include="GameUI\Pages\UserControls\SignInControl.xaml.cs">
       <DependentUpon>SignInControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameUI\ProfileWindow.xaml.cs">
-      <DependentUpon>ProfileWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GameUI\ViewModels\BoardViewModel.cs" />
     <Compile Include="GameUI\ViewModels\LobbyViewModel.cs" />
     <Compile Include="GameUI\ViewModels\MainMenuViewModel.cs" />
@@ -98,18 +92,6 @@
     </Compile>
     <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\BoardUI\BoardPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GameUI\LobbyWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GameUI\LoginWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GameUI\MainMenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,14 +119,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameUI\ProfileWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GameUI\SignInWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="StartWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -152,15 +126,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GameUI\LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GameUI\MainMenuWindow.xaml.cs">
-      <DependentUpon>MainMenuWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GameUI\SignInWindow.xaml.cs">
-      <DependentUpon>SignInWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Langs\Lang.Designer.cs">
       <AutoGen>True</AutoGen>

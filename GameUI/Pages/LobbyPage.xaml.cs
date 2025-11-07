@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace CodenamesClient.GameUI.Pages
 {
@@ -24,22 +25,42 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
-        public LobbyPage(GamemodeDM gamemode)
+        private GamemodeDM.GamemodeName _gamemodeName;
+        private PlayerDM _player;
+
+        public LobbyPage(PlayerDM player, GamemodeDM gamemode)
         {
             InitializeComponent();
             this._viewModel = new LobbyViewModel(gamemode);
             this.DataContext = _viewModel;
+            _gamemodeName = gamemode.name;
+            _player = player;
         }
 
         private void Click_StartGame(object sender, RoutedEventArgs e)
         {
-            BoardPage board = new BoardPage();
+            MatchDM match = PrepareMatch();
+            BoardPage board = new BoardPage(match);
             NavigationService.Navigate(board);
         }
 
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private MatchDM PrepareMatch()
+        {
+            MatchDM match = new MatchDM();
+            match.Rules = new GamemodeDM(_gamemodeName)
+            {
+                turnTimer = _viewModel.TurnTimer,
+                timerTokens = _viewModel.TimerTokens,
+                bystanderTokens = _viewModel.BystanderTokens,
+            };
+            match.Player = _player;
+            match.Companion = new PlayerDM(); //TODO get the real friend/stranger
+            return match;
         }
     }
 }

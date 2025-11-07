@@ -1,7 +1,9 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Operation;
+using CodenamesGame.Domain.POCO;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,12 +28,15 @@ namespace CodenamesClient.GameUI.BoardUI
         private const int BYSTANDER_CODE = 1;
         private const int ASSASSIN_CODE = 2;
 
-        public BoardPage()
+        public BoardPage(MatchDM match)
         {
             InitializeComponent();
-            _viewModel = new BoardViewModel();
+            _viewModel = new BoardViewModel(match);
             this.DataContext = _viewModel;
             DrawWords();
+            DrawKeycard();
+            _viewModel.StartChronometer();
+            _viewModel.StartTimer();
         }
 
         private void Click_QuitMatch(object sender, RoutedEventArgs e)
@@ -52,16 +57,28 @@ namespace CodenamesClient.GameUI.BoardUI
                         clickedButton.Background = GetAgentCardImage();
                         clickedButton.Content = string.Empty;
                         clickedButton.IsEnabled = false;
+                        _viewModel.StopTimer();
+                        _viewModel.AddTime(_viewModel.TurnLength);
+                        _viewModel.StartTimer();
                         break;
                     case BYSTANDER_CODE:
                         clickedButton.Background = GetBystanderCardImage();
                         clickedButton.Content = string.Empty;
                         clickedButton.IsEnabled = false;
+                        _viewModel.TurnTimer = 0;
+                        _viewModel.StopTimer();
+                        MessageBox.Show("Le diste a un civil, se ha terminado tu turno");
+                        MessageBox.Show("Ahora es tu turno nuevamente");
+                        _viewModel.TurnTimer = _viewModel.TurnLength;
+                        _viewModel.StartTimer();
                         break;
                     case ASSASSIN_CODE:
                         clickedButton.Background = GetAssassinCardImage();
                         clickedButton.Content = string.Empty;
                         clickedButton.IsEnabled = false;
+                        _viewModel.TurnTimer = 0;
+                        _viewModel.StopTimer();
+                        MessageBox.Show("Te encontraste con un asesino, fin del juego");
                         break;
                 }
             }
@@ -107,6 +124,30 @@ namespace CodenamesClient.GameUI.BoardUI
                 ToggleButton toggleButton = gridBoard.Children.OfType<ToggleButton>()
                     .FirstOrDefault(e => Grid.GetRow(e) == row && Grid.GetColumn(e) == column);
                 toggleButton.Content = word.Value;
+            }
+        }
+
+        private void DrawKeycard()
+        {
+            SolidColorBrush agentBrush = new SolidColorBrush(Colors.Green);
+            SolidColorBrush assasinBrush = new SolidColorBrush(Colors.Black);
+            for (int i = 0; i < gridKeycard.RowDefinitions.Count; i++)
+            {
+                for (int j = 0; j < gridKeycard.ColumnDefinitions.Count; j++)
+                {
+                    if (_viewModel.Keycard[i, j] == 0)
+                    {
+                        Rectangle rectangle = gridKeycard.Children.OfType<Rectangle>()
+                            .FirstOrDefault(e => Grid.GetRow(e) == i && Grid.GetColumn(e) == j);
+                        rectangle.Fill = agentBrush;
+                    }
+                    if (_viewModel.Keycard[i, j] == 2)
+                    {
+                        Rectangle rectangle = gridKeycard.Children.OfType<Rectangle>()
+                            .FirstOrDefault(e => Grid.GetRow(e) == i && Grid.GetColumn(e) == j);
+                        rectangle.Fill = assasinBrush;
+                    }
+                }
             }
         }
     }

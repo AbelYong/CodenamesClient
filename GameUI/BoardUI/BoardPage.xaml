@@ -77,8 +77,8 @@
                 <StackPanel MinWidth="255">
                     <StackPanel MinWidth="255" Orientation="Horizontal">
                         <StackPanel>
-                            <TextBlock Grid.Row="0" Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="Black"/>
-                            <TextBlock Grid.Row="1" Text="00:00" Style="{StaticResource subtitle}" Foreground="Black" HorizontalAlignment="Center" />
+                            <TextBlock Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="Black"/>
+                            <TextBlock Text="{Binding ElapsedTime, StringFormat='mm\\:ss'}" Style="{StaticResource subtitle}" Foreground="Black" HorizontalAlignment="Center" />
                         </StackPanel>
                         <Button Click="Click_QuitMatch" Style="{StaticResource imageButtonFocus}" MinHeight="60" MinWidth="125">
                             <Button.Background>
@@ -88,7 +88,7 @@
                     </StackPanel>
                     <Label Content="{x:Static language:Lang.matchParty}"
                            Style="{StaticResource title}" Foreground="Black" />
-                    <Label Content="Player" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
+                    <Label Content="{Binding PlayerUsername}" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
                            Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="Black" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
                     <Button Content="Friend" FontSize="24" Height="40"
                             Style="{StaticResource buttonCustomFocus}" Background="Beige" BorderBrush="Black" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" />

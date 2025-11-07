@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodenamesGame.Domain.POCO;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Resources;
 using System.Runtime.CompilerServices;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -14,44 +16,63 @@ namespace CodenamesClient.GameUI.ViewModels
 {
     public class BoardViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private readonly Random random = new Random();
-        private DispatcherTimer _timer;
-        private readonly int[,] _agentsMatrix = new int[5, 5];
-        private readonly Dictionary<int, string> _keywords = new Dictionary<int, string>();
         public const int MAX_GLOBAL_AGENTS = 15;
         public const int MAX_GLOBAL_ASSASSINS = 3;
         public const int MAX_GLOBAL_BYSTANDERS = 7;
         public const int MAX_LOCAL_BYSTANDERS = 13;
+        public event PropertyChangedEventHandler PropertyChanged;
+        public string PlayerUsername { get; set; }
+        private readonly Random random = new Random();
+        private DispatcherTimer _timer;
+        private DispatcherTimer _chronometer;
+        private TimeSpan _elapsedTime;
+        private const int MAX_ROWS = 5;
+        private const int MAX_COLUMNS = 5;
+        private readonly int[,] _agentsMatrix;
+        private readonly Dictionary<int, string> _keywords = new Dictionary<int, string>();
+        private readonly int[,] _keycardMatrix;
+        
         private int _turnTimer;
         private int _timerTokens;
         private int _bystanderTokens;
-        
+        private int _turnLenght;
+
         public List<int> AgentNumbers { get; set; }
 
-        public BoardViewModel()
+        public BoardViewModel(MatchDM match)
         {
-            GenerateMockBoard();
+            InitializeAgentNumbers();
+            _agentsMatrix = GenerateMockBoard();
             GenerateMockWordList();
-            InitializeAgents();
+            _keycardMatrix = GenerateMockBoard();
+            InitializeMatchData(match);
+            InitializeChronometer();
+            InitializeTimer();
         }
 
-        public int[,] AgentsMatrix { get; set; }
+        public int[,] AgentsMatrix
+        {
+            get => _agentsMatrix;
+        }
 
         public Dictionary<int, string> Keywords
         {
-            get
-            {
-                return _keywords;
-            }
+            get => _keywords;
+        }
+
+        public int[,] Keycard
+        {
+            get => _keycardMatrix;
+        }
+
+        public int TurnLength
+        {
+            get => _turnLenght;
         }
 
         public int TurnTimer
         {
-            get
-            { 
-                return _turnTimer;
-            }
+            get => _turnTimer;
             set
             {
                 _turnTimer = value;
@@ -61,10 +82,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public int TimerTokens
         {
-            get
-            {
-                return _timerTokens;
-            }
+            get => _timerTokens;
             set
             {
                 _timerTokens = value;
@@ -74,10 +92,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public int BystanderTokens
         {
-            get
-            {
-                return _bystanderTokens;
-            }
+            get => _bystanderTokens;
             set
             {
                 _bystanderTokens = value;
@@ -85,19 +100,82 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private void GenerateMockBoard()
+        public TimeSpan ElapsedTime
         {
-            int numberOfRows = _agentsMatrix.GetLength(0);
-            int numberOfColumns = _agentsMatrix.GetLength(1);
+            get => _elapsedTime;
+            set
+            {
+                _elapsedTime = value;
+                OnPropertyChanged(nameof(ElapsedTime));
+            }
+        }
+
+        private void InitializeAgentNumbers()
+        {
+            AgentNumbers = new List<int>();
+            for (int i = 0; i < MAX_GLOBAL_AGENTS; i++)
+            {
+                AgentNumbers.Add(i);
+            }
+        }
+
+        private int[,] GenerateMockBoard()
+        {
+            int[,] board = new int[MAX_ROWS, MAX_COLUMNS];
+            int numberOfRows = board.GetLength(0);
+            int numberOfColumns = board.GetLength(1);
             int totalSpots = numberOfRows * numberOfColumns;
 
-            Array.Clear(_agentsMatrix, 0, _agentsMatrix.Length);
+            Array.Clear(board, 0, board.Length);
             List<int> positions = Enumerable.Range(0, totalSpots).ToList();
 
             Shuffle(positions);
-            SetAssassins(positions, numberOfColumns);
-            SetBystanders(positions, numberOfColumns);
-            AgentsMatrix = _agentsMatrix;
+            SetAssassins(positions, board);
+            SetBystanders(positions, board);
+            return board;
+        }
+
+        private void SetAssassins(List<int> positions, int[,] board)
+        {
+            int numberOfColumns = board.GetLength(1);
+            const int ASSASSIN_CODE = 2;
+            for (int i = 0; i < MAX_GLOBAL_ASSASSINS; i++)
+            {
+                int flatIndex = positions[i];
+                int row = flatIndex / numberOfColumns;
+                int column = flatIndex % numberOfColumns;
+                board[row, column] = ASSASSIN_CODE;
+            }
+        }
+
+        private void SetBystanders(List<int> positions, int[,] board)
+        {
+            int numberOfColumns = board.GetLength(1);
+            const int BYSTANDER_CODE = 1;
+            int startIndex = MAX_GLOBAL_ASSASSINS;
+            int endIndex = startIndex + MAX_LOCAL_BYSTANDERS;
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                int flatIndex = positions[i];
+                int row = flatIndex / numberOfColumns;
+                int column = flatIndex % numberOfColumns;
+                board[row, column] = BYSTANDER_CODE;
+            }
+        }
+
+        private void Shuffle(List<int> positions)
+        {
+            //Shuffle the positions using Fisher-Yates algorithm
+            int n = positions.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+
+                int value = positions[k];
+                positions[k] = positions[n];
+                positions[n] = value;
+            }
         }
 
         private void GenerateMockWordList()
@@ -131,54 +209,80 @@ namespace CodenamesClient.GameUI.ViewModels
             return allWords;
         }
 
-        private void SetAssassins(List<int> positions, int numberOfColumns)
+        private void InitializeMatchData(MatchDM match)
         {
-            const int ASSASSIN_CODE = 2;
-            for (int i = 0; i < MAX_GLOBAL_ASSASSINS; i++)
+            _turnLenght = match.Rules.turnTimer;
+            _timerTokens = match.Rules.timerTokens;
+            _bystanderTokens = match.Rules.bystanderTokens;
+            PlayerUsername = match.Player.Username;
+        }
+
+        private void InitializeTimer()
+        {
+            _turnTimer = _turnLenght;
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += TimerTick;
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            if (TurnTimer > 0)
             {
-                int flatIndex = positions[i];
-                int row = flatIndex / numberOfColumns;
-                int column = flatIndex % numberOfColumns;
-                _agentsMatrix[row, column] = ASSASSIN_CODE;
+                TurnTimer--;
+            }
+            else
+            {
+                _timer.Stop();
             }
         }
 
-        private void SetBystanders(List<int> positions, int numberOfColumns)
+        public void StartTimer()
         {
-            const int BYSTANDER_CODE = 1;
-            int startIndex = MAX_GLOBAL_ASSASSINS;
-            int endIndex = startIndex + MAX_LOCAL_BYSTANDERS;
-            for (int i = startIndex; i < endIndex; i++)
+            _timer.Start();
+        }
+
+        public void AddTime(int seconds)
+        {
+            int turnLength = TurnTimer + seconds;
+            if (turnLength >= 60)
             {
-                int flatIndex = positions[i];
-                int row = flatIndex / numberOfColumns;
-                int column = flatIndex % numberOfColumns;
-                _agentsMatrix[row, column] = BYSTANDER_CODE;
+                const int MAX_TURN_LENGTH = 60;
+                TurnTimer = MAX_TURN_LENGTH;
+            }
+            else
+            {
+                TurnTimer = turnLength;
             }
         }
 
-        private void Shuffle(List<int> positions)
+        public void StopTimer()
         {
-            //Shuffle the positions using Fisher-Yates algorithm
-            int n = positions.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = random.Next(n + 1);
-
-                int value = positions[k];
-                positions[k] = positions[n];
-                positions[n] = value;
-            }
+            _timer.Stop();
         }
 
-        private void InitializeAgents()
+        private void InitializeChronometer()
         {
-            AgentNumbers = new List<int>();
-            for (int i = 0; i < MAX_GLOBAL_AGENTS; i++)
-            {
-                AgentNumbers.Add(i);
-            }
+            ElapsedTime = TimeSpan.Zero;
+            _chronometer = new DispatcherTimer();
+            _chronometer.Interval = TimeSpan.FromSeconds(1);
+            _chronometer.Tick += ChronometerTick;
+        }
+
+        private void ChronometerTick(object sender, EventArgs e)
+        {
+            ElapsedTime = ElapsedTime.Add(TimeSpan.FromSeconds(1));
+        }
+
+        public void StartChronometer()
+        {
+            _chronometer.Start();
+        }
+
+        public void StopChronometer()
+        {
+            _chronometer.Stop();
+            ElapsedTime =TimeSpan.Zero;
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

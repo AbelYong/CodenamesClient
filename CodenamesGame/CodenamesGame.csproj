@@ -69,6 +69,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Domain\POCO\GamemodeDM.cs" />
+    <Compile Include="Domain\POCO\MatchDM.cs" />
     <Compile Include="Domain\POCO\PlayerDM.cs" />
     <Compile Include="Domain\POCO\UserDM.cs" />
     <Compile Include="Network\EmailOperation.cs" />
