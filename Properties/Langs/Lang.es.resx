@@ -412,7 +412,7 @@
     <value>No se pudo enviar el código</value>
   </data>
   <data name="globalConnectionLost" xml:space="preserve">
-    <value>No te pudimos conectar al servidor de Codenames: Duet, por favor inténtalo más tarde</value>
+    <value>Has perdido la conexión al servidor de Codenames: Duet, por favor inténtalo más tarde</value>
   </data>
   <data name="globalServerError" xml:space="preserve">
     <value>Lo sentimos, no pudimos procesar tu solicitud debido a un error de nuestra parte, por favor inténtalo más tarde</value>
@@ -431,5 +431,11 @@
   </data>
   <data name="matchTimer" xml:space="preserve">
     <value>Temporizador</value>
+  </data>
+  <data name="globalTimeoutError" xml:space="preserve">
+    <value>Lo sentimos, parece que el servidor de Codenames: Duet no esta disponible, por favor inténtalo más tarde</value>
+  </data>
+  <data name="loginAlreadyLoggedInError" xml:space="preserve">
+    <value>Ya estas conectado en otro dispositivo, por favor desconéctate allí antes de conectarte aquí.</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using CodenamesClient.GameUI.Pages.UserControls;
+using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Validation;
 using CodenamesGame.AuthenticationService;
@@ -16,23 +17,33 @@ namespace CodenamesClient.GameUI.Pages
 {
     public partial class LoginPage : Page
     {
+        private LoginViewModel _viewModel;
         
         public LoginPage()
         {
             InitializeComponent();
+            _viewModel = new LoginViewModel();
+            DataContext = _viewModel;
+            _viewModel.ConnectionLost += ShowConnectionLostMessage;
         }
 
-        private void Click_btnLogin(object sender, RoutedEventArgs e)
+        private void ShowConnectionLostMessage()
+        {
+            string message = _viewModel.RequestErrorMessage;
+            MessageBox.Show(message);
+        }
+
+        private async void Click_btnLogin(object sender, RoutedEventArgs e)
         {
             string username = tBxUsername.Text;
             string password = pBxPassword.Password;
 
             if (ValidateLoginData(username, password))
             {
-                LoginRequest request = CodenamesGame.Network.UserOperation.Authenticate(username, password);
+                LoginRequest request = UserOperation.Authenticate(username, password);
                 if (request.IsSuccess)
                 {
-                    GoToMainMenuWindow(request.UserID);
+                    await BeginSession(request.UserID);
                 }
                 else
                 {
@@ -42,7 +53,7 @@ namespace CodenamesClient.GameUI.Pages
                     }
                     else
                     {
-                        MessageBox.Show(Util.StatusToMessageMapper.AuthCodeToMessage(request.StatusCode));
+                        MessageBox.Show(Util.StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode));
                     }
                 }
             }
@@ -60,24 +71,33 @@ namespace CodenamesClient.GameUI.Pages
             SignInControl.Visibility = Visibility.Collapsed;
         }
 
-        private void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
+        private async void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
         {
-            GoToMainMenuWindow(null);
+            await BeginSession(null);
         }
 
-        private void GoToMainMenuWindow(Guid? userID)
+        private async Task BeginSession(Guid? userID)
         {
-            MainMenuPage mainMenu;
             if (userID != null)
             {
                 Guid auxUserID = userID.Value;
                 PlayerDM player = UserOperation.GetPlayer(auxUserID);
-                mainMenu = new MainMenuPage(player);
-                NavigationService.Navigate(mainMenu);
+                await _viewModel.Connect(player);
+                GoToMainMenuWindow(player, false);
             }
             else
             {
-                mainMenu = new MainMenuPage(null);
+                PlayerDM guest = LoginViewModel.AssembleGuest();
+                await _viewModel.Connect(guest);
+                GoToMainMenuWindow(guest, true);
+            }
+        }
+
+        private void GoToMainMenuWindow(PlayerDM player, bool isGuest)
+        {
+            if (_viewModel.HasPlayerConnection)
+            {
+                MainMenuPage mainMenu = new MainMenuPage(player, _viewModel.Session, isGuest);
                 NavigationService.Navigate(mainMenu);
             }
         }

@@ -6,6 +6,8 @@
       xmlns:local="clr-namespace:CodenamesClient.GameUI.Pages"
       xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
       xmlns:uc="clr-namespace:CodenamesClient.GameUI.Pages.UserControls"
+      xmlns:viewmodels="clr-namespace:CodenamesClient.GameUI.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="640" d:DesignWidth="1024" Background="#FF1D1D1D"
       Title="LoginPage">

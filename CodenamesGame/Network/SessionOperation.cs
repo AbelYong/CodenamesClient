@@ -2,8 +2,6 @@
 using CodenamesGame.SessionService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
 
 namespace CodenamesGame.Network
@@ -25,40 +23,53 @@ namespace CodenamesGame.Network
             _client = new SessionManagerClient(context, _ENDPOINT_NAME);
         }
 
-        public bool Connect(PlayerDM player)
+        public CommunicationRequest Connect(PlayerDM player)
         {
             if (_client == null)
             {
                 InitializeCallbackChannel();
             }
 
+            CommunicationRequest request = new CommunicationRequest();
             Player svPlayer = PlayerDM.AssembleSessionSvPlayer(player);
             try
             {
-                _client.ConnectAsync(svPlayer);
-                return true;
+                request = _client.Connect(svPlayer);
             }
             catch (EndpointNotFoundException)
             {
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request.IsSuccess = false;
                 Util.NetworkUtil.SafeClose(_client);
-                return false;
+                _client = null;
             }
+            catch (TimeoutException)
+            {
+                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                request.IsSuccess = false;
+                Util.NetworkUtil.SafeClose(_client);
+                _client = null;
+            }
+            return request;
         }
 
         public void Disconnect(PlayerDM player)
         {
-            Player svPlayer = PlayerDM.AssembleSessionSvPlayer(player);
-            try
+            if (_client != null)
             {
-                _client.DisconnectAsync(svPlayer);
-            }
-            catch (EndpointNotFoundException)
-            {
-                Util.NetworkUtil.SafeClose(_client);
-            }
-            catch (CommunicationObjectFaultedException)
-            {
-                Util.NetworkUtil.SafeClose(_client);
+                Player svPlayer = PlayerDM.AssembleSessionSvPlayer(player);
+                try
+                {
+                    _client.DisconnectAsync(svPlayer);
+                }
+                catch (EndpointNotFoundException)
+                {
+                    Util.NetworkUtil.SafeClose(_client);
+                }
+                catch (CommunicationObjectFaultedException)
+                {
+                    Util.NetworkUtil.SafeClose(_client);
+                }
             }
         }
 

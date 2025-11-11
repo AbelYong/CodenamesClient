@@ -263,15 +263,140 @@ namespace CodenamesGame.SessionService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.CommunicationRequest))]
+    public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSuccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.SessionService.StatusCode StatusCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSuccess {
+            get {
+                return this.IsSuccessField;
+            }
+            set {
+                if ((this.IsSuccessField.Equals(value) != true)) {
+                    this.IsSuccessField = value;
+                    this.RaisePropertyChanged("IsSuccess");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.SessionService.StatusCode StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class LoginRequest : CodenamesGame.SessionService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> UserIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CommunicationRequest : CodenamesGame.SessionService.Request {
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    public enum StatusCode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OK = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CREATED = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UPDATED = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        MISSING_DATA = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WRONG_DATA = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNAUTHORIZED = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_ERROR = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNAVAIBLE = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_TIMEOUT = 8,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="SessionService.ISessionManager", CallbackContract=typeof(CodenamesGame.SessionService.ISessionManagerCallback))]
     public interface ISessionManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionManager/Connect", ReplyAction="http://tempuri.org/ISessionManager/ConnectResponse")]
-        void Connect(CodenamesGame.SessionService.Player player);
+        CodenamesGame.SessionService.CommunicationRequest Connect(CodenamesGame.SessionService.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionManager/Connect", ReplyAction="http://tempuri.org/ISessionManager/ConnectResponse")]
-        System.Threading.Tasks.Task ConnectAsync(CodenamesGame.SessionService.Player player);
+        System.Threading.Tasks.Task<CodenamesGame.SessionService.CommunicationRequest> ConnectAsync(CodenamesGame.SessionService.Player player);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/Disconnect")]
         void Disconnect(CodenamesGame.SessionService.Player player);
@@ -321,11 +446,11 @@ namespace CodenamesGame.SessionService {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void Connect(CodenamesGame.SessionService.Player player) {
-            base.Channel.Connect(player);
+        public CodenamesGame.SessionService.CommunicationRequest Connect(CodenamesGame.SessionService.Player player) {
+            return base.Channel.Connect(player);
         }
         
-        public System.Threading.Tasks.Task ConnectAsync(CodenamesGame.SessionService.Player player) {
+        public System.Threading.Tasks.Task<CodenamesGame.SessionService.CommunicationRequest> ConnectAsync(CodenamesGame.SessionService.Player player) {
             return base.Channel.ConnectAsync(player);
         }
         

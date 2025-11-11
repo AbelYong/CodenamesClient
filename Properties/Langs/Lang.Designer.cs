@@ -124,7 +124,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a We couldn&apos;t connect you to the Codenames: Duet Server. Please try again later.
+        ///   Busca una cadena traducida similar a You lost connection to the Codenames: Duet Server. Please try again later.
         /// </summary>
         public static string globalConnectionLost {
             get {
@@ -223,6 +223,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, the Codenames: Duet server seems to be unavailable, please try again later.
+        /// </summary>
+        public static string globalTimeoutError {
+            get {
+                return ResourceManager.GetString("globalTimeoutError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t process your request due to an unknown error.
         /// </summary>
         public static string globalUnknownServerError {
@@ -273,6 +282,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string lobbyRules {
             get {
                 return ResourceManager.GetString("lobbyRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You are already logged in on another device, please log out of that device before logging in here.
+        /// </summary>
+        public static string loginAlreadyLoggedInError {
+            get {
+                return ResourceManager.GetString("loginAlreadyLoggedInError", resourceCulture);
             }
         }
         

@@ -23,6 +23,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:simpleType name="StatusCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK" />
+      <xs:enumeration value="CREATED" />
+      <xs:enumeration value="UPDATED" />
+      <xs:enumeration value="MISSING_DATA" />
+      <xs:enumeration value="WRONG_DATA" />
+      <xs:enumeration value="UNAUTHORIZED" />
+      <xs:enumeration value="SERVER_ERROR" />
+      <xs:enumeration value="SERVER_UNAVAIBLE" />
+      <xs:enumeration value="SERVER_TIMEOUT" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="StatusCode" nillable="true" type="tns:StatusCode" />
   <xs:complexType name="ArrayOfPlayer">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Player" nillable="true" type="tns:Player" />

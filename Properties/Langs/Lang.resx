@@ -412,7 +412,7 @@
     <value>Could not send code</value>
   </data>
   <data name="globalConnectionLost" xml:space="preserve">
-    <value>We couldn't connect you to the Codenames: Duet Server. Please try again later</value>
+    <value>You lost connection to the Codenames: Duet Server. Please try again later</value>
   </data>
   <data name="globalServerError" xml:space="preserve">
     <value>Sorry, we couldn't process your request due to an error on our end, please try again later</value>
@@ -431,5 +431,11 @@
   </data>
   <data name="matchTimer" xml:space="preserve">
     <value>Timer</value>
+  </data>
+  <data name="globalTimeoutError" xml:space="preserve">
+    <value>Sorry, the Codenames: Duet server seems to be unavailable, please try again later</value>
+  </data>
+  <data name="loginAlreadyLoggedInError" xml:space="preserve">
+    <value>You are already logged in on another device, please log out of that device before logging in here</value>
   </data>
 </root>

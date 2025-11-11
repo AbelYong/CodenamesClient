@@ -1,12 +1,10 @@
 ﻿using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
+using CodenamesGame.SessionService;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CodenamesClient.GameUI.ViewModels
@@ -17,31 +15,19 @@ namespace CodenamesClient.GameUI.ViewModels
         private readonly SessionOperation _session;
         private PlayerDM _player;
         private string _username;
-        private bool _hasPlayerConnection;
         private bool _isPlayerGuest;
 
-        public MainMenuViewModel(PlayerDM player)
+        public MainMenuViewModel(PlayerDM player, SessionOperation session, bool isGuest)
         {
-            _session = new SessionOperation();
-            if (player != null)
-            {
-                Player = player;
-            }
-            else
-            {
-                Player = AssembleGuest();
-                IsPlayerGuest = true;
-            }
+            _session = session;
+            IsPlayerGuest = isGuest;
+            Player = player;
             Username = Player.Username;
-            Connect(Player);
         }
 
         public PlayerDM Player
         {
-            get
-            {
-                return _player;
-            }
+            get => _player;
             set
             {
                 _player = value;
@@ -51,10 +37,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public string Username
         {
-            get
-            {
-                return _username;
-            }
+            get => _username;
             set
             {
                 _username = value;
@@ -64,27 +47,17 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public bool IsPlayerGuest
         {
-            get
-            {
-                return _isPlayerGuest;
-            }
+            get => _isPlayerGuest;
             set
             {
                 _isPlayerGuest = value;
                 OnPropertyChanged();
             }
         }
+
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        private void Connect(PlayerDM player)
-        {
-            if (player != null)
-            {
-                _hasPlayerConnection = _session.Connect(player);
-            }
         }
 
         public void Disconnect(PlayerDM player)
@@ -93,16 +66,6 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 _session.Disconnect(player);
             }
-        }
-
-        private static PlayerDM AssembleGuest()
-        {
-            const int DEFAULT_AVATAR = 0;
-            PlayerDM guest = new PlayerDM();
-            guest.PlayerID = Guid.NewGuid();
-            guest.Username = Lang.globalGuest;
-            guest.AvatarID = DEFAULT_AVATAR;
-            return guest;
         }
     }
 }

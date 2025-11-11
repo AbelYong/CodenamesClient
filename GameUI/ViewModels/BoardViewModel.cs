@@ -16,12 +16,11 @@ namespace CodenamesClient.GameUI.ViewModels
 {
     public class BoardViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public const int MAX_GLOBAL_AGENTS = 15;
         public const int MAX_GLOBAL_ASSASSINS = 3;
         public const int MAX_GLOBAL_BYSTANDERS = 7;
         public const int MAX_LOCAL_BYSTANDERS = 13;
-        public event PropertyChangedEventHandler PropertyChanged;
-        public string PlayerUsername { get; set; }
         private readonly Random random = new Random();
         private DispatcherTimer _timer;
         private DispatcherTimer _chronometer;
@@ -49,6 +48,8 @@ namespace CodenamesClient.GameUI.ViewModels
             InitializeChronometer();
             InitializeTimer();
         }
+
+        public string PlayerUsername { get; set; }
 
         public int[,] AgentsMatrix
         {

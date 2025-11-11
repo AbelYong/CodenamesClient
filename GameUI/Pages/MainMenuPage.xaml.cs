@@ -5,26 +5,15 @@ using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace CodenamesClient.GameUI.Pages
 {
-    /// <summary>
-    /// Lógica de interacción para MainMenuPage.xaml
-    /// </summary>
     public partial class MainMenuPage : Page
     {
         private MainMenuViewModel _viewModel;
@@ -34,11 +23,11 @@ namespace CodenamesClient.GameUI.Pages
         private List<PlayerDM> _requests = new List<PlayerDM>();
         private List<PlayerDM> _search = new List<PlayerDM>();
 
-        public MainMenuPage(PlayerDM player)
+        public MainMenuPage(PlayerDM player, SessionOperation sesion, bool isGuest)
         {
             InitializeComponent();
-            _viewModel = new MainMenuViewModel(player);
-            this.DataContext = _viewModel;
+            _viewModel = new MainMenuViewModel(player, sesion, isGuest);
+            DataContext = _viewModel;
 
             _mediaPlayer = new MediaPlayer();
             _mediaPlayer.Open(new Uri("Main Theme (NOT FINAL).mp3", UriKind.Relative));

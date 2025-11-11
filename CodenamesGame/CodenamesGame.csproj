@@ -139,6 +139,9 @@
     <None Include="Connected Services\FriendService\item3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\SessionService\CodenamesGame.SessionService.CommunicationRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\SessionService\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -146,6 +149,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionService\item3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\SessionService.wsdl" />
