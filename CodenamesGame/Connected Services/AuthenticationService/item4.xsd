@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:complexType name="Match">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ResetResult">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="PlayerOne" nillable="true" type="q1:Player" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="PlayerTwo" nillable="true" type="q2:Player" />
-      <xs:element minOccurs="0" name="Rules" nillable="true" type="tns:MatchRules" />
-      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SelectedWords" nillable="true" type="q3:ArrayOfint" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Match" nillable="true" type="tns:Match" />
-  <xs:complexType name="MatchRules">
+  <xs:element name="ResetResult" nillable="true" type="tns:ResetResult" />
+  <xs:complexType name="BeginRegistrationResult">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BystanderTokens" type="xs:int" />
-      <xs:element minOccurs="0" name="GameMode" type="tns:GameMode" />
-      <xs:element minOccurs="0" name="MaxAssassins" type="xs:int" />
-      <xs:element minOccurs="0" name="TimerTokens" type="xs:int" />
-      <xs:element minOccurs="0" name="TurnTimer" type="xs:int" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequestId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="MatchRules" nillable="true" type="tns:MatchRules" />
-  <xs:simpleType name="GameMode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NORMAL" />
-      <xs:enumeration value="CUSTOM" />
-      <xs:enumeration value="COUNTERINTELLIGENCE" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="GameMode" nillable="true" type="tns:GameMode" />
+  <xs:element name="BeginRegistrationResult" nillable="true" type="tns:BeginRegistrationResult" />
+  <xs:complexType name="ConfirmRegistrationResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserId" nillable="true" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConfirmRegistrationResult" nillable="true" type="tns:ConfirmRegistrationResult" />
 </xs:schema>

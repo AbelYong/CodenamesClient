@@ -214,7 +214,7 @@
                     <StackPanel Orientation="Horizontal" Width="600">
                         <Image Source="/Assets/BoardUI/Agents/agent01.png" Width="30" Height="30" Margin="0,0,10,0"/>
                         <Button Content="{x:Static language:Lang.socialAccept}" Width="90" Click="Click_AcceptRequest"/>
-
+                        <Button Content="{x:Static language:Lang.socialReject}" Width="90" Click="Click_RejectRequest"/>
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate x:Key="SearchItemTemplate">
@@ -256,18 +256,18 @@
                     <ScrollViewer x:Name="FriendsAndRequestsView" Visibility="Visible">
                         <StackPanel>
                             <TextBlock Text="{x:Static language:Lang.socialRequests}" Margin="0,0,0,8" Foreground="White" FontWeight="Bold"/>
-                            <ListView x:Name="RequestsList" Background="#2D2D2D" BorderThickness="0"
+                            <ListView x:Name="RequestsList" ItemsSource="{Binding Requests}" Background="#2D2D2D" BorderThickness="0"
                                       Foreground="White" SelectionMode="Single"
                                       ItemTemplate="{StaticResource RequestItemTemplate}"/>
                             <TextBlock Text="{x:Static language:Lang.globalFriends}" Margin="0,20,0,8" Foreground="White" FontWeight="Bold"/>
-                            <ListView x:Name="FriendsList" Height="360" Background="#2D2D2D" BorderThickness="0"
+                            <ListView x:Name="FriendsList" ItemsSource="{Binding Friends}" Height="360" Background="#2D2D2D" BorderThickness="0"
                                       Foreground="White" SelectionMode="Single"
                                       ItemTemplate="{StaticResource FriendItemTemplate}"/>
                         </StackPanel>
                     </ScrollViewer>
                     <StackPanel x:Name="SearchView" Visibility="Collapsed">
                         <TextBlock Text="{x:Static language:Lang.socialSearchResults}" Margin="0,0,0,8" Foreground="White" FontWeight="Bold"/>
-                        <ListView x:Name="SearchResultsList" Height="360" Background="#2D2D2D" BorderThickness="0"
+                        <ListView x:Name="SearchResultsList" ItemsSource="{Binding SearchResults}" Height="360" Background="#2D2D2D" BorderThickness="0"
                                   Foreground="White" SelectionMode="Single"
                                   ItemTemplate="{StaticResource SearchItemTemplate}"/>
                     </StackPanel>

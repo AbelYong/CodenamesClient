@@ -4,108 +4,198 @@ using CodenamesGame.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 
 namespace CodenamesGame.Network
 {
-    public static class SocialOperation
+    /// <summary>
+    /// Manages communication with the IFriendManager duplex service.
+    /// Implemented as a Singleton to maintain a single active connection
+    /// that can receive callbacks.
+    /// </summary>
+    public sealed class SocialOperation
     {
         private const string _ENDPOINT_NAME = "NetTcpBinding_IFriendManager";
-        public static List<PlayerDM> SearchPlayers(Guid mePlayerId, string query, int limit = 20)
+
+        private static readonly Lazy<SocialOperation> _instance =
+            new Lazy<SocialOperation>(() => new SocialOperation());
+
+        /// <summary>
+        /// Gets the single instance of the social operations manager.
+        /// </summary>
+        public static SocialOperation Instance => _instance.Value;
+
+        private FriendManagerClient _client;
+        private FriendCallbackHandler _callbackHandler;
+        private Guid _currentPlayerId;
+
+        /// <summary>
+        /// Private constructor for the Singleton pattern.
+        /// </summary>
+        private SocialOperation() { }
+
+        /// <summary>
+        /// Initializes the duplex client and connects to the server.
+        /// Must be called after login.
+        /// </summary>
+        /// <param name="mePlayerId">The player ID for the current session.</param>
+        public void Initialize(Guid mePlayerId)
         {
-            var client = new FriendManagerClient(_ENDPOINT_NAME);
+            if (_client != null && _client.State == CommunicationState.Opened)
+            {
+                return;
+            }
+
+            if (mePlayerId == Guid.Empty)
+            {
+                throw new ArgumentException("PlayerId cannot be empty for duplex connection.", nameof(mePlayerId));
+            }
+
+            _currentPlayerId = mePlayerId;
+            _callbackHandler = new FriendCallbackHandler();
+            var context = new InstanceContext(_callbackHandler);
+            _client = new FriendManagerClient(context, _ENDPOINT_NAME);
+
             try
             {
-                var list = client.SearchPlayers(query ?? "", mePlayerId, limit);
+                _client.Open();
+                _client.Connect(_currentPlayerId);
+            }
+            catch (Exception ex)
+            {
+                NetworkUtil.SafeClose(_client);
+                _client = null;
+                throw new CommunicationException($"Failed to connect to FriendService: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// Closes the duplex connection. Must be called when logging out.
+        /// </summary>
+        public void Terminate()
+        {
+            if (_client != null && _client.State == CommunicationState.Opened)
+            {
+                try
+                {
+                    _client.Disconnect(_currentPlayerId);
+                }
+                catch (Exception)
+                {
+                    
+                }
+                finally
+                {
+                    NetworkUtil.SafeClose(_client);
+                    _client = null;
+                    _currentPlayerId = Guid.Empty;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the WCF client, ensuring that it is open and ready.
+        /// </summary>
+        /// <returns>The FriendManagerClient instance.
+        private FriendManagerClient GetClient()
+        {
+            if (_client == null || _client.State != CommunicationState.Opened)
+            {
+                throw new InvalidOperationException("Friend service connection is not available or has been closed.");
+            }
+            return _client;
+        }
+
+        public List<PlayerDM> SearchPlayers(string query, int limit = 20)
+        {
+            try
+            {
+                var list = GetClient().SearchPlayers(query ?? "", _currentPlayerId, limit);
                 return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
             }
-            finally
-            { 
-                NetworkUtil.SafeClose(client); 
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new List<PlayerDM>();
             }
         }
 
-        public static List<PlayerDM> GetFriends(Guid mePlayerId)
+        public List<PlayerDM> GetFriends()
         {
-            var client = new FriendManagerClient(_ENDPOINT_NAME);
             try
             {
-                var list = client.GetFriends(mePlayerId);
+                var list = GetClient().GetFriends(_currentPlayerId);
                 return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
             }
-            finally
-            { 
-                NetworkUtil.SafeClose(client);
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new List<PlayerDM>();
             }
         }
 
-        public static List<PlayerDM> GetIncomingRequests(Guid mePlayerId)
+        public List<PlayerDM> GetIncomingRequests()
         {
-            var client = new FriendManagerClient(_ENDPOINT_NAME);
             try
             {
-                var list = client.GetIncomingRequests(mePlayerId);
+                var list = GetClient().GetIncomingRequests(_currentPlayerId);
                 return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
             }
-            finally 
-            { 
-                NetworkUtil.SafeClose(client);
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new List<PlayerDM>();
             }
         }
 
-        public static (bool ok, string msg) SendFriendRequest(Guid fromPlayerId, Guid toPlayerId)
+        /// <summary>
+        /// Sends a friend request. The result will be received
+        /// through the OnOperationSuccess/OnOperationFailure events.
+        /// </summary>
+        /// <param name="toPlayerId">The ID of the player to whom it is sent.</param>
+        public void SendFriendRequest(Guid toPlayerId)
         {
-            var client = new FriendManagerClient(_ENDPOINT_NAME);
             try
             {
-                var r = client.SendFriendRequest(fromPlayerId, toPlayerId);
-                return (r.Success, r.Message);
+                GetClient().SendFriendRequest(_currentPlayerId, toPlayerId);
             }
-            finally 
-            { 
-                NetworkUtil.SafeClose(client);
-            }
+            catch (Exception ex) { OnOperationFailure(ex); }
         }
 
-        public static (bool ok, string msg) AcceptFriendRequest(Guid mePlayerId, Guid requesterPlayerId)
+        public void AcceptFriendRequest(Guid requesterPlayerId)
         {
-            var client = new FriendManagerClient(_ENDPOINT_NAME);
             try
             {
-                var r = client.AcceptFriendRequest(mePlayerId, requesterPlayerId);
-                return (r.Success, r.Message);
+                GetClient().AcceptFriendRequest(_currentPlayerId, requesterPlayerId);
             }
-            finally
-            { 
-                NetworkUtil.SafeClose(client); 
-            }
+            catch (Exception ex) { OnOperationFailure(ex); }
         }
 
-        public static (bool ok, string msg) RejectFriendRequest(Guid mePlayerId, Guid requesterPlayerId)
+        public void RejectFriendRequest(Guid requesterPlayerId)
         {
-            var client = new FriendManagerClient(_ENDPOINT_NAME);
             try
             {
-                var r = client.RejectFriendRequest(mePlayerId, requesterPlayerId);
-                return (r.Success, r.Message);
+                GetClient().RejectFriendRequest(_currentPlayerId, requesterPlayerId);
             }
-            finally
-            {
-                NetworkUtil.SafeClose(client); 
-            }
+            catch (Exception ex) { OnOperationFailure(ex); }
         }
 
-        public static (bool ok, string msg) RemoveFriend(Guid mePlayerId, Guid friendPlayerId)
+        public void RemoveFriend(Guid friendPlayerId)
         {
-            var client = new FriendManagerClient(_ENDPOINT_NAME);
             try
             {
-                var r = client.RemoveFriend(mePlayerId, friendPlayerId);
-                return (r.Success, r.Message);
+                GetClient().RemoveFriend(_currentPlayerId, friendPlayerId);
             }
-            finally
-            {
-                NetworkUtil.SafeClose(client);
-            }
+            catch (Exception ex) { OnOperationFailure(ex); }
+        }
+
+        /// <summary>
+        /// Helper method to trigger the failure event in case of
+        /// a transport exception (e.g., server down).
+        /// </summary>
+        private void OnOperationFailure(Exception ex)
+        {
+            FriendCallbackHandler.RaiseOperationFailure($"Error de conexión: {ex.Message}");
         }
     }
 }
