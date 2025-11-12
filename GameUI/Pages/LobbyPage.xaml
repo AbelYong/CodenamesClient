@@ -16,7 +16,7 @@
     <Grid>
         <DockPanel LastChildFill="True">
             <Button Click="Click_ReturnToLobby" DockPanel.Dock="Top" 
-                    Style="{StaticResource imageButtonFocus}" Height="50" Width="50" HorizontalAlignment="Left">
+                    Style="{StaticResource imageButtonFocus}" Height="50" Width="50" HorizontalAlignment="Right">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/GameUI/returnArrow.png"/>
                 </Button.Background>

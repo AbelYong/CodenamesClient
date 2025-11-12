@@ -59,7 +59,7 @@ namespace CodenamesClient.GameUI.Pages
                 bystanderTokens = _viewModel.BystanderTokens,
             };
             match.Player = _player;
-            match.Companion = new PlayerDM(); //TODO get the real friend/stranger
+            match.Companion = LoginViewModel.AssembleGuest(); //TODO get the real friend/stranger
             return match;
         }
     }

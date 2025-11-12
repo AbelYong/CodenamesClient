@@ -94,6 +94,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             if (result.IsSuccess)
             {
                 SaveProfile();
+                ClickSaveProfile?.Invoke();
             }
             else
             {
