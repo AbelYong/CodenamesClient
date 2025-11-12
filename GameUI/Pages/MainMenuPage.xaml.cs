@@ -240,11 +240,20 @@ namespace CodenamesClient.GameUI.Pages
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.Enter) return;
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (e.Key != Key.Enter)
+            {
+                return;
+            }
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
 
             var q = SearchBox.Text?.Trim();
-            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend) return;
+            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend)
+            {
+                return;
+            }
             _viewModel.SearchPlayers(q);
 
             FriendsAndRequestsView.Visibility = Visibility.Collapsed;
@@ -253,36 +262,60 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_SendRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var target = ItemFromButton((Button)sender);
-            if (target?.PlayerID == null) return;
+            if (target?.PlayerID == null)
+            {
+                return;
+            }
 
             SocialOperation.Instance.SendFriendRequest(target.PlayerID.Value);
         }
 
         private void Click_AcceptRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null) return;
+            if (requester?.PlayerID == null)
+            {
+                return;
+            }
 
             SocialOperation.Instance.AcceptFriendRequest(requester.PlayerID.Value);
         }
 
         private void Click_RejectRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null) return;
+            if (requester?.PlayerID == null)
+            {
+                return;
+            }
 
             SocialOperation.Instance.RejectFriendRequest(requester.PlayerID.Value);
         }
 
         private void Click_RemoveFriend(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var friend = ItemFromButton((Button)sender);
-            if (friend?.PlayerID == null) return;
+            if (friend?.PlayerID == null)
+            {
+                return;
+            }
 
             SocialOperation.Instance.RemoveFriend(friend.PlayerID.Value);
         }

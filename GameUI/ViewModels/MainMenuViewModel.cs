@@ -175,7 +175,10 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void LoadInitialFriendData()
         {
-            if (IsPlayerGuest) return;
+            if (IsPlayerGuest)
+            {
+                return;
+            }
 
             Application.Current.Dispatcher.Invoke(() =>
             {
