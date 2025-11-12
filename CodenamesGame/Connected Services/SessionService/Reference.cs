@@ -268,6 +268,7 @@ namespace CodenamesGame.SessionService {
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.MatchRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.CommunicationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -351,6 +352,29 @@ namespace CodenamesGame.SessionService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MatchRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class MatchRequest : CodenamesGame.SessionService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.SessionService.Match MatchField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.SessionService.Match Match {
+            get {
+                return this.MatchField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MatchField, value) != true)) {
+                    this.MatchField = value;
+                    this.RaisePropertyChanged("Match");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class CommunicationRequest : CodenamesGame.SessionService.Request {
@@ -386,6 +410,222 @@ namespace CodenamesGame.SessionService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SERVER_TIMEOUT = 8,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.SessionService.Player PlayerOneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.SessionService.Player PlayerTwoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.SessionService.MatchRules RulesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int[] SelectedWordsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.SessionService.Player PlayerOne {
+            get {
+                return this.PlayerOneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerOneField, value) != true)) {
+                    this.PlayerOneField = value;
+                    this.RaisePropertyChanged("PlayerOne");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.SessionService.Player PlayerTwo {
+            get {
+                return this.PlayerTwoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlayerTwoField, value) != true)) {
+                    this.PlayerTwoField = value;
+                    this.RaisePropertyChanged("PlayerTwo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.SessionService.MatchRules Rules {
+            get {
+                return this.RulesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RulesField, value) != true)) {
+                    this.RulesField = value;
+                    this.RaisePropertyChanged("Rules");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int[] SelectedWords {
+            get {
+                return this.SelectedWordsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SelectedWordsField, value) != true)) {
+                    this.SelectedWordsField = value;
+                    this.RaisePropertyChanged("SelectedWords");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MatchRules", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class MatchRules : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int BystanderTokensField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.SessionService.GameMode GameModeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MaxAssassinsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TimerTokensField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TurnTimerField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int BystanderTokens {
+            get {
+                return this.BystanderTokensField;
+            }
+            set {
+                if ((this.BystanderTokensField.Equals(value) != true)) {
+                    this.BystanderTokensField = value;
+                    this.RaisePropertyChanged("BystanderTokens");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.SessionService.GameMode GameMode {
+            get {
+                return this.GameModeField;
+            }
+            set {
+                if ((this.GameModeField.Equals(value) != true)) {
+                    this.GameModeField = value;
+                    this.RaisePropertyChanged("GameMode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MaxAssassins {
+            get {
+                return this.MaxAssassinsField;
+            }
+            set {
+                if ((this.MaxAssassinsField.Equals(value) != true)) {
+                    this.MaxAssassinsField = value;
+                    this.RaisePropertyChanged("MaxAssassins");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TimerTokens {
+            get {
+                return this.TimerTokensField;
+            }
+            set {
+                if ((this.TimerTokensField.Equals(value) != true)) {
+                    this.TimerTokensField = value;
+                    this.RaisePropertyChanged("TimerTokens");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TurnTimer {
+            get {
+                return this.TurnTimerField;
+            }
+            set {
+                if ((this.TurnTimerField.Equals(value) != true)) {
+                    this.TurnTimerField = value;
+                    this.RaisePropertyChanged("TurnTimer");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GameMode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    public enum GameMode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NORMAL = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CUSTOM = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        COUNTERINTELLIGENCE = 2,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

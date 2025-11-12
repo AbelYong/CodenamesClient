@@ -107,6 +107,12 @@
     <None Include="Connected Services\AuthenticationService\item4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\AuthenticationService\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthenticationService\item51.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\EmailService\CodenamesGame.EmailService.RequestResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -152,6 +158,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionService\item41.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\SessionService.wsdl" />

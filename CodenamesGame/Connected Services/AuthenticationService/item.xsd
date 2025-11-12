@@ -3,7 +3,7 @@
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services" />
+  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
@@ -59,7 +59,7 @@
   <xs:element name="CompletePasswordResetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q5:ResetResult" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q5:ResetResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -75,7 +75,7 @@
   <xs:element name="BeginRegistrationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Services" minOccurs="0" name="BeginRegistrationResult" nillable="true" type="q8:BeginRegistrationResult" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="BeginRegistrationResult" nillable="true" type="q8:BeginRegistrationResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -90,7 +90,7 @@
   <xs:element name="ConfirmRegistrationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Services" minOccurs="0" name="ConfirmRegistrationResult" nillable="true" type="q10:ConfirmRegistrationResult" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="ConfirmRegistrationResult" nillable="true" type="q10:ConfirmRegistrationResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

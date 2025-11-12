@@ -34,7 +34,7 @@
       <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
-      <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services" />
+      <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserManager_GetPlayerByUserID_InputMessage">

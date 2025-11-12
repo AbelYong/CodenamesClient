@@ -2,7 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9049/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:9049/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
-  <xs:import schemaLocation="http://localhost:9049/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services" />
+  <xs:import schemaLocation="http://localhost:9049/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
   <xs:element name="GetPlayerByUserID">
     <xs:complexType>
       <xs:sequence>
@@ -27,7 +27,7 @@
   <xs:element name="UpdateProfileResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Services" minOccurs="0" name="UpdateProfileResult" nillable="true" type="q4:UpdateResult" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="UpdateProfileResult" nillable="true" type="q4:UpdateResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

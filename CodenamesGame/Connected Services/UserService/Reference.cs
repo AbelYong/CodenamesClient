@@ -265,7 +265,8 @@ namespace CodenamesGame.UserService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UpdateResult", Namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Manag" +
+        "ers")]
     [System.SerializableAttribute()]
     public partial class UpdateResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         

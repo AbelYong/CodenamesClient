@@ -28,9 +28,6 @@ namespace CodenamesGame.EmailService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MessageField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StatusCodeField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -63,19 +60,6 @@ namespace CodenamesGame.EmailService {
                 if ((object.ReferenceEquals(this.MessageField, value) != true)) {
                     this.MessageField = value;
                     this.RaisePropertyChanged("Message");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StatusCode {
-            get {
-                return this.StatusCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StatusCodeField, value) != true)) {
-                    this.StatusCodeField = value;
-                    this.RaisePropertyChanged("StatusCode");
                 }
             }
         }

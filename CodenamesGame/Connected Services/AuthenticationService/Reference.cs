@@ -17,6 +17,8 @@ namespace CodenamesGame.AuthenticationService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.CommunicationRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.MatchRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.LoginRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -77,6 +79,36 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CommunicationRequest : CodenamesGame.AuthenticationService.Request {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MatchRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class MatchRequest : CodenamesGame.AuthenticationService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.AuthenticationService.Match MatchField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.AuthenticationService.Match Match {
+            get {
+                return this.MatchField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MatchField, value) != true)) {
+                    this.MatchField = value;
+                    this.RaisePropertyChanged("Match");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class LoginRequest : CodenamesGame.AuthenticationService.Request {
@@ -125,25 +157,31 @@ namespace CodenamesGame.AuthenticationService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SERVER_UNAVAIBLE = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_TIMEOUT = 8,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
+        private CodenamesGame.AuthenticationService.Player PlayerOneField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
+        private CodenamesGame.AuthenticationService.Player PlayerTwoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid UserIDField;
+        private CodenamesGame.AuthenticationService.MatchRules RulesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int[] SelectedWordsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -156,40 +194,53 @@ namespace CodenamesGame.AuthenticationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
+        public CodenamesGame.AuthenticationService.Player PlayerOne {
             get {
-                return this.EmailField;
+                return this.PlayerOneField;
             }
             set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
+                if ((object.ReferenceEquals(this.PlayerOneField, value) != true)) {
+                    this.PlayerOneField = value;
+                    this.RaisePropertyChanged("PlayerOne");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
+        public CodenamesGame.AuthenticationService.Player PlayerTwo {
             get {
-                return this.PasswordField;
+                return this.PlayerTwoField;
             }
             set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
+                if ((object.ReferenceEquals(this.PlayerTwoField, value) != true)) {
+                    this.PlayerTwoField = value;
+                    this.RaisePropertyChanged("PlayerTwo");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid UserID {
+        public CodenamesGame.AuthenticationService.MatchRules Rules {
             get {
-                return this.UserIDField;
+                return this.RulesField;
             }
             set {
-                if ((this.UserIDField.Equals(value) != true)) {
-                    this.UserIDField = value;
-                    this.RaisePropertyChanged("UserID");
+                if ((object.ReferenceEquals(this.RulesField, value) != true)) {
+                    this.RulesField = value;
+                    this.RaisePropertyChanged("Rules");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int[] SelectedWords {
+            get {
+                return this.SelectedWordsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SelectedWordsField, value) != true)) {
+                    this.SelectedWordsField = value;
+                    this.RaisePropertyChanged("SelectedWords");
                 }
             }
         }
@@ -379,7 +430,208 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ResetResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MatchRules", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class MatchRules : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int BystanderTokensField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.AuthenticationService.GameMode GameModeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int MaxAssassinsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TimerTokensField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TurnTimerField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int BystanderTokens {
+            get {
+                return this.BystanderTokensField;
+            }
+            set {
+                if ((this.BystanderTokensField.Equals(value) != true)) {
+                    this.BystanderTokensField = value;
+                    this.RaisePropertyChanged("BystanderTokens");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.AuthenticationService.GameMode GameMode {
+            get {
+                return this.GameModeField;
+            }
+            set {
+                if ((this.GameModeField.Equals(value) != true)) {
+                    this.GameModeField = value;
+                    this.RaisePropertyChanged("GameMode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int MaxAssassins {
+            get {
+                return this.MaxAssassinsField;
+            }
+            set {
+                if ((this.MaxAssassinsField.Equals(value) != true)) {
+                    this.MaxAssassinsField = value;
+                    this.RaisePropertyChanged("MaxAssassins");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TimerTokens {
+            get {
+                return this.TimerTokensField;
+            }
+            set {
+                if ((this.TimerTokensField.Equals(value) != true)) {
+                    this.TimerTokensField = value;
+                    this.RaisePropertyChanged("TimerTokens");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TurnTimer {
+            get {
+                return this.TurnTimerField;
+            }
+            set {
+                if ((this.TurnTimerField.Equals(value) != true)) {
+                    this.TurnTimerField = value;
+                    this.RaisePropertyChanged("TurnTimer");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid UserIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="GameMode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    public enum GameMode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NORMAL = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CUSTOM = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        COUNTERINTELLIGENCE = 2,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResetResult", Namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Manag" +
+        "ers")]
     [System.SerializableAttribute()]
     public partial class ResetResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -440,7 +692,8 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BeginRegistrationResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BeginRegistrationResult", Namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Manag" +
+        "ers")]
     [System.SerializableAttribute()]
     public partial class BeginRegistrationResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -517,7 +770,8 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConfirmRegistrationResult", Namespace="http://schemas.datacontract.org/2004/07/Services")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ConfirmRegistrationResult", Namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Manag" +
+        "ers")]
     [System.SerializableAttribute()]
     public partial class ConfirmRegistrationResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
