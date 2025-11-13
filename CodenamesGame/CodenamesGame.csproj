@@ -82,6 +82,7 @@
     <Compile Include="Network\EmailOperation.cs" />
     <Compile Include="Network\MatchmakingCallback.cs" />
     <Compile Include="Network\MatchmakingOperation.cs" />
+    <Compile Include="Network\FriendCallbackHandler.cs" />
     <Compile Include="Network\SessionOperation.cs" />
     <Compile Include="Network\SocialOperation.cs" />
     <Compile Include="Network\UserOperation.cs" />
@@ -118,12 +119,6 @@
     <None Include="Connected Services\AuthenticationService\item4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AuthenticationService\item5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AuthenticationService\item51.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\EmailService\CodenamesGame.EmailService.RequestResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -137,16 +132,10 @@
     <None Include="Connected Services\EmailService\item2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\FriendService\CodenamesGame.FriendService.OperationResultSv.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\FriendService\CodenamesGame.FriendService.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\FriendService\FriendService.wsdl" />
-    <None Include="Connected Services\FriendService\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\FriendService\item1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -194,12 +183,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\SessionService\item4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\SessionService\item41.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\SessionService.wsdl" />

@@ -19,9 +19,6 @@ namespace CodenamesClient.GameUI.Pages
         private MainMenuViewModel _viewModel;
         private ProfileControl _profileControl;
         private MediaPlayer _mediaPlayer;
-        private List<PlayerDM> _friends = new List<PlayerDM>();
-        private List<PlayerDM> _requests = new List<PlayerDM>();
-        private List<PlayerDM> _search = new List<PlayerDM>();
 
         public MainMenuPage(PlayerDM player, SessionOperation sesion, bool isGuest)
         {
@@ -131,7 +128,7 @@ namespace CodenamesClient.GameUI.Pages
             FriendsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
 
-            RefreshFriendsUi();
+            _viewModel.LoadInitialFriendData();
         }
 
         private void Click_HideFriends(object sender, RoutedEventArgs e)
@@ -255,31 +252,25 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void RefreshFriendsUi()
-        {
-            if (_viewModel.Player?.PlayerID == null) return;
-            var me = _viewModel.Player.PlayerID.Value;
-
-            _friends = SocialOperation.GetFriends(me);
-            _requests = SocialOperation.GetIncomingRequests(me);
-
-            FriendsList.ItemsSource = _friends;
-            RequestsList.ItemsSource = _requests;
-        }
-
         private static PlayerDM ItemFromButton(Button btn) => btn?.DataContext as PlayerDM;
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.Enter) return;
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (e.Key != Key.Enter)
+            {
+                return;
+            }
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
 
             var q = SearchBox.Text?.Trim();
-            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend) return;
-
-            var me = _viewModel.Player.PlayerID.Value;
-            _search = SocialOperation.SearchPlayers(me, q, 20);
-            SearchResultsList.ItemsSource = _search;
+            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend)
+            {
+                return;
+            }
+            _viewModel.SearchPlayers(q);
 
             FriendsAndRequestsView.Visibility = Visibility.Collapsed;
             SearchView.Visibility = Visibility.Visible;
@@ -287,46 +278,62 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_SendRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var target = ItemFromButton((Button)sender);
-            if (target?.PlayerID == null) return;
+            if (target?.PlayerID == null)
+            {
+                return;
+            }
 
-            var (ok, msg) = SocialOperation.SendFriendRequest(_viewModel.Player.PlayerID.Value, target.PlayerID.Value);
-            MessageBox.Show(msg);
-            RefreshFriendsUi();
+            SocialOperation.Instance.SendFriendRequest(target.PlayerID.Value);
         }
 
         private void Click_AcceptRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null) return;
+            if (requester?.PlayerID == null)
+            {
+                return;
+            }
 
-            var (ok, msg) = SocialOperation.AcceptFriendRequest(_viewModel.Player.PlayerID.Value, requester.PlayerID.Value);
-            MessageBox.Show(msg);
-            RefreshFriendsUi();
+            SocialOperation.Instance.AcceptFriendRequest(requester.PlayerID.Value);
         }
 
         private void Click_RejectRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null) return;
+            if (requester?.PlayerID == null)
+            {
+                return;
+            }
 
-            var (ok, msg) = SocialOperation.RejectFriendRequest(_viewModel.Player.PlayerID.Value, requester.PlayerID.Value);
-            MessageBox.Show(msg);
-            RefreshFriendsUi();
+            SocialOperation.Instance.RejectFriendRequest(requester.PlayerID.Value);
         }
 
         private void Click_RemoveFriend(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
             var friend = ItemFromButton((Button)sender);
-            if (friend?.PlayerID == null) return;
+            if (friend?.PlayerID == null)
+            {
+                return;
+            }
 
-            var (ok, msg) = SocialOperation.RemoveFriend(_viewModel.Player.PlayerID.Value, friend.PlayerID.Value);
-            MessageBox.Show(msg);
-            RefreshFriendsUi();
-        } 
+            SocialOperation.Instance.RemoveFriend(friend.PlayerID.Value);
+        }
     }
 }

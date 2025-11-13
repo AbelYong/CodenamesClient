@@ -263,70 +263,45 @@ namespace CodenamesGame.FriendService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="OperationResultSv", Namespace="http://schemas.datacontract.org/2004/07/Services")]
-    [System.SerializableAttribute()]
-    public partial class OperationResultSv : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool SuccessField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
-            get {
-                return this.MessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
-                    this.MessageField = value;
-                    this.RaisePropertyChanged("Message");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
-            get {
-                return this.SuccessField;
-            }
-            set {
-                if ((this.SuccessField.Equals(value) != true)) {
-                    this.SuccessField = value;
-                    this.RaisePropertyChanged("Success");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FriendService.IFriendManager")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FriendService.IFriendManager", CallbackContract=typeof(CodenamesGame.FriendService.IFriendManagerCallback))]
     public interface IFriendManager {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Connect")]
+        void Connect(System.Guid mePlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Connect")]
+        System.Threading.Tasks.Task ConnectAsync(System.Guid mePlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Disconnect")]
+        void Disconnect(System.Guid mePlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Disconnect")]
+        System.Threading.Tasks.Task DisconnectAsync(System.Guid mePlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/SendFriendRequest")]
+        void SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/SendFriendRequest")]
+        System.Threading.Tasks.Task SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/AcceptFriendRequest")]
+        void AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/AcceptFriendRequest")]
+        System.Threading.Tasks.Task AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RejectFriendRequest")]
+        void RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RejectFriendRequest")]
+        System.Threading.Tasks.Task RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RemoveFriend")]
+        void RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RemoveFriend")]
+        System.Threading.Tasks.Task RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SearchPlayers", ReplyAction="http://tempuri.org/IFriendManager/SearchPlayersResponse")]
         CodenamesGame.FriendService.Player[] SearchPlayers(string query, System.Guid mePlayerId, int limit);
@@ -345,30 +320,28 @@ namespace CodenamesGame.FriendService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetIncomingRequests", ReplyAction="http://tempuri.org/IFriendManager/GetIncomingRequestsResponse")]
         System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetIncomingRequestsAsync(System.Guid mePlayerId);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IFriendManagerCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/SendFriendRequestResponse")]
-        CodenamesGame.FriendService.OperationResultSv SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/NotifyNewFriendRequest")]
+        void NotifyNewFriendRequest(CodenamesGame.FriendService.Player fromPlayer);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/SendFriendRequestResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/NotifyFriendRequestAccepted")]
+        void NotifyFriendRequestAccepted(CodenamesGame.FriendService.Player byPlayer);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/AcceptFriendRequestResponse")]
-        CodenamesGame.FriendService.OperationResultSv AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/NotifyFriendRequestRejected")]
+        void NotifyFriendRequestRejected(CodenamesGame.FriendService.Player byPlayer);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/AcceptFriendRequestResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/NotifyFriendRemoved")]
+        void NotifyFriendRemoved(CodenamesGame.FriendService.Player byPlayer);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RejectFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/RejectFriendRequestResponse")]
-        CodenamesGame.FriendService.OperationResultSv RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/NotifyOperationSuccess")]
+        void NotifyOperationSuccess(string message);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RejectFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/RejectFriendRequestResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RemoveFriend", ReplyAction="http://tempuri.org/IFriendManager/RemoveFriendResponse")]
-        CodenamesGame.FriendService.OperationResultSv RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RemoveFriend", ReplyAction="http://tempuri.org/IFriendManager/RemoveFriendResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/NotifyOperationFailure")]
+        void NotifyOperationFailure(string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -377,25 +350,74 @@ namespace CodenamesGame.FriendService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class FriendManagerClient : System.ServiceModel.ClientBase<CodenamesGame.FriendService.IFriendManager>, CodenamesGame.FriendService.IFriendManager {
+    public partial class FriendManagerClient : System.ServiceModel.DuplexClientBase<CodenamesGame.FriendService.IFriendManager>, CodenamesGame.FriendService.IFriendManager {
         
-        public FriendManagerClient() {
+        public FriendManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public FriendManagerClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public FriendManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public FriendManagerClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public FriendManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public FriendManagerClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public FriendManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public FriendManagerClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public FriendManagerClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void Connect(System.Guid mePlayerId) {
+            base.Channel.Connect(mePlayerId);
+        }
+        
+        public System.Threading.Tasks.Task ConnectAsync(System.Guid mePlayerId) {
+            return base.Channel.ConnectAsync(mePlayerId);
+        }
+        
+        public void Disconnect(System.Guid mePlayerId) {
+            base.Channel.Disconnect(mePlayerId);
+        }
+        
+        public System.Threading.Tasks.Task DisconnectAsync(System.Guid mePlayerId) {
+            return base.Channel.DisconnectAsync(mePlayerId);
+        }
+        
+        public void SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId) {
+            base.Channel.SendFriendRequest(fromPlayerId, toPlayerId);
+        }
+        
+        public System.Threading.Tasks.Task SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId) {
+            return base.Channel.SendFriendRequestAsync(fromPlayerId, toPlayerId);
+        }
+        
+        public void AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+            base.Channel.AcceptFriendRequest(mePlayerId, requesterPlayerId);
+        }
+        
+        public System.Threading.Tasks.Task AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+            return base.Channel.AcceptFriendRequestAsync(mePlayerId, requesterPlayerId);
+        }
+        
+        public void RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+            base.Channel.RejectFriendRequest(mePlayerId, requesterPlayerId);
+        }
+        
+        public System.Threading.Tasks.Task RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+            return base.Channel.RejectFriendRequestAsync(mePlayerId, requesterPlayerId);
+        }
+        
+        public void RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId) {
+            base.Channel.RemoveFriend(mePlayerId, friendPlayerId);
+        }
+        
+        public System.Threading.Tasks.Task RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId) {
+            return base.Channel.RemoveFriendAsync(mePlayerId, friendPlayerId);
         }
         
         public CodenamesGame.FriendService.Player[] SearchPlayers(string query, System.Guid mePlayerId, int limit) {
@@ -420,38 +442,6 @@ namespace CodenamesGame.FriendService {
         
         public System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetIncomingRequestsAsync(System.Guid mePlayerId) {
             return base.Channel.GetIncomingRequestsAsync(mePlayerId);
-        }
-        
-        public CodenamesGame.FriendService.OperationResultSv SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId) {
-            return base.Channel.SendFriendRequest(fromPlayerId, toPlayerId);
-        }
-        
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId) {
-            return base.Channel.SendFriendRequestAsync(fromPlayerId, toPlayerId);
-        }
-        
-        public CodenamesGame.FriendService.OperationResultSv AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
-            return base.Channel.AcceptFriendRequest(mePlayerId, requesterPlayerId);
-        }
-        
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
-            return base.Channel.AcceptFriendRequestAsync(mePlayerId, requesterPlayerId);
-        }
-        
-        public CodenamesGame.FriendService.OperationResultSv RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
-            return base.Channel.RejectFriendRequest(mePlayerId, requesterPlayerId);
-        }
-        
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
-            return base.Channel.RejectFriendRequestAsync(mePlayerId, requesterPlayerId);
-        }
-        
-        public CodenamesGame.FriendService.OperationResultSv RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId) {
-            return base.Channel.RemoveFriend(mePlayerId, friendPlayerId);
-        }
-        
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.OperationResultSv> RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId) {
-            return base.Channel.RemoveFriendAsync(mePlayerId, friendPlayerId);
         }
     }
 }
