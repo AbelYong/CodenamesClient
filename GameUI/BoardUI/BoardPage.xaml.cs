@@ -1,6 +1,7 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Operation;
 using CodenamesGame.Domain.POCO;
+using CodenamesGame.Domain.POCO.Match;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -106,6 +107,7 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             int remainingAgents = _viewModel.AgentNumbers.Count;
             int random = _random.Next(remainingAgents);
+
             int agentToReveal = _viewModel.AgentNumbers.ElementAt(random);
             ImageBrush card = PictureHandler.GetImage(agentToReveal);
             _viewModel.AgentNumbers.Remove(agentToReveal);
@@ -124,6 +126,7 @@ namespace CodenamesClient.GameUI.BoardUI
         private ImageBrush GetAssassinCardImage()
         {
             int random = _random.Next(BoardViewModel.MAX_GLOBAL_ASSASSINS);
+
             int assasssinToReveal = BoardViewModel.MAX_GLOBAL_AGENTS + BoardViewModel.MAX_GLOBAL_BYSTANDERS + random;
             ImageBrush card = PictureHandler.GetImage(assasssinToReveal);
             return card;

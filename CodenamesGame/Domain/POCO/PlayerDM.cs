@@ -74,6 +74,20 @@ namespace CodenamesGame.Domain.POCO
             };
         }
 
+        public static PlayerDM AssemblePlayer(MatchmakingService.Player player)
+        {
+            if (player == null)
+            {
+                return null;
+            }
+            return new PlayerDM
+            {
+                PlayerID = player.PlayerID,
+                Username = player.Username,
+                AvatarID = player.AvatarID
+            };
+        }
+
         public static AuthenticationService.Player AssembleAuthSvPlayer(PlayerDM player)
         {
             AuthenticationService.Player svPlayer = new AuthenticationService.Player();
@@ -109,6 +123,15 @@ namespace CodenamesGame.Domain.POCO
             svPlayer.FacebookUsername = player.FacebookUsername;
             svPlayer.InstagramUsername = player.InstagramUsername;
             svPlayer.DiscordUsername = player.DiscordUsername;
+            return svPlayer;
+        }
+
+        public static MatchmakingService.Player AssembleMatchmakingSvPlayer(PlayerDM player)
+        {
+            MatchmakingService.Player svPlayer = new MatchmakingService.Player();
+            svPlayer.PlayerID = player.PlayerID;
+            svPlayer.Username = player.Username;
+            svPlayer.AvatarID =player.AvatarID;
             return svPlayer;
         }
     }

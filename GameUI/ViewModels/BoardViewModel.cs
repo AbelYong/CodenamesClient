@@ -1,4 +1,5 @@
 ﻿using CodenamesGame.Domain.POCO;
+using CodenamesGame.Domain.POCO.Match;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,20 +18,17 @@ namespace CodenamesClient.GameUI.ViewModels
     public class BoardViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        //The MAX_GLOBAL constants are used for selecting random images from the assets by setting limits for number-indexing
         public const int MAX_GLOBAL_AGENTS = 15;
         public const int MAX_GLOBAL_ASSASSINS = 3;
         public const int MAX_GLOBAL_BYSTANDERS = 7;
-        public const int MAX_LOCAL_BYSTANDERS = 13;
-        private readonly Random random = new Random();
         private DispatcherTimer _timer;
         private DispatcherTimer _chronometer;
         private TimeSpan _elapsedTime;
-        private const int MAX_ROWS = 5;
-        private const int MAX_COLUMNS = 5;
         private readonly int[,] _agentsMatrix;
-        private readonly Dictionary<int, string> _keywords = new Dictionary<int, string>();
         private readonly int[,] _keycardMatrix;
-        
+        private readonly Dictionary<int, string> _keywords = new Dictionary<int, string>();
+
         private int _turnTimer;
         private int _timerTokens;
         private int _bystanderTokens;
@@ -41,9 +39,9 @@ namespace CodenamesClient.GameUI.ViewModels
         public BoardViewModel(MatchDM match)
         {
             InitializeAgentNumbers();
-            _agentsMatrix = GenerateMockBoard();
-            GenerateMockWordList();
-            _keycardMatrix = GenerateMockBoard();
+            _agentsMatrix = match.Board;
+            SetKeywords(match.SelectedWords);
+            _keycardMatrix = match.Keycard;
             InitializeMatchData(match);
             InitializeChronometer();
             InitializeTimer();
@@ -120,77 +118,15 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private int[,] GenerateMockBoard()
+        private void SetKeywords(List<int> wordlist)
         {
-            int[,] board = new int[MAX_ROWS, MAX_COLUMNS];
-            int numberOfRows = board.GetLength(0);
-            int numberOfColumns = board.GetLength(1);
-            int totalSpots = numberOfRows * numberOfColumns;
-
-            Array.Clear(board, 0, board.Length);
-            List<int> positions = Enumerable.Range(0, totalSpots).ToList();
-
-            Shuffle(positions);
-            SetAssassins(positions, board);
-            SetBystanders(positions, board);
-            return board;
-        }
-
-        private void SetAssassins(List<int> positions, int[,] board)
-        {
-            int numberOfColumns = board.GetLength(1);
-            const int ASSASSIN_CODE = 2;
-            for (int i = 0; i < MAX_GLOBAL_ASSASSINS; i++)
-            {
-                int flatIndex = positions[i];
-                int row = flatIndex / numberOfColumns;
-                int column = flatIndex % numberOfColumns;
-                board[row, column] = ASSASSIN_CODE;
-            }
-        }
-
-        private void SetBystanders(List<int> positions, int[,] board)
-        {
-            int numberOfColumns = board.GetLength(1);
-            const int BYSTANDER_CODE = 1;
-            int startIndex = MAX_GLOBAL_ASSASSINS;
-            int endIndex = startIndex + MAX_LOCAL_BYSTANDERS;
-            for (int i = startIndex; i < endIndex; i++)
-            {
-                int flatIndex = positions[i];
-                int row = flatIndex / numberOfColumns;
-                int column = flatIndex % numberOfColumns;
-                board[row, column] = BYSTANDER_CODE;
-            }
-        }
-
-        private void Shuffle(List<int> positions)
-        {
-            //Shuffle the positions using Fisher-Yates algorithm
-            int n = positions.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = random.Next(n + 1);
-
-                int value = positions[k];
-                positions[k] = positions[n];
-                positions[n] = value;
-            }
-        }
-
-        private void GenerateMockWordList()
-        {
+            const int TOTAL_KEYCARDS = 25;
             _keywords.Clear();
-            const int numberOfWords = 400;
-            List<int> selectedWords = Enumerable.Range(0, numberOfWords).ToList();
-            Shuffle(selectedWords);
 
             List<string> allWords = GetCurrentCultureWords();
-            int totalKeycards = MAX_GLOBAL_AGENTS + MAX_GLOBAL_BYSTANDERS + MAX_GLOBAL_ASSASSINS;
-            for (int i = 0; i < totalKeycards; i++)
+            for (int i = 0; i < TOTAL_KEYCARDS; i++)
             {
-                _keywords.Add(i, allWords[selectedWords[i]]);
+                _keywords.Add(i, allWords[wordlist[i]]);
             }
         }
 
@@ -212,10 +148,10 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void InitializeMatchData(MatchDM match)
         {
-            _turnLenght = match.Rules.turnTimer;
-            _timerTokens = match.Rules.timerTokens;
-            _bystanderTokens = match.Rules.bystanderTokens;
-            PlayerUsername = match.Player.Username;
+            _turnLenght = match.Rules.TurnTimer;
+            _timerTokens = match.Rules.TimerTokens;
+            _bystanderTokens = match.Rules.BystanderTokens;
+            PlayerUsername = match.Requester.Username;
         }
 
         private void InitializeTimer()
@@ -245,16 +181,9 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void AddTime(int seconds)
         {
+            const int MAX_TURN_LENGTH = 60;
             int turnLength = TurnTimer + seconds;
-            if (turnLength >= 60)
-            {
-                const int MAX_TURN_LENGTH = 60;
-                TurnTimer = MAX_TURN_LENGTH;
-            }
-            else
-            {
-                TurnTimer = turnLength;
-            }
+            TurnTimer = turnLength < MAX_TURN_LENGTH ? turnLength : MAX_TURN_LENGTH;
         }
 
         public void StopTimer()

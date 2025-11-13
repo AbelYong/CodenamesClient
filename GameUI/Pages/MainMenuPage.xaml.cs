@@ -35,6 +35,12 @@ namespace CodenamesClient.GameUI.Pages
             _mediaPlayer.MediaEnded += (s, e) => _mediaPlayer.Position = TimeSpan.Zero;
         }
 
+        //This method is needed by the MainWindow to close the session if the user closes the window
+        public MainMenuViewModel GetViewModel()
+        {
+            return _viewModel;
+        }
+
         /*
          * ProfileControl is created in code instead of the XAML, because WPF cannot find
          * the resources needed to generate ProfileControl in design time, so we instantiate it
@@ -190,25 +196,35 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_NormalGameMode(object sender, RoutedEventArgs e)
         {
-            GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.NORMAL);
+            GamemodeDM mode = GamemodeDM.NORMAL;
             GoToLobby(mode);
         }
         private void Click_CustomGameMode(object sender, RoutedEventArgs e)
         {
-            GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.CUSTOM);
+            GamemodeDM mode = GamemodeDM.CUSTOM;
             GoToLobby(mode);
         }
         private void Click_CounterintelligenceMode(object sender, RoutedEventArgs e)
         {
-            GamemodeDM mode = new GamemodeDM(GamemodeDM.GamemodeName.COUNTERINTELLIGENCE);
+            GamemodeDM mode = GamemodeDM.COUNTERINTELLIGENCE;
             GoToLobby(mode);
         }
 
         private void GoToLobby(GamemodeDM mode)
         {
+            SetMainWindowClosingData();
             LobbyPage lobby = new LobbyPage(_viewModel.Player, mode);
             NavigationService.Navigate(lobby);
             GameModeGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void SetMainWindowClosingData()
+        {
+            if (Application.Current.MainWindow is MainWindow mainWindow)
+            {
+                mainWindow.SetPlayer(_viewModel.Player);
+                mainWindow.SetSessionOperation(_viewModel.Session);
+            }
         }
 
         private void Click_ShowScoreboards(object sender, RoutedEventArgs e)
@@ -311,6 +327,6 @@ namespace CodenamesClient.GameUI.Pages
             var (ok, msg) = SocialOperation.RemoveFriend(_viewModel.Player.PlayerID.Value, friend.PlayerID.Value);
             MessageBox.Show(msg);
             RefreshFriendsUi();
-        }
+        } 
     }
 }

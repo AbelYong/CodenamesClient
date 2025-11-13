@@ -1,6 +1,9 @@
 ﻿using CodenamesClient.GameUI.BoardUI;
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesGame.Domain.POCO;
+using CodenamesGame.Domain.POCO.Match;
+using CodenamesGame.MatchmakingService;
+using CodenamesGame.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +28,7 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
-        private GamemodeDM.GamemodeName _gamemodeName;
+        private GamemodeDM _gamemode;
         private PlayerDM _player;
 
         public LobbyPage(PlayerDM player, GamemodeDM gamemode)
@@ -33,15 +36,25 @@ namespace CodenamesClient.GameUI.Pages
             InitializeComponent();
             this._viewModel = new LobbyViewModel(gamemode);
             this.DataContext = _viewModel;
-            _gamemodeName = gamemode.name;
+            _gamemode = gamemode;
             _player = player;
         }
 
         private void Click_StartGame(object sender, RoutedEventArgs e)
         {
-            MatchDM match = PrepareMatch();
-            BoardPage board = new BoardPage(match);
-            NavigationService.Navigate(board);
+            MatchConfigurationDM matchConfig = PrepareMatchRequest();
+            MatchRequest request = new MatchmakingOperation().RequestMatch(matchConfig);
+            if (request.IsSuccess)
+            {
+                Guid myID = (Guid)_player.PlayerID;
+                MatchDM match = MatchDM.AssembleMatch(request.Match, myID);
+                BoardPage board = new BoardPage(match);
+                NavigationService.Navigate(board);
+            }
+            else
+            {
+                MessageBox.Show("Ocurrio un error tras solicitar la partida");
+            }
         }
 
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
@@ -49,18 +62,30 @@ namespace CodenamesClient.GameUI.Pages
             NavigationService.GoBack();
         }
 
-        private MatchDM PrepareMatch()
+        private MatchConfigurationDM PrepareMatchRequest()
         {
-            MatchDM match = new MatchDM();
-            match.Rules = new GamemodeDM(_gamemodeName)
+            MatchConfigurationDM matchConfig = new MatchConfigurationDM();
+            switch (_gamemode)
             {
-                turnTimer = _viewModel.TurnTimer,
-                timerTokens = _viewModel.TimerTokens,
-                bystanderTokens = _viewModel.BystanderTokens,
-            };
-            match.Player = _player;
-            match.Companion = LoginViewModel.AssembleGuest(); //TODO get the real friend/stranger
-            return match;
+                case GamemodeDM.NORMAL:
+                    matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
+                    break;
+                case GamemodeDM.CUSTOM:
+                    matchConfig.Rules.gamemode = GamemodeDM.CUSTOM;
+                    matchConfig.Rules.TurnTimer = _viewModel.TurnTimer;
+                    matchConfig.Rules.TimerTokens = _viewModel.TimerTokens;
+                    matchConfig.Rules.BystanderTokens = _viewModel.BystanderTokens;
+                    break;
+                case GamemodeDM.COUNTERINTELLIGENCE:
+                    matchConfig.Rules.gamemode = GamemodeDM.COUNTERINTELLIGENCE;
+                    break;
+                default:
+                    matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
+                    break;
+            }
+            matchConfig.Requester = _player;
+            matchConfig.Companion = LoginViewModel.AssembleGuest(); //TODO get the real friend/stranger
+            return matchConfig;
         }
     }
 }

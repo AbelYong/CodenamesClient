@@ -25,6 +25,11 @@ namespace CodenamesClient.GameUI.ViewModels
             Username = Player.Username;
         }
 
+        public SessionOperation Session
+        {
+            get => _session;
+        }
+
         public PlayerDM Player
         {
             get => _player;

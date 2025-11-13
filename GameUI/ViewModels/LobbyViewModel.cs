@@ -66,17 +66,17 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public LobbyViewModel(GamemodeDM gamemode)
         {
-            switch (gamemode.name)
+            switch (gamemode)
             {
-                case (GamemodeDM.GamemodeName.NORMAL):
+                case (GamemodeDM.NORMAL):
                     GamemodeName = Lang.gamemodeNormalGame;
                     LoadDefaultRules();
                     break;
-                case (GamemodeDM.GamemodeName.CUSTOM):
+                case (GamemodeDM.CUSTOM):
                     GamemodeName = Lang.gamemodeCustomGame;
                     LoadDefaultRules();
                     break;
-                case (GamemodeDM.GamemodeName.COUNTERINTELLIGENCE):
+                case (GamemodeDM.COUNTERINTELLIGENCE):
                     GamemodeName = Lang.gamemodeCounterintelligenceMode;
                     LoadDefaultRules();
                     break;
