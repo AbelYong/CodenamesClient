@@ -43,18 +43,7 @@ namespace CodenamesClient.GameUI.Pages
         private void Click_StartGame(object sender, RoutedEventArgs e)
         {
             MatchConfigurationDM matchConfig = PrepareMatchRequest();
-            MatchRequest request = new MatchmakingOperation().RequestMatch(matchConfig);
-            if (request.IsSuccess)
-            {
-                Guid myID = (Guid)_player.PlayerID;
-                MatchDM match = MatchDM.AssembleMatch(request.Match, myID);
-                BoardPage board = new BoardPage(match);
-                NavigationService.Navigate(board);
-            }
-            else
-            {
-                MessageBox.Show("Ocurrio un error tras solicitar la partida");
-            }
+            
         }
 
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
