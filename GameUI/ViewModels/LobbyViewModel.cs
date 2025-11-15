@@ -2,6 +2,12 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CodenamesClient.Properties.Langs;
+using CodenamesGame.Network;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -13,6 +19,9 @@ namespace CodenamesClient.GameUI.ViewModels
         private int _bystanderTokens;
         private int _turnTimer;
         private bool _isCustomGame;
+
+        private readonly SessionOperation _session;
+        public ObservableCollection<PlayerDM> OnlineFriends { get; }
 
         public string GamemodeName
         {
@@ -33,7 +42,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public int BystanderTokens
         {
             get => _bystanderTokens;
@@ -43,7 +52,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public int TurnTimer
         {
             get => _turnTimer;
@@ -64,8 +73,12 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public LobbyViewModel(GamemodeDM gamemode)
+        public LobbyViewModel(GamemodeDM gamemode, SessionOperation session)
         {
+            _session = session;
+            OnlineFriends = new ObservableCollection<PlayerDM>();
+            LoadInitialOnlineFriends();
+
             switch (gamemode)
             {
                 case (GamemodeDM.NORMAL):
@@ -85,6 +98,80 @@ namespace CodenamesClient.GameUI.ViewModels
                     LoadDefaultRules();
                     break;
             }
+        }
+
+        /// <summary>
+        /// Loads the initial list of online friends from the session instance.
+        /// </summary>
+        private void LoadInitialOnlineFriends()
+        {
+            var onlineFriendsList = _session.GetOnlineFriendsList();
+            OnlineFriends.Clear();
+            foreach (var friend in onlineFriendsList)
+            {
+                OnlineFriends.Add(friend);
+            }
+        }
+
+        /// <summary>
+        /// Subscribes to static events in the session.
+        /// </summary>
+        public void SubscribeToSessionEvents()
+        {
+            SessionOperation.OnFriendOnline += HandleFriendOnline;
+            SessionOperation.OnFriendOffline += HandleFriendOffline;
+            SessionOperation.OnOnlineFriendsReceived += HandleOnlineFriendsReceived;
+        }
+
+        /// <summary>
+        /// Unsubscribes from static session events.
+        /// </summary>
+        public void UnsubscribeFromSessionEvents()
+        {
+            SessionOperation.OnFriendOnline -= HandleFriendOnline;
+            SessionOperation.OnFriendOffline -= HandleFriendOffline;
+            SessionOperation.OnOnlineFriendsReceived -= HandleOnlineFriendsReceived;
+        }
+
+        /// <summary>
+        /// Handler for when a friend connects.
+        /// </summary>
+        private void HandleFriendOnline(object sender, PlayerEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (!OnlineFriends.Any(f => f.PlayerID == e.Player.PlayerID))
+                {
+                    OnlineFriends.Add(e.Player);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Handler for when a friend disconnects.
+        /// </summary>
+        private void HandleFriendOffline(object sender, Guid playerId)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var friend = OnlineFriends.FirstOrDefault(f => f.PlayerID == playerId);
+                if (friend != null)
+                {
+                    OnlineFriends.Remove(friend);
+                }
+            });
+        }
+
+        private void HandleOnlineFriendsReceived(object sender, List<PlayerDM> friendsList)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                OnlineFriends.Clear();
+                foreach (var friend in friendsList)
+                {
+                    OnlineFriends.Add(friend);
+                }
+            });
         }
 
         private void LoadDefaultRules()
