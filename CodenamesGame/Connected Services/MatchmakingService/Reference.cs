@@ -15,6 +15,140 @@ namespace CodenamesGame.MatchmakingService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.CommunicationRequest))]
+    public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSuccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchmakingService.StatusCode StatusCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSuccess {
+            get {
+                return this.IsSuccessField;
+            }
+            set {
+                if ((this.IsSuccessField.Equals(value) != true)) {
+                    this.IsSuccessField = value;
+                    this.RaisePropertyChanged("IsSuccess");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchmakingService.StatusCode StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class LoginRequest : CodenamesGame.MatchmakingService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> UserIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CommunicationRequest : CodenamesGame.MatchmakingService.Request {
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    public enum StatusCode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OK = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CREATED = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UPDATED = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CONFLICT = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_DISCONNECT = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        MISSING_DATA = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WRONG_DATA = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNAUTHORIZED = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNALLOWED = 8,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_ERROR = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNAVAIBLE = 10,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_TIMEOUT = 11,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MatchConfiguration", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
     public partial class MatchConfiguration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -449,155 +583,6 @@ namespace CodenamesGame.MatchmakingService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.CommunicationRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.LoginRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.MatchRequest))]
-    public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsSuccessField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.StatusCode StatusCodeField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsSuccess {
-            get {
-                return this.IsSuccessField;
-            }
-            set {
-                if ((this.IsSuccessField.Equals(value) != true)) {
-                    this.IsSuccessField = value;
-                    this.RaisePropertyChanged("IsSuccess");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.StatusCode StatusCode {
-            get {
-                return this.StatusCodeField;
-            }
-            set {
-                if ((this.StatusCodeField.Equals(value) != true)) {
-                    this.StatusCodeField = value;
-                    this.RaisePropertyChanged("StatusCode");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
-    [System.SerializableAttribute()]
-    public partial class CommunicationRequest : CodenamesGame.MatchmakingService.Request {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
-    [System.SerializableAttribute()]
-    public partial class LoginRequest : CodenamesGame.MatchmakingService.Request {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.Guid> UserIDField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.Guid> UserID {
-            get {
-                return this.UserIDField;
-            }
-            set {
-                if ((this.UserIDField.Equals(value) != true)) {
-                    this.UserIDField = value;
-                    this.RaisePropertyChanged("UserID");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MatchRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
-    [System.SerializableAttribute()]
-    public partial class MatchRequest : CodenamesGame.MatchmakingService.Request {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.Match MatchField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.Match Match {
-            get {
-                return this.MatchField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MatchField, value) != true)) {
-                    this.MatchField = value;
-                    this.RaisePropertyChanged("Match");
-                }
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
-    public enum StatusCode : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        OK = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        CREATED = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        UPDATED = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        MISSING_DATA = 3,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        WRONG_DATA = 4,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNAUTHORIZED = 5,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_ERROR = 6,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_UNAVAIBLE = 7,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_TIMEOUT = 8,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
     public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -738,30 +723,54 @@ namespace CodenamesGame.MatchmakingService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MatchmakingService.IMatchmakingManager", CallbackContract=typeof(CodenamesGame.MatchmakingService.IMatchmakingManagerCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MatchmakingService.IMatchmakingManager", CallbackContract=typeof(CodenamesGame.MatchmakingService.IMatchmakingManagerCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IMatchmakingManager {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/GetMatchWithAFriend", ReplyAction="http://tempuri.org/IMatchmakingManager/GetMatchWithAFriendResponse")]
-        CodenamesGame.MatchmakingService.MatchRequest GetMatchWithAFriend(CodenamesGame.MatchmakingService.MatchConfiguration configuration);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/Connect", ReplyAction="http://tempuri.org/IMatchmakingManager/ConnectResponse")]
+        CodenamesGame.MatchmakingService.CommunicationRequest Connect(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/GetMatchWithAFriend", ReplyAction="http://tempuri.org/IMatchmakingManager/GetMatchWithAFriendResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.MatchRequest> GetMatchWithAFriendAsync(CodenamesGame.MatchmakingService.MatchConfiguration configuration);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/Connect", ReplyAction="http://tempuri.org/IMatchmakingManager/ConnectResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> ConnectAsync(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/CancelMatch", ReplyAction="http://tempuri.org/IMatchmakingManager/CancelMatchResponse")]
-        CodenamesGame.MatchmakingService.CommunicationRequest CancelMatch();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/Disconnect")]
+        void Disconnect(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/CancelMatch", ReplyAction="http://tempuri.org/IMatchmakingManager/CancelMatchResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> CancelMatchAsync();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/Disconnect")]
+        System.Threading.Tasks.Task DisconnectAsync(System.Guid playerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/RequestArrangedMatch", ReplyAction="http://tempuri.org/IMatchmakingManager/RequestArrangedMatchResponse")]
+        CodenamesGame.MatchmakingService.CommunicationRequest RequestArrangedMatch(CodenamesGame.MatchmakingService.MatchConfiguration configuration);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/RequestArrangedMatch", ReplyAction="http://tempuri.org/IMatchmakingManager/RequestArrangedMatchResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> RequestArrangedMatchAsync(CodenamesGame.MatchmakingService.MatchConfiguration configuration);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/ConfirmMatchReceived")]
+        void ConfirmMatchReceived(System.Guid playerID, System.Guid matchID);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/ConfirmMatchReceived")]
+        System.Threading.Tasks.Task ConfirmMatchReceivedAsync(System.Guid playerID, System.Guid matchID);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/RequestMatchCancel")]
+        void RequestMatchCancel(System.Guid playerID);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/RequestMatchCancel")]
+        System.Threading.Tasks.Task RequestMatchCancelAsync(System.Guid playerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IMatchmakingManagerCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/ReceiveMatch")]
-        void ReceiveMatch(CodenamesGame.MatchmakingService.Match match);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyRequestPending")]
+        void NotifyRequestPending(System.Guid RequesterID, System.Guid CompanionID);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyMatchReady")]
+        void NotifyMatchReady(CodenamesGame.MatchmakingService.Match match);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyPlayersReady")]
+        void NotifyPlayersReady(System.Guid matchID);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyMatchCanceled")]
-        void NotifyMatchCanceled();
+        void NotifyMatchCanceled(System.Guid matchID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -792,20 +801,49 @@ namespace CodenamesGame.MatchmakingService {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public CodenamesGame.MatchmakingService.MatchRequest GetMatchWithAFriend(CodenamesGame.MatchmakingService.MatchConfiguration configuration) {
-            return base.Channel.GetMatchWithAFriend(configuration);
+        public CodenamesGame.MatchmakingService.CommunicationRequest Connect(System.Guid playerID) {
+            return base.Channel.Connect(playerID);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.MatchRequest> GetMatchWithAFriendAsync(CodenamesGame.MatchmakingService.MatchConfiguration configuration) {
-            return base.Channel.GetMatchWithAFriendAsync(configuration);
+        public System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> ConnectAsync(System.Guid playerID) {
+            return base.Channel.ConnectAsync(playerID);
         }
         
-        public CodenamesGame.MatchmakingService.CommunicationRequest CancelMatch() {
-            return base.Channel.CancelMatch();
+        public void Disconnect(System.Guid playerID) {
+            base.Channel.Disconnect(playerID);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> CancelMatchAsync() {
-            return base.Channel.CancelMatchAsync();
+        public System.Threading.Tasks.Task DisconnectAsync(System.Guid playerID) {
+            return base.Channel.DisconnectAsync(playerID);
+        }
+        
+        public CodenamesGame.MatchmakingService.CommunicationRequest RequestArrangedMatch(CodenamesGame.MatchmakingService.MatchConfiguration configuration) {
+            return base.Channel.RequestArrangedMatch(configuration);
+        }
+        
+        public System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> RequestArrangedMatchAsync(CodenamesGame.MatchmakingService.MatchConfiguration configuration) {
+            return base.Channel.RequestArrangedMatchAsync(configuration);
+        }
+        
+        public void ConfirmMatchReceived(System.Guid playerID, System.Guid matchID) {
+            base.Channel.ConfirmMatchReceived(playerID, matchID);
+        }
+        
+        public System.Threading.Tasks.Task ConfirmMatchReceivedAsync(System.Guid playerID, System.Guid matchID) {
+            return base.Channel.ConfirmMatchReceivedAsync(playerID, matchID);
+        }
+        
+        public void RequestMatchCancel(System.Guid playerID) {
+            base.Channel.RequestMatchCancel(playerID);
+        }
+        
+        public System.Threading.Tasks.Task RequestMatchCancelAsync(System.Guid playerID) {
+            return base.Channel.RequestMatchCancelAsync(playerID);
+        }
+
+        internal void ConnectAsync(object currentPlayerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9058/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import schemaLocation="http://localhost:9058/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="MatchRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="Match" nillable="true" type="q1:Match" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="MatchRequest" nillable="true" type="tns:MatchRequest" />
-  <xs:complexType name="Request">
+  <xs:complexType name="MatchConfiguration">
     <xs:sequence>
-      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="StatusCode" type="q2:StatusCode" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="Companion" nillable="true" type="q1:Player" />
+      <xs:element minOccurs="0" name="MatchRules" nillable="true" type="tns:MatchRules" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="Requester" nillable="true" type="q2:Player" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Request" nillable="true" type="tns:Request" />
-  <xs:complexType name="CommunicationRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
+  <xs:element name="MatchConfiguration" nillable="true" type="tns:MatchConfiguration" />
+  <xs:complexType name="MatchRules">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BystanderTokens" type="xs:int" />
+      <xs:element minOccurs="0" name="Gamemode" type="tns:Gamemode" />
+      <xs:element minOccurs="0" name="TimerTokens" type="xs:int" />
+      <xs:element minOccurs="0" name="TurnTimer" type="xs:int" />
+    </xs:sequence>
   </xs:complexType>
-  <xs:element name="CommunicationRequest" nillable="true" type="tns:CommunicationRequest" />
-  <xs:complexType name="LoginRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UserID" nillable="true" type="ser:guid" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+  <xs:element name="MatchRules" nillable="true" type="tns:MatchRules" />
+  <xs:simpleType name="Gamemode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NORMAL" />
+      <xs:enumeration value="CUSTOM" />
+      <xs:enumeration value="COUNTERINTELLIGENCE" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Gamemode" nillable="true" type="tns:Gamemode" />
+  <xs:complexType name="Match">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BoardPlayerOne" nillable="true" type="q3:ArrayOfArrayOfint" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BoardPlayerTwo" nillable="true" type="q4:ArrayOfArrayOfint" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="Companion" nillable="true" type="q5:Player" />
+      <xs:element minOccurs="0" name="MatchID" type="ser:guid" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="Requester" nillable="true" type="q6:Player" />
+      <xs:element minOccurs="0" name="Rules" nillable="true" type="tns:MatchRules" />
+      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SelectedWords" nillable="true" type="q7:ArrayOfint" />
+    </xs:sequence>
   </xs:complexType>
-  <xs:element name="LoginRequest" nillable="true" type="tns:LoginRequest" />
+  <xs:element name="Match" nillable="true" type="tns:Match" />
 </xs:schema>

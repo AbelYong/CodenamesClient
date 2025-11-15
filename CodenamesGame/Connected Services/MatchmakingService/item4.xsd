@@ -1,43 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
-  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-  <xs:element name="GetMatchWithAFriend">
+  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
+  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+  <xs:element name="Connect">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="configuration" nillable="true" type="q1:MatchConfiguration" />
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="playerID" type="q1:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetMatchWithAFriendResponse">
+  <xs:element name="ConnectResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="GetMatchWithAFriendResult" nillable="true" type="q2:MatchRequest" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="ConnectResult" nillable="true" type="q2:CommunicationRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CancelMatch">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="CancelMatchResponse">
+  <xs:element name="Disconnect">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="CancelMatchResult" nillable="true" type="q3:CommunicationRequest" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="playerID" type="q3:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ReceiveMatch">
+  <xs:element name="RequestArrangedMatch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="match" nillable="true" type="q4:Match" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="configuration" nillable="true" type="q4:MatchConfiguration" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestArrangedMatchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="RequestArrangedMatchResult" nillable="true" type="q5:CommunicationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmMatchReceived">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="playerID" type="q6:guid" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="matchID" type="q7:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RequestMatchCancel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="playerID" type="q8:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyRequestPending">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="RequesterID" type="q9:guid" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="CompanionID" type="q10:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyMatchReady">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="match" nillable="true" type="q11:Match" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyPlayersReady">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="matchID" type="q12:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyMatchCanceled">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="matchID" type="q13:guid" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>

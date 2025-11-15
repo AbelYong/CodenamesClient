@@ -80,7 +80,7 @@
     <Compile Include="Domain\POCO\PlayerDM.cs" />
     <Compile Include="Domain\POCO\UserDM.cs" />
     <Compile Include="Network\EmailOperation.cs" />
-    <Compile Include="Network\MatchmakingCallback.cs" />
+    <Compile Include="Network\MatchmakingCallbackHandler.cs" />
     <Compile Include="Network\MatchmakingOperation.cs" />
     <Compile Include="Network\FriendCallbackHandler.cs" />
     <Compile Include="Network\SessionOperation.cs" />
@@ -146,9 +146,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\MatchmakingService\CodenamesGame.MatchmakingService.CommunicationRequest.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\MatchmakingService\CodenamesGame.MatchmakingService.MatchRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\MatchmakingService\item.xsd">

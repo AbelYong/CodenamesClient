@@ -370,22 +370,31 @@ namespace CodenamesGame.SessionService {
         UPDATED = 2,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        MISSING_DATA = 3,
+        CONFLICT = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        WRONG_DATA = 4,
+        CLIENT_DISCONNECT = 4,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNAUTHORIZED = 5,
+        MISSING_DATA = 5,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_ERROR = 6,
+        WRONG_DATA = 6,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_UNAVAIBLE = 7,
+        UNAUTHORIZED = 7,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_TIMEOUT = 8,
+        UNALLOWED = 8,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_ERROR = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNAVAIBLE = 10,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_TIMEOUT = 11,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

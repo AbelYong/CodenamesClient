@@ -12,51 +12,81 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+      <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
       <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
-      <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
+      <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
       <xsd:import schemaLocation="http://localhost:9058/?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IMatchmakingManager_GetMatchWithAFriend_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetMatchWithAFriend" />
+  <wsdl:message name="IMatchmakingManager_Connect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Connect" />
   </wsdl:message>
-  <wsdl:message name="IMatchmakingManager_GetMatchWithAFriend_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetMatchWithAFriendResponse" />
+  <wsdl:message name="IMatchmakingManager_Connect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectResponse" />
   </wsdl:message>
-  <wsdl:message name="IMatchmakingManager_CancelMatch_InputMessage">
-    <wsdl:part name="parameters" element="tns:CancelMatch" />
+  <wsdl:message name="IMatchmakingManager_Disconnect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Disconnect" />
   </wsdl:message>
-  <wsdl:message name="IMatchmakingManager_CancelMatch_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CancelMatchResponse" />
+  <wsdl:message name="IMatchmakingManager_RequestArrangedMatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestArrangedMatch" />
   </wsdl:message>
-  <wsdl:message name="IMatchmakingManager_ReceiveMatch_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ReceiveMatch" />
+  <wsdl:message name="IMatchmakingManager_RequestArrangedMatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RequestArrangedMatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchmakingManager_ConfirmMatchReceived_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmMatchReceived" />
+  </wsdl:message>
+  <wsdl:message name="IMatchmakingManager_RequestMatchCancel_InputMessage">
+    <wsdl:part name="parameters" element="tns:RequestMatchCancel" />
+  </wsdl:message>
+  <wsdl:message name="IMatchmakingManager_NotifyRequestPending_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyRequestPending" />
+  </wsdl:message>
+  <wsdl:message name="IMatchmakingManager_NotifyMatchReady_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyMatchReady" />
+  </wsdl:message>
+  <wsdl:message name="IMatchmakingManager_NotifyPlayersReady_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPlayersReady" />
   </wsdl:message>
   <wsdl:message name="IMatchmakingManager_NotifyMatchCanceled_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyMatchCanceled" />
   </wsdl:message>
-  <wsdl:portType name="IMatchmakingManager">
-    <wsdl:operation name="GetMatchWithAFriend">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMatchmakingManager/GetMatchWithAFriend" message="tns:IMatchmakingManager_GetMatchWithAFriend_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/GetMatchWithAFriendResponse" message="tns:IMatchmakingManager_GetMatchWithAFriend_OutputMessage" />
+  <wsdl:portType msc:usingSession="true" name="IMatchmakingManager">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Connect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchmakingManager/Connect" message="tns:IMatchmakingManager_Connect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/ConnectResponse" message="tns:IMatchmakingManager_Connect_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CancelMatch">
-      <wsdl:input wsaw:Action="http://tempuri.org/IMatchmakingManager/CancelMatch" message="tns:IMatchmakingManager_CancelMatch_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/CancelMatchResponse" message="tns:IMatchmakingManager_CancelMatch_OutputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Disconnect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchmakingManager/Disconnect" message="tns:IMatchmakingManager_Disconnect_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ReceiveMatch">
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/ReceiveMatch" message="tns:IMatchmakingManager_ReceiveMatch_OutputCallbackMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RequestArrangedMatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchmakingManager/RequestArrangedMatch" message="tns:IMatchmakingManager_RequestArrangedMatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/RequestArrangedMatchResponse" message="tns:IMatchmakingManager_RequestArrangedMatch_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="NotifyMatchCanceled">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ConfirmMatchReceived">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchmakingManager/ConfirmMatchReceived" message="tns:IMatchmakingManager_ConfirmMatchReceived_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="RequestMatchCancel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchmakingManager/RequestMatchCancel" message="tns:IMatchmakingManager_RequestMatchCancel_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyRequestPending">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/NotifyRequestPending" message="tns:IMatchmakingManager_NotifyRequestPending_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyMatchReady">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/NotifyMatchReady" message="tns:IMatchmakingManager_NotifyMatchReady_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPlayersReady">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/NotifyPlayersReady" message="tns:IMatchmakingManager_NotifyPlayersReady_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyMatchCanceled">
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchmakingManager/NotifyMatchCanceled" message="tns:IMatchmakingManager_NotifyMatchCanceled_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IMatchmakingManager" type="tns:IMatchmakingManager">
     <wsp:PolicyReference URI="#NetTcpBinding_IMatchmakingManager_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="GetMatchWithAFriend">
-      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/GetMatchWithAFriend" style="document" />
+    <wsdl:operation name="Connect">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/Connect" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -64,8 +94,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CancelMatch">
-      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/CancelMatch" style="document" />
+    <wsdl:operation name="Disconnect">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/Disconnect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="RequestArrangedMatch">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/RequestArrangedMatch" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -73,8 +109,32 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ReceiveMatch">
-      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/ReceiveMatch" style="document" />
+    <wsdl:operation name="ConfirmMatchReceived">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/ConfirmMatchReceived" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="RequestMatchCancel">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/RequestMatchCancel" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyRequestPending">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/NotifyRequestPending" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyMatchReady">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/NotifyMatchReady" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyPlayersReady">
+      <soap12:operation soapAction="http://tempuri.org/IMatchmakingManager/NotifyPlayersReady" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
