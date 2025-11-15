@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -23,7 +24,7 @@ using System.Xml.Linq;
 namespace CodenamesClient.GameUI.Pages
 {
     /// <summary>
-    /// Lógica de interacción para LobbyPage.xaml
+    /// Interaction logic for LobbyPage.xaml
     /// </summary>
     public partial class LobbyPage : Page
     {
@@ -31,13 +32,23 @@ namespace CodenamesClient.GameUI.Pages
         private GamemodeDM _gamemode;
         private PlayerDM _player;
 
-        public LobbyPage(PlayerDM player, GamemodeDM gamemode)
+        private SessionOperation _session;
+        private Storyboard _slideInOnlineFriends;
+        private Storyboard _slideOutOnlineFriends;
+
+        public LobbyPage(PlayerDM player, GamemodeDM gamemode, SessionOperation session)
         {
             InitializeComponent();
-            this._viewModel = new LobbyViewModel(gamemode);
+
+            this._session = session;
+            this._viewModel = new LobbyViewModel(gamemode, _session);
             this.DataContext = _viewModel;
             _gamemode = gamemode;
             _player = player;
+
+            _viewModel.SubscribeToSessionEvents();
+            _slideInOnlineFriends = (Storyboard)FindResource("SlideInOnlineFriendsAnimation");
+            _slideOutOnlineFriends = (Storyboard)FindResource("SlideOutOnlineFriendsAnimation");
         }
 
         private void Click_StartGame(object sender, RoutedEventArgs e)
@@ -49,6 +60,8 @@ namespace CodenamesClient.GameUI.Pages
                 Guid myID = (Guid)_player.PlayerID;
                 MatchDM match = MatchDM.AssembleMatch(request.Match, myID);
                 BoardPage board = new BoardPage(match);
+
+                _viewModel.UnsubscribeFromSessionEvents();
                 NavigationService.Navigate(board);
             }
             else
@@ -59,6 +72,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
         {
+            _viewModel.UnsubscribeFromSessionEvents();
             NavigationService.GoBack();
         }
 
@@ -84,8 +98,50 @@ namespace CodenamesClient.GameUI.Pages
                     break;
             }
             matchConfig.Requester = _player;
-            matchConfig.Companion = LoginViewModel.AssembleGuest(); //TODO get the real friend/stranger
+            matchConfig.Companion = LoginViewModel.AssembleGuest();
             return matchConfig;
+        }
+
+        /// <summary>
+        /// Displays the online friends panel with an animation.
+        /// </summary>
+        private void Click_ShowOnlineFriends(object sender, RoutedEventArgs e)
+        {
+            Overlay.Visibility = Visibility.Visible;
+            OnlineFriendsGrid.Visibility = Visibility.Visible;
+            _slideInOnlineFriends.Begin();
+        }
+
+        /// <summary>
+        /// Hides the online friends panel.
+        /// </summary>
+        private void Click_HideOnlineFriends(object sender, RoutedEventArgs e)
+        {
+            EventHandler slideOutHandler = null;
+
+            slideOutHandler = (s, a) =>
+            {
+                OnlineFriendsGrid.Visibility = Visibility.Collapsed;
+                Overlay.Visibility = Visibility.Collapsed;
+
+                _slideOutOnlineFriends.Completed -= slideOutHandler;
+            };
+
+            _slideOutOnlineFriends.Completed += slideOutHandler;
+
+            _slideOutOnlineFriends.Begin();
+        }
+
+        /// <summary>
+        /// Click event for the “Invite” button in the online friends list.
+        /// </summary>
+        private void Click_InviteFriend(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is PlayerDM friendToInvite)
+            {
+                // TODO: Implement the actual invitation logic here.
+                MessageBox.Show($"TODO: Enviar invitación a {friendToInvite.Username}");
+            }
         }
     }
 }

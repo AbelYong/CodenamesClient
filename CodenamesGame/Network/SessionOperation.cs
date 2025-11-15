@@ -2,6 +2,7 @@
 using CodenamesGame.SessionService;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 
 namespace CodenamesGame.Network
@@ -12,15 +13,28 @@ namespace CodenamesGame.Network
         private SessionManagerClient _client;
         private List<PlayerDM> _onlineFriends { get; set; }
 
+        public static event EventHandler<PlayerEventArgs> OnFriendOnline;
+        public static event EventHandler<Guid> OnFriendOffline;
+        public static event EventHandler<List<PlayerDM>> OnOnlineFriendsReceived;
+
         public SessionOperation()
         {
             InitializeCallbackChannel();
+            _onlineFriends = new List<PlayerDM>();
         }
 
         private void InitializeCallbackChannel()
         {
             InstanceContext context = new InstanceContext(this);
             _client = new SessionManagerClient(context, _ENDPOINT_NAME);
+        }
+
+        /// <summary>
+        /// Gets the current list of cached online friends.
+        /// </summary>
+        public List<PlayerDM> GetOnlineFriendsList()
+        {
+            return _onlineFriends;
         }
 
         public CommunicationRequest Connect(PlayerDM player)
@@ -77,6 +91,8 @@ namespace CodenamesGame.Network
         {
             Guid? auxFriendId = playerId;
             _onlineFriends.RemoveAll((friend) => friend.PlayerID == auxFriendId);
+
+            OnFriendOffline?.Invoke(this, playerId);
         }
 
         public void NotifyFriendOnline(Player player)
@@ -85,6 +101,8 @@ namespace CodenamesGame.Network
             if (auxFriend != null)
             {
                 _onlineFriends.Add(auxFriend);
+
+                OnFriendOnline?.Invoke(this, new PlayerEventArgs { Player = auxFriend });
             }
         }
 
@@ -100,6 +118,8 @@ namespace CodenamesGame.Network
                 }
             }
             _onlineFriends = auxFriends;
+
+            OnOnlineFriendsReceived?.Invoke(this, _onlineFriends);
         }
     }
 }
