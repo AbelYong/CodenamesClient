@@ -91,6 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameWords.resx</DependentUpon>
     </Compile>
+    <Compile Include="Util\LobbyOperationType.cs" />
     <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\BoardUI\BoardPage.xaml">
       <SubType>Designer</SubType>

@@ -58,6 +58,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\LobbyService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\MatchmakingService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,6 +85,11 @@
     <Compile Include="Domain\POCO\PlayerDM.cs" />
     <Compile Include="Domain\POCO\UserDM.cs" />
     <Compile Include="Network\EmailOperation.cs" />
+    <Compile Include="Network\EventArguments\InvitationReceivedEventArgs.cs" />
+    <Compile Include="Network\EventArguments\OperationMessageEventArgs.cs" />
+    <Compile Include="Network\EventArguments\PlayerEventArgs.cs" />
+    <Compile Include="Network\LobbyCallbackHandler.cs" />
+    <Compile Include="Network\LobbyOperation.cs" />
     <Compile Include="Network\MatchmakingCallbackHandler.cs" />
     <Compile Include="Network\MatchmakingOperation.cs" />
     <Compile Include="Network\FriendCallbackHandler.cs" />
@@ -90,6 +100,31 @@
     <Compile Include="Util\NetworkUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\LobbyService\CodenamesGame.LobbyService.CommunicationRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LobbyService\CodenamesGame.LobbyService.CreateLobbyRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LobbyService\CodenamesGame.LobbyService.JoinPartyRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LobbyService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LobbyService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LobbyService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LobbyService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LobbyService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\LobbyService\LobbyService.wsdl" />
     <None Include="Connected Services\MatchmakingService\item.disco" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +242,7 @@
     <WCFMetadataStorage Include="Connected Services\AuthenticationService\" />
     <WCFMetadataStorage Include="Connected Services\EmailService\" />
     <WCFMetadataStorage Include="Connected Services\FriendService\" />
+    <WCFMetadataStorage Include="Connected Services\LobbyService\" />
     <WCFMetadataStorage Include="Connected Services\MatchmakingService\" />
     <WCFMetadataStorage Include="Connected Services\SessionService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
@@ -297,6 +333,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\MatchmakingService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LobbyService\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LobbyService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LobbyService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LobbyService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

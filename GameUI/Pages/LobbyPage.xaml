@@ -40,6 +40,24 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+        <Storyboard x:Key="SlideInLobbyCodeAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridTypeCode"
+                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                 From="640" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="SlideOutLobbyCodeAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridTypeCode"
+                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                 From="0" To="640" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
     </Page.Resources>
 
     <Grid>
@@ -58,7 +76,7 @@
                 <Label Content="{x:Static language:Lang.lobbyRules}" Width="375" Style="{StaticResource subtitle}" 
                    HorizontalContentAlignment="Center" BorderThickness="2" 
 BorderBrush="White"/>
-                <Grid Margin="0,0,0,175">
+                <Grid Margin="0,0,0,100">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -90,21 +108,26 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                          IsReadOnly="{Binding !IsCustomGame}"/>
                 </Grid>
                 <Button Click="Click_StartGame" Content="{x:Static language:Lang.globalPlay}"
-                    Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48"/>
+                    Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48" Margin="0,0,0,25"/>
+                <Button Click="Click_btnCreateLobby" Content="Create lobby" IsEnabled="{Binding CreateLobbyBtnEnabled}"
+                        Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="36"/>
+                <Label Content="{Binding VisibleLobbyCodeTag}" Style="{StaticResource subtitle}" Width="300" Height="40" />
 
             </StackPanel>
-            <StackPanel DockPanel.Dock="Right" Margin="30,0,0,0">
+            <StackPanel DockPanel.Dock="Right" Margin="30,0,0,0" Width="200">
                 <Label Content="{x:Static language:Lang.matchParty}"
                    Style="{StaticResource title}" />
-                <Label Content="Player" Height="40" 
-                 
-  Style="{StaticResource subtitle}" Background="White" BorderBrush="White" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" Width="110"/>
-                <Button Content="Friend"
-                    Visibility="Collapsed" Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
+                <Label Content="{Binding PartyHost.Username}" Height="40" HorizontalContentAlignment="Center"
+                       Style="{StaticResource subtitle}" Background="White" BorderBrush="White" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" Width="200"/>
+                <Button x:Name="btnGuest" Content="{Binding PartyGuest.Username}" Visibility="{Binding GuestBtnVisibility}"
+                        Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
 
-                <Button Content="Invite+" 
-                    Style="{StaticResource buttonCustomFocus}" Height="40" 
+                <Button x:Name="btnInvite" Content="Invite+" Visibility="{Binding InviteBtnVisibility}"
+                    Style="{StaticResource buttonCustomFocus}" Height="40" Margin="0,0,0,10"
                     Click="Click_ShowOnlineFriends"/>
+                <Button x:Name="btnJoinWithCode" Content="Join" Visibility="{Binding JoinBtnVisibility}"
+                    Style="{StaticResource buttonCustomFocus}" Height="40" 
+                    Click="Click_btnJoinParty"/>
 
             </StackPanel>
             <Image Source="/Assets/GameUI/agent.png" Height="450"/>
@@ -140,6 +163,23 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                         Width="180" Height="40" Margin="0,0,0,20" 
                         Click="Click_HideOnlineFriends"/>
             </Grid>
+        </Grid>
+        <Grid x:Name="gridTypeCode" Width="400" Height="200" Background="#272727"
+              HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="640"/>
+            </Grid.RenderTransform>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Type the match code: " Style="{StaticResource subtitle}" Margin="0,0,0,10" />
+            <TextBox Grid.Row="1" x:Name="tbkInputCode" Style="{StaticResource textBoxCustomFocus}" Width="300" Margin="0,0,0,20" />
+            <Button Grid.Row="2" Click="Click_btnSendCode" Content="Send code" Margin="0,0,0,10"
+                    Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
+            <Button Grid.Row="3" Click="Click_btnCloseTypeCode" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
         </Grid>
     </Grid>
 </Page>

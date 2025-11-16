@@ -35,13 +35,15 @@ namespace CodenamesClient.GameUI.Pages
         private SessionOperation _session;
         private Storyboard _slideInOnlineFriends;
         private Storyboard _slideOutOnlineFriends;
+        private Storyboard _slideInTypeCode;
+        private Storyboard _slideOutTypeCode;
 
         public LobbyPage(PlayerDM player, GamemodeDM gamemode, SessionOperation session)
         {
             InitializeComponent();
 
             this._session = session;
-            this._viewModel = new LobbyViewModel(gamemode, _session);
+            this._viewModel = new LobbyViewModel(player, gamemode, _session);
             this.DataContext = _viewModel;
             _gamemode = gamemode;
             _player = player;
@@ -49,6 +51,8 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.SubscribeToSessionEvents();
             _slideInOnlineFriends = (Storyboard)FindResource("SlideInOnlineFriendsAnimation");
             _slideOutOnlineFriends = (Storyboard)FindResource("SlideOutOnlineFriendsAnimation");
+            _slideInTypeCode = (Storyboard)FindResource("SlideInLobbyCodeAnimation");
+            _slideOutTypeCode = (Storyboard)FindResource("SlideOutLobbyCodeAnimation");
         }
 
         private void Click_StartGame(object sender, RoutedEventArgs e)
@@ -56,8 +60,15 @@ namespace CodenamesClient.GameUI.Pages
             //TODO
         }
 
+        private void Click_btnCreateLobby(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CreateLobby();
+        }
+
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
         {
+            _viewModel.DisconnectFromLobbyService(_player);
+            _viewModel.UnsucribeToLobbyEvents();
             _viewModel.UnsubscribeFromSessionEvents();
             NavigationService.GoBack();
         }
@@ -86,6 +97,41 @@ namespace CodenamesClient.GameUI.Pages
             matchConfig.Requester = _player;
             matchConfig.Companion = LoginViewModel.AssembleGuest();
             return matchConfig;
+        }
+
+        private void Click_btnJoinParty(object sender, RoutedEventArgs e)
+        {
+            Overlay.Visibility = Visibility.Visible;
+            gridTypeCode.Visibility = Visibility.Visible;
+            _slideInTypeCode.Begin();
+        }
+
+        private void Click_btnSendCode(object sender, RoutedEventArgs e)
+        {
+            _viewModel.JoinParty(_player, tbkInputCode.Text);
+            CloseTypeCodeGrid();
+        }
+
+        private void Click_btnCloseTypeCode(object sender, RoutedEventArgs e)
+        {
+            CloseTypeCodeGrid();
+        }
+
+        private void CloseTypeCodeGrid()
+        {
+            EventHandler slideOutHandler = null;
+
+            slideOutHandler = (s, a) =>
+            {
+                gridTypeCode.Visibility = Visibility.Collapsed;
+                Overlay.Visibility = Visibility.Collapsed;
+
+                _slideOutTypeCode.Completed -= slideOutHandler;
+            };
+
+            _slideOutTypeCode.Completed += slideOutHandler;
+
+            _slideOutTypeCode.Begin();
         }
 
         /// <summary>
@@ -125,8 +171,8 @@ namespace CodenamesClient.GameUI.Pages
         {
             if (sender is Button btn && btn.DataContext is PlayerDM friendToInvite)
             {
-                // TODO: Implement the actual invitation logic here.
-                MessageBox.Show($"TODO: Enviar invitación a {friendToInvite.Username}");
+                Guid friendID = (Guid)friendToInvite.PlayerID;
+                _viewModel.InviteToParty(friendID);
             }
         }
     }

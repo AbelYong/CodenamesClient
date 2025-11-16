@@ -268,6 +268,7 @@ namespace CodenamesGame.SessionService {
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.CreateLobbyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.CommunicationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -351,6 +352,29 @@ namespace CodenamesGame.SessionService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CreateLobbyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CreateLobbyRequest : CodenamesGame.SessionService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LobbyCodeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LobbyCode {
+            get {
+                return this.LobbyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class CommunicationRequest : CodenamesGame.SessionService.Request {
@@ -376,25 +400,31 @@ namespace CodenamesGame.SessionService {
         CLIENT_DISCONNECT = 4,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        MISSING_DATA = 5,
+        CLIENT_UNREACHABLE = 5,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        WRONG_DATA = 6,
+        MISSING_DATA = 6,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNAUTHORIZED = 7,
+        WRONG_DATA = 7,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNALLOWED = 8,
+        NOT_FOUND = 8,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_ERROR = 9,
+        UNAUTHORIZED = 9,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_UNAVAIBLE = 10,
+        UNALLOWED = 10,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_TIMEOUT = 11,
+        SERVER_ERROR = 11,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNAVAIBLE = 12,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_TIMEOUT = 13,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

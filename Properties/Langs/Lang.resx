@@ -438,4 +438,43 @@
   <data name="loginAlreadyLoggedInError" xml:space="preserve">
     <value>You are already logged in on another device, please log out of that device before logging in here</value>
   </data>
+  <data name="lobbyErrorAlreadyConnected" xml:space="preserve">
+    <value>You are already connected to the Lobby Service of Codenames</value>
+  </data>
+  <data name="lobbyErrorAlreadyPartyHost" xml:space="preserve">
+    <value>You are already in a party, leave your current party to start a new lobby</value>
+  </data>
+  <data name="lobbyErrorCannotInviteNewGuest" xml:space="preserve">
+    <value>You cannot invite a new player, your party is full</value>
+  </data>
+  <data name="lobbyErrorYouAreNotPartyHost" xml:space="preserve">
+    <value>You cannot invite another player because you're not your current party's host</value>
+  </data>
+  <data name="lobbyErrorPartyOrHostNotFound" xml:space="preserve">
+    <value>We couldn't invite this player because we couldn't find your party or your player profile, please try again later</value>
+  </data>
+  <data name="lobbyErrorServiceConnectionLost" xml:space="preserve">
+    <value>We couldn't send an invitation because you have lost connection to Codenames' lobby service, please try again later</value>
+  </data>
+  <data name="lobbyErrorProfileNotFoundWhenJoining" xml:space="preserve">
+    <value>We couldn't put you in this party because we couldn't found your profile, please try again later</value>
+  </data>
+  <data name="lobbyErrorLobbyCodeNotFound" xml:space="preserve">
+    <value>No lobby matching this code was found, please try again</value>
+  </data>
+  <data name="lobbyErrorLobbyFull" xml:space="preserve">
+    <value>You can't join this lobby because it's already full</value>
+  </data>
+  <data name="lobbyErrorPartyHostNotFound" xml:space="preserve">
+    <value>We couldn't put you in this lobby because the party's host has lost connection</value>
+  </data>
+  <data name="lobbyInfoFriendNotOnlineEmailSent" xml:space="preserve">
+    <value>Your friend is offline, we sent an invitation to your friend's email</value>
+  </data>
+  <data name="globalInvitationReceivedMessage" xml:space="preserve">
+    <value>{0} has invited you to their lobby, join them?</value>
+  </data>
+  <data name="globalInvitationReceivedTitle" xml:space="preserve">
+    <value>You have been invited to party</value>
+  </data>
 </root>

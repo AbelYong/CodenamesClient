@@ -41,6 +41,7 @@ namespace CodenamesClient.GameUI.ViewModels
             if (!IsPlayerGuest)
             {
                 LoadInitialFriendData();
+                Guid playerID = (Guid)player.PlayerID;
             }
         }
 

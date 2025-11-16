@@ -28,4 +28,5 @@ namespace CodenamesGame.Network
         {
             throw new NotImplementedException();
         }
+    }
 }

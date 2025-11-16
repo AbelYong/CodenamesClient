@@ -438,4 +438,43 @@
   <data name="loginAlreadyLoggedInError" xml:space="preserve">
     <value>Ya estas conectado en otro dispositivo, por favor desconéctate allí antes de conectarte aquí.</value>
   </data>
+  <data name="lobbyErrorAlreadyConnected" xml:space="preserve">
+    <value>Ya estas conectando al servicio de salas de Codenames</value>
+  </data>
+  <data name="lobbyErrorAlreadyPartyHost" xml:space="preserve">
+    <value>Ya estas en un grupo, abandona tu grupo actual para crear una nueva sala</value>
+  </data>
+  <data name="lobbyErrorCannotInviteNewGuest" xml:space="preserve">
+    <value>No puedes invitar a otro jugador, tu grupo esta lleno</value>
+  </data>
+  <data name="lobbyErrorYouAreNotPartyHost" xml:space="preserve">
+    <value>No puedes invitar a otro jugador por que no eres el anfitrión de tu grupo</value>
+  </data>
+  <data name="lobbyErrorPartyOrHostNotFound" xml:space="preserve">
+    <value>No pudimos invitar a este jugador porque no pudimos encontrar tu sala o tu perfil, por favor inténtalo más tarde</value>
+  </data>
+  <data name="lobbyErrorServiceConnectionLost" xml:space="preserve">
+    <value>No pudimos enviar la invitación por que has perdido la conexión con el servicio de salas de Codenames, por favor inténtalo más tarde</value>
+  </data>
+  <data name="lobbyErrorProfileNotFoundWhenJoining" xml:space="preserve">
+    <value>No pudimos colocarte en este grupo por que no pudimos recuperar tu perfil, por favor inténtalo más tarde</value>
+  </data>
+  <data name="lobbyErrorLobbyCodeNotFound" xml:space="preserve">
+    <value>No encontramos ninguna sala con este código, por favor inténtalo de nuevo</value>
+  </data>
+  <data name="lobbyErrorLobbyFull" xml:space="preserve">
+    <value>No te puedes unir a esta  sala porque esta llena</value>
+  </data>
+  <data name="lobbyErrorPartyHostNotFound" xml:space="preserve">
+    <value>No te pudimos colocar en esta sala porque el anfitrión se ha desconectado</value>
+  </data>
+  <data name="lobbyInfoFriendNotOnlineEmailSent" xml:space="preserve">
+    <value>Tu amigo esta desconectado, enviamos una invitación a su correo</value>
+  </data>
+  <data name="globalInvitationReceivedMessage" xml:space="preserve">
+    <value>{0} te ha invitado a unirse a tu sala, ¿quieres unirte a su sala?</value>
+  </data>
+  <data name="globalInvitationReceivedTitle" xml:space="preserve">
+    <value>Te han invitado a un grupo</value>
+  </data>
 </root>

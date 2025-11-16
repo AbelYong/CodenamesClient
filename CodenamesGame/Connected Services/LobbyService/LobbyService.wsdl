@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="LobbyService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ILobbyManager_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
+      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILobbyManager_Connect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Connect" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_Connect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_Disconnect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Disconnect" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_CreateParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateParty" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_CreateParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_InviteToParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:InviteToParty" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_InviteToParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InviteToPartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_JoinParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:JoinParty" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_JoinParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:JoinPartyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_LeaveParty_InputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveParty" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_NotifyMatchInvitationReceived_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyMatchInvitationReceived" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_NotifyMatchInvitationAccepted_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyMatchInvitationAccepted" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_NotifyPartyAbandoned_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPartyAbandoned" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="true" name="ILobbyManager">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Connect">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/Connect" message="tns:ILobbyManager_Connect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/ConnectResponse" message="tns:ILobbyManager_Connect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Disconnect">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/Disconnect" message="tns:ILobbyManager_Disconnect_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/CreateParty" message="tns:ILobbyManager_CreateParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/CreatePartyResponse" message="tns:ILobbyManager_CreateParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InviteToParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/InviteToParty" message="tns:ILobbyManager_InviteToParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/InviteToPartyResponse" message="tns:ILobbyManager_InviteToParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="JoinParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/JoinParty" message="tns:ILobbyManager_JoinParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/JoinPartyResponse" message="tns:ILobbyManager_JoinParty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LeaveParty">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/LeaveParty" message="tns:ILobbyManager_LeaveParty_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyMatchInvitationReceived">
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/NotifyMatchInvitationReceived" message="tns:ILobbyManager_NotifyMatchInvitationReceived_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyMatchInvitationAccepted">
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/NotifyMatchInvitationAccepted" message="tns:ILobbyManager_NotifyMatchInvitationAccepted_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPartyAbandoned">
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/NotifyPartyAbandoned" message="tns:ILobbyManager_NotifyPartyAbandoned_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ILobbyManager" type="tns:ILobbyManager">
+    <wsp:PolicyReference URI="#NetTcpBinding_ILobbyManager_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Connect">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/Connect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Disconnect">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/Disconnect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CreateParty">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/CreateParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InviteToParty">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/InviteToParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="JoinParty">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/JoinParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LeaveParty">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/LeaveParty" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyMatchInvitationReceived">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/NotifyMatchInvitationReceived" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyMatchInvitationAccepted">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/NotifyMatchInvitationAccepted" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyPartyAbandoned">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/NotifyPartyAbandoned" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LobbyService">
+    <wsdl:port name="NetTcpBinding_ILobbyManager" binding="tns:NetTcpBinding_ILobbyManager">
+      <soap12:address location="net.tcp://localhost:9063/LobbyService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:9063/LobbyService</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

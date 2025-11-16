@@ -160,6 +160,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a {0} has invited you to their lobby, join them?.
+        /// </summary>
+        public static string globalInvitationReceivedMessage {
+            get {
+                return ResourceManager.GetString("globalInvitationReceivedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You have been invited to party.
+        /// </summary>
+        public static string globalInvitationReceivedTitle {
+            get {
+                return ResourceManager.GetString("globalInvitationReceivedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Play.
         /// </summary>
         public static string globalPlay {
@@ -273,6 +291,105 @@ namespace CodenamesClient.Properties.Langs {
         public static string langSpanish {
             get {
                 return ResourceManager.GetString("langSpanish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You are already connected to the Lobby Service of Codenames.
+        /// </summary>
+        public static string lobbyErrorAlreadyConnected {
+            get {
+                return ResourceManager.GetString("lobbyErrorAlreadyConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You are already in a party, leave your current party to start a new lobby.
+        /// </summary>
+        public static string lobbyErrorAlreadyPartyHost {
+            get {
+                return ResourceManager.GetString("lobbyErrorAlreadyPartyHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You cannot invite a new player, your party is full.
+        /// </summary>
+        public static string lobbyErrorCannotInviteNewGuest {
+            get {
+                return ResourceManager.GetString("lobbyErrorCannotInviteNewGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No lobby matching this code was found, please try again.
+        /// </summary>
+        public static string lobbyErrorLobbyCodeNotFound {
+            get {
+                return ResourceManager.GetString("lobbyErrorLobbyCodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You can&apos;t join this lobby because it&apos;s already full.
+        /// </summary>
+        public static string lobbyErrorLobbyFull {
+            get {
+                return ResourceManager.GetString("lobbyErrorLobbyFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t put you in this lobby because the party&apos;s host has lost connection.
+        /// </summary>
+        public static string lobbyErrorPartyHostNotFound {
+            get {
+                return ResourceManager.GetString("lobbyErrorPartyHostNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t invite this player because we couldn&apos;t find your party or your player profile, please try again later.
+        /// </summary>
+        public static string lobbyErrorPartyOrHostNotFound {
+            get {
+                return ResourceManager.GetString("lobbyErrorPartyOrHostNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t put you in this party because we couldn&apos;t found your profile, please try again later.
+        /// </summary>
+        public static string lobbyErrorProfileNotFoundWhenJoining {
+            get {
+                return ResourceManager.GetString("lobbyErrorProfileNotFoundWhenJoining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t send an invitation because you have lost connection to Codenames&apos; lobby service, please try again later.
+        /// </summary>
+        public static string lobbyErrorServiceConnectionLost {
+            get {
+                return ResourceManager.GetString("lobbyErrorServiceConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You cannot invite another player because you&apos;re not your current party&apos;s host.
+        /// </summary>
+        public static string lobbyErrorYouAreNotPartyHost {
+            get {
+                return ResourceManager.GetString("lobbyErrorYouAreNotPartyHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your friend is offline, we sent an invitation to your friend&apos;s email.
+        /// </summary>
+        public static string lobbyInfoFriendNotOnlineEmailSent {
+            get {
+                return ResourceManager.GetString("lobbyInfoFriendNotOnlineEmailSent", resourceCulture);
             }
         }
         

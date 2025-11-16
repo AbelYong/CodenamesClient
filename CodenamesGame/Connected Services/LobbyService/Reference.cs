@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CodenamesGame.MatchmakingService {
+namespace CodenamesGame.LobbyService {
     using System.Runtime.Serialization;
     using System;
     
@@ -17,9 +17,10 @@ namespace CodenamesGame.MatchmakingService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.LoginRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.CreateLobbyRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.CommunicationRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.LobbyService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.LobbyService.CreateLobbyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.LobbyService.JoinPartyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.LobbyService.CommunicationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -29,7 +30,7 @@ namespace CodenamesGame.MatchmakingService {
         private bool IsSuccessField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.StatusCode StatusCodeField;
+        private CodenamesGame.LobbyService.StatusCode StatusCodeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -55,7 +56,7 @@ namespace CodenamesGame.MatchmakingService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.StatusCode StatusCode {
+        public CodenamesGame.LobbyService.StatusCode StatusCode {
             get {
                 return this.StatusCodeField;
             }
@@ -81,7 +82,7 @@ namespace CodenamesGame.MatchmakingService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class LoginRequest : CodenamesGame.MatchmakingService.Request {
+    public partial class LoginRequest : CodenamesGame.LobbyService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.Guid> UserIDField;
@@ -104,7 +105,7 @@ namespace CodenamesGame.MatchmakingService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateLobbyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class CreateLobbyRequest : CodenamesGame.MatchmakingService.Request {
+    public partial class CreateLobbyRequest : CodenamesGame.LobbyService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LobbyCodeField;
@@ -125,9 +126,32 @@ namespace CodenamesGame.MatchmakingService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JoinPartyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class JoinPartyRequest : CodenamesGame.LobbyService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.LobbyService.Party PartyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.LobbyService.Party Party {
+            get {
+                return this.PartyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyField, value) != true)) {
+                    this.PartyField = value;
+                    this.RaisePropertyChanged("Party");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class CommunicationRequest : CodenamesGame.MatchmakingService.Request {
+    public partial class CommunicationRequest : CodenamesGame.LobbyService.Request {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
@@ -179,21 +203,21 @@ namespace CodenamesGame.MatchmakingService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MatchConfiguration", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
-    public partial class MatchConfiguration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Party : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.Player CompanionField;
+        private string LobbyCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.MatchRules MatchRulesField;
+        private CodenamesGame.LobbyService.Player PartyGuestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.Player RequesterField;
+        private CodenamesGame.LobbyService.Player PartyHostField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -206,40 +230,40 @@ namespace CodenamesGame.MatchmakingService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.Player Companion {
+        public string LobbyCode {
             get {
-                return this.CompanionField;
+                return this.LobbyCodeField;
             }
             set {
-                if ((object.ReferenceEquals(this.CompanionField, value) != true)) {
-                    this.CompanionField = value;
-                    this.RaisePropertyChanged("Companion");
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.MatchRules MatchRules {
+        public CodenamesGame.LobbyService.Player PartyGuest {
             get {
-                return this.MatchRulesField;
+                return this.PartyGuestField;
             }
             set {
-                if ((object.ReferenceEquals(this.MatchRulesField, value) != true)) {
-                    this.MatchRulesField = value;
-                    this.RaisePropertyChanged("MatchRules");
+                if ((object.ReferenceEquals(this.PartyGuestField, value) != true)) {
+                    this.PartyGuestField = value;
+                    this.RaisePropertyChanged("PartyGuest");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.Player Requester {
+        public CodenamesGame.LobbyService.Player PartyHost {
             get {
-                return this.RequesterField;
+                return this.PartyHostField;
             }
             set {
-                if ((object.ReferenceEquals(this.RequesterField, value) != true)) {
-                    this.RequesterField = value;
-                    this.RaisePropertyChanged("Requester");
+                if ((object.ReferenceEquals(this.PartyHostField, value) != true)) {
+                    this.PartyHostField = value;
+                    this.RaisePropertyChanged("PartyHost");
                 }
             }
         }
@@ -285,7 +309,7 @@ namespace CodenamesGame.MatchmakingService {
         private System.Nullable<System.Guid> PlayerIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.User UserField;
+        private CodenamesGame.LobbyService.User UserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsernameField;
@@ -392,7 +416,7 @@ namespace CodenamesGame.MatchmakingService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.User User {
+        public CodenamesGame.LobbyService.User User {
             get {
                 return this.UserField;
             }
@@ -413,99 +437,6 @@ namespace CodenamesGame.MatchmakingService {
                 if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
                     this.UsernameField = value;
                     this.RaisePropertyChanged("Username");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MatchRules", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
-    [System.SerializableAttribute()]
-    public partial class MatchRules : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int BystanderTokensField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.Gamemode GamemodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TimerTokensField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TurnTimerField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int BystanderTokens {
-            get {
-                return this.BystanderTokensField;
-            }
-            set {
-                if ((this.BystanderTokensField.Equals(value) != true)) {
-                    this.BystanderTokensField = value;
-                    this.RaisePropertyChanged("BystanderTokens");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.Gamemode Gamemode {
-            get {
-                return this.GamemodeField;
-            }
-            set {
-                if ((this.GamemodeField.Equals(value) != true)) {
-                    this.GamemodeField = value;
-                    this.RaisePropertyChanged("Gamemode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TimerTokens {
-            get {
-                return this.TimerTokensField;
-            }
-            set {
-                if ((this.TimerTokensField.Equals(value) != true)) {
-                    this.TimerTokensField = value;
-                    this.RaisePropertyChanged("TimerTokens");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TurnTimer {
-            get {
-                return this.TurnTimerField;
-            }
-            set {
-                if ((this.TurnTimerField.Equals(value) != true)) {
-                    this.TurnTimerField = value;
-                    this.RaisePropertyChanged("TurnTimer");
                 }
             }
         }
@@ -597,245 +528,93 @@ namespace CodenamesGame.MatchmakingService {
         }
     }
     
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Gamemode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
-    public enum Gamemode : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        NORMAL = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        CUSTOM = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        COUNTERINTELLIGENCE = 2,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
-    [System.SerializableAttribute()]
-    public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int[][] BoardPlayerOneField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int[][] BoardPlayerTwoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.Player CompanionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid MatchIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.Player RequesterField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchmakingService.MatchRules RulesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int[] SelectedWordsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int[][] BoardPlayerOne {
-            get {
-                return this.BoardPlayerOneField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BoardPlayerOneField, value) != true)) {
-                    this.BoardPlayerOneField = value;
-                    this.RaisePropertyChanged("BoardPlayerOne");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int[][] BoardPlayerTwo {
-            get {
-                return this.BoardPlayerTwoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BoardPlayerTwoField, value) != true)) {
-                    this.BoardPlayerTwoField = value;
-                    this.RaisePropertyChanged("BoardPlayerTwo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.Player Companion {
-            get {
-                return this.CompanionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CompanionField, value) != true)) {
-                    this.CompanionField = value;
-                    this.RaisePropertyChanged("Companion");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid MatchID {
-            get {
-                return this.MatchIDField;
-            }
-            set {
-                if ((this.MatchIDField.Equals(value) != true)) {
-                    this.MatchIDField = value;
-                    this.RaisePropertyChanged("MatchID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.Player Requester {
-            get {
-                return this.RequesterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RequesterField, value) != true)) {
-                    this.RequesterField = value;
-                    this.RaisePropertyChanged("Requester");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchmakingService.MatchRules Rules {
-            get {
-                return this.RulesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RulesField, value) != true)) {
-                    this.RulesField = value;
-                    this.RaisePropertyChanged("Rules");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int[] SelectedWords {
-            get {
-                return this.SelectedWordsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SelectedWordsField, value) != true)) {
-                    this.SelectedWordsField = value;
-                    this.RaisePropertyChanged("SelectedWords");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MatchmakingService.IMatchmakingManager", CallbackContract=typeof(CodenamesGame.MatchmakingService.IMatchmakingManagerCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
-    public interface IMatchmakingManager {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="LobbyService.ILobbyManager", CallbackContract=typeof(CodenamesGame.LobbyService.ILobbyManagerCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
+    public interface ILobbyManager {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/Connect", ReplyAction="http://tempuri.org/IMatchmakingManager/ConnectResponse")]
-        CodenamesGame.MatchmakingService.CommunicationRequest Connect(System.Guid playerID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/Connect", ReplyAction="http://tempuri.org/ILobbyManager/ConnectResponse")]
+        CodenamesGame.LobbyService.CommunicationRequest Connect(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/Connect", ReplyAction="http://tempuri.org/IMatchmakingManager/ConnectResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> ConnectAsync(System.Guid playerID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/Connect", ReplyAction="http://tempuri.org/ILobbyManager/ConnectResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> ConnectAsync(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/Disconnect")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/Disconnect")]
         void Disconnect(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/Disconnect")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/Disconnect")]
         System.Threading.Tasks.Task DisconnectAsync(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/RequestArrangedMatch", ReplyAction="http://tempuri.org/IMatchmakingManager/RequestArrangedMatchResponse")]
-        CodenamesGame.MatchmakingService.CommunicationRequest RequestArrangedMatch(CodenamesGame.MatchmakingService.MatchConfiguration configuration);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/CreateParty", ReplyAction="http://tempuri.org/ILobbyManager/CreatePartyResponse")]
+        CodenamesGame.LobbyService.CreateLobbyRequest CreateParty(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchmakingManager/RequestArrangedMatch", ReplyAction="http://tempuri.org/IMatchmakingManager/RequestArrangedMatchResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> RequestArrangedMatchAsync(CodenamesGame.MatchmakingService.MatchConfiguration configuration);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/CreateParty", ReplyAction="http://tempuri.org/ILobbyManager/CreatePartyResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.LobbyService.CreateLobbyRequest> CreatePartyAsync(System.Guid playerID);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/ConfirmMatchReceived")]
-        void ConfirmMatchReceived(System.Guid playerID, System.Guid matchID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/InviteToParty", ReplyAction="http://tempuri.org/ILobbyManager/InviteToPartyResponse")]
+        CodenamesGame.LobbyService.CommunicationRequest InviteToParty(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/ConfirmMatchReceived")]
-        System.Threading.Tasks.Task ConfirmMatchReceivedAsync(System.Guid playerID, System.Guid matchID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/InviteToParty", ReplyAction="http://tempuri.org/ILobbyManager/InviteToPartyResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> InviteToPartyAsync(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/RequestMatchCancel")]
-        void RequestMatchCancel(System.Guid playerID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/JoinParty", ReplyAction="http://tempuri.org/ILobbyManager/JoinPartyResponse")]
+        CodenamesGame.LobbyService.JoinPartyRequest JoinParty(System.Guid joiningPlayerID, string lobbyCode);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/RequestMatchCancel")]
-        System.Threading.Tasks.Task RequestMatchCancelAsync(System.Guid playerID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/JoinParty", ReplyAction="http://tempuri.org/ILobbyManager/JoinPartyResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.LobbyService.JoinPartyRequest> JoinPartyAsync(System.Guid joiningPlayerID, string lobbyCode);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/LeaveParty")]
+        void LeaveParty(System.Guid playerID, string lobbyCode);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/LeaveParty")]
+        System.Threading.Tasks.Task LeavePartyAsync(System.Guid playerID, string lobbyCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IMatchmakingManagerCallback {
+    public interface ILobbyManagerCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyRequestPending")]
-        void NotifyRequestPending(System.Guid RequesterID, System.Guid CompanionID);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/NotifyMatchInvitationReceived")]
+        void NotifyMatchInvitationReceived(CodenamesGame.LobbyService.Player fromPlayer, string lobbyCode);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyMatchReady")]
-        void NotifyMatchReady(CodenamesGame.MatchmakingService.Match match);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/NotifyMatchInvitationAccepted")]
+        void NotifyMatchInvitationAccepted(CodenamesGame.LobbyService.Player byPlayer);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyPlayersReady")]
-        void NotifyPlayersReady(System.Guid matchID);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchmakingManager/NotifyMatchCanceled")]
-        void NotifyMatchCanceled(System.Guid matchID);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/NotifyPartyAbandoned")]
+        void NotifyPartyAbandoned(System.Guid leavingPlayerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IMatchmakingManagerChannel : CodenamesGame.MatchmakingService.IMatchmakingManager, System.ServiceModel.IClientChannel {
+    public interface ILobbyManagerChannel : CodenamesGame.LobbyService.ILobbyManager, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MatchmakingManagerClient : System.ServiceModel.DuplexClientBase<CodenamesGame.MatchmakingService.IMatchmakingManager>, CodenamesGame.MatchmakingService.IMatchmakingManager {
+    public partial class LobbyManagerClient : System.ServiceModel.DuplexClientBase<CodenamesGame.LobbyService.ILobbyManager>, CodenamesGame.LobbyService.ILobbyManager {
         
-        public MatchmakingManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
+        public LobbyManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
         }
         
-        public MatchmakingManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+        public LobbyManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
                 base(callbackInstance, endpointConfigurationName) {
         }
         
-        public MatchmakingManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+        public LobbyManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public MatchmakingManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public LobbyManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public MatchmakingManagerClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public LobbyManagerClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public CodenamesGame.MatchmakingService.CommunicationRequest Connect(System.Guid playerID) {
+        public CodenamesGame.LobbyService.CommunicationRequest Connect(System.Guid playerID) {
             return base.Channel.Connect(playerID);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> ConnectAsync(System.Guid playerID) {
+        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> ConnectAsync(System.Guid playerID) {
             return base.Channel.ConnectAsync(playerID);
         }
         
@@ -847,28 +626,36 @@ namespace CodenamesGame.MatchmakingService {
             return base.Channel.DisconnectAsync(playerID);
         }
         
-        public CodenamesGame.MatchmakingService.CommunicationRequest RequestArrangedMatch(CodenamesGame.MatchmakingService.MatchConfiguration configuration) {
-            return base.Channel.RequestArrangedMatch(configuration);
+        public CodenamesGame.LobbyService.CreateLobbyRequest CreateParty(System.Guid playerID) {
+            return base.Channel.CreateParty(playerID);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.MatchmakingService.CommunicationRequest> RequestArrangedMatchAsync(CodenamesGame.MatchmakingService.MatchConfiguration configuration) {
-            return base.Channel.RequestArrangedMatchAsync(configuration);
+        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.CreateLobbyRequest> CreatePartyAsync(System.Guid playerID) {
+            return base.Channel.CreatePartyAsync(playerID);
         }
         
-        public void ConfirmMatchReceived(System.Guid playerID, System.Guid matchID) {
-            base.Channel.ConfirmMatchReceived(playerID, matchID);
+        public CodenamesGame.LobbyService.CommunicationRequest InviteToParty(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode) {
+            return base.Channel.InviteToParty(hostPlayerID, friendToInviteID, lobbyCode);
         }
         
-        public System.Threading.Tasks.Task ConfirmMatchReceivedAsync(System.Guid playerID, System.Guid matchID) {
-            return base.Channel.ConfirmMatchReceivedAsync(playerID, matchID);
+        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> InviteToPartyAsync(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode) {
+            return base.Channel.InviteToPartyAsync(hostPlayerID, friendToInviteID, lobbyCode);
         }
         
-        public void RequestMatchCancel(System.Guid playerID) {
-            base.Channel.RequestMatchCancel(playerID);
+        public CodenamesGame.LobbyService.JoinPartyRequest JoinParty(System.Guid joiningPlayerID, string lobbyCode) {
+            return base.Channel.JoinParty(joiningPlayerID, lobbyCode);
         }
         
-        public System.Threading.Tasks.Task RequestMatchCancelAsync(System.Guid playerID) {
-            return base.Channel.RequestMatchCancelAsync(playerID);
+        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.JoinPartyRequest> JoinPartyAsync(System.Guid joiningPlayerID, string lobbyCode) {
+            return base.Channel.JoinPartyAsync(joiningPlayerID, lobbyCode);
+        }
+        
+        public void LeaveParty(System.Guid playerID, string lobbyCode) {
+            base.Channel.LeaveParty(playerID, lobbyCode);
+        }
+        
+        public System.Threading.Tasks.Task LeavePartyAsync(System.Guid playerID, string lobbyCode) {
+            return base.Channel.LeavePartyAsync(playerID, lobbyCode);
         }
     }
 }
