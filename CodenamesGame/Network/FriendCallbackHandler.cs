@@ -1,25 +1,11 @@
 ﻿using CodenamesGame.Domain.POCO;
 using CodenamesGame.FriendService;
+using CodenamesGame.Network.EventArguments;
 using System;
 using System.ServiceModel;
 
 namespace CodenamesGame.Network
 {
-    /// <summary>
-    /// Arguments for API operation events that return a message.
-    /// </summary>
-    public class OperationEventArgs : EventArgs
-    {
-        public string Message { get; set; }
-    }
-
-    /// <summary>
-    /// Arguments for events involving another player.
-    /// </summary>
-    public class PlayerEventArgs : EventArgs
-    {
-        public PlayerDM Player { get; set; }
-    }
 
     /// <summary>
     /// Implements the WCF callback interface (IFriendManagerCallback)
@@ -34,8 +20,8 @@ namespace CodenamesGame.Network
         public static event EventHandler<PlayerEventArgs> OnFriendRequestRejected;
         public static event EventHandler<PlayerEventArgs> OnFriendRemoved;
 
-        public static event EventHandler<OperationEventArgs> OnOperationSuccess;
-        public static event EventHandler<OperationEventArgs> OnOperationFailure;
+        public static event EventHandler<OperationMessageEventArgs> OnOperationSuccess;
+        public static event EventHandler<OperationMessageEventArgs> OnOperationFailure;
 
         public void NotifyNewFriendRequest(Player fromPlayer)
         {
@@ -64,13 +50,13 @@ namespace CodenamesGame.Network
         public void NotifyOperationSuccess(string message)
         {
             OnOperationSuccess?.Invoke(this,
-                new OperationEventArgs { Message = message });
+                new OperationMessageEventArgs { Message = message });
         }
 
         public void NotifyOperationFailure(string message)
         {
             OnOperationFailure?.Invoke(this,
-                new OperationEventArgs { Message = message });
+                new OperationMessageEventArgs { Message = message });
         }
 
         /// <summary>
@@ -79,7 +65,7 @@ namespace CodenamesGame.Network
         /// </summary>
         public static void RaiseOperationFailure(string message)
         {
-            OnOperationFailure?.Invoke(null, new OperationEventArgs { Message = message });
+            OnOperationFailure?.Invoke(null, new OperationMessageEventArgs { Message = message });
         }
     }
 }

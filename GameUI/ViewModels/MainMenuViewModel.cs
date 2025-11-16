@@ -1,6 +1,7 @@
 ﻿using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
+using CodenamesGame.Network.EventArguments;
 using CodenamesGame.SessionService;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,6 @@ namespace CodenamesClient.GameUI.ViewModels
         private PlayerDM _player;
         private string _username;
         private bool _isPlayerGuest;
-        private bool _hasPlayerConnection;
 
         public ObservableCollection<PlayerDM> Friends { get; set; }
         public ObservableCollection<PlayerDM> Requests { get; set; }
@@ -36,7 +36,6 @@ namespace CodenamesClient.GameUI.ViewModels
             IsPlayerGuest = isGuest;
             Player = player ?? AssembleGuest();
             Username = Player.Username;
-            _hasPlayerConnection = true;
 
             ConnectSocialService(Player);
             if (!IsPlayerGuest)
@@ -161,7 +160,7 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private void HandleOperationSuccess(object sender, OperationEventArgs e)
+        private void HandleOperationSuccess(object sender, OperationMessageEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -170,7 +169,7 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private void HandleOperationFailure(object sender, OperationEventArgs e)
+        private void HandleOperationFailure(object sender, OperationMessageEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
