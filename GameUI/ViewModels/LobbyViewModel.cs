@@ -34,7 +34,8 @@ namespace CodenamesClient.GameUI.ViewModels
         private bool _createLobbyBtnEnabled;
 
         private readonly SessionOperation _session;
-        public ObservableCollection<PlayerDM> OnlineFriends { get; }
+
+        public ObservableCollection<FriendItem> Friends { get; }
 
         public Visibility GuestBtnVisibility
         {
@@ -51,7 +52,7 @@ namespace CodenamesClient.GameUI.ViewModels
             get => _inviteBtnVisibility;
             set
             {
-                _inviteBtnVisibility= value;
+                _inviteBtnVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -61,7 +62,7 @@ namespace CodenamesClient.GameUI.ViewModels
             get => _jointBtnVisibility;
             set
             {
-                _jointBtnVisibility= value;
+                _jointBtnVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -175,8 +176,9 @@ namespace CodenamesClient.GameUI.ViewModels
             _session = session;
             PartyHost = player;
 
-            OnlineFriends = new ObservableCollection<PlayerDM>();
-            LoadInitialOnlineFriends();
+            Friends = new ObservableCollection<FriendItem>();
+            LoadFriends();
+
             ConnectToLobbyService(player);
 
             switch (gamemode)
@@ -314,75 +316,75 @@ namespace CodenamesClient.GameUI.ViewModels
         }
 
         /// <summary>
-        /// Loads the initial list of online friends from the session instance.
+        /// Loads all friends and checks which ones are online.
         /// </summary>
-        private void LoadInitialOnlineFriends()
+        private void LoadFriends()
         {
-            var onlineFriendsList = _session.GetOnlineFriendsList();
-            OnlineFriends.Clear();
-            foreach (var friend in onlineFriendsList)
+            try
             {
-                OnlineFriends.Add(friend);
+                var allFriends = SocialOperation.Instance.GetFriends();
+
+                var onlineFriendsList = _session.GetOnlineFriendsList();
+                var onlineIds = new HashSet<Guid>(onlineFriendsList.Select(p => p.PlayerID.Value));
+
+                Friends.Clear();
+                foreach (var friend in allFriends)
+                {
+                    if (friend.PlayerID.HasValue)
+                    {
+                        bool isOnline = onlineIds.Contains(friend.PlayerID.Value);
+                        Friends.Add(new FriendItem { Player = friend, IsOnline = isOnline });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error loading friends: " + ex.Message);
             }
         }
 
-        /// <summary>
-        /// Subscribes to static events in the session.
-        /// </summary>
         public void SubscribeToSessionEvents()
         {
             SessionOperation.OnFriendOnline += HandleFriendOnline;
             SessionOperation.OnFriendOffline += HandleFriendOffline;
-            SessionOperation.OnOnlineFriendsReceived += HandleOnlineFriendsReceived;
         }
 
-        /// <summary>
-        /// Unsubscribes from static session events.
-        /// </summary>
         public void UnsubscribeFromSessionEvents()
         {
             SessionOperation.OnFriendOnline -= HandleFriendOnline;
             SessionOperation.OnFriendOffline -= HandleFriendOffline;
-            SessionOperation.OnOnlineFriendsReceived -= HandleOnlineFriendsReceived;
         }
 
         /// <summary>
-        /// Handler for when a friend connects.
+        /// Updates the friend's status to online.
         /// </summary>
         private void HandleFriendOnline(object sender, PlayerEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (!OnlineFriends.Any(f => f.PlayerID == e.Player.PlayerID))
+                var friendItem = Friends.FirstOrDefault(f => f.Player.PlayerID == e.Player.PlayerID);
+                if (friendItem != null)
                 {
-                    OnlineFriends.Add(e.Player);
+                    friendItem.IsOnline = true;
+                }
+                else
+                {
+                    Friends.Add(new FriendItem { Player = e.Player, IsOnline = true });
                 }
             });
         }
 
         /// <summary>
-        /// Handler for when a friend disconnects.
+        /// Updates the friend's status to offline.
         /// </summary>
         private void HandleFriendOffline(object sender, Guid playerId)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var friend = OnlineFriends.FirstOrDefault(f => f.PlayerID == playerId);
-                if (friend != null)
+                var friendItem = Friends.FirstOrDefault(f => f.Player.PlayerID == playerId);
+                if (friendItem != null)
                 {
-                    OnlineFriends.Remove(friend);
-                }
-            });
-        }
-
-        private void HandleOnlineFriendsReceived(object sender, List<PlayerDM> friendsList)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                OnlineFriends.Clear();
-                foreach (var friend in friendsList)
-                {
-                    OnlineFriends.Add(friend);
+                    friendItem.IsOnline = false;
                 }
             });
         }
@@ -397,6 +399,28 @@ namespace CodenamesClient.GameUI.ViewModels
             TurnTimer = NORMAL_TIMER;
         }
 
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+    public class FriendItem : INotifyPropertyChanged
+    {
+        private bool _isOnline;
+        public PlayerDM Player { get; set; }
+
+        public bool IsOnline
+        {
+            get => _isOnline;
+            set
+            {
+                _isOnline = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

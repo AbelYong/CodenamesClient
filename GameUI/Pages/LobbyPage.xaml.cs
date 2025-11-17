@@ -23,9 +23,6 @@ using System.Xml.Linq;
 
 namespace CodenamesClient.GameUI.Pages
 {
-    /// <summary>
-    /// Interaction logic for LobbyPage.xaml
-    /// </summary>
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
@@ -130,13 +127,9 @@ namespace CodenamesClient.GameUI.Pages
             };
 
             _slideOutTypeCode.Completed += slideOutHandler;
-
             _slideOutTypeCode.Begin();
         }
 
-        /// <summary>
-        /// Displays the online friends panel with an animation.
-        /// </summary>
         private void Click_ShowOnlineFriends(object sender, RoutedEventArgs e)
         {
             Overlay.Visibility = Visibility.Visible;
@@ -144,9 +137,6 @@ namespace CodenamesClient.GameUI.Pages
             _slideInOnlineFriends.Begin();
         }
 
-        /// <summary>
-        /// Hides the online friends panel.
-        /// </summary>
         private void Click_HideOnlineFriends(object sender, RoutedEventArgs e)
         {
             EventHandler slideOutHandler = null;
@@ -160,19 +150,25 @@ namespace CodenamesClient.GameUI.Pages
             };
 
             _slideOutOnlineFriends.Completed += slideOutHandler;
-
             _slideOutOnlineFriends.Begin();
         }
 
         /// <summary>
-        /// Click event for the “Invite” button in the online friends list.
+        /// Click event for the “Invite” button in the friend list.
         /// </summary>
         private void Click_InviteFriend(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.DataContext is PlayerDM friendToInvite)
+            if (sender is Button btn && btn.DataContext is FriendItem friendItem)
             {
-                Guid friendID = (Guid)friendToInvite.PlayerID;
-                _viewModel.InviteToParty(friendID);
+                PlayerDM friendToInvite = friendItem.Player;
+
+                if (friendToInvite.PlayerID.HasValue)
+                {
+                    Guid friendID = (Guid)friendToInvite.PlayerID;
+                    _viewModel.InviteToParty(friendID);
+
+                    MessageBox.Show($"Invitación enviada a {friendToInvite.Username}");
+                }
             }
         }
     }
