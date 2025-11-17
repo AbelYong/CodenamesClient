@@ -106,5 +106,20 @@ namespace CodenamesClient.Util
             }
             return Lang.globalUnknownServerError;
         }
+
+        public static string GetModerationMessage(CodenamesGame.ModerationService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.ModerationService.StatusCode.REPORT_CREATED:
+                    return Lang.reportSuccess;
+                case CodenamesGame.ModerationService.StatusCode.REPORT_DUPLICATED:
+                    return Lang.reportDuplicate;
+                case CodenamesGame.ModerationService.StatusCode.USER_KICKED_AND_BANNED:
+                    return Lang.reportUserBanned;
+                default:
+                    return Lang.globalUnknownServerError;
+            }
+        }
     }
 }

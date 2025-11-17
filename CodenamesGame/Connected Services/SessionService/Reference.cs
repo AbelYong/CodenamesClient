@@ -425,6 +425,29 @@ namespace CodenamesGame.SessionService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SERVER_TIMEOUT = 13,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ACCOUNT_BANNED = 14,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_CREATED = 15,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_DUPLICATED = 16,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        USER_KICKED_AND_BANNED = 17,
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BanReason", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    public enum BanReason : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        TemporaryBan = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PermanentBan = 1,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -442,6 +465,18 @@ namespace CodenamesGame.SessionService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/Disconnect")]
         System.Threading.Tasks.Task DisconnectAsync(CodenamesGame.SessionService.Player player);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/NotifyNewFriendship")]
+        void NotifyNewFriendship(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/NotifyNewFriendship")]
+        System.Threading.Tasks.Task NotifyNewFriendshipAsync(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/NotifyFriendshipEnded")]
+        void NotifyFriendshipEnded(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/NotifyFriendshipEnded")]
+        System.Threading.Tasks.Task NotifyFriendshipEndedAsync(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -455,6 +490,9 @@ namespace CodenamesGame.SessionService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/ReceiveOnlineFriends")]
         void ReceiveOnlineFriends(CodenamesGame.SessionService.Player[] friends);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/NotifyKicked")]
+        void NotifyKicked(CodenamesGame.SessionService.BanReason reason);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -499,6 +537,22 @@ namespace CodenamesGame.SessionService {
         
         public System.Threading.Tasks.Task DisconnectAsync(CodenamesGame.SessionService.Player player) {
             return base.Channel.DisconnectAsync(player);
+        }
+        
+        public void NotifyNewFriendship(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB) {
+            base.Channel.NotifyNewFriendship(friendA, friendB);
+        }
+        
+        public System.Threading.Tasks.Task NotifyNewFriendshipAsync(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB) {
+            return base.Channel.NotifyNewFriendshipAsync(friendA, friendB);
+        }
+        
+        public void NotifyFriendshipEnded(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB) {
+            base.Channel.NotifyFriendshipEnded(friendA, friendB);
+        }
+        
+        public System.Threading.Tasks.Task NotifyFriendshipEndedAsync(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB) {
+            return base.Channel.NotifyFriendshipEndedAsync(friendA, friendB);
         }
     }
 }

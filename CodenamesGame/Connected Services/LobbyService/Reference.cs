@@ -199,6 +199,18 @@ namespace CodenamesGame.LobbyService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SERVER_TIMEOUT = 13,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ACCOUNT_BANNED = 14,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_CREATED = 15,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_DUPLICATED = 16,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        USER_KICKED_AND_BANNED = 17,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

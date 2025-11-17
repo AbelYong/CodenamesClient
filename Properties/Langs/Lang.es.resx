@@ -477,4 +477,40 @@
   <data name="globalInvitationReceivedTitle" xml:space="preserve">
     <value>Te han invitado a un grupo</value>
   </data>
+  <data name="kickTitle" xml:space="preserve">
+    <value>Expulsión</value>
+  </data>
+  <data name="kickMessageTemp" xml:space="preserve">
+    <value>Has sido expulsado por acumulación de reportes. Se aplicó una suspensión temporal.</value>
+  </data>
+  <data name="kickMessagePerm" xml:space="preserve">
+    <value>Has sido vetado permanentemente debido a conducta inapropiada reiterada.</value>
+  </data>
+  <data name="confirmReportMessage" xml:space="preserve">
+    <value>¿Estás seguro de que deseas reportar a {0} por conducta antideportiva?</value>
+  </data>
+  <data name="reportSuccess" xml:space="preserve">
+    <value>Jugador reportado exitosamente.</value>
+  </data>
+  <data name="reportDuplicate" xml:space="preserve">
+    <value>Ya has reportado a este jugador anteriormente.</value>
+  </data>
+  <data name="reportUserBanned" xml:space="preserve">
+    <value>Reporte recibido. El jugador ha sido sancionado y expulsado de la partida.</value>
+  </data>
+  <data name="globalWarningTitle" xml:space="preserve">
+    <value>Advertencia</value>
+  </data>
+  <data name="globalInformationTitle" xml:space="preserve">
+    <value>Información</value>
+  </data>
+  <data name="globalUnknownError" xml:space="preserve">
+    <value>Ocurrió un error desconocido.</value>
+  </data>
+  <data name="globalDisconnected" xml:space="preserve">
+    <value>Has sido desconectado del servidor.</value>
+  </data>
+  <data name="matchReport" xml:space="preserve">
+    <value>Reportar</value>
+  </data>
 </root>

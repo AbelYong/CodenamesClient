@@ -1,5 +1,7 @@
 ﻿using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
+using CodenamesGame.Network;
+using CodenamesClient.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +13,8 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace CodenamesClient.GameUI.ViewModels
@@ -34,6 +38,10 @@ namespace CodenamesClient.GameUI.ViewModels
         private int _bystanderTokens;
         private int _turnLenght;
 
+        private ModerationOperation _moderationOperation;
+        private PlayerDM _opponent;
+        public ICommand ReportPlayerCommand { get; set; }
+
         public List<int> AgentNumbers { get; set; }
 
         public BoardViewModel(MatchDM match)
@@ -45,6 +53,8 @@ namespace CodenamesClient.GameUI.ViewModels
             InitializeMatchData(match);
             InitializeChronometer();
             InitializeTimer();
+            _moderationOperation = new ModerationOperation();
+
         }
 
         public string PlayerUsername { get; set; }
@@ -218,6 +228,33 @@ namespace CodenamesClient.GameUI.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private void IdentifyReportTarget(MatchDM match)
+        {
+            _opponent = match.Companion;
+        }
+
+        public void ReportOpponent()
+        {
+            if (_opponent == null) return;
+
+            var result = MessageBox.Show(
+                string.Format(Properties.Langs.Lang.confirmReportMessage, _opponent.Username),
+                Properties.Langs.Lang.globalWarningTitle,
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                string reason = "Conducta antideportiva";
+
+                var serverResponse = _moderationOperation.ReportPlayer(_opponent.PlayerID.Value, reason);
+
+                string feedbackMessage = StatusToMessageMapper.GetModerationMessage(serverResponse.StatusCode);
+
+                MessageBox.Show(feedbackMessage, Properties.Langs.Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

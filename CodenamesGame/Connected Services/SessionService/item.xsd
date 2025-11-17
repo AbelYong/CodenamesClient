@@ -39,6 +39,10 @@
       <xs:enumeration value="SERVER_ERROR" />
       <xs:enumeration value="SERVER_UNAVAIBLE" />
       <xs:enumeration value="SERVER_TIMEOUT" />
+      <xs:enumeration value="ACCOUNT_BANNED" />
+      <xs:enumeration value="REPORT_CREATED" />
+      <xs:enumeration value="REPORT_DUPLICATED" />
+      <xs:enumeration value="USER_KICKED_AND_BANNED" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="StatusCode" nillable="true" type="tns:StatusCode" />
@@ -48,4 +52,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
+  <xs:simpleType name="BanReason">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TemporaryBan" />
+      <xs:enumeration value="PermanentBan" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BanReason" nillable="true" type="tns:BanReason" />
 </xs:schema>

@@ -25,6 +25,12 @@
   <wsdl:message name="ISessionManager_Disconnect_InputMessage">
     <wsdl:part name="parameters" element="tns:Disconnect" />
   </wsdl:message>
+  <wsdl:message name="ISessionManager_NotifyNewFriendship_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyNewFriendship" />
+  </wsdl:message>
+  <wsdl:message name="ISessionManager_NotifyFriendshipEnded_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyFriendshipEnded" />
+  </wsdl:message>
   <wsdl:message name="ISessionManager_NotifyFriendOnline_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyFriendOnline" />
   </wsdl:message>
@@ -34,6 +40,9 @@
   <wsdl:message name="ISessionManager_ReceiveOnlineFriends_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveOnlineFriends" />
   </wsdl:message>
+  <wsdl:message name="ISessionManager_NotifyKicked_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyKicked" />
+  </wsdl:message>
   <wsdl:portType name="ISessionManager">
     <wsdl:operation name="Connect">
       <wsdl:input wsaw:Action="http://tempuri.org/ISessionManager/Connect" message="tns:ISessionManager_Connect_InputMessage" />
@@ -41,6 +50,12 @@
     </wsdl:operation>
     <wsdl:operation name="Disconnect">
       <wsdl:input wsaw:Action="http://tempuri.org/ISessionManager/Disconnect" message="tns:ISessionManager_Disconnect_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifyNewFriendship">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISessionManager/NotifyNewFriendship" message="tns:ISessionManager_NotifyNewFriendship_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifyFriendshipEnded">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISessionManager/NotifyFriendshipEnded" message="tns:ISessionManager_NotifyFriendshipEnded_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="NotifyFriendOnline">
       <wsdl:output wsaw:Action="http://tempuri.org/ISessionManager/NotifyFriendOnline" message="tns:ISessionManager_NotifyFriendOnline_OutputCallbackMessage" />
@@ -50,6 +65,9 @@
     </wsdl:operation>
     <wsdl:operation name="ReceiveOnlineFriends">
       <wsdl:output wsaw:Action="http://tempuri.org/ISessionManager/ReceiveOnlineFriends" message="tns:ISessionManager_ReceiveOnlineFriends_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifyKicked">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISessionManager/NotifyKicked" message="tns:ISessionManager_NotifyKicked_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_ISessionManager" type="tns:ISessionManager">
@@ -70,6 +88,18 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="NotifyNewFriendship">
+      <soap12:operation soapAction="http://tempuri.org/ISessionManager/NotifyNewFriendship" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyFriendshipEnded">
+      <soap12:operation soapAction="http://tempuri.org/ISessionManager/NotifyFriendshipEnded" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="NotifyFriendOnline">
       <soap12:operation soapAction="http://tempuri.org/ISessionManager/NotifyFriendOnline" style="document" />
       <wsdl:output>
@@ -84,6 +114,12 @@
     </wsdl:operation>
     <wsdl:operation name="ReceiveOnlineFriends">
       <soap12:operation soapAction="http://tempuri.org/ISessionManager/ReceiveOnlineFriends" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyKicked">
+      <soap12:operation soapAction="http://tempuri.org/ISessionManager/NotifyKicked" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
