@@ -80,18 +80,42 @@
                             <TextBlock Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="White"/>
                             <TextBlock Text="{Binding ElapsedTime, StringFormat='mm\\:ss'}" Style="{StaticResource subtitle}" Foreground="White" HorizontalAlignment="Center" />
                         </StackPanel>
+
                         <Button Click="Click_QuitMatch" Style="{StaticResource imageButtonFocus}" MinHeight="60" MinWidth="125">
                             <Button.Background>
                                 <ImageBrush ImageSource="/Assets/BoardUI/exit.png"/>
                             </Button.Background>
                         </Button>
                     </StackPanel>
+
                     <Label Content="{x:Static language:Lang.matchParty}"
-                           Style="{StaticResource title}" Foreground="White" />
+            Style="{StaticResource title}" Foreground="White" />
+
                     <Label Content="{Binding PlayerUsername}" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
-                           Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
+            Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
+
                     <Button Content="Friend" FontSize="24" Height="40"
-                            Style="{StaticResource buttonCustomFocus}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" />
+            Style="{StaticResource buttonCustomFocus}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" />
+
+                    <Button Content="{x:Static language:Lang.matchReport}" 
+            FontSize="18" 
+            Height="35"
+            Width="150"
+            HorizontalAlignment="Center"
+            Click="Click_ReportPlayer" 
+            Background="#FF8B0000" 
+            Foreground="White"
+            BorderBrush="Red"
+            BorderThickness="2" 
+            Margin="100,0,0,0"
+            ToolTip="Reportar al compañero por conducta antideportiva">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
                 </StackPanel>
             </StackPanel>
             <!-- Chat, board and tokens-->

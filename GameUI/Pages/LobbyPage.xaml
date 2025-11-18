@@ -14,18 +14,39 @@
       HorizontalAlignment="Center" VerticalAlignment="Center">
 
     <Page.Resources>
-        <DataTemplate x:Key="OnlineFriendItemTemplate">
-            <StackPanel Orientation="Horizontal" Width="300">
+        <DataTemplate x:Key="FriendItemTemplate">
+            <StackPanel Orientation="Horizontal" Width="350" Margin="5">
+
+                <Ellipse Width="15" Height="15" Margin="0,0,10,0" VerticalAlignment="Center">
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Setter Property="Fill" Value="Gray"/>
+                            <Setter Property="Stroke" Value="White"/>
+                            <Setter Property="StrokeThickness" Value="1"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsOnline}" Value="True">
+                                    <Setter Property="Fill" Value="#FF39FF14"/>
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="#FF39FF14" BlurRadius="8" ShadowDepth="0"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+
                 <Image Source="/Assets/BoardUI/Agents/agent01.png" Width="30" Height="30" Margin="0,0,10,0"/>
-                <TextBlock Text="{Binding Username}" Width="150" VerticalAlignment="Center" Foreground="White"/>
-                <Button Content="Invite" Width="90" Click="Click_InviteFriend"/>
+                <TextBlock Text="{Binding Player.Username}" Width="150" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+                <Button Content="Invite" Width="90" Click="Click_InviteFriend" Style="{StaticResource buttonCustomFocus}"/>
             </StackPanel>
         </DataTemplate>
 
         <Storyboard x:Key="SlideInOnlineFriendsAnimation">
             <DoubleAnimation Storyboard.TargetName="OnlineFriendsGrid"
-                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                         From="640" To="0" Duration="0:0:0.2">
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="640" To="0" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -33,8 +54,8 @@
         </Storyboard>
         <Storyboard x:Key="SlideOutOnlineFriendsAnimation">
             <DoubleAnimation Storyboard.TargetName="OnlineFriendsGrid"
-                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                         From="0" To="640" Duration="0:0:0.2">
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="0" To="640" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -42,8 +63,8 @@
         </Storyboard>
         <Storyboard x:Key="SlideInLobbyCodeAnimation">
             <DoubleAnimation Storyboard.TargetName="gridTypeCode"
-                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                 From="640" To="0" Duration="0:0:0.2">
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="640" To="0" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -51,8 +72,8 @@
         </Storyboard>
         <Storyboard x:Key="SlideOutLobbyCodeAnimation">
             <DoubleAnimation Storyboard.TargetName="gridTypeCode"
-                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                 From="0" To="640" Duration="0:0:0.2">
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="0" To="640" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -62,36 +83,32 @@
 
     <Grid>
         <DockPanel LastChildFill="True">
-
             <Button Click="Click_ReturnToLobby" DockPanel.Dock="Top" 
                     Style="{StaticResource imageButtonFocus}" Height="50" Width="50" HorizontalAlignment="Right">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/GameUI/returnArrow.png"/>
                 </Button.Background>
-
             </Button>
             <StackPanel DockPanel.Dock="Left" Margin="0,0,30,0">
                 <Label Content="{Binding GamemodeName}" Style="{StaticResource title}"
                    FontSize="28" FontWeight="Normal"/>
                 <Label Content="{x:Static language:Lang.lobbyRules}" Width="375" Style="{StaticResource subtitle}" 
                    HorizontalContentAlignment="Center" BorderThickness="2" 
-BorderBrush="White"/>
+                   BorderBrush="White"/>
                 <Grid Margin="0,0,0,100">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
-
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
-
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="{x:Static language:Lang.matchTimerTokens}"
                        Style="{StaticResource subtitle}"  HorizontalAlignment="Left" />
                     <Label Grid.Row="1" 
-Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}" 
+                           Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}" 
                        Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
                     <Label Grid.Row="2" Grid.Column="0" Content="{x:Static language:Lang.matchTurnTimer}" 
                        Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
@@ -102,7 +119,6 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding BystanderTokens}" 
                          Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
                          IsReadOnly="{Binding !IsCustomGame}"/>
-
                     <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TurnTimer}" 
                          Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
                          IsReadOnly="{Binding !IsCustomGame}"/>
@@ -114,7 +130,6 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                 <Button Click="Click_btnCreateLobby" Content="Create lobby" Visibility="{Binding CreateLobbyBtnVisbility}"
                         Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="36"/>
                 <Label Content="{Binding VisibleLobbyCodeTag}" Style="{StaticResource subtitle}" Width="300" Height="40" />
-
             </StackPanel>
             <StackPanel DockPanel.Dock="Right" Margin="30,0,0,0" Width="200">
                 <Label Content="{x:Static language:Lang.matchParty}"
@@ -123,21 +138,19 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                        Style="{StaticResource subtitle}" Background="White" BorderBrush="White" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" Width="200"/>
                 <Button x:Name="btnGuest" Content="{Binding PartyGuest.Username}" Visibility="{Binding GuestBtnVisibility}"
                         Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
-
                 <Button x:Name="btnInvite" Content="Invite+" Visibility="{Binding InviteBtnVisibility}"
                     Style="{StaticResource buttonCustomFocus}" Height="40" Margin="0,0,0,10"
                     Click="Click_ShowOnlineFriends"/>
                 <Button x:Name="btnJoinWithCode" Content="Join" Visibility="{Binding JoinBtnVisibility}"
                     Style="{StaticResource buttonCustomFocus}" Height="40" 
                     Click="Click_btnJoinParty"/>
-
             </StackPanel>
             <Image Source="/Assets/GameUI/agent.png" Height="450"/>
         </DockPanel>
 
         <Border x:Name="Overlay" Visibility="Collapsed" Background="#80000000" />
 
-        <Grid x:Name="OnlineFriendsGrid" Width="400" Height="500" Background="#272727" 
+        <Grid x:Name="OnlineFriendsGrid" Width="450" Height="550" Background="#272727" 
               HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
             <Grid.RenderTransform>
                 <TranslateTransform Y="640"/>
@@ -149,15 +162,15 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="Online Friends" 
+                <Label Grid.Row="0" Content="{x:Static language:Lang.globalFriends}" 
                        Style="{StaticResource subtitle}" Foreground="White" 
                        HorizontalAlignment="Center" Margin="0,20,0,20"/>
 
-                <ListView Grid.Row="1" x:Name="OnlineFriendsList" 
-                          ItemsSource="{Binding OnlineFriends}" 
+                <ListView Grid.Row="1" x:Name="FriendsList" 
+                          ItemsSource="{Binding Friends}" 
                           Background="#2D2D2D" BorderThickness="0"
                           Foreground="White" SelectionMode="Single"
-                          ItemTemplate="{StaticResource OnlineFriendItemTemplate}"
+                          ItemTemplate="{StaticResource FriendItemTemplate}"
                           Margin="20,0,20,20"/>
 
                 <Button Grid.Row="2" Content="{x:Static language:Lang.globalBack}" 
@@ -166,6 +179,7 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                         Click="Click_HideOnlineFriends"/>
             </Grid>
         </Grid>
+
         <Grid x:Name="gridTypeCode" Width="400" Height="200" Background="#272727"
               HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
             <Grid.RenderTransform>

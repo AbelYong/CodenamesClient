@@ -181,6 +181,18 @@ namespace CodenamesGame.MatchmakingService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         SERVER_TIMEOUT = 15,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ACCOUNT_BANNED = 16,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_CREATED = 17,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_DUPLICATED = 18,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        USER_KICKED_AND_BANNED = 19,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

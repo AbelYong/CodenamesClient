@@ -2,6 +2,7 @@
 using CodenamesClient.GameUI.Pages;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
+using CodenamesGame.SessionService;
 using System;
 using System.ComponentModel;
 using System.ServiceModel;
@@ -20,6 +21,7 @@ namespace CodenamesClient.GameUI
             InitializeComponent();
             Closing += MainWindowClosing;
             Closed += MainWindowClosed;
+            SessionOperation.OnKicked += OnKickedFromServer;
         }
 
         public void SetPlayer(PlayerDM player)
@@ -63,6 +65,30 @@ namespace CodenamesClient.GameUI
                 //FIXME
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void OnKickedFromServer(object sender, BanReason reason)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                string message = "";
+                switch (reason)
+                {
+                    case BanReason.TemporaryBan:
+                        message = Properties.Langs.Lang.kickMessageTemp;
+                        break;
+                    case BanReason.PermanentBan:
+                        message = Properties.Langs.Lang.kickMessagePerm;
+                        break;
+                    default:
+                        message = Properties.Langs.Lang.globalDisconnected;
+                        break;
+                }
+
+                MessageBox.Show(message, Properties.Langs.Lang.kickTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                MainFrame.Navigate(new LoginPage());
+            });
         }
     }
 }

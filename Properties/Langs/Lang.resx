@@ -495,4 +495,40 @@
   <data name="lobbyMatchCanceledTimeout" xml:space="preserve">
     <value>The match has been cancelled because we didn't receive you or your companion's "Ready!" in time.</value>
   </data>
+  <data name="kickTitle" xml:space="preserve">
+    <value>Expulsion</value>
+  </data>
+  <data name="kickMessageTemp" xml:space="preserve">
+    <value>You have been kicked due to report accumulation. A temporary ban has been applied.</value>
+  </data>
+  <data name="kickMessagePerm" xml:space="preserve">
+    <value>You have been permanently banned due to repeated misconduct.</value>
+  </data>
+  <data name="confirmReportMessage" xml:space="preserve">
+    <value>Are you sure you want to report {0} for unsportsmanlike conduct?</value>
+  </data>
+  <data name="reportSuccess" xml:space="preserve">
+    <value>Player reported successfully.</value>
+  </data>
+  <data name="reportDuplicate" xml:space="preserve">
+    <value>You have already reported this player.</value>
+  </data>
+  <data name="reportUserBanned" xml:space="preserve">
+    <value>Report received. The player has been sanctioned and removed from the game.</value>
+  </data>
+  <data name="globalWarningTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="globalInformationTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="globalUnknownError" xml:space="preserve">
+    <value>An unknown error occurred</value>
+  </data>
+  <data name="globalDisconnected" xml:space="preserve">
+    <value>You have been disconnected from the server.</value>
+  </data>
+  <data name="matchReport" xml:space="preserve">
+    <value>Report</value>
+  </data>
 </root>

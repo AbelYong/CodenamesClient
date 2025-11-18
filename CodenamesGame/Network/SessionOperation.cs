@@ -2,6 +2,7 @@
 using CodenamesGame.Network.EventArguments;
 using CodenamesGame.SessionService;
 using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -17,6 +18,7 @@ namespace CodenamesGame.Network
         public static event EventHandler<PlayerEventArgs> OnFriendOnline;
         public static event EventHandler<Guid> OnFriendOffline;
         public static event EventHandler<List<PlayerDM>> OnOnlineFriendsReceived;
+        public static event EventHandler<BanReason> OnKicked;
 
         public SessionOperation()
         {
@@ -121,6 +123,11 @@ namespace CodenamesGame.Network
             _onlineFriends = auxFriends;
 
             OnOnlineFriendsReceived?.Invoke(this, _onlineFriends);
+        }
+
+        public void NotifyKicked(BanReason reason)
+        {
+            OnKicked?.Invoke(this, reason);
         }
     }
 }

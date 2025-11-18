@@ -61,6 +61,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Are you sure you want to report {0} for unsportsmanlike conduct?.
+        /// </summary>
+        public static string confirmReportMessage {
+            get {
+                return ResourceManager.GetString("confirmReportMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Choose a gamemode.
         /// </summary>
         public static string gamemodeChooseAGamemode {
@@ -133,6 +142,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You have been disconnected from the server..
+        /// </summary>
+        public static string globalDisconnected {
+            get {
+                return ResourceManager.GetString("globalDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Friends.
         /// </summary>
         public static string globalFriends {
@@ -147,6 +165,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalGuest {
             get {
                 return ResourceManager.GetString("globalGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Information.
+        /// </summary>
+        public static string globalInformationTitle {
+            get {
+                return ResourceManager.GetString("globalInformationTitle", resourceCulture);
             }
         }
         
@@ -250,6 +277,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a An unknown error occurred.
+        /// </summary>
+        public static string globalUnknownError {
+            get {
+                return ResourceManager.GetString("globalUnknownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t process your request due to an unknown error.
         /// </summary>
         public static string globalUnknownServerError {
@@ -264,6 +300,42 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalUsername {
             get {
                 return ResourceManager.GetString("globalUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Warning.
+        /// </summary>
+        public static string globalWarningTitle {
+            get {
+                return ResourceManager.GetString("globalWarningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You have been permanently banned due to repeated misconduct..
+        /// </summary>
+        public static string kickMessagePerm {
+            get {
+                return ResourceManager.GetString("kickMessagePerm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You have been kicked due to report accumulation. A temporary ban has been applied..
+        /// </summary>
+        public static string kickMessageTemp {
+            get {
+                return ResourceManager.GetString("kickMessageTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expulsion.
+        /// </summary>
+        public static string kickTitle {
+            get {
+                return ResourceManager.GetString("kickTitle", resourceCulture);
             }
         }
         
@@ -655,6 +727,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Report.
+        /// </summary>
+        public static string matchReport {
+            get {
+                return ResourceManager.GetString("matchReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Timer.
         /// </summary>
         public static string matchTimer {
@@ -750,6 +831,33 @@ namespace CodenamesClient.Properties.Langs {
         public static string profileSocialNetwork {
             get {
                 return ResourceManager.GetString("profileSocialNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You have already reported this player..
+        /// </summary>
+        public static string reportDuplicate {
+            get {
+                return ResourceManager.GetString("reportDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Player reported successfully..
+        /// </summary>
+        public static string reportSuccess {
+            get {
+                return ResourceManager.GetString("reportSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Report received. The player has been sanctioned and removed from the game..
+        /// </summary>
+        public static string reportUserBanned {
+            get {
+                return ResourceManager.GetString("reportUserBanned", resourceCulture);
             }
         }
         

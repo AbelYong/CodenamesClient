@@ -292,5 +292,10 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             AnimateBoardCards();
         }
+
+        private void Click_ReportPlayer(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ReportOpponent();
+        }
     }
 }
