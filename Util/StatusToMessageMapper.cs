@@ -106,5 +106,27 @@ namespace CodenamesClient.Util
             }
             return Lang.globalUnknownServerError;
         }
+
+        public static string GetMatchmakingServiceMessage(CodenamesGame.MatchmakingService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.MatchmakingService.StatusCode.UNAUTHORIZED:
+                    return Lang.lobbyAlreadyConnectedToMatchmakingService;
+                case CodenamesGame.MatchmakingService.StatusCode.CLIENT_CANCEL:
+                    return Lang.lobbyMatchCanceledByCompanion;
+                case CodenamesGame.MatchmakingService.StatusCode.MISSING_DATA:
+                    return Lang.lobbyMatchMissingData;
+                case CodenamesGame.MatchmakingService.StatusCode.CONFLICT:
+                    return Lang.lobbyCantStartPlayerBusy;
+                case CodenamesGame.MatchmakingService.StatusCode.CLIENT_UNREACHABLE:
+                    return Lang.lobbyCantStartCompanionDisconnect;
+                case CodenamesGame.MatchmakingService.StatusCode.SERVER_ERROR:
+                    return Lang.globalServerError;
+                case CodenamesGame.MatchmakingService.StatusCode.CLIENT_TIMEOUT:
+                    return Lang.lobbyMatchCanceledTimeout;
+            }
+            return Lang.globalUnknownServerError;
+        } 
     }
 }

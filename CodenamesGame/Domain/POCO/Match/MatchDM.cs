@@ -35,7 +35,6 @@ namespace CodenamesGame.Domain.POCO.Match
                 match.Keycard = ConvertToBidimensional(incomingMatch.BoardPlayerOne);
             }
             return match;
-
         }
 
         private static List<int> DeserializeIncomingWords(int[] incomingWords)

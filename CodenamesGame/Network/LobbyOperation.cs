@@ -10,6 +10,7 @@ namespace CodenamesGame.Network
         private const string _ENDPOINT_NAME = "NetTcpBinding_ILobbyManager";
         private static readonly Lazy<LobbyOperation> _instance = new Lazy<LobbyOperation>(() => new LobbyOperation());
         private LobbyManagerClient _client;
+        private Guid _currentPlayerID;
 
         public static LobbyOperation Instance
         {
@@ -21,63 +22,50 @@ namespace CodenamesGame.Network
 
         }
 
-        public void Initialize()
+        public CommunicationRequest Initialize(Guid playerID)
         {
+            CommunicationRequest request = new CommunicationRequest();
             if (_client != null && _client.State == CommunicationState.Opened)
             {
-                return;
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.UNAUTHORIZED;
+                return request;
             }
 
             LobbyCallbackHandler callbackHandler = new LobbyCallbackHandler();
             InstanceContext context = new InstanceContext(callbackHandler);
             _client = new LobbyManagerClient(context, _ENDPOINT_NAME);
+            _currentPlayerID = playerID;
 
             try
             {
                 _client.Open();
+                return _client.Connect(_currentPlayerID);
             }
             catch (CommunicationException)
             {
-                NetworkUtil.SafeClose(_client);
-                _client = null;
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                CloseProxy();
             }
             catch (TimeoutException)
             {
-                NetworkUtil.SafeClose(_client);
-                _client = null;
-            }
-        }
-
-        public CommunicationRequest Connect(Guid playerID)
-        {
-            CommunicationRequest request = new CommunicationRequest();
-            if (_client != null && _client.State == CommunicationState.Opened)
-            {
-                try
-                {
-                    request = _client.Connect(playerID);
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                    request = (CommunicationRequest)GenerateServerUnavaibleRequest();
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                    request = (CommunicationRequest)GenerateServerTimeoutRequest();
-                }
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                CloseProxy();
             }
             return request;
         }
 
-        public void Disconnect(Guid playerID)
+        public void Disconnect()
         {
             if (_client != null && _client.State == CommunicationState.Opened)
             {
                 try
                 {
-                    _client.DisconnectAsync(playerID);
+                    _client.DisconnectAsync(_currentPlayerID);
+                    _currentPlayerID = Guid.Empty;
+                    CloseProxy();
                 }
                 catch (CommunicationException)
                 {

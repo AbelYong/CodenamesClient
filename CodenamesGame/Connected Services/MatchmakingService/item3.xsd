@@ -7,8 +7,10 @@
       <xs:enumeration value="CREATED" />
       <xs:enumeration value="UPDATED" />
       <xs:enumeration value="CONFLICT" />
+      <xs:enumeration value="CLIENT_CANCEL" />
       <xs:enumeration value="CLIENT_DISCONNECT" />
       <xs:enumeration value="CLIENT_UNREACHABLE" />
+      <xs:enumeration value="CLIENT_TIMEOUT" />
       <xs:enumeration value="MISSING_DATA" />
       <xs:enumeration value="WRONG_DATA" />
       <xs:enumeration value="NOT_FOUND" />

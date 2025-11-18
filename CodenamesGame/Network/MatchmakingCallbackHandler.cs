@@ -1,32 +1,57 @@
-﻿using CodenamesGame.MatchmakingService;
+﻿using CodenamesGame.Domain.POCO.Match;
+using CodenamesGame.MatchmakingService;
+using CodenamesGame.Network.EventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodenamesGame.Network
 {
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class MatchmakingCallbackHandler : IMatchmakingManagerCallback
     {
-        public void NotifyMatchCanceled(Guid matchID)
+        public static event EventHandler<MatchCanceledEventArgs> OnMatchCanceled;
+        public static event EventHandler<MatchPendingEventArgs> OnMatchPending;
+        public static event EventHandler<MatchDM> OnMatchReady;
+        public static event EventHandler<Guid> OnPlayersReady;
+        private Guid _currentPlayerID;
+
+        public MatchmakingCallbackHandler(Guid playerID)
         {
-            throw new NotImplementedException();
+            if (playerID != Guid.Empty)
+            {
+                _currentPlayerID = playerID;
+            }
+        }
+
+        public void NotifyMatchCanceled(Guid matchID, StatusCode reason)
+        {
+            if (matchID != Guid.Empty)
+            {
+                OnMatchCanceled.Invoke(null, new MatchCanceledEventArgs { MatchID = matchID, Reason = reason });
+            }
         }
 
         public void NotifyMatchReady(Match match)
         {
-            throw new NotImplementedException();
+            if (match != null)
+            {
+                MatchDM auxMatch = MatchDM.AssembleMatch(match, _currentPlayerID);
+                OnMatchReady.Invoke(null, auxMatch);
+            }
         }
 
         public void NotifyPlayersReady(Guid matchID)
         {
-            throw new NotImplementedException();
+            OnPlayersReady.Invoke(null, matchID);
         }
 
-        public void NotifyRequestPending(Guid RequesterID, Guid CompanionID)
+        public void NotifyRequestPending(Guid requesterID, Guid companionID)
         {
-            throw new NotImplementedException();
+            OnMatchPending.Invoke(null, new MatchPendingEventArgs { RequesterID = requesterID, CompanionID = companionID });
         }
     }
 }

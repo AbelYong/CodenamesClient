@@ -477,4 +477,22 @@
   <data name="globalInvitationReceivedTitle" xml:space="preserve">
     <value>Te han invitado a un grupo</value>
   </data>
+  <data name="lobbyAlreadyConnectedToMatchmakingService" xml:space="preserve">
+    <value>Ya estas conectado al servicio de Matchmaking de Codenames</value>
+  </data>
+  <data name="lobbyMatchCanceledByCompanion" xml:space="preserve">
+    <value>La partida fue cancelada por tu compañero</value>
+  </data>
+  <data name="lobbyMatchMissingData" xml:space="preserve">
+    <value>No pudimos crear tu partida por que a tu solicitud le falta información necesaria</value>
+  </data>
+  <data name="lobbyCantStartPlayerBusy" xml:space="preserve">
+    <value>No podemos empezar tu partida por que tu o tu compañero ya están esperando para entrar a una partida</value>
+  </data>
+  <data name="lobbyCantStartCompanionDisconnect" xml:space="preserve">
+    <value>No es posible empezar la partida por que tu compañero ha perdido la conexión al servicio de Matchmaking de Codenames</value>
+  </data>
+  <data name="lobbyMatchCanceledTimeout" xml:space="preserve">
+    <value>La partida fue cancelada por que no recibimos el "Listo!" de tu o tu compañero a tiempo</value>
+  </data>
 </root>

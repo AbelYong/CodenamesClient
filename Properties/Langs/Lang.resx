@@ -477,4 +477,22 @@
   <data name="globalInvitationReceivedTitle" xml:space="preserve">
     <value>You have been invited to party</value>
   </data>
+  <data name="lobbyAlreadyConnectedToMatchmakingService" xml:space="preserve">
+    <value>You are already connected to Codenames Matchmaking Service</value>
+  </data>
+  <data name="lobbyMatchCanceledByCompanion" xml:space="preserve">
+    <value>The match has been cancelled by your companion</value>
+  </data>
+  <data name="lobbyMatchMissingData" xml:space="preserve">
+    <value>We couldn't create your match because your request is missing necessary information</value>
+  </data>
+  <data name="lobbyCantStartPlayerBusy" xml:space="preserve">
+    <value>Can't start a match because you or your companion are already awaiting to begin a match.</value>
+  </data>
+  <data name="lobbyCantStartCompanionDisconnect" xml:space="preserve">
+    <value>Can't start a match because your companion has lost connection to the Codenames Matchmaking Service.</value>
+  </data>
+  <data name="lobbyMatchCanceledTimeout" xml:space="preserve">
+    <value>The match has been cancelled because we didn't receive you or your companion's "Ready!" in time.</value>
+  </data>
 </root>

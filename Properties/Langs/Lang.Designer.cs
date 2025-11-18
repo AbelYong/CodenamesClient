@@ -295,6 +295,33 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You are already connected to Codenames Matchmaking Service.
+        /// </summary>
+        public static string lobbyAlreadyConnectedToMatchmakingService {
+            get {
+                return ResourceManager.GetString("lobbyAlreadyConnectedToMatchmakingService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Can&apos;t start a match because your companion has lost connection to the Codenames Matchmaking Service..
+        /// </summary>
+        public static string lobbyCantStartCompanionDisconnect {
+            get {
+                return ResourceManager.GetString("lobbyCantStartCompanionDisconnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Can&apos;t start a match because you or your companion are already awaiting to begin a match..
+        /// </summary>
+        public static string lobbyCantStartPlayerBusy {
+            get {
+                return ResourceManager.GetString("lobbyCantStartPlayerBusy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a You are already connected to the Lobby Service of Codenames.
         /// </summary>
         public static string lobbyErrorAlreadyConnected {
@@ -390,6 +417,33 @@ namespace CodenamesClient.Properties.Langs {
         public static string lobbyInfoFriendNotOnlineEmailSent {
             get {
                 return ResourceManager.GetString("lobbyInfoFriendNotOnlineEmailSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The match has been cancelled by your companion.
+        /// </summary>
+        public static string lobbyMatchCanceledByCompanion {
+            get {
+                return ResourceManager.GetString("lobbyMatchCanceledByCompanion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The match has been cancelled because we didn&apos;t receive you or your companion&apos;s &quot;Ready!&quot; in time..
+        /// </summary>
+        public static string lobbyMatchCanceledTimeout {
+            get {
+                return ResourceManager.GetString("lobbyMatchCanceledTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t create your match because your request is missing necessary information.
+        /// </summary>
+        public static string lobbyMatchMissingData {
+            get {
+                return ResourceManager.GetString("lobbyMatchMissingData", resourceCulture);
             }
         }
         

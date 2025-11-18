@@ -29,8 +29,6 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
-        private GamemodeDM _gamemode;
-        private PlayerDM _player;
 
         private SessionOperation _session;
         private Storyboard _slideInOnlineFriends;
@@ -42,22 +40,40 @@ namespace CodenamesClient.GameUI.Pages
         {
             InitializeComponent();
 
-            this._session = session;
-            this._viewModel = new LobbyViewModel(player, gamemode, _session);
-            this.DataContext = _viewModel;
-            _gamemode = gamemode;
-            _player = player;
-
-            _viewModel.SubscribeToSessionEvents();
-            _slideInOnlineFriends = (Storyboard)FindResource("SlideInOnlineFriendsAnimation");
-            _slideOutOnlineFriends = (Storyboard)FindResource("SlideOutOnlineFriendsAnimation");
-            _slideInTypeCode = (Storyboard)FindResource("SlideInLobbyCodeAnimation");
-            _slideOutTypeCode = (Storyboard)FindResource("SlideOutLobbyCodeAnimation");
+            _session = session;
+            _viewModel = new LobbyViewModel(player, gamemode, _session);
+            DataContext = _viewModel;
+            Loaded += OnLobbyPageLoaded;
+            Unloaded += OnLobbyPageUnloaded;
         }
 
-        private void Click_StartGame(object sender, RoutedEventArgs e)
+        private void OnLobbyPageLoaded(object sender, RoutedEventArgs e)
         {
-            //TODO
+            if (DataContext is LobbyViewModel vm)
+            {
+                _slideInOnlineFriends = (Storyboard)FindResource("SlideInOnlineFriendsAnimation");
+                _slideOutOnlineFriends = (Storyboard)FindResource("SlideOutOnlineFriendsAnimation");
+                _slideInTypeCode = (Storyboard)FindResource("SlideInLobbyCodeAnimation");
+                _slideOutTypeCode = (Storyboard)FindResource("SlideOutLobbyCodeAnimation");
+
+                _viewModel.SubscribeToSessionEvents();
+
+                _viewModel.BeginMatch += OnBeginMatch;
+            }
+        }
+        private void OnLobbyPageUnloaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.UnsubscribeFromSessionEvents();
+
+            _viewModel.BeginMatch -= OnBeginMatch;
+        }
+
+        private async void Click_StartGame(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.IsPartyFull)
+            {
+                await _viewModel.RequestArrangedMatch();
+            }
         }
 
         private void Click_btnCreateLobby(object sender, RoutedEventArgs e)
@@ -65,38 +81,21 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.CreateLobby();
         }
 
-        private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
+        private void OnBeginMatch(MatchDM match)
         {
-            _viewModel.DisconnectFromLobbyService(_player);
-            _viewModel.UnsucribeToLobbyEvents();
-            _viewModel.UnsubscribeFromSessionEvents();
-            NavigationService.GoBack();
+            _viewModel.BeginMatch -= OnBeginMatch;
+            BoardPage board = new BoardPage(match);
+            NavigationService.Navigate(board);
         }
 
-        private MatchConfigurationDM PrepareMatchRequest()
+        private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
         {
-            MatchConfigurationDM matchConfig = new MatchConfigurationDM();
-            switch (_gamemode)
-            {
-                case GamemodeDM.NORMAL:
-                    matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
-                    break;
-                case GamemodeDM.CUSTOM:
-                    matchConfig.Rules.gamemode = GamemodeDM.CUSTOM;
-                    matchConfig.Rules.TurnTimer = _viewModel.TurnTimer;
-                    matchConfig.Rules.TimerTokens = _viewModel.TimerTokens;
-                    matchConfig.Rules.BystanderTokens = _viewModel.BystanderTokens;
-                    break;
-                case GamemodeDM.COUNTERINTELLIGENCE:
-                    matchConfig.Rules.gamemode = GamemodeDM.COUNTERINTELLIGENCE;
-                    break;
-                default:
-                    matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
-                    break;
-            }
-            matchConfig.Requester = _player;
-            matchConfig.Companion = LoginViewModel.AssembleGuest();
-            return matchConfig;
+            _viewModel.DisconnectFromLobbyService();
+            _viewModel.DisconnectFromMatchmakingService();
+            _viewModel.UnsuscribeFromLobbyEvents();
+            _viewModel.UnsubscribeFromSessionEvents();
+            _viewModel.UnsuscribeFromMatchmakingEvents();
+            NavigationService.GoBack();
         }
 
         private void Click_btnJoinParty(object sender, RoutedEventArgs e)
@@ -108,8 +107,8 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_btnSendCode(object sender, RoutedEventArgs e)
         {
-            _viewModel.JoinParty(_player, tbkInputCode.Text);
             CloseTypeCodeGrid();
+            _viewModel.JoinParty(tbkInputCode.Text);
         }
 
         private void Click_btnCloseTypeCode(object sender, RoutedEventArgs e)

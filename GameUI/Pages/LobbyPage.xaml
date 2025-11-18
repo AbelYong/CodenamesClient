@@ -107,9 +107,11 @@ Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}"
                          Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
                          IsReadOnly="{Binding !IsCustomGame}"/>
                 </Grid>
-                <Button Click="Click_StartGame" Content="{x:Static language:Lang.globalPlay}"
+                <Button Click="Click_StartGame" Content="{x:Static language:Lang.globalPlay}" IsEnabled="{Binding PlayBtnEnabled}" Visibility="{Binding PlayBtnVisibility}"
                     Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48" Margin="0,0,0,25"/>
-                <Button Click="Click_btnCreateLobby" Content="Create lobby" IsEnabled="{Binding CreateLobbyBtnEnabled}"
+                <ToggleButton IsChecked="{Binding IsReadyOrCancelTgBtnActive}" Content="{Binding ReadyOrCancelTgBtnContent}" Style="{StaticResource toggleButtonCustomFocus}" Visibility="{Binding ReadyOrCancelTgBtnVisibility}"
+                        Height="75" FontSize="48" Margin="0,0,0,25"/>
+                <Button Click="Click_btnCreateLobby" Content="Create lobby" Visibility="{Binding CreateLobbyBtnVisbility}"
                         Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="36"/>
                 <Label Content="{Binding VisibleLobbyCodeTag}" Style="{StaticResource subtitle}" Width="300" Height="40" />
 

@@ -9,79 +9,49 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CodenamesGame.Network.EventArguments;
-using CodenamesGame.LobbyService;
 using System.ServiceModel;
+using CodenamesGame.Domain.POCO.Match;
+using System.Threading.Tasks;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
     public class LobbyViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event Action<MatchDM> BeginMatch;
+        private MatchDM _match;
         private readonly PlayerDM _me;
         private PlayerDM _partyHost;
         private PlayerDM _partyGuest;
+        private GamemodeDM _gamemode;
         private string _gamemodeName;
+        private string _readyOrCancelTgBtnContent;
         private string _lobbyCode = string.Empty;
         private string _visibleLobbyCodeTag = string.Empty;
         private int _timerTokens;
         private int _bystanderTokens;
         private int _turnTimer;
+        private bool _playBtnEnabled;
+        private bool _isReadyOrCancelTgBtnActive;
         private bool _isCustomGame;
         private bool _isPartyFull;
+        private bool _canMatchBeCanceled;
+        private Visibility _playBtnVisibility;
+        private Visibility _readyOrCancelTgBtnVisibility;
+        private Visibility _createLobbyBtnVisibility;
         private Visibility _guestBtnVisibility;
         private Visibility _inviteBtnVisibility;
         private Visibility _jointBtnVisibility;
-        private bool _createLobbyBtnEnabled;
 
         private readonly SessionOperation _session;
         public ObservableCollection<PlayerDM> OnlineFriends { get; }
 
-        public Visibility GuestBtnVisibility
+        public MatchDM match
         {
-            get => _guestBtnVisibility;
+            get => _match;
             set
             {
-                _guestBtnVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Visibility InviteBtnVisibility
-        {
-            get => _inviteBtnVisibility;
-            set
-            {
-                _inviteBtnVisibility= value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Visibility JoinBtnVisibility
-        {
-            get => _jointBtnVisibility;
-            set
-            {
-                _jointBtnVisibility= value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool CreateLobbyBtnEnabled
-        {
-            get => _createLobbyBtnEnabled;
-            set
-            {
-                _createLobbyBtnEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string VisibleLobbyCodeTag
-        {
-            get => _visibleLobbyCodeTag;
-            set
-            {
-                _visibleLobbyCodeTag = value;
+                _match = value;
                 OnPropertyChanged();
             }
         }
@@ -102,6 +72,17 @@ namespace CodenamesClient.GameUI.ViewModels
             set
             {
                 _partyGuest = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public GamemodeDM Gamemode
+        {
+            get => _gamemode;
+            set
+            {
+                _gamemode = value;
+                SetGamemodeName(value);
                 OnPropertyChanged();
             }
         }
@@ -166,36 +147,202 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
+        public Visibility PlayBtnVisibility
+        {
+            get => _playBtnVisibility;
+            set
+            {
+                _playBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool PlayBtnEnabled
+        {
+            get => _playBtnEnabled;
+            set
+            {
+                _playBtnEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsReadyOrCancelTgBtnActive
+        {
+            get => _isReadyOrCancelTgBtnActive;
+            set
+            {
+                if (_isReadyOrCancelTgBtnActive == value)
+                {
+                    return;
+                }
+
+                _isReadyOrCancelTgBtnActive = value;
+                OnPropertyChanged();
+
+                if (value) // Going to TRUE (State: Ready -> Cancel)
+                {
+                    ConfirmReady();
+                    ReadyOrCancelTgBtnContent = "Cancel";
+                }
+                else // Going to FALSE (State: Cancel -> Ready, or System Reset)
+                {
+                    if (_canMatchBeCanceled)
+                    {
+                        // Only request cancel if it's allowed
+                        RequestCancel();
+                    }
+
+                    // ALWAYS set content to "Ready" when state is false
+                    ReadyOrCancelTgBtnContent = "Ready";
+                }
+            }
+        }
+
+        public Visibility ReadyOrCancelTgBtnVisibility
+        {
+            get => _readyOrCancelTgBtnVisibility;
+            set
+            {
+                _readyOrCancelTgBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility CreateLobbyBtnVisbility
+        {
+            get => _createLobbyBtnVisibility;
+            set
+            {
+                _createLobbyBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility GuestBtnVisibility
+        {
+            get => _guestBtnVisibility;
+            set
+            {
+                _guestBtnVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility InviteBtnVisibility
+        {
+            get => _inviteBtnVisibility;
+            set
+            {
+                _inviteBtnVisibility= value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility JoinBtnVisibility
+        {
+            get => _jointBtnVisibility;
+            set
+            {
+                _jointBtnVisibility= value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ReadyOrCancelTgBtnContent
+        {
+            get => _readyOrCancelTgBtnContent;
+            set
+            {
+                _readyOrCancelTgBtnContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string VisibleLobbyCodeTag
+        {
+            get => _visibleLobbyCodeTag;
+            set
+            {
+                _visibleLobbyCodeTag = value;
+                OnPropertyChanged();
+            }
+        }
+
         public LobbyViewModel(PlayerDM player, GamemodeDM gamemode, SessionOperation session)
         {
-            CreateLobbyBtnEnabled = true;
-            InviteBtnVisibility = Visibility.Collapsed;
-            GuestBtnVisibility = Visibility.Collapsed;
             _me = player;
+            Gamemode = gamemode;
             _session = session;
             PartyHost = player;
+
+            PlayBtnVisibility = Visibility.Visible;
+            ReadyOrCancelTgBtnVisibility = Visibility.Collapsed;
+            ReadyOrCancelTgBtnContent = "Ready";
+            PlayBtnEnabled = true;
+            CreateLobbyBtnVisbility = Visibility.Visible;
+            ReadyOrCancelTgBtnVisibility = Visibility.Collapsed;
+            InviteBtnVisibility = Visibility.Collapsed;
+            GuestBtnVisibility = Visibility.Collapsed;
+            
 
             OnlineFriends = new ObservableCollection<PlayerDM>();
             LoadInitialOnlineFriends();
             ConnectToLobbyService(player);
+            ConnectToMatchmakingService(player);
 
             switch (gamemode)
             {
                 case (GamemodeDM.NORMAL):
-                    GamemodeName = Lang.gamemodeNormalGame;
                     LoadDefaultRules();
                     break;
                 case (GamemodeDM.CUSTOM):
-                    GamemodeName = Lang.gamemodeCustomGame;
                     LoadDefaultRules();
                     break;
                 case (GamemodeDM.COUNTERINTELLIGENCE):
-                    GamemodeName = Lang.gamemodeCounterintelligenceMode;
-                    LoadDefaultRules();
+                    LoadCounterintelligenceRules();
                     break;
                 default:
-                    GamemodeName = "Gamemode";
                     LoadDefaultRules();
+                    break;
+            }
+        }
+
+        private void LoadDefaultRules()
+        {
+            const int NORMAL_TIMER_TOKENS = 9;
+            const int NORMAL_BYSTANDER_TOKENS = 0;
+            const int NORMAL_TIMER = 30;
+            TimerTokens = NORMAL_TIMER_TOKENS;
+            BystanderTokens = NORMAL_BYSTANDER_TOKENS;
+            TurnTimer = NORMAL_TIMER;
+        }
+
+        private void LoadCounterintelligenceRules()
+        {
+            const int COUNTERINTELLIGENCE_TIMER_TOKENS = 12;
+            const int COUNTERINTELLIGENCE_BYSTANDER_TOKENS = 0;
+            const int COUNTERINTELLIGENCE_TIMER = 45;
+            TimerTokens = COUNTERINTELLIGENCE_TIMER_TOKENS;
+            BystanderTokens = COUNTERINTELLIGENCE_BYSTANDER_TOKENS;
+            TurnTimer = COUNTERINTELLIGENCE_TIMER;
+        }
+
+        private void SetGamemodeName(GamemodeDM gamemode)
+        {
+            switch (gamemode)
+            {
+                case (GamemodeDM.NORMAL):
+                    GamemodeName = Lang.gamemodeNormalGame;
+                    break;
+                case (GamemodeDM.CUSTOM):
+                    GamemodeName = Lang.gamemodeCustomGame;
+                    break;
+                case (GamemodeDM.COUNTERINTELLIGENCE):
+                    GamemodeName = Lang.gamemodeCounterintelligenceMode;
+                    break;
+                default:
+                    GamemodeName = "ERROR";
                     break;
             }
         }
@@ -203,8 +350,7 @@ namespace CodenamesClient.GameUI.ViewModels
         private void ConnectToLobbyService(PlayerDM player)
         {
             Guid playerID = (Guid)player.PlayerID;
-            LobbyOperation.Instance.Initialize();
-            CommunicationRequest request = LobbyOperation.Instance.Connect(playerID);
+            CodenamesGame.LobbyService.CommunicationRequest request = LobbyOperation.Instance.Initialize(playerID);
             if (request.IsSuccess)
             {
                 SuscribeToLobbyEvents();
@@ -215,10 +361,10 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public void DisconnectFromLobbyService(PlayerDM player)
+        public void DisconnectFromLobbyService()
         {
-            Guid playerID = (Guid)player.PlayerID;
-            LobbyOperation.Instance.Disconnect(playerID);
+            UnsuscribeFromLobbyEvents();
+            LobbyOperation.Instance.Disconnect();
         }
 
         private void SuscribeToLobbyEvents()
@@ -228,7 +374,7 @@ namespace CodenamesClient.GameUI.ViewModels
             LobbyCallbackHandler.OnPlayerLeft += HandlePlayerLeft;
         }
 
-        public void UnsucribeToLobbyEvents()
+        public void UnsuscribeFromLobbyEvents()
         {
             LobbyCallbackHandler.OnInvitationReceived -= HandleInvitationReceived;
             LobbyCallbackHandler.OnPlayerJoined -= HandlePlayerJoined;
@@ -244,20 +390,23 @@ namespace CodenamesClient.GameUI.ViewModels
 
             if (result == MessageBoxResult.Yes)
             {
-                JoinParty(e.Player, e.LobbyCode);
+                JoinParty(e.LobbyCode);
             }
         }
 
-        public void JoinParty(PlayerDM me, string lobbyCode)
+        public void JoinParty(string lobbyCode)
         {
             Guid myID = (Guid)_me.PlayerID;
-            JoinPartyRequest request = LobbyOperation.Instance.JoinParty(myID, lobbyCode);
+            CodenamesGame.LobbyService.JoinPartyRequest request = LobbyOperation.Instance.JoinParty(myID, lobbyCode);
             if (request.IsSuccess)
             {
+                IsPartyFull = true;
                 PartyHost = PlayerDM.AssemblePlayer(request.Party.PartyHost);
                 PartyGuest = _me;
                 GuestBtnVisibility = Visibility.Visible;
+                CreateLobbyBtnVisbility = Visibility.Collapsed;
                 InviteBtnVisibility = Visibility.Collapsed;
+                JoinBtnVisibility = Visibility.Collapsed;
             }
             else
             {
@@ -268,13 +417,13 @@ namespace CodenamesClient.GameUI.ViewModels
         public void CreateLobby()
         {
             Guid playerID = (Guid)_me.PlayerID;
-            CreateLobbyRequest request = LobbyOperation.Instance.CreateLobby(playerID);
+            CodenamesGame.LobbyService.CreateLobbyRequest request = LobbyOperation.Instance.CreateLobby(playerID);
             if (request.IsSuccess)
             {
                 _lobbyCode = request.LobbyCode;
                 PartyHost = _me;
                 VisibleLobbyCodeTag = string.Format("Lobby code: {0}", _lobbyCode);
-                CreateLobbyBtnEnabled = false;
+                CreateLobbyBtnVisbility = Visibility.Collapsed;
                 InviteBtnVisibility = Visibility.Visible;
                 JoinBtnVisibility = Visibility.Collapsed;
             }
@@ -289,7 +438,7 @@ namespace CodenamesClient.GameUI.ViewModels
             if (_lobbyCode != string.Empty && PartyHost == _me)
             {
                 Guid partyHostID = (Guid)_me.PlayerID;
-                CommunicationRequest request = LobbyOperation.Instance.InviteToParty(partyHostID, friendID, _lobbyCode);
+                CodenamesGame.LobbyService.CommunicationRequest request = LobbyOperation.Instance.InviteToParty(partyHostID, friendID, _lobbyCode);
                 if (!request.IsSuccess)
                 {
                     MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INVITE_TO_PARTY, request.StatusCode));
@@ -299,6 +448,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void HandlePlayerJoined(object sender, PlayerEventArgs e)
         {
+            IsPartyFull = true;
             PartyHost = _me;
             PartyGuest = e.Player;
             GuestBtnVisibility = Visibility.Visible;
@@ -307,10 +457,165 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void HandlePlayerLeft(object sender, Guid e)
         {
+            IsPartyFull = false;
             PartyHost = _me;
             PartyGuest = null;
+            CreateLobbyBtnVisbility = Visibility.Visible;
             GuestBtnVisibility = Visibility.Collapsed;
             InviteBtnVisibility = Visibility.Visible;
+        }
+
+        private void ConnectToMatchmakingService(PlayerDM player)
+        {
+            Guid playerID = (Guid)player.PlayerID;
+            CodenamesGame.MatchmakingService.CommunicationRequest request = MatchmakingOperation.Instance.Initialize(playerID);
+            if (request.IsSuccess)
+            {
+                SuscribeToMatchmakingEvents();
+            }
+            else
+            {
+                MessageBox.Show(Util.StatusToMessageMapper.GetMatchmakingServiceMessage(request.StatusCode));
+            }
+        }
+
+        public void DisconnectFromMatchmakingService()
+        {
+            UnsuscribeFromMatchmakingEvents();
+            MatchmakingOperation.Instance.Disconnect();
+        }
+
+        public async Task RequestArrangedMatch()
+        {
+            MatchConfigurationDM configuration = PrepareArrangedMatchRequest();
+            if (configuration != null)
+            {
+                PlayBtnEnabled = false;
+                CodenamesGame.MatchmakingService.CommunicationRequest request = await MatchmakingOperation.Instance.RequestArrangedMatch(configuration);
+                if (!request.IsSuccess)
+                {
+                    PlayBtnEnabled = true;
+                    MessageBox.Show(Util.StatusToMessageMapper.GetMatchmakingServiceMessage(request.StatusCode));
+                }
+                else
+                {
+                    MessageBox.Show("Your match has been requested");
+                }
+            }
+        }
+
+        private MatchConfigurationDM PrepareArrangedMatchRequest()
+        {
+            if (_partyHost != null && _partyGuest != null)
+            {
+                MatchConfigurationDM matchConfig = new MatchConfigurationDM();
+                switch (_gamemode)
+                {
+                    case GamemodeDM.NORMAL:
+                        matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
+                        break;
+                    case GamemodeDM.CUSTOM:
+                        matchConfig.Rules.gamemode = GamemodeDM.CUSTOM;
+                        matchConfig.Rules.TurnTimer = TurnTimer;
+                        matchConfig.Rules.TimerTokens = TimerTokens;
+                        matchConfig.Rules.BystanderTokens = BystanderTokens;
+                        break;
+                    case GamemodeDM.COUNTERINTELLIGENCE:
+                        matchConfig.Rules.gamemode = GamemodeDM.COUNTERINTELLIGENCE;
+                        break;
+                    default:
+                        matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
+                        break;
+                }
+                matchConfig.Requester = _me;
+                matchConfig.Companion = _me.PlayerID == _partyHost.PlayerID ? _partyGuest : _partyHost;
+                return matchConfig;
+            }
+            return null;
+        }
+
+        private void ConfirmReady()
+        {
+            if (_match != null)
+            {
+                MatchmakingOperation.Instance.ConfirmMatch(_match.MatchID);
+            }
+        }
+
+        private void RequestCancel()
+        {
+            MatchmakingOperation.Instance.CancelMatch();
+        }
+
+        private void SuscribeToMatchmakingEvents()
+        {
+            MatchmakingCallbackHandler.OnMatchPending += HandleMatchPending;
+            MatchmakingCallbackHandler.OnMatchReady += HandleMatchReady;
+            MatchmakingCallbackHandler.OnPlayersReady += HandlePlayersReady;
+            MatchmakingCallbackHandler.OnMatchCanceled += HandleMatchCanceled;
+        }
+
+        public void UnsuscribeFromMatchmakingEvents()
+        {
+            MatchmakingCallbackHandler.OnMatchPending -= HandleMatchPending;
+            MatchmakingCallbackHandler.OnMatchReady -= HandleMatchReady;
+            MatchmakingCallbackHandler.OnPlayersReady -= HandlePlayersReady;
+            MatchmakingCallbackHandler.OnMatchCanceled -= HandleMatchCanceled;
+        }
+
+        private void HandleMatchPending(object sender, MatchPendingEventArgs e)
+        {
+            PlayBtnEnabled = false;
+        }
+
+        private void HandleMatchReady(object sender, MatchDM match)
+        {
+            if (match != null)
+            {
+                ReadyOrCancelTgBtnVisibility = Visibility.Visible;
+                PlayBtnVisibility = Visibility.Collapsed;
+                _match = match;
+                _canMatchBeCanceled = true;
+                SetRulesToIncomingRules(match);
+            }
+        }
+
+        private void SetRulesToIncomingRules(MatchDM match)
+        {
+            Gamemode = match.Rules.gamemode;
+            TurnTimer = match.Rules.TurnTimer;
+            TimerTokens = match.Rules.TimerTokens;
+            BystanderTokens = match.Rules.BystanderTokens;
+        }
+
+        private void HandlePlayersReady(object sender, Guid e)
+        {
+            MatchDM matchToNavigate = _match;
+
+            ReadyOrCancelTgBtnVisibility = Visibility.Collapsed;
+            PlayBtnVisibility = Visibility.Visible;
+            PlayBtnEnabled = true;
+            _canMatchBeCanceled = false;
+            //Turn it back from cancel to its "signal ready state"
+            IsReadyOrCancelTgBtnActive = false;
+            _match = null; //Free the match field
+
+            if (BeginMatch != null && matchToNavigate != null)
+            {
+                BeginMatch.Invoke(matchToNavigate);
+            }
+        }
+
+        private void HandleMatchCanceled(object sender, MatchCanceledEventArgs e)
+        {
+            if (_match != null && e.MatchID == _match.MatchID)
+            {
+                _match = null;
+                PlayBtnEnabled = true;
+                PlayBtnVisibility = Visibility.Visible;
+                ReadyOrCancelTgBtnVisibility = Visibility.Collapsed;
+                MessageBox.Show(Util.StatusToMessageMapper.GetMatchmakingServiceMessage(e.Reason));
+            }
         }
 
         /// <summary>
@@ -385,16 +690,6 @@ namespace CodenamesClient.GameUI.ViewModels
                     OnlineFriends.Add(friend);
                 }
             });
-        }
-
-        private void LoadDefaultRules()
-        {
-            const int NORMAL_TIMER_TOKENS = 9;
-            const int NORMAL_BYSTANDER_TOKENS = 0;
-            const int NORMAL_TIMER = 30;
-            TimerTokens = NORMAL_TIMER_TOKENS;
-            BystanderTokens = NORMAL_BYSTANDER_TOKENS;
-            TurnTimer = NORMAL_TIMER;
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)

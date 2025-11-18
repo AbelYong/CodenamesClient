@@ -86,6 +86,8 @@
     <Compile Include="Domain\POCO\UserDM.cs" />
     <Compile Include="Network\EmailOperation.cs" />
     <Compile Include="Network\EventArguments\InvitationReceivedEventArgs.cs" />
+    <Compile Include="Network\EventArguments\MatchCanceledEventArgs.cs" />
+    <Compile Include="Network\EventArguments\MatchPendingEventArgs.cs" />
     <Compile Include="Network\EventArguments\OperationMessageEventArgs.cs" />
     <Compile Include="Network\EventArguments\PlayerEventArgs.cs" />
     <Compile Include="Network\LobbyCallbackHandler.cs" />

@@ -154,7 +154,7 @@ namespace CodenamesGame.Domain.POCO
             MatchmakingService.Player svPlayer = new MatchmakingService.Player();
             svPlayer.PlayerID = player.PlayerID;
             svPlayer.Username = player.Username;
-            svPlayer.AvatarID =player.AvatarID;
+            svPlayer.AvatarID = player.AvatarID;
             return svPlayer;
         }
     }

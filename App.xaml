@@ -141,6 +141,65 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!-- Big toggleButton-->
+        <Style x:Key="toggleButtonCustomFocus" TargetType="ToggleButton">
+            <Setter Property="Label.FontFamily" Value="Consolas" />
+            <Setter Property="Label.FontSize" Value="16" />
+            <Setter Property="Label.FontWeight" Value="Bold" />
+            <Setter Property="Label.Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <!-- Animation-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid>
+                            <Rectangle Fill="{TemplateBinding Background}" Stretch="Fill"/>
+
+                            <!-- Color overlay -->
+                            <Rectangle x:Name="Overlay" Fill="#FFD6D6D6" Opacity="0"/>
+
+                            <Border Background="Transparent"
+                            BorderBrush="White"
+                            BorderThickness="2"
+                            Padding="10">
+                            </Border>
+
+                            <!-- Button content -->
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True"/>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- MouseOver animation -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation 
+                                        Storyboard.TargetName="Overlay"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0.5" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation 
+                                        Storyboard.TargetName="Overlay"
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!-- custom focus textbox-->
         <Style x:Key="textBoxCustomFocus" TargetType="TextBox">
             <Setter Property="FontFamily" Value="Consolas" />
