@@ -327,7 +327,16 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 string reason = "Conducta antideportiva";
 
-                var serverResponse = _moderationOperation.ReportPlayer(_companion.PlayerID.Value, reason);
+                // --- AQUÍ ESTÁ EL CAMBIO ---
+                // Debes pasar TRES argumentos:
+                // 1. Tu ID (_me.PlayerID.Value) <- Esto es lo que faltaba
+                // 2. El ID del compañero (_companion.PlayerID.Value)
+                // 3. La razón
+                var serverResponse = _moderationOperation.ReportPlayer(
+                    _me.PlayerID.Value,           // <--- AGREGADO: Tu ID (Reporter)
+                    _companion.PlayerID.Value,    // El ID del reportado (Target)
+                    reason
+                );
 
                 string feedbackMessage = StatusToMessageMapper.GetModerationMessage(serverResponse.StatusCode);
 

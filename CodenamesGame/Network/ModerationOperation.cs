@@ -14,13 +14,12 @@ namespace CodenamesGame.Network
             _client = new ModerationManagerClient(_ENDPOINT_NAME);
         }
 
-        public CommunicationRequest ReportPlayer(Guid reportedUserID, string reason)
+        public CommunicationRequest ReportPlayer(Guid reporterUserID, Guid reportedUserID, string reason)
         {
             CommunicationRequest response = new CommunicationRequest();
-
             try
             {
-                response = _client.ReportPlayer(reportedUserID, reason);
+                response = _client.ReportPlayer(reporterUserID, reportedUserID, reason);
             }
             catch (EndpointNotFoundException)
             {

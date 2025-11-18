@@ -26,10 +26,10 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel = new MainMenuViewModel(player, sesion, isGuest);
             DataContext = _viewModel;
 
-            _mediaPlayer = new MediaPlayer();
+            /*_mediaPlayer = new MediaPlayer();
             _mediaPlayer.Open(new Uri("Main Theme (NOT FINAL).mp3", UriKind.Relative));
             _mediaPlayer.Play();
-            _mediaPlayer.MediaEnded += (s, e) => _mediaPlayer.Position = TimeSpan.Zero;
+            _mediaPlayer.MediaEnded += (s, e) => _mediaPlayer.Position = TimeSpan.Zero;*/
         }
 
         //This method is needed by the MainWindow to close the session if the user closes the window

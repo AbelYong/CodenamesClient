@@ -5,7 +5,8 @@
   <xs:element name="ReportPlayer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="reportedUserID" type="q1:guid" />
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="reporterUserID" type="q1:guid" />
+        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="reportedUserID" type="q2:guid" />
         <xs:element minOccurs="0" name="reason" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -13,7 +14,7 @@
   <xs:element name="ReportPlayerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="ReportPlayerResult" nillable="true" type="q2:CommunicationRequest" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="ReportPlayerResult" nillable="true" type="q3:CommunicationRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
