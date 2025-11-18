@@ -549,4 +549,16 @@
   <data name="lobbySendCode" xml:space="preserve">
     <value>Send code</value>
   </data>
+  <data name="matchPickKeywords" xml:space="preserve">
+    <value>Pick keywords according to {0}'s clue</value>
+  </data>
+  <data name="matchCompanionIsSpymaster" xml:space="preserve">
+    <value>{0} is the spymaster</value>
+  </data>
+  <data name="matchTypeAClue" xml:space="preserve">
+    <value>Type a clue so that {0} picks your keycard's agents</value>
+  </data>
+  <data name="matchYouAreSpymaster" xml:space="preserve">
+    <value>You are the spymaster</value>
+  </data>
 </root>

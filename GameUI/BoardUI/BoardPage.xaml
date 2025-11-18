@@ -14,17 +14,21 @@
 
     <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10">
         <DockPanel LastChildFill="False">
-            <!-- Instructions, keycard and party-->
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" MinHeight="150">
-                <!-- Turn stackpanel-->
-                <StackPanel MinWidth="365" HorizontalAlignment="Left">
-                    <Label Content="Player's turn"
-                           Style="{StaticResource title}" Foreground="White" />
-                    <TextBlock Text="Instructions" IsEnabled="False"
-                               Style="{StaticResource subtitle}" Foreground="White"/>
+            <Grid DockPanel.Dock="Top" MinHeight="150">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="365"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--Instructions stackpanel-->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock local:TextAnimator.AnimatedText="{Binding PlayerSTurn}" Focusable="False"
+                   Style="{StaticResource title}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White" />
+                    <TextBlock local:TextAnimator.AnimatedText="{Binding TurnInstructions}" IsEnabled="False"
+                   Style="{StaticResource subtitle}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White"/>
                 </StackPanel>
-                <!-- Keycard stackpanel-->
-                <StackPanel>
+                <!--Keycard stackpanel-->
+                <StackPanel Grid.Column="1">
                     <Label Content="{x:Static language:Lang.matchYourkeycard}"
                            Style="{StaticResource subtitle}" Foreground="White" />
                     <Grid x:Name="gridKeycard" MinHeight="150" MinWidth="250" Margin="50,0,50,0">
@@ -55,7 +59,8 @@
                         <Rectangle Grid.Row="1" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
                         <Rectangle Grid.Row="1" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
                         <!-- third row-->
-                        <Rectangle Grid.Row="2" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>                        <Rectangle Grid.Row="2" Grid.Column="1" Fill="Beige" />
+                        <Rectangle Grid.Row="2" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                        <Rectangle Grid.Row="2" Grid.Column="1" Fill="Beige" />
                         <Rectangle Grid.Row="2" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
                         <Rectangle Grid.Row="2" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
                         <Rectangle Grid.Row="2" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
@@ -73,8 +78,8 @@
                         <Rectangle Grid.Row="4" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
                     </Grid>
                 </StackPanel>
-                <!-- Party stackpanel-->
-                <StackPanel MinWidth="255">
+                <!--Party stackpanel-->
+                <StackPanel Grid.Column="2" MinWidth="255">
                     <StackPanel MinWidth="255" Orientation="Horizontal">
                         <StackPanel>
                             <TextBlock Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="White"/>
@@ -87,37 +92,34 @@
                             </Button.Background>
                         </Button>
                     </StackPanel>
-
                     <Label Content="{x:Static language:Lang.matchParty}"
-            Style="{StaticResource title}" Foreground="White" />
+                           Style="{StaticResource title}" Foreground="White" />
+                    <Label Content="{Binding MyUsername}" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
+                           Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
 
-                    <Label Content="{Binding PlayerUsername}" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
-            Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
-
-                    <Button Content="Friend" FontSize="24" Height="40"
-            Style="{StaticResource buttonCustomFocus}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" />
+                    <Button Content="{Binding CompanionUsername}" FontSize="24" Height="40" Style="{StaticResource buttonCustomFocus}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" />
 
                     <Button Content="{x:Static language:Lang.matchReport}" 
-            FontSize="18" 
-            Height="35"
-            Width="150"
-            HorizontalAlignment="Center"
-            Click="Click_ReportPlayer" 
-            Background="#FF8B0000" 
-            Foreground="White"
-            BorderBrush="Red"
-            BorderThickness="2" 
-            Margin="100,0,0,0"
-            ToolTip="Reportar al compañero por conducta antideportiva">
+                        FontSize="18" 
+                        Height="35"
+                        Width="150"
+                        HorizontalAlignment="Center"
+                        Click="Click_ReportPlayer" 
+                        Background="#FF8B0000" 
+                        Foreground="White"
+                        BorderBrush="Red"
+                        BorderThickness="2" 
+                        Margin="100,0,0,0"
+                        ToolTip="Reportar al compañero por conducta antideportiva">
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
                             </Style>
                         </Button.Resources>
                     </Button>
-
                 </StackPanel>
-            </StackPanel>
+
+            </Grid>
             <!-- Chat, board and tokens-->
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
                 <!-- Chat grid-->

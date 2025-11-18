@@ -30,10 +30,10 @@ namespace CodenamesClient.GameUI.BoardUI
         private const int BYSTANDER_CODE = 1;
         private const int ASSASSIN_CODE = 2;
 
-        public BoardPage(MatchDM match)
+        public BoardPage(MatchDM match, Guid myID)
         {
             InitializeComponent();
-            _viewModel = new BoardViewModel(match);
+            _viewModel = new BoardViewModel(match, myID);
             this.DataContext = _viewModel;
             DrawWords();
             DrawKeycard();
@@ -295,7 +295,7 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private void Click_ReportPlayer(object sender, RoutedEventArgs e)
         {
-            _viewModel.ReportOpponent();
+            _viewModel.ReportCompanion();
         }
     }
 }

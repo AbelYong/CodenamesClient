@@ -16,48 +16,78 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using CodenamesClient.Properties.Langs;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
     public class BoardViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand ReportPlayerCommand { get; set; }
         //The MAX_GLOBAL constants are used for selecting random images from the assets by setting limits for number-indexing
         public const int MAX_GLOBAL_AGENTS = 15;
         public const int MAX_GLOBAL_ASSASSINS = 3;
         public const int MAX_GLOBAL_BYSTANDERS = 7;
+        private readonly MatchDM _match;
+        private string _playerSTurn;
+        private string _turnInstrucions;
+        private PlayerDM _me;
+        private string _myUsername;
+        private PlayerDM _companion;
+        private string _companionUsername;
         private DispatcherTimer _timer;
         private DispatcherTimer _chronometer;
         private TimeSpan _elapsedTime;
         private readonly int[,] _agentsMatrix;
         private readonly int[,] _keycardMatrix;
         private readonly Dictionary<int, string> _keywords = new Dictionary<int, string>();
-
         private int _turnTimer;
         private int _timerTokens;
         private int _bystanderTokens;
         private int _turnLenght;
-
         private ModerationOperation _moderationOperation;
-        private PlayerDM _opponent;
-        public ICommand ReportPlayerCommand { get; set; }
-
-        public List<int> AgentNumbers { get; set; }
-
-        public BoardViewModel(MatchDM match)
+        
+        public string PlayerSTurn
         {
-            InitializeAgentNumbers();
-            _agentsMatrix = match.Board;
-            SetKeywords(match.SelectedWords);
-            _keycardMatrix = match.Keycard;
-            InitializeMatchData(match);
-            InitializeChronometer();
-            InitializeTimer();
-            _moderationOperation = new ModerationOperation();
-
+            get => _playerSTurn;
+            set
+            {
+                _playerSTurn = value;
+                OnPropertyChanged(nameof(PlayerSTurn));
+            }
         }
 
-        public string PlayerUsername { get; set; }
+        public string TurnInstructions
+        {
+            get => _turnInstrucions;
+            set
+            {
+                _turnInstrucions = value;
+                OnPropertyChanged(nameof(TurnInstructions));
+            }
+        }
+
+        public string MyUsername
+        {
+            get => _myUsername;
+            set
+            {
+                _myUsername = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CompanionUsername
+        {
+            get => _companionUsername;
+            set
+            {
+                _companionUsername = value;
+                OnPropertyChanged(nameof(MyUsername));
+            }
+        }
+
+        public List<int> AgentNumbers { get; set; }
 
         public int[,] AgentsMatrix
         {
@@ -119,6 +149,57 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
+        public BoardViewModel(MatchDM match, Guid myID)
+        {
+            _match = match;
+            SetPlayers(myID);
+            InitializeAgentNumbers();
+            _agentsMatrix = match.Board;
+            SetKeywords(match.SelectedWords);
+            _keycardMatrix = match.Keycard;
+            InitializeMatchData(match);
+            InitializeChronometer();
+            InitializeTimer();
+            _moderationOperation = new ModerationOperation();
+            SetInitialTurn();
+        }
+
+        private void SetPlayers(Guid myID)
+        {
+            if (_match != null)
+            {
+                bool isPlayerRequester = _match.Requester.PlayerID == myID;
+                if (isPlayerRequester)
+                {
+                    MyUsername = _match.Requester.Username;
+                    _me = _match.Requester;
+                    CompanionUsername = _match.Companion.Username;
+                    _companion = _match.Companion;
+                }
+                else
+                {
+                    MyUsername = _match.Requester.Username;
+                    _me = _match.Companion;
+                    CompanionUsername = _match.Requester.Username;
+                    _companion = _match.Requester;
+                }
+            }
+        }
+
+        private void SetInitialTurn()
+        {
+            if (_me.PlayerID == _match.Requester.PlayerID)
+            {
+                PlayerSTurn = string.Format(Lang.matchYouAreSpymaster, _match.Companion.Username);
+                TurnInstructions = string.Format(Lang.matchTypeAClue, _match.Companion.Username);
+            }
+            else
+            {
+                PlayerSTurn = string.Format(Lang.matchCompanionIsSpymaster, _match.Companion.Username);
+                TurnInstructions = string.Format(Lang.matchPickKeywords, _match.Companion.Username);
+            }
+        }
+
         private void InitializeAgentNumbers()
         {
             AgentNumbers = new List<int>();
@@ -140,7 +221,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private List<string> GetCurrentCultureWords()
+        private static List<string> GetCurrentCultureWords()
         {
             ResourceManager manager = Properties.Langs.GameWords.ResourceManager;
             CultureInfo currentCulture = CultureInfo.CurrentUICulture;
@@ -161,7 +242,6 @@ namespace CodenamesClient.GameUI.ViewModels
             _turnLenght = match.Rules.TurnTimer;
             _timerTokens = match.Rules.TimerTokens;
             _bystanderTokens = match.Rules.BystanderTokens;
-            PlayerUsername = match.Requester.Username;
         }
 
         private void InitializeTimer()
@@ -230,17 +310,15 @@ namespace CodenamesClient.GameUI.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private void IdentifyReportTarget(MatchDM match)
+        public void ReportCompanion()
         {
-            _opponent = match.Companion;
-        }
-
-        public void ReportOpponent()
-        {
-            if (_opponent == null) return;
+            if (_companion == null)
+            {
+                return;
+            }
 
             var result = MessageBox.Show(
-                string.Format(Properties.Langs.Lang.confirmReportMessage, _opponent.Username),
+                string.Format(Properties.Langs.Lang.confirmReportMessage, _companion.Username),
                 Properties.Langs.Lang.globalWarningTitle,
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
@@ -249,7 +327,7 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 string reason = "Conducta antideportiva";
 
-                var serverResponse = _moderationOperation.ReportPlayer(_opponent.PlayerID.Value, reason);
+                var serverResponse = _moderationOperation.ReportPlayer(_companion.PlayerID.Value, reason);
 
                 string feedbackMessage = StatusToMessageMapper.GetModerationMessage(serverResponse.StatusCode);
 

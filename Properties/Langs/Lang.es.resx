@@ -549,4 +549,16 @@
   <data name="lobbySendCode" xml:space="preserve">
     <value>Enviar código</value>
   </data>
+  <data name="matchPickKeywords" xml:space="preserve">
+    <value>Elige palabras clave de acuerdo con la pista de {0}</value>
+  </data>
+  <data name="matchCompanionIsSpymaster" xml:space="preserve">
+    <value>{0} es el jefe de espías</value>
+  </data>
+  <data name="matchTypeAClue" xml:space="preserve">
+    <value>Escribe una pista que haga que {0} elija los agentes de tarjeta clave</value>
+  </data>
+  <data name="matchYouAreSpymaster" xml:space="preserve">
+    <value>Tu eres el jefe de espías</value>
+  </data>
 </root>

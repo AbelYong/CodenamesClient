@@ -59,6 +59,7 @@
     <Compile Include="GameUI\BoardUI\BoardPage.xaml.cs">
       <DependentUpon>BoardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameUI\BoardUI\TextAnimator.cs" />
     <Compile Include="GameUI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

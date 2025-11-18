@@ -772,11 +772,29 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a {0} is the spymaster.
+        /// </summary>
+        public static string matchCompanionIsSpymaster {
+            get {
+                return ResourceManager.GetString("matchCompanionIsSpymaster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Party.
         /// </summary>
         public static string matchParty {
             get {
                 return ResourceManager.GetString("matchParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pick keywords according to {0}&apos;s clue.
+        /// </summary>
+        public static string matchPickKeywords {
+            get {
+                return ResourceManager.GetString("matchPickKeywords", resourceCulture);
             }
         }
         
@@ -813,6 +831,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string matchTurnTimer {
             get {
                 return ResourceManager.GetString("matchTurnTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Type a clue so that {0} picks your keycard&apos;s agents.
+        /// </summary>
+        public static string matchTypeAClue {
+            get {
+                return ResourceManager.GetString("matchTypeAClue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You are the spymaster.
+        /// </summary>
+        public static string matchYouAreSpymaster {
+            get {
+                return ResourceManager.GetString("matchYouAreSpymaster", resourceCulture);
             }
         }
         
