@@ -531,4 +531,22 @@
   <data name="matchReport" xml:space="preserve">
     <value>Reportar</value>
   </data>
+  <data name="lobbyInvite" xml:space="preserve">
+    <value>Invitar</value>
+  </data>
+  <data name="lobbyJoin" xml:space="preserve">
+    <value>Unirse</value>
+  </data>
+  <data name="lobbyStartLobby" xml:space="preserve">
+    <value>Crear una sala</value>
+  </data>
+  <data name="lobbyTypeLobbyCode" xml:space="preserve">
+    <value>Escribe el código de la sala</value>
+  </data>
+  <data name="lobbyLobyCode" xml:space="preserve">
+    <value>Código de la sala: {0}</value>
+  </data>
+  <data name="lobbySendCode" xml:space="preserve">
+    <value>Enviar código</value>
+  </data>
 </root>

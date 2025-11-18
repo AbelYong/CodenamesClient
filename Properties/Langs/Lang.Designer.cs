@@ -493,6 +493,33 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invite.
+        /// </summary>
+        public static string lobbyInvite {
+            get {
+                return ResourceManager.GetString("lobbyInvite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Join.
+        /// </summary>
+        public static string lobbyJoin {
+            get {
+                return ResourceManager.GetString("lobbyJoin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Lobby code: {0}.
+        /// </summary>
+        public static string lobbyLobyCode {
+            get {
+                return ResourceManager.GetString("lobbyLobyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The match has been cancelled by your companion.
         /// </summary>
         public static string lobbyMatchCanceledByCompanion {
@@ -525,6 +552,33 @@ namespace CodenamesClient.Properties.Langs {
         public static string lobbyRules {
             get {
                 return ResourceManager.GetString("lobbyRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Send code.
+        /// </summary>
+        public static string lobbySendCode {
+            get {
+                return ResourceManager.GetString("lobbySendCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Create a lobby.
+        /// </summary>
+        public static string lobbyStartLobby {
+            get {
+                return ResourceManager.GetString("lobbyStartLobby", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Type the lobby&apos;s code.
+        /// </summary>
+        public static string lobbyTypeLobbyCode {
+            get {
+                return ResourceManager.GetString("lobbyTypeLobbyCode", resourceCulture);
             }
         }
         

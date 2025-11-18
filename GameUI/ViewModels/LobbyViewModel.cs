@@ -85,6 +85,18 @@ namespace CodenamesClient.GameUI.ViewModels
                 _gamemode = value;
                 SetGamemodeName(value);
                 OnPropertyChanged();
+                switch(value)
+                {
+                    case GamemodeDM.NORMAL:
+                        IsCustomGame = false;
+                        break;
+                    case GamemodeDM.CUSTOM:
+                        IsCustomGame = true;
+                        break;
+                    case GamemodeDM.COUNTERINTELLIGENCE:
+                        IsCustomGame = false;
+                        break;
+                }
             }
         }
 
@@ -140,7 +152,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public bool IsCustomGame
         {
-            get => _isCustomGame;
+            get => !_isCustomGame;
             set
             {
                 _isCustomGame = value;
@@ -421,7 +433,7 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 _lobbyCode = request.LobbyCode;
                 PartyHost = _me;
-                VisibleLobbyCodeTag = string.Format("Lobby code: {0}", _lobbyCode);
+                VisibleLobbyCodeTag = string.Format(Lang.lobbyLobyCode, _lobbyCode);
                 CreateLobbyBtnVisbility = Visibility.Collapsed;
                 InviteBtnVisibility = Visibility.Visible;
                 JoinBtnVisibility = Visibility.Collapsed;

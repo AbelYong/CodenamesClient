@@ -27,8 +27,8 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
-
         private SessionOperation _session;
+        private Guid _myID;
         private Storyboard _slideInOnlineFriends;
         private Storyboard _slideOutOnlineFriends;
         private Storyboard _slideInTypeCode;
@@ -37,7 +37,7 @@ namespace CodenamesClient.GameUI.Pages
         public LobbyPage(PlayerDM player, GamemodeDM gamemode, SessionOperation session)
         {
             InitializeComponent();
-
+            _myID = (Guid)player.PlayerID;
             _session = session;
             _viewModel = new LobbyViewModel(player, gamemode, _session);
             DataContext = _viewModel;
@@ -47,7 +47,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void OnLobbyPageLoaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext is LobbyViewModel vm)
+            if (DataContext is LobbyViewModel)
             {
                 _slideInOnlineFriends = (Storyboard)FindResource("SlideInOnlineFriendsAnimation");
                 _slideOutOnlineFriends = (Storyboard)FindResource("SlideOutOnlineFriendsAnimation");
@@ -82,7 +82,7 @@ namespace CodenamesClient.GameUI.Pages
         private void OnBeginMatch(MatchDM match)
         {
             _viewModel.BeginMatch -= OnBeginMatch;
-            BoardPage board = new BoardPage(match);
+            BoardPage board = new BoardPage(match, _myID);
             NavigationService.Navigate(board);
         }
 
