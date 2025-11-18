@@ -462,6 +462,7 @@ namespace CodenamesClient.GameUI.ViewModels
             IsPartyFull = true;
             PartyHost = _me;
             PartyGuest = e.Player;
+            CreateLobbyBtnVisbility = Visibility.Collapsed;
             GuestBtnVisibility = Visibility.Visible;
             InviteBtnVisibility = Visibility.Collapsed;
         }

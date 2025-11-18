@@ -178,7 +178,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 }
                 else
                 {
-                    MyUsername = _match.Requester.Username;
+                    MyUsername = _match.Companion.Username;
                     _me = _match.Companion;
                     CompanionUsername = _match.Requester.Username;
                     _companion = _match.Requester;
@@ -195,8 +195,8 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                PlayerSTurn = string.Format(Lang.matchCompanionIsSpymaster, _match.Companion.Username);
-                TurnInstructions = string.Format(Lang.matchPickKeywords, _match.Companion.Username);
+                PlayerSTurn = string.Format(Lang.matchCompanionIsSpymaster, _match.Requester.Username);
+                TurnInstructions = string.Format(Lang.matchPickKeywords, _match.Requester.Username);
             }
         }
 
