@@ -48,6 +48,12 @@ namespace CodenamesClient.GameUI.ViewModels
                 }
             }
         }
+
+        public void TriggerPasswordValidation()
+        {
+            ValidateProperty(nameof(Password));
+        }
+
         public string ConfirmPassword
         {
             get => _confirmPassword;
@@ -90,6 +96,7 @@ namespace CodenamesClient.GameUI.ViewModels
             ValidateProperty(nameof(Username));
             ValidateProperty(nameof(FirstName));
             ValidateProperty(nameof(LastName));
+            ValidateProperty(nameof(Password));
             ValidateProperty(nameof(ConfirmPassword));
             OnPropertyChanged(nameof(CanSubmit));
         }
@@ -114,6 +121,13 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 case nameof(LastName):
                     errors = SignInValidation.ValidateLastName(LastName);
+                    break;
+
+                case nameof(Password):
+                    if (!IsPasswordValid)
+                    {
+                        errors = new[] { Lang.signInInvalidPassword };
+                    }
                     break;
 
                 case nameof(ConfirmPassword):

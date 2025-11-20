@@ -318,8 +318,8 @@ namespace CodenamesClient.GameUI.ViewModels
             }
 
             var result = MessageBox.Show(
-                string.Format(Properties.Langs.Lang.confirmReportMessage, _companion.Username),
-                Properties.Langs.Lang.globalWarningTitle,
+                string.Format(Lang.confirmReportMessage, _companion.Username),
+                Lang.globalWarningTitle,
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
 
@@ -327,20 +327,15 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 string reason = "Conducta antideportiva";
 
-                // --- AQUÍ ESTÁ EL CAMBIO ---
-                // Debes pasar TRES argumentos:
-                // 1. Tu ID (_me.PlayerID.Value) <- Esto es lo que faltaba
-                // 2. El ID del compañero (_companion.PlayerID.Value)
-                // 3. La razón
                 var serverResponse = _moderationOperation.ReportPlayer(
-                    _me.PlayerID.Value,           // <--- AGREGADO: Tu ID (Reporter)
-                    _companion.PlayerID.Value,    // El ID del reportado (Target)
+                    _me.PlayerID.Value,
+                    _companion.PlayerID.Value,
                     reason
                 );
 
                 string feedbackMessage = StatusToMessageMapper.GetModerationMessage(serverResponse.StatusCode);
 
-                MessageBox.Show(feedbackMessage, Properties.Langs.Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(feedbackMessage, Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

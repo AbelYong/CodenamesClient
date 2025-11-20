@@ -561,4 +561,7 @@
   <data name="matchYouAreSpymaster" xml:space="preserve">
     <value>You are the spymaster</value>
   </data>
+  <data name="signInInvalidPassword" xml:space="preserve">
+    <value>Invalid password.</value>
+  </data>
 </root>

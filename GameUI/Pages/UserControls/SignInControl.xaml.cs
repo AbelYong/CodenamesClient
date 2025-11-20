@@ -24,6 +24,32 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             DataContext = _vm;
         }
 
+        public void Show()
+        {
+            this.Visibility = Visibility.Visible;
+            var sb = (Storyboard)FindResource("SlideInMainAnimation");
+            sb.Begin(MainRegisterGrid, true);
+        }
+
+        public void Hide(Action onCompleted = null)
+        {
+            var sb = (Storyboard)FindResource("SlideOutMainAnimation");
+
+            EventHandler onDone = null;
+            onDone = (s, e) =>
+            {
+                sb.Completed -= onDone;
+                this.Visibility = Visibility.Collapsed;
+
+                if (MainRegisterGrid.RenderTransform is TranslateTransform tt) tt.Y = 720;
+
+                onCompleted?.Invoke();
+            };
+
+            sb.Completed += onDone;
+            sb.Begin(MainRegisterGrid, true);
+        }
+
         private async void Click_SignIn(object sender, RoutedEventArgs e)
         {
             _vm.ValidateAll();
@@ -160,6 +186,11 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         private void Click_btnClose(object sender, RoutedEventArgs e)
         {
             ClickClose?.Invoke(this, e);
+        }
+
+        private void PasswordInput_LostFocus(object sender, RoutedEventArgs e)
+        {
+            _vm.TriggerPasswordValidation();
         }
     }
 }
