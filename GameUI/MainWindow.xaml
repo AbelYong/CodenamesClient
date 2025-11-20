@@ -8,5 +8,6 @@
         Title="Codenames: Duet" Height="640" Width="1024" Background="#FF1D1D1D">
     <Grid>
         <Frame x:Name="MainFrame" Source="/GameUI/Pages/LoginPage.xaml" NavigationUIVisibility="Hidden" />
+        
     </Grid>
 </Window>

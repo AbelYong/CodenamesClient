@@ -72,12 +72,12 @@ namespace CodenamesClient.GameUI.BoardUI
                         break;
                 }
 
-                await AnimateCardFlip(clickedButton, isFlippingAway: true, durationMs: 150);
+                await AnimateCardFlip(clickedButton, isFlippingAway: true);
 
                 clickedButton.Background = newBackground;
                 clickedButton.Content = string.Empty;
 
-                await AnimateCardFlip(clickedButton, isFlippingAway: false, durationMs: 200);
+                await AnimateCardFlip(clickedButton, isFlippingAway: false);
 
                 switch (code)
                 {
@@ -248,15 +248,9 @@ namespace CodenamesClient.GameUI.BoardUI
             }
         }
 
-        /// <summary>
-        /// Animates the card to “flip” using its ScaleTransform (at index 2 of the TransformGroup).
-        /// </summary>
-        /// <param name="card">The ToggleButton to be animated. </param>
-        /// <param name="isFlippingAway">True if it will shrink (1 to 0), False if it will expand (0 to 1). </param>
-        /// <param name="durationMs">Duration of the animation in milliseconds.</param>
-        /// <returns>A Task that completes when the animation ends.</returns>
-        private Task AnimateCardFlip(ToggleButton card, bool isFlippingAway, double durationMs = 150)
+        private Task AnimateCardFlip(ToggleButton card, bool isFlippingAway)
         {
+            double durationMiliseconds = 150;
             var transformGroup = card.RenderTransform as TransformGroup;
             if (transformGroup == null || transformGroup.Children.Count <= 2 || !(transformGroup.Children[2] is ScaleTransform scaleTransform))
             {
@@ -270,7 +264,7 @@ namespace CodenamesClient.GameUI.BoardUI
             {
                 From = fromValue,
                 To = toValue,
-                Duration = TimeSpan.FromMilliseconds(durationMs),
+                Duration = TimeSpan.FromMilliseconds(durationMiliseconds),
                 EasingFunction = isFlippingAway ? (IEasingFunction)new BackEase { EasingMode = EasingMode.EaseIn, Amplitude = 0.3 }
                                                 : new BackEase { EasingMode = EasingMode.EaseOut, Amplitude = 0.3 }
             };
@@ -297,17 +291,14 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             if (sender is Button btn)
             {
-                btn.IsEnabled = false; // Deshabilitar botón para evitar doble clic
+                btn.IsEnabled = false;
                 try
                 {
-                    // Ejecutar la lógica (que puede tardar unos milisegundos en ir al server)
-                    // Nota: Como ReportOpponent en el VM no es asíncrono (void), esto bloqueará
-                    // un poco la UI, pero evitará el spam inmediato.
                     _viewModel.ReportCompanion();
                 }
                 finally
                 {
-                    btn.IsEnabled = true; // Rehabilitar (opcional, si quieres permitir reportar de nuevo)
+                    btn.IsEnabled = true;
                 }
             }
         }

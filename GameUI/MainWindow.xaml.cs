@@ -59,6 +59,9 @@ namespace CodenamesClient.GameUI
             try
             {
                 _sessionOperation?.Disconnect(_player);
+                LobbyOperation.Instance.Disconnect();
+                MatchmakingOperation.Instance.Disconnect();
+
             }
             catch (Exception ex) when (ex is CommunicationException || ex is CommunicationObjectFaultedException || ex is CommunicationObjectFaultedException)
             {
