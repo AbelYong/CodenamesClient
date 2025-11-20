@@ -472,7 +472,7 @@ namespace CodenamesClient.GameUI.ViewModels
             IsPartyFull = false;
             PartyHost = _me;
             PartyGuest = null;
-            CreateLobbyBtnVisbility = Visibility.Visible;
+            CreateLobbyBtnVisbility = _lobbyCode != string.Empty ? Visibility.Collapsed : Visibility.Visible;
             GuestBtnVisibility = Visibility.Collapsed;
             InviteBtnVisibility = Visibility.Visible;
         }
