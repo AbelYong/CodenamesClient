@@ -297,17 +297,14 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             if (sender is Button btn)
             {
-                btn.IsEnabled = false; // Deshabilitar botón para evitar doble clic
+                btn.IsEnabled = false;
                 try
                 {
-                    // Ejecutar la lógica (que puede tardar unos milisegundos en ir al server)
-                    // Nota: Como ReportOpponent en el VM no es asíncrono (void), esto bloqueará
-                    // un poco la UI, pero evitará el spam inmediato.
                     _viewModel.ReportCompanion();
                 }
                 finally
                 {
-                    btn.IsEnabled = true; // Rehabilitar (opcional, si quieres permitir reportar de nuevo)
+                    btn.IsEnabled = true;
                 }
             }
         }

@@ -667,9 +667,6 @@ namespace CodenamesClient.GameUI.ViewModels
             SessionOperation.OnFriendOffline -= HandleFriendOffline;
         }
 
-        /// <summary>
-        /// Updates the friend's status to online.
-        /// </summary>
         private void HandleFriendOnline(object sender, PlayerEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -686,9 +683,6 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        /// <summary>
-        /// Updates the friend's status to offline.
-        /// </summary>
         private void HandleFriendOffline(object sender, Guid playerId)
         {
             Application.Current.Dispatcher.Invoke(() =>

@@ -561,4 +561,7 @@
   <data name="matchYouAreSpymaster" xml:space="preserve">
     <value>Tu eres el jefe de espías</value>
   </data>
+  <data name="signInInvalidPassword" xml:space="preserve">
+    <value>La contraseña no es válida.</value>
+  </data>
 </root>

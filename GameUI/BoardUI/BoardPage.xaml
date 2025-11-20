@@ -12,26 +12,137 @@
       Title="BoardPage" Background="#FF1D1D1D"
       Loaded="Page_Loaded">
 
-    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10">
-        <DockPanel LastChildFill="False">
-            <Grid DockPanel.Dock="Top" MinHeight="150">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="365"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--Instructions stackpanel-->
-                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                    <TextBlock local:TextAnimator.AnimatedText="{Binding PlayerSTurn}" Focusable="False"
+    <Viewbox Stretch="Uniform">
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,10,10,10" Width="1024" Height="640">
+            <DockPanel LastChildFill="False">
+                <Grid DockPanel.Dock="Top" MinHeight="150">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="365"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Instructions stackpanel-->
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock local:TextAnimator.AnimatedText="{Binding PlayerSTurn}" Focusable="False"
                    Style="{StaticResource title}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White" />
-                    <TextBlock local:TextAnimator.AnimatedText="{Binding TurnInstructions}" IsEnabled="False"
+                        <TextBlock local:TextAnimator.AnimatedText="{Binding TurnInstructions}" IsEnabled="False"
                    Style="{StaticResource subtitle}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White"/>
-                </StackPanel>
-                <!--Keycard stackpanel-->
-                <StackPanel Grid.Column="1">
-                    <Label Content="{x:Static language:Lang.matchYourkeycard}"
+                    </StackPanel>
+                    <!--Keycard stackpanel-->
+                    <StackPanel Grid.Column="1">
+                        <Label Content="{x:Static language:Lang.matchYourkeycard}"
                            Style="{StaticResource subtitle}" Foreground="White" />
-                    <Grid x:Name="gridKeycard" MinHeight="150" MinWidth="250" Margin="50,0,50,0">
+                        <Grid x:Name="gridKeycard" MinHeight="150" MinWidth="250" Margin="50,0,50,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <!-- first row-->
+                            <Rectangle Grid.Row="0" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <!-- second row-->
+                            <Rectangle Grid.Row="1" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <!-- third row-->
+                            <Rectangle Grid.Row="2" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="1" Fill="Beige" />
+                            <Rectangle Grid.Row="2" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <!-- forth row-->
+                            <Rectangle Grid.Row="3" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <!-- fifth row-->
+                            <Rectangle Grid.Row="4" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                        </Grid>
+                    </StackPanel>
+                    <!--Party stackpanel-->
+                    <StackPanel Grid.Column="2" MinWidth="255">
+                        <StackPanel MinWidth="255" Orientation="Horizontal">
+                            <StackPanel>
+                                <TextBlock Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="White"/>
+                                <TextBlock Text="{Binding ElapsedTime, StringFormat='mm\\:ss'}" Style="{StaticResource subtitle}" Foreground="White" HorizontalAlignment="Center" />
+                            </StackPanel>
+
+                            <Button Click="Click_QuitMatch" Style="{StaticResource imageButtonFocus}" MinHeight="60" MinWidth="125">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/Assets/BoardUI/exit.png"/>
+                                </Button.Background>
+                            </Button>
+                        </StackPanel>
+                        <Label Content="{x:Static language:Lang.matchParty}"
+                           Style="{StaticResource title}" Foreground="White" />
+                        <Label Content="{Binding MyUsername}" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
+                           Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
+
+                        <Button Content="{Binding CompanionUsername}" FontSize="24" Height="40" Style="{StaticResource buttonCustomFocus}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" />
+
+                        <Button Content="{x:Static language:Lang.matchReport}" 
+                        FontSize="18" 
+                        Height="35"
+                        Width="150"
+                        HorizontalAlignment="Center"
+                        Click="Click_ReportPlayer" 
+                        Background="#FF8B0000" 
+                        Foreground="White"
+                        BorderBrush="Red"
+                        BorderThickness="2" 
+                        Margin="100,0,0,0"
+                        ToolTip="Reportar al compañero por conducta antideportiva">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+                <!-- Chat, board and tokens-->
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                    <!-- Chat grid-->
+                    <Grid Background="#333333" VerticalAlignment="Center">
+                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <StackPanel DockPanel.Dock="Top" Margin="10,10,10,10">
+                                <Label Content="Cross-Talker™" Style="{StaticResource normal}" FontSize="20" Foreground="Gray" />
+                                <ListView Height="250" Background="#225E08" />
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,10,10">
+                                <TextBox Text="Type a clue" FontSize="16" FontFamily="Consolas" FontStyle="Italic" MinWidth="125" VerticalContentAlignment="Center" >
+                                </TextBox>
+                                <Button MinWidth="40" MinHeight="30" Style="{StaticResource imageButtonFocus}" Margin="30,0,0,0">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="/Assets/BoardUI/sendIcon.png"/>
+                                    </Button.Background>
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                    </Grid>
+                    <!-- Board-->
+                    <Grid x:Name="gridBoard" MinWidth="550" MinHeight="350" Margin="30,0,30,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -47,158 +158,49 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <!-- first row-->
-                        <Rectangle Grid.Row="0" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="0" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="0" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="0" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="0" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
                         <!-- second row-->
-                        <Rectangle Grid.Row="1" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="1" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="1" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="1" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
                         <!-- third row-->
-                        <Rectangle Grid.Row="2" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="2" Grid.Column="1" Fill="Beige" />
-                        <Rectangle Grid.Row="2" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="2" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="2" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
                         <!-- forth row-->
-                        <Rectangle Grid.Row="3" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="3" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="3" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="3" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="3" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
                         <!-- fifth row-->
-                        <Rectangle Grid.Row="4" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="4" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="4" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="4" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                        <Rectangle Grid.Row="4" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
                     </Grid>
-                </StackPanel>
-                <!--Party stackpanel-->
-                <StackPanel Grid.Column="2" MinWidth="255">
-                    <StackPanel MinWidth="255" Orientation="Horizontal">
-                        <StackPanel>
-                            <TextBlock Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="White"/>
-                            <TextBlock Text="{Binding ElapsedTime, StringFormat='mm\\:ss'}" Style="{StaticResource subtitle}" Foreground="White" HorizontalAlignment="Center" />
-                        </StackPanel>
-
-                        <Button Click="Click_QuitMatch" Style="{StaticResource imageButtonFocus}" MinHeight="60" MinWidth="125">
-                            <Button.Background>
-                                <ImageBrush ImageSource="/Assets/BoardUI/exit.png"/>
-                            </Button.Background>
-                        </Button>
-                    </StackPanel>
-                    <Label Content="{x:Static language:Lang.matchParty}"
-                           Style="{StaticResource title}" Foreground="White" />
-                    <Label Content="{Binding MyUsername}" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
-                           Style="{StaticResource subtitle}" Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10"/>
-
-                    <Button Content="{Binding CompanionUsername}" FontSize="24" Height="40" Style="{StaticResource buttonCustomFocus}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" />
-
-                    <Button Content="{x:Static language:Lang.matchReport}" 
-                        FontSize="18" 
-                        Height="35"
-                        Width="150"
-                        HorizontalAlignment="Center"
-                        Click="Click_ReportPlayer" 
-                        Background="#FF8B0000" 
-                        Foreground="White"
-                        BorderBrush="Red"
-                        BorderThickness="2" 
-                        Margin="100,0,0,0"
-                        ToolTip="Reportar al compañero por conducta antideportiva">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="5"/>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
-                </StackPanel>
-
-            </Grid>
-            <!-- Chat, board and tokens-->
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                <!-- Chat grid-->
-                <Grid Background="#333333" VerticalAlignment="Center">
-                    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <StackPanel DockPanel.Dock="Top" Margin="10,10,10,10">
-                            <Label Content="Cross-Talker™" Style="{StaticResource normal}" FontSize="20" Foreground="Gray" />
-                            <ListView Height="250" Background="#225E08" />
-                        </StackPanel>
-                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,10,10">
-                            <TextBox Text="Type a clue" FontSize="16" FontFamily="Consolas" FontStyle="Italic" MinWidth="125" VerticalContentAlignment="Center" >
-                            </TextBox>
-                            <Button MinWidth="40" MinHeight="30" Style="{StaticResource imageButtonFocus}" Margin="30,0,0,0">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="/Assets/BoardUI/sendIcon.png"/>
-                                </Button.Background>
-                            </Button>
-                        </StackPanel>
-                    </DockPanel>
-                </Grid>
-                <!-- Board-->
-                <Grid x:Name="gridBoard" MinWidth="550" MinHeight="350" Margin="30,0,30,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <!-- first row-->
-                    <ToggleButton Grid.Row="0" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="0" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="0" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="0" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="0" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <!-- second row-->
-                    <ToggleButton Grid.Row="1" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="1" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="1" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="1" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="1" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <!-- third row-->
-                    <ToggleButton Grid.Row="2" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="2" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="2" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="2" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="2" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <!-- forth row-->
-                    <ToggleButton Grid.Row="3" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="3" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="3" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="3" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="3" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <!-- fifth row-->
-                    <ToggleButton Grid.Row="4" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="4" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="4" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="4" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                    <ToggleButton Grid.Row="4" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" Background="Beige" Margin="3"/>
-                </Grid>
-                <!-- Token stack panel-->
-                <StackPanel VerticalAlignment="Center">
-                    <Label Content="{x:Static language:Lang.matchTimer}" Style="{StaticResource subtitle}" Foreground="White" />
-                    <Label Content="{Binding TurnTimer, StringFormat='s{0}'}" Style="{StaticResource title}" Foreground="White" />
-                    <Label Content="{x:Static language:Lang.matchTimerTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
-                    <Label Content="{Binding TimerTokens, StringFormat='x{0}'}" Background="Gray" MinWidth="100" MinHeight="50"
+                    <!-- Token stack panel-->
+                    <StackPanel VerticalAlignment="Center">
+                        <Label Content="{x:Static language:Lang.matchTimer}" Style="{StaticResource subtitle}" Foreground="White" />
+                        <Label Content="{Binding TurnTimer, StringFormat='s{0}'}" Style="{StaticResource title}" Foreground="White" />
+                        <Label Content="{x:Static language:Lang.matchTimerTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
+                        <Label Content="{Binding TimerTokens, StringFormat='x{0}'}" Background="Gray" MinWidth="100" MinHeight="50"
                            Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" />
-                    <Label Content="{x:Static language:Lang.matchBystanderTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
-                    <Label Content="{Binding BystanderTokens, StringFormat='x{0}'}" Background="Khaki"  MinWidth="100" MinHeight="50" 
+                        <Label Content="{x:Static language:Lang.matchBystanderTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
+                        <Label Content="{Binding BystanderTokens, StringFormat='x{0}'}" Background="Khaki"  MinWidth="100" MinHeight="50" 
                            Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </DockPanel>
-    </Grid>
+            </DockPanel>
+        </Grid>
+    </Viewbox>
 </Page>

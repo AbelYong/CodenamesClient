@@ -1159,6 +1159,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invalid password..
+        /// </summary>
+        public static string signInInvalidPassword {
+            get {
+                return ResourceManager.GetString("signInInvalidPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The maximum length of the last name is 30 characters.
         /// </summary>
         public static string signInLastNameMaxLength {

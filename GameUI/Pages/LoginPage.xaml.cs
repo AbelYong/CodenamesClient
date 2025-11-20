@@ -62,13 +62,15 @@ namespace CodenamesClient.GameUI.Pages
         private void Click_btnSignIn(object sender, RoutedEventArgs e)
         {
             Overlay.Visibility = Visibility.Visible;
-            SignInControl.Visibility = Visibility.Visible;
+            SignInControl.Show();
         }
 
         private void Click_SignInClose(object sender, RoutedEventArgs e)
         {
-            Overlay.Visibility = Visibility.Collapsed;
-            SignInControl.Visibility = Visibility.Collapsed;
+            SignInControl.Hide(() =>
+            {
+                Overlay.Visibility = Visibility.Collapsed;
+            });
         }
 
         private async void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
