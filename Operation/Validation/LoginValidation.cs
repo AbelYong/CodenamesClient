@@ -10,7 +10,7 @@ namespace CodenamesClient.Validation
 {
     public static class LoginValidation
     {
-        public static String ValidateUsername(string username)
+        public static string ValidateUsername(string username)
         {
             if (string.IsNullOrEmpty(username))
             {
@@ -23,7 +23,7 @@ namespace CodenamesClient.Validation
             return "OK";
         }
 
-        public static String ValidatePassword(string password)
+        public static string ValidatePassword(string password)
         {
             if (string.IsNullOrEmpty(password))
             {
