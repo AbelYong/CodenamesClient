@@ -37,6 +37,18 @@ namespace CodenamesGame.Domain.POCO.Match
             return match;
         }
 
+        public static MatchService.Match AssembleMatchSvMatch(MatchDM match)
+        {
+            MatchService.Match svMatch = new MatchService.Match();
+            svMatch.MatchID = match.MatchID;
+            svMatch.Rules.Gamemode = MatchRulesDM.AssembleMatchSvGamemode(match.Rules.gamemode);
+            svMatch.Rules.TimerTokens = match.Rules.TimerTokens;
+            svMatch.Rules.BystanderTokens = match.Rules.BystanderTokens;
+            svMatch.Requester = PlayerDM.AssembleMatchSvPlayer(match.Requester);
+            svMatch.Companion = PlayerDM.AssembleMatchSvPlayer(match.Companion);
+            return svMatch;
+        }
+
         private static List<int> DeserializeIncomingWords(int[] incomingWords)
         {
             List<int> selectedWords = new List<int>();

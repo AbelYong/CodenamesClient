@@ -157,5 +157,12 @@ namespace CodenamesGame.Domain.POCO
             svPlayer.AvatarID = player.AvatarID;
             return svPlayer;
         }
+
+        public static MatchService.Player AssembleMatchSvPlayer(PlayerDM player)
+        {
+            MatchService.Player svPlayer = new MatchService.Player();
+            svPlayer.PlayerID = player.PlayerID;
+            return svPlayer;
+        }
     }
 }

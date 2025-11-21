@@ -78,5 +78,20 @@ namespace CodenamesGame.Domain.POCO
                     return MatchmakingService.Gamemode.NORMAL;
             }
         }
+
+        public static MatchService.Gamemode AssembleMatchSvGamemode(GamemodeDM mode)
+        {
+            switch (mode)
+            {
+                case GamemodeDM.NORMAL:
+                    return MatchService.Gamemode.NORMAL;
+                case GamemodeDM.CUSTOM:
+                    return MatchService.Gamemode.CUSTOM;
+                case GamemodeDM.COUNTERINTELLIGENCE:
+                    return MatchService.Gamemode.COUNTERINTELLIGENCE;
+                default:
+                    return MatchService.Gamemode.NORMAL;
+            }
+        }
     }
 }

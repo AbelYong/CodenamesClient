@@ -68,6 +68,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\MatchService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ModerationService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -90,6 +95,7 @@
     <Compile Include="Domain\POCO\PlayerDM.cs" />
     <Compile Include="Domain\POCO\UserDM.cs" />
     <Compile Include="Network\EmailOperation.cs" />
+    <Compile Include="Network\EventArguments\BystanderPickedEventArgs.cs" />
     <Compile Include="Network\EventArguments\InvitationReceivedEventArgs.cs" />
     <Compile Include="Network\EventArguments\MatchCanceledEventArgs.cs" />
     <Compile Include="Network\EventArguments\MatchPendingEventArgs.cs" />
@@ -97,9 +103,11 @@
     <Compile Include="Network\EventArguments\PlayerEventArgs.cs" />
     <Compile Include="Network\LobbyCallbackHandler.cs" />
     <Compile Include="Network\LobbyOperation.cs" />
+    <Compile Include="Network\MatchCallbackHandler.cs" />
     <Compile Include="Network\MatchmakingCallbackHandler.cs" />
     <Compile Include="Network\MatchmakingOperation.cs" />
     <Compile Include="Network\FriendCallbackHandler.cs" />
+    <Compile Include="Network\MatchOperation.cs" />
     <Compile Include="Network\ModerationOperation.cs" />
     <Compile Include="Network\SessionOperation.cs" />
     <Compile Include="Network\SocialOperation.cs" />
@@ -210,6 +218,28 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\MatchmakingService\MatchmakingService.wsdl" />
+    <None Include="Connected Services\MatchService\CodenamesGame.MatchService.CommunicationRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\MatchService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchService\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\MatchService\MatchService.wsdl" />
     <None Include="Connected Services\ModerationService\CodenamesGame.ModerationService.CommunicationRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -268,6 +298,7 @@
     <WCFMetadataStorage Include="Connected Services\FriendService\" />
     <WCFMetadataStorage Include="Connected Services\LobbyService\" />
     <WCFMetadataStorage Include="Connected Services\MatchmakingService\" />
+    <WCFMetadataStorage Include="Connected Services\MatchService\" />
     <WCFMetadataStorage Include="Connected Services\ModerationService\" />
     <WCFMetadataStorage Include="Connected Services\SessionService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
@@ -388,6 +419,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ModerationService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchService\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\MatchService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

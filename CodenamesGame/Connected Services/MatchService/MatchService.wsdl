@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="MatchService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IMatchManager_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMatchManager_Connect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Connect" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_Connect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_JoinMatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:JoinMatch" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_JoinMatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:JoinMatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_Disconnect_InputMessage">
+    <wsdl:part name="parameters" element="tns:Disconnect" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_SendClue_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendClue" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyTurnTimeout_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyTurnTimeout" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyPickedAgent_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPickedAgent" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyPickedBystander_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPickedBystander" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyPickedAssassin_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPickedAssassin" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyClueReceived_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyClueReceived" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyTurnChange_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyTurnChange" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyRolesChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyRolesChanged" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyAgentPicked_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyAgentPicked" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyBystanderPicked_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyBystanderPicked" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyAssassinPicked_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyAssassinPicked" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyMatchWon_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyMatchWon" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyMatchTimeout_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyMatchTimeout" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyCompanionDisconnect_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyCompanionDisconnect" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyStatsCouldNotBeSaved_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyStatsCouldNotBeSaved" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="true" name="IMatchManager">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Connect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/Connect" message="tns:IMatchManager_Connect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/ConnectResponse" message="tns:IMatchManager_Connect_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="JoinMatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/JoinMatch" message="tns:IMatchManager_JoinMatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/JoinMatchResponse" message="tns:IMatchManager_JoinMatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Disconnect">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/Disconnect" message="tns:IMatchManager_Disconnect_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendClue">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/SendClue" message="tns:IMatchManager_SendClue_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyTurnTimeout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyTurnTimeout" message="tns:IMatchManager_NotifyTurnTimeout_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPickedAgent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAgent" message="tns:IMatchManager_NotifyPickedAgent_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPickedBystander">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedBystander" message="tns:IMatchManager_NotifyPickedBystander_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPickedAssassin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAssassin" message="tns:IMatchManager_NotifyPickedAssassin_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyClueReceived">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyClueReceived" message="tns:IMatchManager_NotifyClueReceived_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyTurnChange">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyTurnChange" message="tns:IMatchManager_NotifyTurnChange_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyRolesChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyRolesChanged" message="tns:IMatchManager_NotifyRolesChanged_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyAgentPicked">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyAgentPicked" message="tns:IMatchManager_NotifyAgentPicked_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyBystanderPicked">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyBystanderPicked" message="tns:IMatchManager_NotifyBystanderPicked_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyAssassinPicked">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyAssassinPicked" message="tns:IMatchManager_NotifyAssassinPicked_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyMatchWon">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyMatchWon" message="tns:IMatchManager_NotifyMatchWon_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyMatchTimeout">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyMatchTimeout" message="tns:IMatchManager_NotifyMatchTimeout_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyCompanionDisconnect">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyCompanionDisconnect" message="tns:IMatchManager_NotifyCompanionDisconnect_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyStatsCouldNotBeSaved">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyStatsCouldNotBeSaved" message="tns:IMatchManager_NotifyStatsCouldNotBeSaved_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IMatchManager" type="tns:IMatchManager">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMatchManager_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Connect">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/Connect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="JoinMatch">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/JoinMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Disconnect">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/Disconnect" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SendClue">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/SendClue" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyTurnTimeout">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyTurnTimeout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyPickedAgent">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyPickedAgent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyPickedBystander">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyPickedBystander" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyPickedAssassin">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyPickedAssassin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyClueReceived">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyClueReceived" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyTurnChange">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyTurnChange" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyRolesChanged">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyRolesChanged" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyAgentPicked">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyAgentPicked" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyBystanderPicked">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyBystanderPicked" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyAssassinPicked">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyAssassinPicked" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyMatchWon">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyMatchWon" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyMatchTimeout">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyMatchTimeout" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyCompanionDisconnect">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyCompanionDisconnect" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyStatsCouldNotBeSaved">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyStatsCouldNotBeSaved" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MatchService">
+    <wsdl:port name="NetTcpBinding_IMatchManager" binding="tns:NetTcpBinding_IMatchManager">
+      <soap12:address location="net.tcp://localhost:9069/MatchService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:9069/MatchService</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
