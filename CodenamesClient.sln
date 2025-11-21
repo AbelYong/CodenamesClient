@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesClient", "Codename
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesGame", "CodenamesGame\CodenamesGame.csproj", "{44A44618-D4A9-4413-A5BA-494CDD647AE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesClient.Tests", "CodenamesClient.Tests\CodenamesClient.Tests.csproj", "{48AF7A0B-0409-41ED-9D65-9241CE7FD9B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodenamesGame.Tests", "CodenamesGame\CodenamesGame.Tests\CodenamesGame.Tests.csproj", "{44FC14BE-D0A4-4088-AB0F-A52D01AAC3EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{44A44618-D4A9-4413-A5BA-494CDD647AE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44A44618-D4A9-4413-A5BA-494CDD647AE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44A44618-D4A9-4413-A5BA-494CDD647AE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48AF7A0B-0409-41ED-9D65-9241CE7FD9B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48AF7A0B-0409-41ED-9D65-9241CE7FD9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48AF7A0B-0409-41ED-9D65-9241CE7FD9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48AF7A0B-0409-41ED-9D65-9241CE7FD9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44FC14BE-D0A4-4088-AB0F-A52D01AAC3EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44FC14BE-D0A4-4088-AB0F-A52D01AAC3EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44FC14BE-D0A4-4088-AB0F-A52D01AAC3EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44FC14BE-D0A4-4088-AB0F-A52D01AAC3EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
