@@ -1,4 +1,5 @@
-﻿using CodenamesGame.LobbyService;
+﻿using CodenamesGame.Domain.POCO;
+using CodenamesGame.LobbyService;
 using CodenamesGame.Util;
 using System;
 using System.ServiceModel;
@@ -44,14 +45,12 @@ namespace CodenamesGame.Network
             }
             catch (CommunicationException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request = GenerateServerUnavaibleRequest<CommunicationRequest>();
                 CloseProxy();
             }
             catch (TimeoutException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                request = GenerateServerTimeoutRequest<CommunicationRequest>();
                 CloseProxy();
             }
             return request;
@@ -74,86 +73,113 @@ namespace CodenamesGame.Network
             } 
         }
 
-        public CreateLobbyRequest CreateLobby(Guid playerID)
+        public CreateLobbyRequest CreateLobby(PlayerDM player)
         {
             CreateLobbyRequest request = new CreateLobbyRequest();
             if (_client != null && _client.State == CommunicationState.Opened)
             {
-                try
+                if (player != null && player.PlayerID.HasValue)
                 {
-                    request = _client.CreateParty(playerID);
+                    try
+                    {
+                        Player auxPlayer = PlayerDM.AssembleLobbySvPlayer(player);
+                        request = _client.CreateParty(auxPlayer);
+                    }
+                    catch (CommunicationException)
+                    {
+                        request = GenerateServerUnavaibleRequest<CreateLobbyRequest>();
+                        CloseProxy();
+                    }
+                    catch (TimeoutException)
+                    {
+                        request = GenerateServerTimeoutRequest<CreateLobbyRequest>();
+                        CloseProxy();
+                    }
                 }
-                catch (CommunicationException)
+                else
                 {
-                    CloseProxy();
-                    request = (CreateLobbyRequest)GenerateServerUnavaibleRequest();
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                    request = (CreateLobbyRequest)GenerateServerTimeoutRequest();
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.MISSING_DATA;
                 }
             }
             return request;
         }
 
-        public CommunicationRequest InviteToParty(Guid hostPlayerID, Guid friendToInviteID, string lobbyCode)
+        public CommunicationRequest InviteToParty(PlayerDM hostPlayer, Guid friendToInviteID, string lobbyCode)
         {
             CommunicationRequest request = new CommunicationRequest();
             if (_client != null && _client.State == CommunicationState.Opened)
             {
-                try
+                if (hostPlayer != null && hostPlayer.PlayerID.HasValue)
                 {
-                    request = _client.InviteToParty(hostPlayerID, friendToInviteID, lobbyCode);
+                    try
+                    {
+                        Player auxPlayer = PlayerDM.AssembleLobbySvPlayer(hostPlayer);
+                        request = _client.InviteToParty(auxPlayer, friendToInviteID, lobbyCode);
+                    }
+                    catch (CommunicationException)
+                    {
+                        request = GenerateServerUnavaibleRequest<CommunicationRequest>();
+                        CloseProxy();
+                    }
+                    catch (TimeoutException)
+                    {
+                        request = GenerateServerTimeoutRequest<CommunicationRequest>();
+                        CloseProxy();
+                    }
                 }
-                catch (CommunicationException)
+                else
                 {
-                    CloseProxy();
-                    request = (CommunicationRequest)GenerateServerUnavaibleRequest();
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                    request = (CommunicationRequest)GenerateServerTimeoutRequest();
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.MISSING_DATA;
                 }
             }
             return request;
         }
 
-        public JoinPartyRequest JoinParty(Guid joiningPlayerID, string lobbyCode)
+        public JoinPartyRequest JoinParty(PlayerDM joiningPlayer, string lobbyCode)
         {
             JoinPartyRequest request = new JoinPartyRequest();
             if (_client != null && _client.State == CommunicationState.Opened)
             {
-                try
+                if (joiningPlayer != null && joiningPlayer.PlayerID.HasValue)
                 {
-                    request = _client.JoinParty(joiningPlayerID, lobbyCode);
+                    try
+                    {
+                        Player auxPlayer = PlayerDM.AssembleLobbySvPlayer(joiningPlayer);
+                        request = _client.JoinParty(auxPlayer, lobbyCode);
+                    }
+                    catch (CommunicationException)
+                    {
+                        request = GenerateServerUnavaibleRequest<JoinPartyRequest>();
+                        CloseProxy();
+                    }
+                    catch (TimeoutException)
+                    {
+                        request = GenerateServerTimeoutRequest<JoinPartyRequest>();
+                        CloseProxy();
+                    }
                 }
-                catch (CommunicationException)
+                else
                 {
-                    CloseProxy();
-                    request = (JoinPartyRequest)GenerateServerUnavaibleRequest();
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                    request = (JoinPartyRequest)GenerateServerTimeoutRequest();
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.MISSING_DATA;
                 }
             }
             return request;
         }
 
-        private Request GenerateServerUnavaibleRequest()
+        private static T GenerateServerUnavaibleRequest<T>() where T : Request, new()
         {
-            Request request = new Request();
+            var request = new T();
             request.IsSuccess = false;
             request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
             return request;
         }
 
-        private Request GenerateServerTimeoutRequest()
+        private static T GenerateServerTimeoutRequest<T>() where T : Request, new()
         {
-            Request request = new Request();
+            var request = new T();
             request.IsSuccess = false;
             request.StatusCode = StatusCode.SERVER_TIMEOUT;
             return request;

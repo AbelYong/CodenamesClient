@@ -27,7 +27,7 @@
   <xs:element name="CreateParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="playerID" type="q4:guid" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="player" nillable="true" type="q4:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -41,7 +41,7 @@
   <xs:element name="InviteToParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="hostPlayerID" type="q6:guid" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="partyHost" nillable="true" type="q6:Player" />
         <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="friendToInviteID" type="q7:guid" />
         <xs:element minOccurs="0" name="lobbyCode" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -57,7 +57,7 @@
   <xs:element name="JoinParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="joiningPlayerID" type="q9:guid" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="joiningPlayer" nillable="true" type="q9:Player" />
         <xs:element minOccurs="0" name="lobbyCode" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>

@@ -171,46 +171,52 @@ namespace CodenamesGame.LobbyService {
         CONFLICT = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        CLIENT_DISCONNECT = 4,
+        CLIENT_CANCEL = 4,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        CLIENT_UNREACHABLE = 5,
+        CLIENT_DISCONNECT = 5,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        MISSING_DATA = 6,
+        CLIENT_UNREACHABLE = 6,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        WRONG_DATA = 7,
+        CLIENT_TIMEOUT = 7,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        NOT_FOUND = 8,
+        MISSING_DATA = 8,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNAUTHORIZED = 9,
+        WRONG_DATA = 9,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNALLOWED = 10,
+        NOT_FOUND = 10,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_ERROR = 11,
+        UNAUTHORIZED = 11,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_UNAVAIBLE = 12,
+        UNALLOWED = 12,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_TIMEOUT = 13,
+        SERVER_ERROR = 13,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ACCOUNT_BANNED = 14,
+        SERVER_UNAVAIBLE = 14,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_CREATED = 15,
+        SERVER_TIMEOUT = 15,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_DUPLICATED = 16,
+        ACCOUNT_BANNED = 16,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        USER_KICKED_AND_BANNED = 17,
+        REPORT_CREATED = 17,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_DUPLICATED = 18,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        USER_KICKED_AND_BANNED = 19,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -557,22 +563,22 @@ namespace CodenamesGame.LobbyService {
         System.Threading.Tasks.Task DisconnectAsync(System.Guid playerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/CreateParty", ReplyAction="http://tempuri.org/ILobbyManager/CreatePartyResponse")]
-        CodenamesGame.LobbyService.CreateLobbyRequest CreateParty(System.Guid playerID);
+        CodenamesGame.LobbyService.CreateLobbyRequest CreateParty(CodenamesGame.LobbyService.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/CreateParty", ReplyAction="http://tempuri.org/ILobbyManager/CreatePartyResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.LobbyService.CreateLobbyRequest> CreatePartyAsync(System.Guid playerID);
+        System.Threading.Tasks.Task<CodenamesGame.LobbyService.CreateLobbyRequest> CreatePartyAsync(CodenamesGame.LobbyService.Player player);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/InviteToParty", ReplyAction="http://tempuri.org/ILobbyManager/InviteToPartyResponse")]
-        CodenamesGame.LobbyService.CommunicationRequest InviteToParty(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode);
+        CodenamesGame.LobbyService.CommunicationRequest InviteToParty(CodenamesGame.LobbyService.Player partyHost, System.Guid friendToInviteID, string lobbyCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/InviteToParty", ReplyAction="http://tempuri.org/ILobbyManager/InviteToPartyResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> InviteToPartyAsync(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode);
+        System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> InviteToPartyAsync(CodenamesGame.LobbyService.Player partyHost, System.Guid friendToInviteID, string lobbyCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/JoinParty", ReplyAction="http://tempuri.org/ILobbyManager/JoinPartyResponse")]
-        CodenamesGame.LobbyService.JoinPartyRequest JoinParty(System.Guid joiningPlayerID, string lobbyCode);
+        CodenamesGame.LobbyService.JoinPartyRequest JoinParty(CodenamesGame.LobbyService.Player joiningPlayer, string lobbyCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/JoinParty", ReplyAction="http://tempuri.org/ILobbyManager/JoinPartyResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.LobbyService.JoinPartyRequest> JoinPartyAsync(System.Guid joiningPlayerID, string lobbyCode);
+        System.Threading.Tasks.Task<CodenamesGame.LobbyService.JoinPartyRequest> JoinPartyAsync(CodenamesGame.LobbyService.Player joiningPlayer, string lobbyCode);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/LeaveParty")]
         void LeaveParty(System.Guid playerID, string lobbyCode);
@@ -638,28 +644,28 @@ namespace CodenamesGame.LobbyService {
             return base.Channel.DisconnectAsync(playerID);
         }
         
-        public CodenamesGame.LobbyService.CreateLobbyRequest CreateParty(System.Guid playerID) {
-            return base.Channel.CreateParty(playerID);
+        public CodenamesGame.LobbyService.CreateLobbyRequest CreateParty(CodenamesGame.LobbyService.Player player) {
+            return base.Channel.CreateParty(player);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.CreateLobbyRequest> CreatePartyAsync(System.Guid playerID) {
-            return base.Channel.CreatePartyAsync(playerID);
+        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.CreateLobbyRequest> CreatePartyAsync(CodenamesGame.LobbyService.Player player) {
+            return base.Channel.CreatePartyAsync(player);
         }
         
-        public CodenamesGame.LobbyService.CommunicationRequest InviteToParty(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode) {
-            return base.Channel.InviteToParty(hostPlayerID, friendToInviteID, lobbyCode);
+        public CodenamesGame.LobbyService.CommunicationRequest InviteToParty(CodenamesGame.LobbyService.Player partyHost, System.Guid friendToInviteID, string lobbyCode) {
+            return base.Channel.InviteToParty(partyHost, friendToInviteID, lobbyCode);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> InviteToPartyAsync(System.Guid hostPlayerID, System.Guid friendToInviteID, string lobbyCode) {
-            return base.Channel.InviteToPartyAsync(hostPlayerID, friendToInviteID, lobbyCode);
+        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.CommunicationRequest> InviteToPartyAsync(CodenamesGame.LobbyService.Player partyHost, System.Guid friendToInviteID, string lobbyCode) {
+            return base.Channel.InviteToPartyAsync(partyHost, friendToInviteID, lobbyCode);
         }
         
-        public CodenamesGame.LobbyService.JoinPartyRequest JoinParty(System.Guid joiningPlayerID, string lobbyCode) {
-            return base.Channel.JoinParty(joiningPlayerID, lobbyCode);
+        public CodenamesGame.LobbyService.JoinPartyRequest JoinParty(CodenamesGame.LobbyService.Player joiningPlayer, string lobbyCode) {
+            return base.Channel.JoinParty(joiningPlayer, lobbyCode);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.JoinPartyRequest> JoinPartyAsync(System.Guid joiningPlayerID, string lobbyCode) {
-            return base.Channel.JoinPartyAsync(joiningPlayerID, lobbyCode);
+        public System.Threading.Tasks.Task<CodenamesGame.LobbyService.JoinPartyRequest> JoinPartyAsync(CodenamesGame.LobbyService.Player joiningPlayer, string lobbyCode) {
+            return base.Channel.JoinPartyAsync(joiningPlayer, lobbyCode);
         }
         
         public void LeaveParty(System.Guid playerID, string lobbyCode) {

@@ -403,8 +403,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void JoinParty(string lobbyCode)
         {
-            Guid myID = (Guid)_me.PlayerID;
-            CodenamesGame.LobbyService.JoinPartyRequest request = LobbyOperation.Instance.JoinParty(myID, lobbyCode);
+            CodenamesGame.LobbyService.JoinPartyRequest request = LobbyOperation.Instance.JoinParty(_me, lobbyCode);
             if (request.IsSuccess)
             {
                 IsPartyFull = true;
@@ -423,8 +422,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void CreateLobby()
         {
-            Guid playerID = (Guid)_me.PlayerID;
-            CodenamesGame.LobbyService.CreateLobbyRequest request = LobbyOperation.Instance.CreateLobby(playerID);
+            CodenamesGame.LobbyService.CreateLobbyRequest request = LobbyOperation.Instance.CreateLobby(_me);
             if (request.IsSuccess)
             {
                 _lobbyCode = request.LobbyCode;
@@ -444,8 +442,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (_lobbyCode != string.Empty && PartyHost == _me)
             {
-                Guid partyHostID = (Guid)_me.PlayerID;
-                CodenamesGame.LobbyService.CommunicationRequest request = LobbyOperation.Instance.InviteToParty(partyHostID, friendID, _lobbyCode);
+                CodenamesGame.LobbyService.CommunicationRequest request = LobbyOperation.Instance.InviteToParty(_me, friendID, _lobbyCode);
                 if (!request.IsSuccess)
                 {
                     MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INVITE_TO_PARTY, request.StatusCode));

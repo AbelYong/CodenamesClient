@@ -2,7 +2,6 @@
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
-using CodenamesGame.Network;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -139,9 +138,6 @@ namespace CodenamesClient.GameUI.Pages
             _slideOutOnlineFriends.Begin();
         }
 
-        /// <summary>
-        /// Click event for the “Invite” button in the friend list.
-        /// </summary>
         private void Click_InviteFriend(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.DataContext is FriendItem friendItem)
