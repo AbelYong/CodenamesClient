@@ -1,72 +1,34 @@
-﻿using CodenamesClient.GameUI.BoardUI;
-using CodenamesClient.GameUI.Pages;
-using CodenamesGame.Domain.POCO;
+﻿using CodenamesClient.GameUI.Pages;
 using CodenamesGame.Network;
 using CodenamesGame.SessionService;
 using System;
-using System.ComponentModel;
 using System.ServiceModel;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace CodenamesClient.GameUI
 {
     public partial class MainWindow : Window
     {
-        private PlayerDM _player;
-        private SessionOperation _sessionOperation;
-
         public MainWindow()
         {
             InitializeComponent();
-            Closing += MainWindowClosing;
             Closed += MainWindowClosed;
-            SessionOperation.OnKicked += OnKickedFromServer;
-        }
-
-        public void SetPlayer(PlayerDM player)
-        {
-            _player = player;
-        }
-
-        public void SetSessionOperation(SessionOperation session)
-        {
-            _sessionOperation = session;
-        }
-
-        private void MainWindowClosing(object sender, CancelEventArgs e)
-        {
-            if (MainFrame.Content is Page currentPage)
-            {
-                if (currentPage is MainMenuPage mainMenu)
-                {
-                    _player = mainMenu.GetViewModel().Player;
-                    _sessionOperation = mainMenu.GetViewModel().Session;
-                }
-                else if (currentPage is LobbyPage lobby)
-                {
-                    //TODO
-                }
-                else if (currentPage is BoardPage)
-                {
-                    //TODO
-                }
-            }
+            SessionCallbackHandler.OnKicked += OnKickedFromServer;
         }
 
         private void MainWindowClosed(object sender, EventArgs e)
         {
             try
             {
-                _sessionOperation?.Disconnect(_player);
+                SessionOperation.Instance.Disconnect();
+                SocialOperation.Instance.Terminate();
                 LobbyOperation.Instance.Disconnect();
                 MatchmakingOperation.Instance.Disconnect();
-
+                MatchOperation.Instance.Disconnect();
             }
             catch (Exception ex) when (ex is CommunicationException || ex is CommunicationObjectFaultedException || ex is CommunicationObjectFaultedException)
             {
-                //FIXME
-                MessageBox.Show(ex.Message);
+                //Do nothing
             }
         }
 

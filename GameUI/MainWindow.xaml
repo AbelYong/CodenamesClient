@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CodenamesClient.GameUI"
         mc:Ignorable="d"
         Title="Codenames: Duet" Height="640" Width="1024" Background="#FF1D1D1D"
-        WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
+        WindowState="Normal" WindowStyle="SingleBorderWindow" ResizeMode="NoResize">
     <Grid>
         <Frame x:Name="MainFrame" Source="/GameUI/Pages/LoginPage.xaml" NavigationUIVisibility="Hidden" />
         

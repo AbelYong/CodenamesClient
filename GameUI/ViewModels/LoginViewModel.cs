@@ -16,18 +16,12 @@ namespace CodenamesClient.GameUI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event Action ConnectionLost;
-        private readonly SessionOperation _session;
         private bool _hasPlayerConnection;
         private string _requestErrorMessage;
 
         public LoginViewModel()
         {
-            _session = new SessionOperation();
-        }
 
-        public SessionOperation Session
-        {
-            get => _session;
         }
 
         public bool HasPlayerConnection
@@ -54,7 +48,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (player != null)
             {
-                CommunicationRequest request = await Task.Run(() => _session.Connect(player));
+                CommunicationRequest request = await Task.Run(() => SessionOperation.Instance.Initialize(player));
                 if (request.IsSuccess)
                 {
                     _hasPlayerConnection = true;

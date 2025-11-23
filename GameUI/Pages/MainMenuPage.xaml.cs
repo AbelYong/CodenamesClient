@@ -20,10 +20,10 @@ namespace CodenamesClient.GameUI.Pages
         private ProfileControl _profileControl;
         private MediaPlayer _mediaPlayer;
 
-        public MainMenuPage(PlayerDM player, SessionOperation sesion, bool isGuest)
+        public MainMenuPage(PlayerDM player, bool isGuest)
         {
             InitializeComponent();
-            _viewModel = new MainMenuViewModel(player, sesion, isGuest);
+            _viewModel = new MainMenuViewModel(player, isGuest);
             DataContext = _viewModel;
 
             /*_mediaPlayer = new MediaPlayer();
@@ -87,7 +87,7 @@ namespace CodenamesClient.GameUI.Pages
         {
             if (_viewModel.Player != null)
             {
-                _viewModel.Disconnect(_viewModel.Player);
+                _viewModel.Disconnect();
             }
             LoginPage login = new LoginPage();
             NavigationService.Navigate(login);
@@ -118,7 +118,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_btnQuit(object sender, RoutedEventArgs e)
         {
-            _viewModel.Disconnect(_viewModel.Player);
+            _viewModel.Disconnect();
             Application.Current.Shutdown();
         }
 
@@ -209,21 +209,10 @@ namespace CodenamesClient.GameUI.Pages
 
         private void GoToLobby(GamemodeDM mode)
         {
-            SetMainWindowClosingData();
-
-            LobbyPage lobby = new LobbyPage(_viewModel.Player, mode, _viewModel.Session);
+            LobbyPage lobby = new LobbyPage(_viewModel.Player, mode);
 
             NavigationService.Navigate(lobby);
             GameModeGrid.Visibility = Visibility.Collapsed;
-        }
-
-        private void SetMainWindowClosingData()
-        {
-            if (Application.Current.MainWindow is MainWindow mainWindow)
-            {
-                mainWindow.SetPlayer(_viewModel.Player);
-                mainWindow.SetSessionOperation(_viewModel.Session);
-            }
         }
 
         private void Click_ShowScoreboards(object sender, RoutedEventArgs e)

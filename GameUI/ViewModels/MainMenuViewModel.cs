@@ -17,7 +17,6 @@ namespace CodenamesClient.GameUI.ViewModels
     public class MainMenuViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private readonly SessionOperation _session;
         private PlayerDM _player;
         private string _username;
         private bool _isPlayerGuest;
@@ -26,14 +25,13 @@ namespace CodenamesClient.GameUI.ViewModels
         public ObservableCollection<PlayerDM> Requests { get; set; }
         public ObservableCollection<PlayerDM> SearchResults { get; set; }
 
-        public MainMenuViewModel(PlayerDM player, SessionOperation session, bool isGuest)
+        public MainMenuViewModel(PlayerDM player, bool isGuest)
         {
             Friends = new ObservableCollection<PlayerDM>();
             Requests = new ObservableCollection<PlayerDM>();
             SearchResults = new ObservableCollection<PlayerDM>();
 
-            _session = session;
-            IsPlayerGuest = isGuest;
+            IsPlayerGuest = isGuest;
             Player = player ?? AssembleGuest();
             Username = Player.Username;
 
@@ -41,13 +39,7 @@ namespace CodenamesClient.GameUI.ViewModels
             if (!IsPlayerGuest)
             {
                 LoadInitialFriendData();
-                Guid playerID = (Guid)player.PlayerID;
             }
-        }
-
-        public SessionOperation Session
-        {
-            get => _session;
         }
 
         public PlayerDM Player
@@ -89,11 +81,11 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public void Disconnect(PlayerDM player)
+        public void Disconnect()
         {
             if (_player != null)
             {
-                _session.Disconnect(player);
+                SessionOperation.Instance.Disconnect();
                 if (!IsPlayerGuest)
                 {
                     SocialOperation.Instance.Terminate();
@@ -192,8 +184,14 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 Friends.Clear();
                 Requests.Clear();
-                foreach (var friend in friendsList) Friends.Add(friend);
-                foreach (var req in requestsList) Requests.Add(req);
+                foreach (var friend in friendsList)
+                {
+                    Friends.Add(friend);
+                }
+                foreach (var req in requestsList)
+                {
+                    Requests.Add(req);
+                }
             });
         }
 

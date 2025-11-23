@@ -99,7 +99,7 @@ namespace CodenamesClient.GameUI.Pages
         {
             if (_viewModel.HasPlayerConnection)
             {
-                MainMenuPage mainMenu = new MainMenuPage(player, _viewModel.Session, isGuest);
+                MainMenuPage mainMenu = new MainMenuPage(player, isGuest);
                 NavigationService.Navigate(mainMenu);
             }
         }
@@ -205,7 +205,7 @@ namespace CodenamesClient.GameUI.Pages
                 }
 
                 await Task.Run(() =>
-                    CodenamesGame.Network.UserOperation.BeginPasswordReset(user, email)
+                    UserOperation.BeginPasswordReset(user, email)
                 );
 
                 MessageBox.Show(Lang.resetCodeSend);
@@ -244,7 +244,7 @@ namespace CodenamesClient.GameUI.Pages
                 }
 
                 var result = await Task.Run(() =>
-                    CodenamesGame.Network.UserOperation.CompletePasswordReset(user, code, p1)
+                    UserOperation.CompletePasswordReset(user, code, p1)
                 );
 
                 MessageBox.Show(result.Message);

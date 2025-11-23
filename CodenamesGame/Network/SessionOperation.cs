@@ -9,125 +9,91 @@ using System.ServiceModel;
 
 namespace CodenamesGame.Network
 {
-    public class SessionOperation : ISessionManagerCallback
+    public class SessionOperation
     {
         private const string _ENDPOINT_NAME = "NetTcpBinding_ISessionManager";
+        private static readonly Lazy<SessionOperation> _instance = new Lazy<SessionOperation>(() => new SessionOperation());
         private SessionManagerClient _client;
-        private List<PlayerDM> _onlineFriends { get; set; }
+        private PlayerDM _player;
 
-        public static event EventHandler<PlayerEventArgs> OnFriendOnline;
-        public static event EventHandler<Guid> OnFriendOffline;
-        public static event EventHandler<List<PlayerDM>> OnOnlineFriendsReceived;
-        public static event EventHandler<BanReason> OnKicked;
-
-        public SessionOperation()
+        public static SessionOperation Instance
         {
-            InitializeCallbackChannel();
-            _onlineFriends = new List<PlayerDM>();
+            get => _instance.Value;
         }
 
-        private void InitializeCallbackChannel()
+        private SessionOperation()
         {
-            InstanceContext context = new InstanceContext(this);
-            _client = new SessionManagerClient(context, _ENDPOINT_NAME);
+            
         }
 
-        /// <summary>
-        /// Gets the current list of cached online friends.
-        /// </summary>
-        public List<PlayerDM> GetOnlineFriendsList()
+        public CommunicationRequest Initialize(PlayerDM player)
         {
-            return _onlineFriends;
-        }
-
-        public CommunicationRequest Connect(PlayerDM player)
-        {
-            if (_client == null)
-            {
-                InitializeCallbackChannel();
-            }
-
             CommunicationRequest request = new CommunicationRequest();
-            Player svPlayer = PlayerDM.AssembleSessionSvPlayer(player);
-            try
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                request = _client.Connect(svPlayer);
-            }
-            catch (EndpointNotFoundException)
-            {
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
                 request.IsSuccess = false;
-                Util.NetworkUtil.SafeClose(_client);
-                _client = null;
+                request.StatusCode = StatusCode.UNAUTHORIZED;
             }
-            catch (TimeoutException)
+
+            SessionCallbackHandler callbackHandler = new SessionCallbackHandler();
+            InstanceContext context = new InstanceContext(callbackHandler);
+            _client = new SessionManagerClient(context, _ENDPOINT_NAME);
+            
+            if (player != null && player.PlayerID.HasValue)
             {
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                _player = player;
+                Player auxPlayer = PlayerDM.AssembleSessionSvPlayer(player);
+
+                try
+                {
+                    _client.Open();
+                    return _client.Connect(auxPlayer);
+                }
+                catch (CommunicationException)
+                {
+                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    request.IsSuccess = false;
+                    CloseProxy();
+                }
+                catch (TimeoutException)
+                {
+                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    request.IsSuccess = false;
+                    CloseProxy();
+                }
+            }
+            else
+            {
                 request.IsSuccess = false;
-                Util.NetworkUtil.SafeClose(_client);
-                _client = null;
+                request.StatusCode = StatusCode.MISSING_DATA;
             }
             return request;
         }
 
-        public void Disconnect(PlayerDM player)
+        public void Disconnect()
         {
-            if (_client != null)
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                Player svPlayer = PlayerDM.AssembleSessionSvPlayer(player);
+                Player svPlayer = PlayerDM.AssembleSessionSvPlayer(_player);
                 try
                 {
                     _client.DisconnectAsync(svPlayer);
                 }
                 catch (EndpointNotFoundException)
                 {
-                    Util.NetworkUtil.SafeClose(_client);
+                    CloseProxy();
                 }
                 catch (CommunicationObjectFaultedException)
                 {
-                    Util.NetworkUtil.SafeClose(_client);
+                    CloseProxy();
                 }
             }
         }
 
-        public void NotifyFriendOffline(Guid playerId)
+        private void CloseProxy()
         {
-            Guid? auxFriendId = playerId;
-            _onlineFriends.RemoveAll((friend) => friend.PlayerID == auxFriendId);
-
-            OnFriendOffline?.Invoke(this, playerId);
-        }
-
-        public void NotifyFriendOnline(Player player)
-        {
-            PlayerDM auxFriend = PlayerDM.AssemblePlayer(player);
-            if (auxFriend != null)
-            {
-                _onlineFriends.Add(auxFriend);
-
-                OnFriendOnline?.Invoke(this, new PlayerEventArgs { Player = auxFriend });
-            }
-        }
-
-        public void ReceiveOnlineFriends(Player[] friends)
-        {
-            List<PlayerDM> auxFriends = new List<PlayerDM>();
-            foreach (Player friend in friends)
-            {
-                PlayerDM auxFriend = PlayerDM.AssemblePlayer(friend);
-                if (auxFriend != null)
-                {
-                    auxFriends.Add(auxFriend);
-                }
-            }
-            _onlineFriends = auxFriends;
-
-            OnOnlineFriendsReceived?.Invoke(this, _onlineFriends);
-        }
-
-        public void NotifyKicked(BanReason reason)
-        {
-            OnKicked?.Invoke(this, reason);
+            Util.NetworkUtil.SafeClose(_client);
+            _client = null;
         }
     }
 }

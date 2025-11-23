@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CodenamesGame.Network.EventArguments;
-using System.ServiceModel;
 using CodenamesGame.Domain.POCO.Match;
 using System.Threading.Tasks;
 
@@ -42,8 +41,6 @@ namespace CodenamesClient.GameUI.ViewModels
         private Visibility _guestBtnVisibility;
         private Visibility _inviteBtnVisibility;
         private Visibility _jointBtnVisibility;
-
-        private readonly SessionOperation _session;
 
         public ObservableCollection<FriendItem> Friends { get; }
 
@@ -280,11 +277,10 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public LobbyViewModel(PlayerDM player, GamemodeDM gamemode, SessionOperation session)
+        public LobbyViewModel(PlayerDM player, GamemodeDM gamemode)
         {
             _me = player;
             Gamemode = gamemode;
-            _session = session;
             PartyHost = player;
 
             PlayBtnVisibility = Visibility.Visible;
@@ -509,10 +505,6 @@ namespace CodenamesClient.GameUI.ViewModels
                     PlayBtnEnabled = true;
                     MessageBox.Show(Util.StatusToMessageMapper.GetMatchmakingServiceMessage(request.StatusCode));
                 }
-                else
-                {
-                    MessageBox.Show("Your match has been requested");
-                }
             }
         }
 
@@ -554,7 +546,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private void RequestCancel()
+        private static void RequestCancel()
         {
             MatchmakingOperation.Instance.CancelMatch();
         }
@@ -636,7 +628,7 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 var allFriends = SocialOperation.Instance.GetFriends();
 
-                var onlineFriendsList = _session.GetOnlineFriendsList();
+                var onlineFriendsList = SessionCallbackHandler.GetOnlineFriendsList();
                 var onlineIds = new HashSet<Guid>(onlineFriendsList.Select(p => p.PlayerID.Value));
 
                 Friends.Clear();
@@ -657,14 +649,14 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void SubscribeToSessionEvents()
         {
-            SessionOperation.OnFriendOnline += HandleFriendOnline;
-            SessionOperation.OnFriendOffline += HandleFriendOffline;
+            SessionCallbackHandler.OnFriendOnline += HandleFriendOnline;
+            SessionCallbackHandler.OnFriendOffline += HandleFriendOffline;
         }
 
         public void UnsubscribeFromSessionEvents()
         {
-            SessionOperation.OnFriendOnline -= HandleFriendOnline;
-            SessionOperation.OnFriendOffline -= HandleFriendOffline;
+            SessionCallbackHandler.OnFriendOnline -= HandleFriendOnline;
+            SessionCallbackHandler.OnFriendOffline -= HandleFriendOffline;
         }
 
         private void HandleFriendOnline(object sender, PlayerEventArgs e)

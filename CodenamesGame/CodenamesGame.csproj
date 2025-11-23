@@ -109,6 +109,7 @@
     <Compile Include="Network\FriendCallbackHandler.cs" />
     <Compile Include="Network\MatchOperation.cs" />
     <Compile Include="Network\ModerationOperation.cs" />
+    <Compile Include="Network\SessionCallbackHandler.cs" />
     <Compile Include="Network\SessionOperation.cs" />
     <Compile Include="Network\SocialOperation.cs" />
     <Compile Include="Network\UserOperation.cs" />

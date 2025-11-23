@@ -2,24 +2,12 @@
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
-using CodenamesGame.MatchmakingService;
 using CodenamesGame.Network;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 using static CodenamesClient.GameUI.ViewModels.LobbyViewModel;
 
 namespace CodenamesClient.GameUI.Pages
@@ -27,19 +15,17 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
-        private SessionOperation _session;
         private Guid _myID;
         private Storyboard _slideInOnlineFriends;
         private Storyboard _slideOutOnlineFriends;
         private Storyboard _slideInTypeCode;
         private Storyboard _slideOutTypeCode;
 
-        public LobbyPage(PlayerDM player, GamemodeDM gamemode, SessionOperation session)
+        public LobbyPage(PlayerDM player, GamemodeDM gamemode)
         {
             InitializeComponent();
             _myID = (Guid)player.PlayerID;
-            _session = session;
-            _viewModel = new LobbyViewModel(player, gamemode, _session);
+            _viewModel = new LobbyViewModel(player, gamemode);
             DataContext = _viewModel;
             Loaded += OnLobbyPageLoaded;
             Unloaded += OnLobbyPageUnloaded;
