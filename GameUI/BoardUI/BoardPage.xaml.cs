@@ -29,11 +29,19 @@ namespace CodenamesClient.GameUI.BoardUI
         private const int AGENT_CODE = 0;
         private const int BYSTANDER_CODE = 1;
         private const int ASSASSIN_CODE = 2;
+        private MediaPlayer _mediaPlayer = new MediaPlayer();
 
         public BoardPage(MatchDM match, Guid myID)
         {
             InitializeComponent();
             _viewModel = new BoardViewModel(match, myID);
+
+            _viewModel.GoBackToMenu += OnGoBackToMenu;
+
+            _viewModel.OnAgentLightRequested += FlashAgentLight;
+            _viewModel.OnBystanderLightRequested += FlashBystanderLight;
+            _viewModel.OnAssassinLightRequested += TriggerAssassinSequence;
+
             this.DataContext = _viewModel;
             DrawWords();
             DrawKeycard();
@@ -41,8 +49,118 @@ namespace CodenamesClient.GameUI.BoardUI
             _viewModel.StartTimer();
         }
 
+        private void PlayAudioFile(string fileName)
+        {
+            try
+            {
+                string soundPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "AudioGame", fileName);
+                _mediaPlayer.Open(new Uri(soundPath, UriKind.RelativeOrAbsolute));
+                _mediaPlayer.Play();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reproduciendo audio {fileName}: {ex.Message}");
+            }
+        }
+
+        private async void FlashAgentLight()
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Close();
+            LightAgentOn.BeginAnimation(UIElement.OpacityProperty, null);
+            LightAgentOn.Opacity = 0;
+
+            LightAgentOn.Opacity = 1;
+            PlayAudioFile("friend.mp3");
+
+            await Task.Delay(4000);
+
+            DoubleAnimation fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(500));
+
+            fadeOut.Completed += (s, e) =>
+            {
+                LightAgentOn.BeginAnimation(UIElement.OpacityProperty, null);
+                LightAgentOn.Opacity = 0;
+            };
+            LightAgentOn.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+
+            _mediaPlayer.Stop();
+        }
+
+        private async void FlashBystanderLight()
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Close();
+            LightBystanderOn.BeginAnimation(UIElement.OpacityProperty, null);
+            LightBystanderOn.Opacity = 0;
+
+            LightBystanderOn.Opacity = 1;
+            PlayAudioFile("cDown.mp3");
+
+            await Task.Delay(5000);
+
+            DoubleAnimation fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(500));
+
+            fadeOut.Completed += (s, e) =>
+            {
+                LightBystanderOn.BeginAnimation(UIElement.OpacityProperty, null);
+                LightBystanderOn.Opacity = 0;
+            };
+
+            LightBystanderOn.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+
+            _mediaPlayer.Stop();
+        }
+
+        private async void TriggerAssassinSequence()
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Close();
+            LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, null);
+
+            DoubleAnimation blink = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
+            blink.AutoReverse = true;
+            blink.RepeatBehavior = RepeatBehavior.Forever;
+
+            LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, blink);
+
+            PlayAudioFile("sos.mp3");
+
+            await Task.Delay(4000);
+
+            _mediaPlayer.Stop();
+            LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, null);
+            LightAssassinOn.Opacity = 0;
+
+            _viewModel.ShowGameOverScreen();
+        }
+
+        private void OnGoBackToMenu()
+        {
+            if (NavigationService != null)
+            {
+                NavigationService.GoBack();
+            }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Close();
+
+            _viewModel.StopTimer();
+            _viewModel.StopChronometer();
+            _viewModel.Disconnect();
+
+            _viewModel.GoBackToMenu -= OnGoBackToMenu;
+            _viewModel.OnAgentLightRequested -= FlashAgentLight;
+            _viewModel.OnBystanderLightRequested -= FlashBystanderLight;
+            _viewModel.OnAssassinLightRequested -= TriggerAssassinSequence;
+        }
+
         private void Click_QuitMatch(object sender, RoutedEventArgs e)
         {
+            _viewModel.GoBackToMenu -= OnGoBackToMenu;
             NavigationService.GoBack();
         }
 
@@ -82,22 +200,13 @@ namespace CodenamesClient.GameUI.BoardUI
                 switch (code)
                 {
                     case AGENT_CODE:
-                        _viewModel.StopTimer();
-                        _viewModel.AddTime(_viewModel.TurnLength);
-                        _viewModel.StartTimer();
+                        _viewModel.HandleAgentSelection();
                         break;
                     case BYSTANDER_CODE:
-                        _viewModel.TurnTimer = 0;
-                        _viewModel.StopTimer();
-                        MessageBox.Show("Le diste a un civil, se ha terminado tu turno");
-                        MessageBox.Show("Ahora es tu turno nuevamente");
-                        _viewModel.TurnTimer = _viewModel.TurnLength;
-                        _viewModel.StartTimer();
+                        _viewModel.HandleBystanderSelection();
                         break;
                     case ASSASSIN_CODE:
-                        _viewModel.TurnTimer = 0;
-                        _viewModel.StopTimer();
-                        MessageBox.Show("Te encontraste con un asesino, fin del juego");
+                        _viewModel.HandleAssassinSelection();
                         break;
                 }
             }
@@ -287,7 +396,7 @@ namespace CodenamesClient.GameUI.BoardUI
             AnimateBoardCards();
         }
 
-        private async void Click_ReportPlayer(object sender, RoutedEventArgs e)
+        private void Click_ReportPlayer(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn)
             {
@@ -300,6 +409,24 @@ namespace CodenamesClient.GameUI.BoardUI
                 {
                     btn.IsEnabled = true;
                 }
+            }
+        }
+
+        private void Click_SkipTurn(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SkipTurn();
+        }
+
+        private void Click_SendMessage(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SendMessage();
+        }
+
+        private void KeyDown_ChatInput(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                _viewModel.SendMessage();
             }
         }
     }

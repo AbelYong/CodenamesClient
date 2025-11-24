@@ -213,6 +213,15 @@
     <Resource Include="Assets\GameUI\returnArrow.png" />
     <Resource Include="Assets\BoardUI\sendIcon.png" />
     <Resource Include="Assets\BoardUI\exit.png" />
+    <Content Include="Assets\AudioGame\cDown.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\AudioGame\friend.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\AudioGame\sos.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Main Theme %28NOT FINAL%29.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,9 +1,11 @@
 ﻿using CodenamesGame.MatchService;
 using CodenamesGame.Network.EventArguments;
 using System;
+using System.ServiceModel;
 
 namespace CodenamesGame.Network
 {
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     public class MatchCallbackHandler : IMatchManagerCallback
     {
         public static event Action OnCompanionDisconnect;

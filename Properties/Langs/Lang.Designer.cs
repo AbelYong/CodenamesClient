@@ -70,6 +70,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Your partner lost connection, the mission has been canceled..
+        /// </summary>
+        public static string errorCompanionLostConnection {
+            get {
+                return ResourceManager.GetString("errorCompanionLostConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You cannot use a word currently on the board as a clue.
+        /// </summary>
+        public static string errorIllegalClue {
+            get {
+                return ResourceManager.GetString("errorIllegalClue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Choose a gamemode.
         /// </summary>
         public static string gamemodeChooseAGamemode {
@@ -781,6 +799,42 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Defeat.
+        /// </summary>
+        public static string matchDefeat {
+            get {
+                return ResourceManager.GetString("matchDefeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} found the assassin, you . Mission failed.
+        /// </summary>
+        public static string matchDefeatAssassinCompanion {
+            get {
+                return ResourceManager.GetString("matchDefeatAssassinCompanion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You found the assassin. Mission failed.
+        /// </summary>
+        public static string matchDefeatAssassinMessage {
+            get {
+                return ResourceManager.GetString("matchDefeatAssassinMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Too many witnesses involved, operation compromised. Mission aborted.
+        /// </summary>
+        public static string matchDefeatTimeoutMessage {
+            get {
+                return ResourceManager.GetString("matchDefeatTimeoutMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Party.
         /// </summary>
         public static string matchParty {
@@ -804,6 +858,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string matchReport {
             get {
                 return ResourceManager.GetString("matchReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Skip turn.
+        /// </summary>
+        public static string matchSkipTurn {
+            get {
+                return ResourceManager.GetString("matchSkipTurn", resourceCulture);
             }
         }
         
@@ -840,6 +903,42 @@ namespace CodenamesClient.Properties.Langs {
         public static string matchTypeAClue {
             get {
                 return ResourceManager.GetString("matchTypeAClue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Victory!.
+        /// </summary>
+        public static string matchVictory {
+            get {
+                return ResourceManager.GetString("matchVictory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a All agents found. Mission complete.
+        /// </summary>
+        public static string matchVictoryMessage {
+            get {
+                return ResourceManager.GetString("matchVictoryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Wait to receive the clue from your partner.
+        /// </summary>
+        public static string matchWaitForClue {
+            get {
+                return ResourceManager.GetString("matchWaitForClue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Wait for you companion to pick cards.
+        /// </summary>
+        public static string matchWaitForCompanion {
+            get {
+                return ResourceManager.GetString("matchWaitForCompanion", resourceCulture);
             }
         }
         
