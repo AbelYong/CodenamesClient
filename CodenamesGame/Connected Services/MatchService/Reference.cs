@@ -19,6 +19,7 @@ namespace CodenamesGame.MatchService {
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.LoginRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.CreateLobbyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.JoinPartyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.CommunicationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -125,6 +126,29 @@ namespace CodenamesGame.MatchService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JoinPartyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class JoinPartyRequest : CodenamesGame.MatchService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.Party PartyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.Party Party {
+            get {
+                return this.PartyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyField, value) != true)) {
+                    this.PartyField = value;
+                    this.RaisePropertyChanged("Party");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class CommunicationRequest : CodenamesGame.MatchService.Request {
@@ -197,33 +221,21 @@ namespace CodenamesGame.MatchService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
-    public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Party : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int[][] BoardPlayerOneField;
+        private string LobbyCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int[][] BoardPlayerTwoField;
+        private CodenamesGame.MatchService.Player PartyGuestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchService.Player CompanionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid MatchIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchService.Player RequesterField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private CodenamesGame.MatchService.MatchRules RulesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int[] SelectedWordsField;
+        private CodenamesGame.MatchService.Player PartyHostField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -236,92 +248,40 @@ namespace CodenamesGame.MatchService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int[][] BoardPlayerOne {
+        public string LobbyCode {
             get {
-                return this.BoardPlayerOneField;
+                return this.LobbyCodeField;
             }
             set {
-                if ((object.ReferenceEquals(this.BoardPlayerOneField, value) != true)) {
-                    this.BoardPlayerOneField = value;
-                    this.RaisePropertyChanged("BoardPlayerOne");
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int[][] BoardPlayerTwo {
+        public CodenamesGame.MatchService.Player PartyGuest {
             get {
-                return this.BoardPlayerTwoField;
+                return this.PartyGuestField;
             }
             set {
-                if ((object.ReferenceEquals(this.BoardPlayerTwoField, value) != true)) {
-                    this.BoardPlayerTwoField = value;
-                    this.RaisePropertyChanged("BoardPlayerTwo");
+                if ((object.ReferenceEquals(this.PartyGuestField, value) != true)) {
+                    this.PartyGuestField = value;
+                    this.RaisePropertyChanged("PartyGuest");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchService.Player Companion {
+        public CodenamesGame.MatchService.Player PartyHost {
             get {
-                return this.CompanionField;
+                return this.PartyHostField;
             }
             set {
-                if ((object.ReferenceEquals(this.CompanionField, value) != true)) {
-                    this.CompanionField = value;
-                    this.RaisePropertyChanged("Companion");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid MatchID {
-            get {
-                return this.MatchIDField;
-            }
-            set {
-                if ((this.MatchIDField.Equals(value) != true)) {
-                    this.MatchIDField = value;
-                    this.RaisePropertyChanged("MatchID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchService.Player Requester {
-            get {
-                return this.RequesterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RequesterField, value) != true)) {
-                    this.RequesterField = value;
-                    this.RaisePropertyChanged("Requester");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public CodenamesGame.MatchService.MatchRules Rules {
-            get {
-                return this.RulesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RulesField, value) != true)) {
-                    this.RulesField = value;
-                    this.RaisePropertyChanged("Rules");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int[] SelectedWords {
-            get {
-                return this.SelectedWordsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SelectedWordsField, value) != true)) {
-                    this.SelectedWordsField = value;
-                    this.RaisePropertyChanged("SelectedWords");
+                if ((object.ReferenceEquals(this.PartyHostField, value) != true)) {
+                    this.PartyHostField = value;
+                    this.RaisePropertyChanged("PartyHost");
                 }
             }
         }
@@ -511,6 +471,224 @@ namespace CodenamesGame.MatchService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid UserIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int[][] BoardPlayerOneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int[][] BoardPlayerTwoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.Player CompanionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid MatchIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.Player RequesterField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.MatchRules RulesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int[] SelectedWordsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int[][] BoardPlayerOne {
+            get {
+                return this.BoardPlayerOneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BoardPlayerOneField, value) != true)) {
+                    this.BoardPlayerOneField = value;
+                    this.RaisePropertyChanged("BoardPlayerOne");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int[][] BoardPlayerTwo {
+            get {
+                return this.BoardPlayerTwoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BoardPlayerTwoField, value) != true)) {
+                    this.BoardPlayerTwoField = value;
+                    this.RaisePropertyChanged("BoardPlayerTwo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.Player Companion {
+            get {
+                return this.CompanionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CompanionField, value) != true)) {
+                    this.CompanionField = value;
+                    this.RaisePropertyChanged("Companion");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid MatchID {
+            get {
+                return this.MatchIDField;
+            }
+            set {
+                if ((this.MatchIDField.Equals(value) != true)) {
+                    this.MatchIDField = value;
+                    this.RaisePropertyChanged("MatchID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.Player Requester {
+            get {
+                return this.RequesterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RequesterField, value) != true)) {
+                    this.RequesterField = value;
+                    this.RaisePropertyChanged("Requester");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.MatchRules Rules {
+            get {
+                return this.RulesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RulesField, value) != true)) {
+                    this.RulesField = value;
+                    this.RaisePropertyChanged("Rules");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int[] SelectedWords {
+            get {
+                return this.SelectedWordsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SelectedWordsField, value) != true)) {
+                    this.SelectedWordsField = value;
+                    this.RaisePropertyChanged("SelectedWords");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MatchRules", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
     public partial class MatchRules : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -602,83 +780,6 @@ namespace CodenamesGame.MatchService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
-    [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid UserIDField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
-            get {
-                return this.PasswordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid UserID {
-            get {
-                return this.UserIDField;
-            }
-            set {
-                if ((this.UserIDField.Equals(value) != true)) {
-                    this.UserIDField = value;
-                    this.RaisePropertyChanged("UserID");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Gamemode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     public enum Gamemode : int {
@@ -704,6 +805,237 @@ namespace CodenamesGame.MatchService {
         GUESSER = 1,
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AgentPickedNotification", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class AgentPickedNotification : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.BoardCoordinates CoordinatesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NewTurnLengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SenderIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.BoardCoordinates Coordinates {
+            get {
+                return this.CoordinatesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CoordinatesField, value) != true)) {
+                    this.CoordinatesField = value;
+                    this.RaisePropertyChanged("Coordinates");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NewTurnLength {
+            get {
+                return this.NewTurnLengthField;
+            }
+            set {
+                if ((this.NewTurnLengthField.Equals(value) != true)) {
+                    this.NewTurnLengthField = value;
+                    this.RaisePropertyChanged("NewTurnLength");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SenderID {
+            get {
+                return this.SenderIDField;
+            }
+            set {
+                if ((this.SenderIDField.Equals(value) != true)) {
+                    this.SenderIDField = value;
+                    this.RaisePropertyChanged("SenderID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BoardCoordinates", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class BoardCoordinates : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ColumnField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RowField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Column {
+            get {
+                return this.ColumnField;
+            }
+            set {
+                if ((this.ColumnField.Equals(value) != true)) {
+                    this.ColumnField = value;
+                    this.RaisePropertyChanged("Column");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Row {
+            get {
+                return this.RowField;
+            }
+            set {
+                if ((this.RowField.Equals(value) != true)) {
+                    this.RowField = value;
+                    this.RaisePropertyChanged("Row");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BystanderPickedNotification", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class BystanderPickedNotification : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.BoardCoordinates CoordinatesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingTokensField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SenderIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.TokenType TokenToUpdateField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.BoardCoordinates Coordinates {
+            get {
+                return this.CoordinatesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CoordinatesField, value) != true)) {
+                    this.CoordinatesField = value;
+                    this.RaisePropertyChanged("Coordinates");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingTokens {
+            get {
+                return this.RemainingTokensField;
+            }
+            set {
+                if ((this.RemainingTokensField.Equals(value) != true)) {
+                    this.RemainingTokensField = value;
+                    this.RaisePropertyChanged("RemainingTokens");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SenderID {
+            get {
+                return this.SenderIDField;
+            }
+            set {
+                if ((this.SenderIDField.Equals(value) != true)) {
+                    this.SenderIDField = value;
+                    this.RaisePropertyChanged("SenderID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.TokenType TokenToUpdate {
+            get {
+                return this.TokenToUpdateField;
+            }
+            set {
+                if ((this.TokenToUpdateField.Equals(value) != true)) {
+                    this.TokenToUpdateField = value;
+                    this.RaisePropertyChanged("TokenToUpdate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TokenType", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     public enum TokenType : int {
@@ -713,6 +1045,83 @@ namespace CodenamesGame.MatchService {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         BYSTANDER = 1,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AssassinPickedNotification", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class AssassinPickedNotification : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.MatchService.BoardCoordinates CoordinatesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FinalMatchLengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid SenderIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.MatchService.BoardCoordinates Coordinates {
+            get {
+                return this.CoordinatesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CoordinatesField, value) != true)) {
+                    this.CoordinatesField = value;
+                    this.RaisePropertyChanged("Coordinates");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FinalMatchLength {
+            get {
+                return this.FinalMatchLengthField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FinalMatchLengthField, value) != true)) {
+                    this.FinalMatchLengthField = value;
+                    this.RaisePropertyChanged("FinalMatchLength");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid SenderID {
+            get {
+                return this.SenderIDField;
+            }
+            set {
+                if ((this.SenderIDField.Equals(value) != true)) {
+                    this.SenderIDField = value;
+                    this.RaisePropertyChanged("SenderID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -750,22 +1159,22 @@ namespace CodenamesGame.MatchService {
         System.Threading.Tasks.Task NotifyTurnTimeoutAsync(System.Guid senderID, CodenamesGame.MatchService.MatchRoleType currentRole);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyPickedAgent")]
-        void NotifyPickedAgent(System.Guid senderID, int newTurnLength);
+        void NotifyPickedAgent(CodenamesGame.MatchService.AgentPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyPickedAgent")]
-        System.Threading.Tasks.Task NotifyPickedAgentAsync(System.Guid senderID, int newTurnLength);
+        System.Threading.Tasks.Task NotifyPickedAgentAsync(CodenamesGame.MatchService.AgentPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyPickedBystander")]
-        void NotifyPickedBystander(System.Guid senderID, CodenamesGame.MatchService.TokenType tokenToUpdate);
+        void NotifyPickedBystander(CodenamesGame.MatchService.BystanderPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyPickedBystander")]
-        System.Threading.Tasks.Task NotifyPickedBystanderAsync(System.Guid senderID, CodenamesGame.MatchService.TokenType tokenToUpdate);
+        System.Threading.Tasks.Task NotifyPickedBystanderAsync(CodenamesGame.MatchService.BystanderPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyPickedAssassin")]
-        void NotifyPickedAssassin(System.Guid senderID);
+        void NotifyPickedAssassin(CodenamesGame.MatchService.AssassinPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyPickedAssassin")]
-        System.Threading.Tasks.Task NotifyPickedAssassinAsync(System.Guid senderID);
+        System.Threading.Tasks.Task NotifyPickedAssassinAsync(CodenamesGame.MatchService.AssassinPickedNotification notification);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -781,13 +1190,13 @@ namespace CodenamesGame.MatchService {
         void NotifyRolesChanged();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyAgentPicked")]
-        void NotifyAgentPicked(int newTurnLength);
+        void NotifyAgentPicked(CodenamesGame.MatchService.AgentPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyBystanderPicked")]
-        void NotifyBystanderPicked(CodenamesGame.MatchService.TokenType tokenToUpdate, int remainingTokens);
+        void NotifyBystanderPicked(CodenamesGame.MatchService.BystanderPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyAssassinPicked")]
-        void NotifyAssassinPicked(string finalMatchLength);
+        void NotifyAssassinPicked(CodenamesGame.MatchService.AssassinPickedNotification notification);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyMatchWon")]
         void NotifyMatchWon(string finalMatchLength);
@@ -870,28 +1279,28 @@ namespace CodenamesGame.MatchService {
             return base.Channel.NotifyTurnTimeoutAsync(senderID, currentRole);
         }
         
-        public void NotifyPickedAgent(System.Guid senderID, int newTurnLength) {
-            base.Channel.NotifyPickedAgent(senderID, newTurnLength);
+        public void NotifyPickedAgent(CodenamesGame.MatchService.AgentPickedNotification notification) {
+            base.Channel.NotifyPickedAgent(notification);
         }
         
-        public System.Threading.Tasks.Task NotifyPickedAgentAsync(System.Guid senderID, int newTurnLength) {
-            return base.Channel.NotifyPickedAgentAsync(senderID, newTurnLength);
+        public System.Threading.Tasks.Task NotifyPickedAgentAsync(CodenamesGame.MatchService.AgentPickedNotification notification) {
+            return base.Channel.NotifyPickedAgentAsync(notification);
         }
         
-        public void NotifyPickedBystander(System.Guid senderID, CodenamesGame.MatchService.TokenType tokenToUpdate) {
-            base.Channel.NotifyPickedBystander(senderID, tokenToUpdate);
+        public void NotifyPickedBystander(CodenamesGame.MatchService.BystanderPickedNotification notification) {
+            base.Channel.NotifyPickedBystander(notification);
         }
         
-        public System.Threading.Tasks.Task NotifyPickedBystanderAsync(System.Guid senderID, CodenamesGame.MatchService.TokenType tokenToUpdate) {
-            return base.Channel.NotifyPickedBystanderAsync(senderID, tokenToUpdate);
+        public System.Threading.Tasks.Task NotifyPickedBystanderAsync(CodenamesGame.MatchService.BystanderPickedNotification notification) {
+            return base.Channel.NotifyPickedBystanderAsync(notification);
         }
         
-        public void NotifyPickedAssassin(System.Guid senderID) {
-            base.Channel.NotifyPickedAssassin(senderID);
+        public void NotifyPickedAssassin(CodenamesGame.MatchService.AssassinPickedNotification notification) {
+            base.Channel.NotifyPickedAssassin(notification);
         }
         
-        public System.Threading.Tasks.Task NotifyPickedAssassinAsync(System.Guid senderID) {
-            return base.Channel.NotifyPickedAssassinAsync(senderID);
+        public System.Threading.Tasks.Task NotifyPickedAssassinAsync(CodenamesGame.MatchService.AssassinPickedNotification notification) {
+            return base.Channel.NotifyPickedAssassinAsync(notification);
         }
     }
 }

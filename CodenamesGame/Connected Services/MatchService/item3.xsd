@@ -58,23 +58,21 @@
   <xs:element name="NotifyPickedAgent">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="senderID" type="q10:guid" />
-        <xs:element minOccurs="0" name="newTurnLength" type="xs:int" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="notification" nillable="true" type="q10:AgentPickedNotification" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyPickedBystander">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="senderID" type="q11:guid" />
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="tokenToUpdate" type="q12:TokenType" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="notification" nillable="true" type="q11:BystanderPickedNotification" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyPickedAssassin">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="senderID" type="q13:guid" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="notification" nillable="true" type="q12:AssassinPickedNotification" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -98,22 +96,21 @@
   <xs:element name="NotifyAgentPicked">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="newTurnLength" type="xs:int" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="notification" nillable="true" type="q13:AgentPickedNotification" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyBystanderPicked">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="tokenToUpdate" type="q14:TokenType" />
-        <xs:element minOccurs="0" name="remainingTokens" type="xs:int" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="notification" nillable="true" type="q14:BystanderPickedNotification" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyAssassinPicked">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="finalMatchLength" nillable="true" type="xs:string" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="notification" nillable="true" type="q15:AssassinPickedNotification" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -1,4 +1,5 @@
-﻿using CodenamesGame.MatchService;
+﻿using CodenamesGame.Domain.POCO.Match;
+using CodenamesGame.MatchService;
 using CodenamesGame.Network.EventArguments;
 using System;
 
@@ -10,9 +11,9 @@ namespace CodenamesGame.Network
         public static event EventHandler<string> OnClueReceived;
         public static event Action OnTurnChange;
         public static event Action OnRolesChanged;
-        public static event EventHandler<int> OnAgentPicked;
+        public static event EventHandler<AgentPickedEventArgs> OnAgentPicked;
         public static event EventHandler<BystanderPickedEventArgs> OnBystanderPicked;
-        public static event EventHandler<string> OnAssassinPicked;
+        public static event EventHandler<AssassinPickedEventArgs> OnAssassinPicked;
         public static event EventHandler<string> OnMatchTimeout;
         public static event EventHandler<string> OnMatchWon;
         public static event Action OnScoreNotSaved;
@@ -42,20 +43,35 @@ namespace CodenamesGame.Network
             OnRolesChanged?.Invoke();
         }
 
-        public void NotifyAgentPicked(int newTurnLength)
+        public void NotifyAgentPicked(AgentPickedNotification notification)
         {
-            OnAgentPicked?.Invoke(null, newTurnLength);
+            OnAgentPicked?.Invoke(null,
+                new AgentPickedEventArgs
+                {
+                    Coordinates = BoardCoordinatesDM.AssembleBoardCoordinates(notification.Coordinates),
+                    NewTurnLength = notification.NewTurnLength
+                });
         }
 
-        public void NotifyBystanderPicked(TokenType tokenToUpdate, int remainingTokens)
+        public void NotifyBystanderPicked(BystanderPickedNotification notification)
         {
             OnBystanderPicked?.Invoke(null,
-                new BystanderPickedEventArgs { TokenToUpdate = tokenToUpdate, RemainingTokens = remainingTokens });
+                new BystanderPickedEventArgs
+                {
+                    Coordinates = BoardCoordinatesDM.AssembleBoardCoordinates(notification.Coordinates),
+                    TokenToUpdate = notification.TokenToUpdate,
+                    RemainingTokens = notification.RemainingTokens
+                });
         }
 
-        public void NotifyAssassinPicked(string finalMatchLength)
+        public void NotifyAssassinPicked(AssassinPickedNotification notification)
         {
-            OnAssassinPicked?.Invoke(null, finalMatchLength);
+            OnAssassinPicked?.Invoke(null,
+                new AssassinPickedEventArgs
+                {
+                    Coordinates = BoardCoordinatesDM.AssembleBoardCoordinates(notification.Coordinates),
+                    FinalMatchLength = notification.FinalMatchLength
+                });
         }
 
         public void NotifyMatchTimeout(string finalMatchLength)

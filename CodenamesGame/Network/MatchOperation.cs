@@ -1,11 +1,7 @@
 ﻿using CodenamesGame.Domain.POCO.Match;
 using CodenamesGame.MatchService;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodenamesGame.Network
 {
@@ -46,15 +42,15 @@ namespace CodenamesGame.Network
                 _client.Open();
                 return _client.Connect(playerID);
             }
-            catch (CommunicationException)
-            {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-            }
             catch (TimeoutException)
             {
                 request.IsSuccess = false;
                 request.StatusCode = StatusCode.SERVER_TIMEOUT;
+            }
+            catch (CommunicationException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
             }
             return request;
         }
@@ -140,13 +136,19 @@ namespace CodenamesGame.Network
             }
         }
 
-        public void NotifyPickedAgent(int newTurnLength)
+        public void NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
         {
             if (_client != null && _client.State == CommunicationState.Opened)
             {
                 try
                 {
-                    _client.NotifyPickedAgentAsync(_currentPlayerID, newTurnLength);
+                    AgentPickedNotification notification = new AgentPickedNotification
+                    {
+                        SenderID = _currentPlayerID,
+                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates),
+                        NewTurnLength = newTurnLength
+                    };
+                    _client.NotifyPickedAgentAsync(notification);
                 }
                 catch (CommunicationException)
                 {
@@ -159,13 +161,20 @@ namespace CodenamesGame.Network
             }
         }
 
-        public void NotifyPickedBystander(TokenType tokenType, int remainingTokens)
+        public void NotifyPickedBystander(BoardCoordinatesDM coordinates, TokenType tokenType)
         {
             if (_client != null && _client.State == CommunicationState.Opened)
             {
                 try
                 {
-                    _client.NotifyPickedBystanderAsync(_currentPlayerID, tokenType);
+                    BystanderPickedNotification notification = new BystanderPickedNotification
+                    {
+                        SenderID = _currentPlayerID,
+                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates),
+                        TokenToUpdate = tokenType
+                    };
+
+                    _client.NotifyPickedBystanderAsync(notification);
                 }
                 catch (CommunicationException)
                 {
@@ -178,13 +187,18 @@ namespace CodenamesGame.Network
             }
         }
 
-        public void NotifyPickedAssassin()
+        public void NotifyPickedAssassin(BoardCoordinatesDM coordinates)
         {
             if (_client != null && _client.State == CommunicationState.Opened)
             {
                 try
                 {
-                    _client.NotifyPickedAssassinAsync(_currentPlayerID);
+                    AssassinPickedNotification notification = new AssassinPickedNotification
+                    {
+                        SenderID = _currentPlayerID,
+                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates)
+                    };
+                    _client.NotifyPickedAssassinAsync(notification);
                 }
                 catch (CommunicationException)
                 {
