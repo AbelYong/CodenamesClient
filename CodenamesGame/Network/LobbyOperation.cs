@@ -76,6 +76,10 @@ namespace CodenamesGame.Network
         public CreateLobbyRequest CreateLobby(PlayerDM player)
         {
             CreateLobbyRequest request = new CreateLobbyRequest();
+            if (_client == null || _client.State != CommunicationState.Opened)
+            {
+                Initialize(_currentPlayerID);
+            }
             if (_client != null && _client.State == CommunicationState.Opened)
             {
                 if (player != null && player.PlayerID.HasValue)
@@ -101,6 +105,10 @@ namespace CodenamesGame.Network
                     request.IsSuccess = false;
                     request.StatusCode = StatusCode.MISSING_DATA;
                 }
+            }
+            else
+            {
+                request = GenerateServerUnavaibleRequest<CreateLobbyRequest>();
             }
             return request;
         }

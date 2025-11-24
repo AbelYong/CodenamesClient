@@ -49,6 +49,7 @@ namespace CodenamesGame.Domain.POCO
             return new PlayerDM
             {
                 PlayerID = player.PlayerID,
+                AvatarID = player.AvatarID,
                 Username = player.Username,
                 Name = player.Name,
                 LastName = player.LastName

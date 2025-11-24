@@ -8,7 +8,7 @@ namespace CodenamesClient.Util
 {
     public enum LobbyOperationType
     {
-        CONNECT,
+        INTIALIZE,
         CREATE_PARTY,
         INVITE_TO_PARTY,
         JOIN_PARTY

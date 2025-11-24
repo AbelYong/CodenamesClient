@@ -13,7 +13,8 @@ namespace CodenamesClient.Operation
         public const int NUMBER_OF_AGENT_PICTURES = 15;
         public const int NUMBER_OF_BYSTANDER_PICTURES = 7;
         public const int NUMBER_OF_ASSASSIN_PICTURES = 3;
-        private static readonly List<String> _agentPicturePaths = new List<string>
+        private const int _DEFAULT_IMAGE = 0;
+        private static readonly List<string> _agentPicturePaths = new List<string>
         {
             //Agents
             "/Assets/BoardUI/Agents/agent01.png",
@@ -45,11 +46,19 @@ namespace CodenamesClient.Operation
             "/Assets/BoardUI/Assassins/assassin03.png"
         };
 
+        public static string GetImagePath(int imageIndex)
+        {
+            if (imageIndex >= 0 && imageIndex < _agentPicturePaths.Count)
+            {
+                return _agentPicturePaths[imageIndex];
+            }
+            return _agentPicturePaths[_DEFAULT_IMAGE];
+        }
+
         //If image index is zero (default) or out of bounds, returns default picture
         public static ImageBrush GetImage(int imageIndex)
         {
-            const int DEFAULT_IMAGE = 0;
-            string path = _agentPicturePaths[DEFAULT_IMAGE];
+            string path = _agentPicturePaths[_DEFAULT_IMAGE];
             if (imageIndex >= 0 && imageIndex < _agentPicturePaths.Count)
             {
                 path = _agentPicturePaths[imageIndex];

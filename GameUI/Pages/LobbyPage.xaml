@@ -37,7 +37,11 @@
                     </Ellipse.Style>
                 </Ellipse>
 
-                <Image Source="/Assets/BoardUI/Agents/agent01.png" Width="30" Height="30" Margin="0,0,10,0"/>
+                <Ellipse Width="30" Height="30" Margin="0,0,10,0">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding ProfilePicturePath}" Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <TextBlock Text="{Binding Player.Username}" Width="150" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
                 <Button Content="{x:Static language:Lang.lobbyInvite}" Width="90" Click="Click_InviteFriend" Style="{StaticResource buttonCustomFocus}"/>
             </StackPanel>
@@ -115,13 +119,28 @@
 
                         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TimerTokens}"
                          Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
-                         IsReadOnly="{Binding IsCustomGame}"/>
+                         Focusable="{Binding IsCustomGame}"
+                                 PreviewTextInput="NumberValidation"
+                                 PreviewKeyDown="NumberValidationKeyDown"
+                                 TextChanged="TimerTokensRangeValidation" 
+                                 LostFocus="TimerTokensMinRangeValidation"
+                                 DataObject.Pasting="TextBoxPasting"/>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding BystanderTokens}" 
                          Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
-                         IsReadOnly="{Binding IsCustomGame}"/>
+                         Focusable="{Binding IsCustomGame}"
+                                 PreviewTextInput="NumberValidation"
+                                 PreviewKeyDown="NumberValidationKeyDown"
+                                 TextChanged="BystanderTokensRangeValidation"
+                                 LostFocus="BystanderTokensMinRangeValidation"
+                                 DataObject.Pasting="TextBoxPasting"/>
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TurnTimer}" 
                          Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
-                         IsReadOnly="{Binding IsCustomGame}"/>
+                         Focusable="{Binding IsCustomGame}"
+                                 PreviewTextInput="NumberValidation"
+                                 PreviewKeyDown="NumberValidationKeyDown"
+                                 TextChanged="TurnTimerRangeValidation"
+                                 LostFocus="TurnTimerMinRangeValidation"
+                                 DataObject.Pasting="TextBoxPasting"/>
                     </Grid>
                     <Button Click="Click_StartGame" Content="{x:Static language:Lang.globalPlay}" IsEnabled="{Binding PlayBtnEnabled}" Visibility="{Binding PlayBtnVisibility}"
                     Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48" Margin="0,0,0,25"/>
@@ -192,7 +211,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="{x:Static language:Lang.lobbyTypeLobbyCode}" Style="{StaticResource subtitle}" Margin="0,0,0,10" />
-                <TextBox Grid.Row="1" x:Name="tbkInputCode" Style="{StaticResource textBoxCustomFocus}" Width="300" Margin="0,0,0,20" />
+                <TextBox Grid.Row="1" x:Name="tbkInputCode" Style="{StaticResource textBoxCustomFocus}" TextAlignment="Center" Width="300" Margin="0,0,0,20" />
                 <Button Grid.Row="2" Click="Click_btnSendCode" Content="{x:Static language:Lang.lobbySendCode}" Margin="0,0,0,10"
                     Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
                 <Button Grid.Row="3" Click="Click_btnCloseTypeCode" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />

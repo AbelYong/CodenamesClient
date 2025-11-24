@@ -3,8 +3,10 @@ using CodenamesClient.GameUI.ViewModels;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using static CodenamesClient.GameUI.ViewModels.LobbyViewModel;
@@ -19,6 +21,7 @@ namespace CodenamesClient.GameUI.Pages
         private Storyboard _slideOutOnlineFriends;
         private Storyboard _slideInTypeCode;
         private Storyboard _slideOutTypeCode;
+        private readonly Regex _regex = new Regex("[^0-9]+", RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
         public LobbyPage(PlayerDM player, GamemodeDM gamemode)
         {
@@ -44,11 +47,111 @@ namespace CodenamesClient.GameUI.Pages
                 _viewModel.BeginMatch += OnBeginMatch;
             }
         }
+
         private void OnLobbyPageUnloaded(object sender, RoutedEventArgs e)
         {
             _viewModel.UnsubscribeFromSessionEvents();
 
             _viewModel.BeginMatch -= OnBeginMatch;
+        }
+
+        private void NumberValidation(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = _regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TextBoxPasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                string text = (string)e.DataObject.GetData(typeof(string));
+                if (_regex.IsMatch(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private void TimerTokensRangeValidation(object sender, TextChangedEventArgs e)
+        {
+            int maxTokens = MatchRulesDM.MAX_TIMER_TOKENS;
+            TextBox tbx = sender as TextBox;
+            RangeValidation(tbx, maxTokens);
+        }
+
+        private void TimerTokensMinRangeValidation(object sender, RoutedEventArgs e)
+        {
+            const int minTokens = 4;
+            TextBox tbx = sender as TextBox;
+            MinRangeValidation(tbx, minTokens);
+        }
+
+        private void BystanderTokensRangeValidation(object sender, TextChangedEventArgs e)
+        {
+            int maxTokens = MatchRulesDM.MAX_BYSTANDER_TOKENS;
+            TextBox tbx = sender as TextBox;
+            RangeValidation(tbx, maxTokens);
+        }
+
+        private void BystanderTokensMinRangeValidation(object sender, RoutedEventArgs e)
+        {
+            const int minTokens = 0;
+            TextBox tbx = sender as TextBox;
+            MinRangeValidation(tbx, minTokens);
+        }
+
+        private void TurnTimerRangeValidation(object sender, TextChangedEventArgs e)
+        {
+            int maxTurnTimer = MatchRulesDM.MAX_TURN_TIMER;
+            TextBox tbx = sender as TextBox;
+            RangeValidation(tbx, maxTurnTimer);
+        }
+
+        private void TurnTimerMinRangeValidation(object sender, RoutedEventArgs e)
+        {
+            const int minTurnTimer = 15;
+            TextBox tbx = sender as TextBox;
+            MinRangeValidation(tbx, minTurnTimer);
+        }
+
+        private static void RangeValidation(TextBox tbx, int max)
+        {
+            if (string.IsNullOrEmpty(tbx.Text))
+            {
+                return;
+            }
+
+            if (int.TryParse(tbx.Text, out int value) && value > max)
+            {
+                tbx.Text = max.ToString();
+                tbx.CaretIndex = tbx.Text.Length; // Move cursor to end
+            }
+        }
+
+        private static void MinRangeValidation(TextBox tbx, int min)
+        {
+            if (string.IsNullOrEmpty(tbx.Text))
+            {
+                tbx.Text = min.ToString();
+                return;
+            }
+
+            if (int.TryParse(tbx.Text, out int value) && value < min)
+            {
+                tbx.Text = min.ToString();
+            }
         }
 
         private async void Click_StartGame(object sender, RoutedEventArgs e)

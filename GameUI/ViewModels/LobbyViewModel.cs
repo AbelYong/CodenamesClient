@@ -11,6 +11,8 @@ using System.Linq;
 using CodenamesGame.Network.EventArguments;
 using CodenamesGame.Domain.POCO.Match;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using CodenamesClient.Operation;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -43,16 +45,6 @@ namespace CodenamesClient.GameUI.ViewModels
         private Visibility _jointBtnVisibility;
 
         public ObservableCollection<FriendItem> Friends { get; }
-
-        public MatchDM match
-        {
-            get => _match;
-            set
-            {
-                _match = value;
-                OnPropertyChanged();
-            }
-        }
 
         public PlayerDM PartyHost
         {
@@ -149,7 +141,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public bool IsCustomGame
         {
-            get => !_isCustomGame;
+            get => _isCustomGame;
             set
             {
                 _isCustomGame = value;
@@ -364,7 +356,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.CONNECT, request.StatusCode));
+                MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INTIALIZE, request.StatusCode));
             }
         }
 
@@ -634,7 +626,13 @@ namespace CodenamesClient.GameUI.ViewModels
                     if (friend.PlayerID.HasValue)
                     {
                         bool isOnline = onlineIds.Contains(friend.PlayerID.Value);
-                        Friends.Add(new FriendItem { Player = friend, IsOnline = isOnline });
+                        Friends.Add(
+                            new FriendItem
+                            {
+                                Player = friend,
+                                ProfilePicturePath = PictureHandler.GetImagePath(friend.AvatarID),
+                                IsOnline = isOnline
+                            });
                     }
                 }
             }
@@ -667,7 +665,13 @@ namespace CodenamesClient.GameUI.ViewModels
                 }
                 else
                 {
-                    Friends.Add(new FriendItem { Player = e.Player, IsOnline = true });
+                    Friends.Add(
+                        new FriendItem
+                        { 
+                            Player = e.Player, 
+                            ProfilePicturePath = PictureHandler.GetImagePath(e.Player.AvatarID),
+                            IsOnline = true 
+                        });
                 }
             });
         }
@@ -688,7 +692,25 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             public event PropertyChangedEventHandler PropertyChanged;
             private bool _isOnline;
+            private string _profilePicturePath;
             public PlayerDM Player { get; set; }
+
+            public string ProfilePicturePath
+            {
+                get
+                {
+                    if (string.IsNullOrEmpty(_profilePicturePath))
+                    {
+                        return PictureHandler.GetImagePath(Player.AvatarID);
+                    }
+                    return _profilePicturePath;
+                }
+                set
+                {
+                    _profilePicturePath = value;
+                    OnPropertyChanged();
+                }
+            }
 
             public bool IsOnline
             {
