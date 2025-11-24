@@ -17,7 +17,7 @@ namespace CodenamesClient.Validation
 
         private static readonly Regex GmailRegex =
             new Regex(@"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$",
-                      RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+                      RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
 
         public static IEnumerable<string> ValidateEmail(string email)
         {
