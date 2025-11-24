@@ -248,7 +248,10 @@ namespace CodenamesClient.GameUI.Pages
                 );
 
                 MessageBox.Show(result.Message);
-                if (result.Success) HideResetOverlay();
+                if (result.Success)
+                {
+                    HideResetOverlay();
+                }
             }
             catch (Exception ex)
             {

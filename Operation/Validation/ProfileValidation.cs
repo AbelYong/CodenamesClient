@@ -33,59 +33,75 @@ namespace CodenamesClient.Validation
             if (string.IsNullOrWhiteSpace(username))
             {
                 yield return Lang.signInUsernameRequired;
-                yield break;
             }
         }
 
         public static IEnumerable<string> ValidateFirstName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
+            {
                 yield break;
+            }
 
             if (!IsLettersAndSpacesOnly(name))
+            {
                 yield return Lang.signInFirstNameOnlyLettersSpacesAccents;
+            }
 
             if (name.Length > PlayerDM.NAME_MAX_LENGTH)
+            {
                 yield return Lang.signInFirstNameMaxLength;
+            }
         }
 
         public static IEnumerable<string> ValidateLastName(string lastName)
         {
             if (string.IsNullOrWhiteSpace(lastName))
+            {
                 yield break;
+            }
 
             if (!IsLettersAndSpacesOnly(lastName))
+            {
                 yield return Lang.signInLastNameOnlyLettersSpacesAccents;
+            }
 
             if (lastName.Length > PlayerDM.LASTNAME_MAX_LENGTH)
+            {
                 yield return Lang.signInLastNameMaxLength;
+            }
         }
 
         public static IEnumerable<string> ValidateFacebook(string facebook)
         {
-            if (!string.IsNullOrWhiteSpace(facebook) &&
-                facebook.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
+            if (!string.IsNullOrWhiteSpace(facebook) && facebook.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
+            {
                 yield return Lang.profileSocialNetwork;
+            }
         }
 
         public static IEnumerable<string> ValidateInstagram(string instagram)
         {
-            if (!string.IsNullOrWhiteSpace(instagram) &&
-                instagram.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
+            if (!string.IsNullOrWhiteSpace(instagram) && instagram.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
+            {
                 yield return Lang.profileSocialNetwork;
+            }
         }
 
         public static IEnumerable<string> ValidateDiscord(string discord)
         {
-            if (!string.IsNullOrWhiteSpace(discord) &&
-                discord.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
+            if (!string.IsNullOrWhiteSpace(discord) && discord.Trim().Length > PlayerDM.SOCIALMEDIA_MAX_LENGTH)
+            {
                 yield return Lang.profileSocialNetwork;
+            }
         }
 
         private static bool IsLettersAndSpacesOnly(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
+            {
                 return true;
+            }
 
             string normalized = input.Normalize(NormalizationForm.FormC).Trim();
 
@@ -107,13 +123,34 @@ namespace CodenamesClient.Validation
             string instagram,
             string discord)
         {
-            foreach (var e in ValidateEmail(email)) yield return e;
-            foreach (var e in ValidateUsername(username)) yield return e;
-            foreach (var e in ValidateFirstName(firstName)) yield return e;
-            foreach (var e in ValidateLastName(lastName)) yield return e;
-            foreach (var e in ValidateFacebook(facebook)) yield return e;
-            foreach (var e in ValidateInstagram(instagram)) yield return e;
-            foreach (var e in ValidateDiscord(discord)) yield return e;
+            foreach (var e in ValidateEmail(email))
+            {
+                yield return e;
+            }
+            foreach (var e in ValidateUsername(username))
+            {
+                yield return e;
+            }
+            foreach (var e in ValidateFirstName(firstName))
+            {
+                yield return e;
+            }
+            foreach (var e in ValidateLastName(lastName))
+            {
+                yield return e;
+            }
+            foreach (var e in ValidateFacebook(facebook))
+            {
+                yield return e;
+            }
+            foreach (var e in ValidateInstagram(instagram))
+            {
+                yield return e;
+            }
+            foreach (var e in ValidateDiscord(discord))
+            {
+                yield return e;
+            }
         }
     }
 }
