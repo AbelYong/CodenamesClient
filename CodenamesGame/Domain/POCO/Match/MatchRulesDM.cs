@@ -8,6 +8,10 @@ namespace CodenamesGame.Domain.POCO
 {
     public class MatchRulesDM
     {
+        public const int MAX_TURN_TIMER = 60;
+        public const int MAX_TIMER_TOKENS = 12;
+        public const int MAX_BYSTANDER_TOKENS = 13;
+
         public GamemodeDM gamemode { get; set; }
         public int TurnTimer { get; set; }
         public int TimerTokens { get; set; }
