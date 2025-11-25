@@ -16,16 +16,39 @@ namespace CodenamesClient.GameUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public event Action ConnectionLost;
         private bool _hasPlayerConnection;
+        private bool _btnLoginEnabled;
+        private bool _btnSignInGuestEnabled;
         private string _requestErrorMessage;
 
         public LoginViewModel()
         {
-
+            BtnLoginEnabled = true;
+            BtnSignInGuestEnabled = true;
         }
 
         public bool HasPlayerConnection
         {
             get => _hasPlayerConnection;
+        }
+
+        public bool BtnLoginEnabled
+        {
+            get => _btnLoginEnabled;
+            set
+            {
+                _btnLoginEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool BtnSignInGuestEnabled
+        {
+            get => _btnSignInGuestEnabled;
+            set
+            {
+                _btnSignInGuestEnabled = value;
+                OnPropertyChanged();
+            }
         }
 
         public string RequestErrorMessage
@@ -37,15 +60,21 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (player != null)
             {
+                BtnLoginEnabled = false;
+                BtnSignInGuestEnabled = false;
                 CommunicationRequest request = await Task.Run(() => SessionOperation.Instance.Initialize(player));
                 if (request.IsSuccess)
                 {
                     _hasPlayerConnection = true;
+                    BtnLoginEnabled = true;
+                    BtnSignInGuestEnabled = true;
                 }
                 else
                 {
                     _hasPlayerConnection = false;
                     _requestErrorMessage = Util.StatusToMessageMapper.GetSessionServiceMessage(request.StatusCode);
+                    BtnLoginEnabled = true;
+                    BtnSignInGuestEnabled = true;
                     ConnectionLost?.Invoke();
                 }
             }

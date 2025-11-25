@@ -69,6 +69,7 @@
 
                 <!-- Action buttons -->
                 <Button Click="Click_btnLogin"
+                        IsEnabled="{Binding BtnLoginEnabled}"
                         Content="{x:Static language:Lang.loginLogIn}"
                         Style="{StaticResource buttonCustomFocus}"
                         Margin="0,10,0,0" Width="316" FontSize="24" Height="60"/>
@@ -82,9 +83,10 @@
                 </StackPanel>
 
                 <Button Click="Click_btnPlayAsGuest"
-                    Content="{x:Static language:Lang.loginPlayAsGuest}"
-                    Style="{StaticResource buttonCustomFocus}"
-                    Margin="0,10,0,0" Height="60" Width="316" FontSize="24"/>
+                        IsEnabled="{Binding BtnSignInGuestEnabled}"
+                        Content="{x:Static language:Lang.loginPlayAsGuest}"
+                        Style="{StaticResource buttonCustomFocus}"
+                        Margin="0,10,0,0" Height="60" Width="316" FontSize="24"/>
             </StackPanel>
 
             <Border x:Name="Overlay" Visibility="Collapsed" Background="#80000000" />
