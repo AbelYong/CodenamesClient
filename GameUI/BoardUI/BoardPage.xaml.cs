@@ -328,7 +328,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(opacityAnim, card);
-                    Storyboard.SetTargetProperty(opacityAnim, new PropertyPath("Opacity"));
+                    Storyboard.SetTargetProperty(opacityAnim, new PropertyPath(UIElement.OpacityProperty));
                     storyboard.Children.Add(opacityAnim);
 
                     var slideXAnim = new DoubleAnimation(startTranslateX, 0, TimeSpan.FromMilliseconds(animationDuration))
@@ -337,7 +337,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(slideXAnim, card);
-                    Storyboard.SetTargetProperty(slideXAnim, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
+                    Storyboard.SetTargetProperty(slideXAnim, new PropertyPath("RenderTransform.Children[0].X"));
                     storyboard.Children.Add(slideXAnim);
 
                     var slideYAnim = new DoubleAnimation(startTranslateY, 0, TimeSpan.FromMilliseconds(animationDuration))
@@ -346,7 +346,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(slideYAnim, card);
-                    Storyboard.SetTargetProperty(slideYAnim, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.Y)"));
+                    Storyboard.SetTargetProperty(slideYAnim, new PropertyPath("RenderTransform.Children[1].Y"));
                     storyboard.Children.Add(slideYAnim);
 
                     var rotateAnim = new DoubleAnimation(startRotation, 0, TimeSpan.FromMilliseconds(animationDuration))
@@ -355,7 +355,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(rotateAnim, card);
-                    Storyboard.SetTargetProperty(rotateAnim, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"));
+                    Storyboard.SetTargetProperty(rotateAnim, new PropertyPath("RenderTransform.Children[1].Angle"));
                     storyboard.Children.Add(rotateAnim);
 
                     storyboard.Begin();

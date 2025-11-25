@@ -132,7 +132,7 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private void HandleFriendRequestRejected(object sender, PlayerEventArgs e)
+        private static void HandleFriendRequestRejected(object sender, PlayerEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -162,7 +162,7 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private void HandleOperationFailure(object sender, OperationMessageEventArgs e)
+        private static void HandleOperationFailure(object sender, OperationMessageEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {

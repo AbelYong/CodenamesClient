@@ -44,7 +44,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             {
                 System.Windows.MessageBox.Show(string.Join("\n", list), Lang.globalInvalidData,
                     MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
             }
             else
             {
@@ -76,7 +75,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             }
         }
 
-        private bool SendVerificationCode(string email)
+        private static bool SendVerificationCode(string email)
         {
             RequestResult result = EmailOperation.SendVerificationEmail(email);
             if (!result.IsSuccess)
@@ -177,7 +176,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 tBxFacebook.Text = player.FacebookUsername;
                 tBxInstagram.Text = player.InstagramUsername;
                 tBxDiscord.Text = player.DiscordUsername;
-                //TODO address handling
                 SetProfilePicture(player.AvatarID);
             }
         }

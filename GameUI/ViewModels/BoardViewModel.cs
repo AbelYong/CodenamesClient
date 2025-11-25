@@ -35,7 +35,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public const int MAX_TURN_LENGTH = 60;
 
         private readonly MatchDM _match;
-        private ModerationOperation _moderationOperation;
+        private readonly ModerationOperation _moderationOperation;
 
         private PlayerDM _me;
         private PlayerDM _companion;
@@ -502,7 +502,7 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private void HandleScoreNotSaved()
+        private static void HandleScoreNotSaved()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {

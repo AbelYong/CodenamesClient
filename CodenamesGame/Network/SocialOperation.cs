@@ -26,12 +26,8 @@ namespace CodenamesGame.Network
         public static SocialOperation Instance => _instance.Value;
 
         private FriendManagerClient _client;
-        private FriendCallbackHandler _callbackHandler;
         private Guid _currentPlayerId;
 
-        /// <summary>
-        /// Private constructor for the Singleton pattern.
-        /// </summary>
         private SocialOperation() { }
 
         /// <summary>
@@ -41,6 +37,7 @@ namespace CodenamesGame.Network
         /// <param name="mePlayerId">The player ID for the current session.</param>
         public void Initialize(Guid mePlayerId)
         {
+            FriendCallbackHandler callbackHandler;
             if (_client != null && _client.State == CommunicationState.Opened)
             {
                 return;
@@ -52,8 +49,8 @@ namespace CodenamesGame.Network
             }
 
             _currentPlayerId = mePlayerId;
-            _callbackHandler = new FriendCallbackHandler();
-            var context = new InstanceContext(_callbackHandler);
+            callbackHandler = new FriendCallbackHandler();
+            var context = new InstanceContext(callbackHandler);
             _client = new FriendManagerClient(context, _ENDPOINT_NAME);
 
             try
@@ -82,7 +79,7 @@ namespace CodenamesGame.Network
                 }
                 catch (Exception)
                 {
-                    
+
                 }
                 finally
                 {
@@ -193,7 +190,7 @@ namespace CodenamesGame.Network
         /// Helper method to trigger the failure event in case of
         /// a transport exception (e.g., server down).
         /// </summary>
-        private void OnOperationFailure(Exception ex)
+        private static void OnOperationFailure(Exception ex)
         {
             FriendCallbackHandler.RaiseOperationFailure($"Error de conexión: {ex.Message}");
         }

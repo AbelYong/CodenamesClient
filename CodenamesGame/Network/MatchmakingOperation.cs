@@ -49,7 +49,6 @@ namespace CodenamesGame.Network
 
             try
             {
-                //todo translate me
                 _client.Open();
                 request = _client.Connect(_currentPlayerID);
             }
@@ -61,7 +60,6 @@ namespace CodenamesGame.Network
             }
             catch (TimeoutException)
             {
-                //TODO translate me
                 CloseProxy();
                 request.IsSuccess = false;
                 request.StatusCode = StatusCode.SERVER_TIMEOUT;

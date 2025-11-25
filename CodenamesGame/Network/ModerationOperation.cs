@@ -7,7 +7,7 @@ namespace CodenamesGame.Network
     public class ModerationOperation
     {
         private const string _ENDPOINT_NAME = "NetTcpBinding_IModerationManager";
-        private ModerationManagerClient _client;
+        private readonly ModerationManagerClient _client;
 
         public ModerationOperation()
         {

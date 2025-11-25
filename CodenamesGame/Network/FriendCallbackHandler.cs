@@ -25,37 +25,37 @@ namespace CodenamesGame.Network
 
         public void NotifyNewFriendRequest(Player fromPlayer)
         {
-            OnNewFriendRequest?.Invoke(this,
+            OnNewFriendRequest?.Invoke(null,
                 new PlayerEventArgs { Player = PlayerDM.AssemblePlayer(fromPlayer) });
         }
 
         public void NotifyFriendRequestAccepted(Player byPlayer)
         {
-            OnFriendRequestAccepted?.Invoke(this,
+            OnFriendRequestAccepted?.Invoke(null,
                 new PlayerEventArgs { Player = PlayerDM.AssemblePlayer(byPlayer) });
         }
 
         public void NotifyFriendRequestRejected(Player byPlayer)
         {
-            OnFriendRequestRejected?.Invoke(this,
+            OnFriendRequestRejected?.Invoke(null,
                 new PlayerEventArgs { Player = PlayerDM.AssemblePlayer(byPlayer) });
         }
 
         public void NotifyFriendRemoved(Player byPlayer)
         {
-            OnFriendRemoved?.Invoke(this,
+            OnFriendRemoved?.Invoke(null,
                 new PlayerEventArgs { Player = PlayerDM.AssemblePlayer(byPlayer) });
         }
 
         public void NotifyOperationSuccess(string message)
         {
-            OnOperationSuccess?.Invoke(this,
+            OnOperationSuccess?.Invoke(null,
                 new OperationMessageEventArgs { Message = message });
         }
 
         public void NotifyOperationFailure(string message)
         {
-            OnOperationFailure?.Invoke(this,
+            OnOperationFailure?.Invoke(null,
                 new OperationMessageEventArgs { Message = message });
         }
 
@@ -65,7 +65,8 @@ namespace CodenamesGame.Network
         /// </summary>
         public static void RaiseOperationFailure(string message)
         {
-            OnOperationFailure?.Invoke(null, new OperationMessageEventArgs { Message = message });
+            OnOperationFailure?.Invoke(null,
+                new OperationMessageEventArgs { Message = message });
         }
     }
 }
