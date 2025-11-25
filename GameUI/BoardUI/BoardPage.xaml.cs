@@ -244,9 +244,7 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private void DrawWords()
         {
-            int rows = gridBoard.RowDefinitions.Count;
             int columns = gridBoard.ColumnDefinitions.Count;
-            int totalSpots = rows * columns;
             foreach (KeyValuePair<int, string> word in _viewModel.Keywords)
             {
                 int flatIndex = word.Key;
@@ -254,7 +252,10 @@ namespace CodenamesClient.GameUI.BoardUI
                 int column = flatIndex % columns;
                 ToggleButton toggleButton = gridBoard.Children.OfType<ToggleButton>()
                     .FirstOrDefault(e => Grid.GetRow(e) == row && Grid.GetColumn(e) == column);
-                toggleButton.Content = word.Value;
+                if (toggleButton != null)
+                {
+                    toggleButton.Content = word.Value;
+                }
             }
         }
 
@@ -268,17 +269,23 @@ namespace CodenamesClient.GameUI.BoardUI
                 {
                     if (_viewModel.Keycard[i, j] == 0)
                     {
-                        Rectangle rectangle = gridKeycard.Children.OfType<Rectangle>()
-                            .FirstOrDefault(e => Grid.GetRow(e) == i && Grid.GetColumn(e) == j);
-                        rectangle.Fill = agentBrush;
+                        DrawKeycardCell(i, j, agentBrush);
                     }
-                    if (_viewModel.Keycard[i, j] == 2)
+                    else if (_viewModel.Keycard[i, j] == 2)
                     {
-                        Rectangle rectangle = gridKeycard.Children.OfType<Rectangle>()
-                            .FirstOrDefault(e => Grid.GetRow(e) == i && Grid.GetColumn(e) == j);
-                        rectangle.Fill = assasinBrush;
+                        DrawKeycardCell(i, j, assasinBrush);
                     }
                 }
+            }
+        }
+
+        private void DrawKeycardCell(int i, int j, SolidColorBrush brush)
+        {
+            Rectangle rectangle = gridKeycard.Children.OfType<Rectangle>()
+                    .FirstOrDefault(e => Grid.GetRow(e) == i && Grid.GetColumn(e) == j);
+            if (rectangle != null)
+            {
+                rectangle.Fill = brush;
             }
         }
 

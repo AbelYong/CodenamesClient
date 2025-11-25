@@ -76,11 +76,11 @@ namespace CodenamesClient.GameUI.Pages
             {
                 _profileControl.ClickCloseProfile -= CloseProfile;
                 _profileControl.ClickSaveProfile -= SaveProfile;
+                _profileControl.Visibility = Visibility.Collapsed;
+                gridMainMenu.Children.Remove(_profileControl);
+                _profileControl = null;
+                Overlay.Visibility = Visibility.Collapsed;
             }
-            _profileControl.Visibility = Visibility.Collapsed;
-            gridMainMenu.Children.Remove(_profileControl);
-            _profileControl = null;
-            Overlay.Visibility = Visibility.Collapsed;
         }
 
         private void Click_btnLogout(object sender, RoutedEventArgs e)
