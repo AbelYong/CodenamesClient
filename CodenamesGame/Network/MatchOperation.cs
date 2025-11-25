@@ -161,7 +161,7 @@ namespace CodenamesGame.Network
             }
         }
 
-        public void NotifyPickedBystander(BoardCoordinatesDM coordinates, TokenType tokenType)
+        public void NotifyPickedBystander(BoardCoordinatesDM coordinates)
         {
             if (_client != null && _client.State == CommunicationState.Opened)
             {
@@ -170,8 +170,7 @@ namespace CodenamesGame.Network
                     BystanderPickedNotification notification = new BystanderPickedNotification
                     {
                         SenderID = _currentPlayerID,
-                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates),
-                        TokenToUpdate = tokenType
+                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates)
                     };
 
                     _client.NotifyPickedBystanderAsync(notification);

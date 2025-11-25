@@ -11,6 +11,7 @@ namespace CodenamesGame.Domain.POCO
         public const int MAX_TURN_TIMER = 60;
         public const int MAX_TIMER_TOKENS = 12;
         public const int MAX_BYSTANDER_TOKENS = 13;
+        public const int TIMER_TOKENS_TO_TAKE_CUSTOM = 2;
 
         public GamemodeDM gamemode { get; set; }
         public int TurnTimer { get; set; }

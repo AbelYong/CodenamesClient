@@ -2,15 +2,18 @@
 using CodenamesGame.MatchService;
 using CodenamesGame.Network.EventArguments;
 using System;
+using System.ServiceModel;
 
 namespace CodenamesGame.Network
 {
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     public class MatchCallbackHandler : IMatchManagerCallback
     {
         public static event Action OnCompanionDisconnect;
         public static event EventHandler<string> OnClueReceived;
         public static event Action OnTurnChange;
         public static event Action OnRolesChanged;
+        public static event EventHandler<int> OnGuesserTurnTimeout;
         public static event EventHandler<AgentPickedEventArgs> OnAgentPicked;
         public static event EventHandler<BystanderPickedEventArgs> OnBystanderPicked;
         public static event EventHandler<AssassinPickedEventArgs> OnAssassinPicked;
@@ -36,6 +39,11 @@ namespace CodenamesGame.Network
         public void NotifyTurnChange()
         {
             OnTurnChange?.Invoke();
+        }
+
+        public void NotifyGuesserTurnTimeout(int timerTokens)
+        {
+            OnGuesserTurnTimeout?.Invoke(null, timerTokens);
         }
 
         public void NotifyRolesChanged()

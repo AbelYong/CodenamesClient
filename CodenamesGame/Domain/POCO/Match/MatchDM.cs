@@ -16,6 +16,11 @@ namespace CodenamesGame.Domain.POCO.Match
         public int[,] Keycard { get; set; }
         public List<int> SelectedWords { get; set; }
 
+        public MatchDM()
+        {
+            this.Rules = new MatchRulesDM();
+        }
+
         public static MatchDM AssembleMatch(MatchmakingService.Match incomingMatch, Guid myID)
         {
             MatchDM match = new MatchDM();
@@ -40,6 +45,7 @@ namespace CodenamesGame.Domain.POCO.Match
         public static MatchService.Match AssembleMatchSvMatch(MatchDM match)
         {
             MatchService.Match svMatch = new MatchService.Match();
+            svMatch.Rules = new MatchService.MatchRules();
             svMatch.MatchID = match.MatchID;
             svMatch.Rules.Gamemode = MatchRulesDM.AssembleMatchSvGamemode(match.Rules.gamemode);
             svMatch.Rules.TimerTokens = match.Rules.TimerTokens;

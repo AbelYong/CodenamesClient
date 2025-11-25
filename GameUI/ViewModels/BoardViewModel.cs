@@ -1,6 +1,8 @@
 ﻿using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
 using CodenamesGame.Network;
+using CodenamesGame.Network.EventArguments;
+using CodenamesGame.MatchService;
 using CodenamesClient.Util;
 using System;
 using System.Collections;
@@ -10,50 +12,74 @@ using System.Globalization;
 using System.Linq;
 using System.Resources;
 using System.Runtime.CompilerServices;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Threading;
 using CodenamesClient.Properties.Langs;
+using System.Collections.ObjectModel;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
     public class BoardViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public ICommand ReportPlayerCommand { get; set; }
+        public event Action GoBackToMenu;
+
+        public event Action OnAgentLightRequested;
+        public event Action OnBystanderLightRequested;
+        public event Action OnAssassinLightRequested;
+
         //The MAX_GLOBAL constants are used for selecting random images from the assets by setting limits for number-indexing
         public const int MAX_GLOBAL_AGENTS = 15;
         public const int MAX_GLOBAL_ASSASSINS = 3;
         public const int MAX_GLOBAL_BYSTANDERS = 7;
+        public const int MAX_TURN_LENGTH = 60;
+
         private readonly MatchDM _match;
+        private ModerationOperation _moderationOperation;
+
+        private PlayerDM _me;
+        private PlayerDM _companion;
+
         private string _playerSTurn;
         private string _turnInstrucions;
-        private PlayerDM _me;
         private string _myUsername;
-        private PlayerDM _companion;
         private string _companionUsername;
+        private string _chatInput;
+        private string _gameOverTitle;
+        private string _gameOverMessage;
+        private string _gameOverImageSource;
+        private string _overlayColor;
+
         private DispatcherTimer _timer;
         private DispatcherTimer _chronometer;
         private TimeSpan _elapsedTime;
+
         private readonly int[,] _agentsMatrix;
         private readonly int[,] _keycardMatrix;
         private readonly Dictionary<int, string> _keywords = new Dictionary<int, string>();
+
         private int _turnTimer;
         private int _timerTokens;
         private int _bystanderTokens;
-        private int _turnLenght;
-        private ModerationOperation _moderationOperation;
-        
+        private int _turnLength;
+
+        private bool _isGameOverVisible;
+        private bool _showAssassinImage;
+        private bool _isChatEnabled;
+        private bool _isBoardEnabled;
+        private bool _isSkipButtonVisible;
+        private bool _amISpymaster;
+
+        public ObservableCollection<ChatMessageDM> ChatMessages {  get; set; }
+        public List<int> AgentNumbers { get; set; }
+
         public string PlayerSTurn
         {
             get => _playerSTurn;
             set
             {
                 _playerSTurn = value;
-                OnPropertyChanged(nameof(PlayerSTurn));
+                OnPropertyChanged();
             }
         }
 
@@ -63,7 +89,7 @@ namespace CodenamesClient.GameUI.ViewModels
             set
             {
                 _turnInstrucions = value;
-                OnPropertyChanged(nameof(TurnInstructions));
+                OnPropertyChanged();
             }
         }
 
@@ -83,11 +109,49 @@ namespace CodenamesClient.GameUI.ViewModels
             set
             {
                 _companionUsername = value;
-                OnPropertyChanged(nameof(MyUsername));
+                OnPropertyChanged();
             }
         }
 
-        public List<int> AgentNumbers { get; set; }
+        public string ChatInput
+        {
+            get => _chatInput;
+            set
+            {
+                _chatInput = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsChatEnabled
+        {
+            get => _isChatEnabled;
+            set
+            {
+                _isChatEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsBoardEnabled
+        {
+            get => _isBoardEnabled;
+            set
+            {
+                _isBoardEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSkipButtonVisible
+        {
+            get => _isSkipButtonVisible;
+            set
+            {
+                _isSkipButtonVisible = value;
+                OnPropertyChanged();
+            }
+        }
 
         public int[,] AgentsMatrix
         {
@@ -106,7 +170,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public int TurnLength
         {
-            get => _turnLenght;
+            get => _turnLength;
         }
 
         public int TurnTimer
@@ -115,7 +179,7 @@ namespace CodenamesClient.GameUI.ViewModels
             set
             {
                 _turnTimer = value;
-                OnPropertyChanged(nameof(TurnTimer));
+                OnPropertyChanged();
             }
         }
 
@@ -125,7 +189,7 @@ namespace CodenamesClient.GameUI.ViewModels
             set
             {
                 _timerTokens = value;
-                OnPropertyChanged(nameof(TimerTokens));
+                OnPropertyChanged();
             }
         }
 
@@ -135,7 +199,7 @@ namespace CodenamesClient.GameUI.ViewModels
             set
             {
                 _bystanderTokens = value;
-                OnPropertyChanged(nameof(BystanderTokens));
+                OnPropertyChanged();
             }
         }
 
@@ -145,13 +209,78 @@ namespace CodenamesClient.GameUI.ViewModels
             set
             {
                 _elapsedTime = value;
-                OnPropertyChanged(nameof(ElapsedTime));
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsGameOverVisible
+        {
+            get => _isGameOverVisible;
+            set
+            {
+                _isGameOverVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string GameOverTitle
+        {
+            get => _gameOverTitle;
+            set
+            {
+                _gameOverTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string GameOverMessage
+        {
+            get => _gameOverMessage;
+            set
+            {
+                _gameOverMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string GameOverImageSource
+        {
+            get => _gameOverImageSource;
+            set
+            {
+                _gameOverImageSource = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowAssassinImage
+        {
+            get => _showAssassinImage;
+            set
+            {
+                _showAssassinImage = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public string OverlayColor
+        {
+            get => _overlayColor;
+            set
+            {
+                _overlayColor = value;
+                OnPropertyChanged();
             }
         }
 
         public BoardViewModel(MatchDM match, Guid myID)
         {
             _match = match;
+            MatchOperation.Instance.Initialize(myID);
+            MatchOperation.Instance.JoinMatch(match);
+            _moderationOperation = new ModerationOperation();
+            ChatMessages = new ObservableCollection<ChatMessageDM>();
+
             SetPlayers(myID);
             InitializeAgentNumbers();
             _agentsMatrix = match.Board;
@@ -160,8 +289,39 @@ namespace CodenamesClient.GameUI.ViewModels
             InitializeMatchData(match);
             InitializeChronometer();
             InitializeTimer();
-            _moderationOperation = new ModerationOperation();
+            SubscribeToCallbacks();
+
             SetInitialTurn();
+        }
+
+        private void SubscribeToCallbacks()
+        {
+            MatchCallbackHandler.OnCompanionDisconnect += HandleCompanionDisconnect;
+            MatchCallbackHandler.OnClueReceived += HandleClueReceived;
+            MatchCallbackHandler.OnTurnChange += HandleTurnChange;
+            MatchCallbackHandler.OnRolesChanged += HandleRolesChanged;
+            MatchCallbackHandler.OnGuesserTurnTimeout += HandleGuesserTurnTimeout;
+            MatchCallbackHandler.OnAgentPicked += HandleAgentPicked;
+            MatchCallbackHandler.OnBystanderPicked += HandleBystanderPicked;
+            MatchCallbackHandler.OnMatchWon += HandleMatchWon;
+            MatchCallbackHandler.OnMatchTimeout += HandleMatchTimeout;
+            MatchCallbackHandler.OnAssassinPicked += HandleAssassinPicked;
+            MatchCallbackHandler.OnScoreNotSaved += HandleScoreNotSaved;
+        }
+
+        private void UnsubscribeCallbacks()
+        {
+            MatchCallbackHandler.OnCompanionDisconnect -= HandleCompanionDisconnect;
+            MatchCallbackHandler.OnClueReceived -= HandleClueReceived;
+            MatchCallbackHandler.OnTurnChange -= HandleTurnChange;
+            MatchCallbackHandler.OnGuesserTurnTimeout -= HandleGuesserTurnTimeout;
+            MatchCallbackHandler.OnRolesChanged -= HandleRolesChanged;
+            MatchCallbackHandler.OnAgentPicked -= HandleAgentPicked;
+            MatchCallbackHandler.OnBystanderPicked -= HandleBystanderPicked;
+            MatchCallbackHandler.OnMatchWon -= HandleMatchWon;
+            MatchCallbackHandler.OnMatchTimeout -= HandleMatchTimeout;
+            MatchCallbackHandler.OnAssassinPicked -= HandleAssassinPicked;
+            MatchCallbackHandler.OnScoreNotSaved -= HandleScoreNotSaved;
         }
 
         private void SetPlayers(Guid myID)
@@ -188,17 +348,277 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void SetInitialTurn()
         {
-            if (_me.PlayerID == _match.Requester.PlayerID)
+            _amISpymaster = _me.PlayerID == _match.Requester.PlayerID;
+
+            UpdateUIState();
+        }
+
+        private void UpdateUIState()
+        {
+            if (_amISpymaster)
             {
-                PlayerSTurn = string.Format(Lang.matchYouAreSpymaster, _match.Companion.Username);
-                TurnInstructions = string.Format(Lang.matchTypeAClue, _match.Companion.Username);
+                PlayerSTurn = string.Format(Lang.matchYouAreSpymaster, CompanionUsername);
+                TurnInstructions = string.Format(Lang.matchTypeAClue, CompanionUsername);
+                IsChatEnabled = true;
+                IsBoardEnabled = false;
+                IsSkipButtonVisible = false;
             }
             else
             {
-                PlayerSTurn = string.Format(Lang.matchCompanionIsSpymaster, _match.Requester.Username);
-                TurnInstructions = string.Format(Lang.matchPickKeywords, _match.Requester.Username);
+                PlayerSTurn = string.Format(Lang.matchCompanionIsSpymaster, CompanionUsername);
+                TurnInstructions = string.Format(Lang.matchWaitForClue, CompanionUsername);
+                IsChatEnabled = false;
+                IsBoardEnabled = false;
+                IsSkipButtonVisible = false;
             }
         }
+
+        private void HandleCompanionDisconnect()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                StopTimer();
+                StopChronometer();
+                MessageBox.Show(Lang.errorCompanionLostConnection, Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                GoBackToMenu?.Invoke();
+            });
+        }
+
+        private void HandleClueReceived(object sender, string clue)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                AddMessageToChat(clue, false);
+
+                if (!_amISpymaster)
+                {
+                    if (!IsBoardEnabled)
+                    {
+                        ResetTimer();
+                    }
+
+                    IsBoardEnabled = true;
+                    IsSkipButtonVisible = true;
+                    IsChatEnabled = false;
+                    TurnInstructions = string.Format(Lang.matchPickKeywords, CompanionUsername);
+                }
+            });
+        }
+
+        private void HandleTurnChange()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (!_amISpymaster)
+                {
+                    if (!IsBoardEnabled)
+                    {
+                        ResetTimer();
+                    }
+                    IsBoardEnabled = true;
+                    IsSkipButtonVisible = true;
+                    IsChatEnabled = false;
+                    TurnInstructions = string.Format(Lang.matchPickKeywords, CompanionUsername);
+                }
+                else
+                {
+                    IsChatEnabled = false;
+                    IsBoardEnabled = false;
+                    TurnInstructions = string.Format(Lang.matchWaitForCompanion, CompanionUsername);
+                    StopTimer();
+                }
+            });
+        }
+
+        private void HandleGuesserTurnTimeout(object sender, int e)
+        {
+            TimerTokens = e;
+        }
+
+        private void HandleRolesChanged()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _amISpymaster = !_amISpymaster;
+                UpdateUIState();
+                ResetTimer();
+            });
+        }
+
+        private void HandleAgentPicked(object sender, AgentPickedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (_amISpymaster)
+                {
+                    OnAgentLightRequested?.Invoke();
+                    TurnTimer = e.NewTurnLength;
+                    StartTimer();
+                }
+            });
+        }
+
+        private void HandleBystanderPicked(object sender, BystanderPickedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (_amISpymaster)
+                {
+                    OnBystanderLightRequested?.Invoke();
+                }
+
+                if (e.TokenToUpdate == TokenType.TIMER)
+                {
+                    TimerTokens = e.RemainingTokens;
+                }
+                else if (e.TokenToUpdate == TokenType.BYSTANDER)
+                {
+                    BystanderTokens = e.RemainingTokens;
+                }
+            });
+        }
+
+        private void HandleAssassinPicked(object sender, AssassinPickedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                StopTimer();
+                StopChronometer();
+
+                GameOverTitle = Lang.matchDefeat;
+                GameOverMessage = _amISpymaster ? string.Format(Lang.matchDefeatAssassinCompanion, CompanionUsername) : Lang.matchDefeatAssassinMessage;
+                OverlayColor = "#CC000000";
+                GameOverImageSource = "/Assets/BoardUI/Assassins/assassin01.png";
+                ShowAssassinImage = true;
+
+                if (_amISpymaster)
+                {
+                    OnAssassinLightRequested?.Invoke();
+                }
+                else
+                {
+                    ShowGameOverScreen();
+                }
+            });
+        }
+
+        private void HandleScoreNotSaved()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageBox.Show("La partida ha terminado pero hubo un error al guardar las estadísticas.",
+                    Lang.globalWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+            });
+        }
+
+        public void Disconnect()
+        {
+            UnsubscribeCallbacks();
+            MatchOperation.Instance.Disconnect();
+        }
+
+        public void SendMessage()
+        {
+            if (string.IsNullOrWhiteSpace(ChatInput) || !IsChatEnabled)
+            {
+                return;
+            }
+            if (IsMessageIllegal(ChatInput))
+            {
+                MessageBox.Show(Lang.errorIllegalClue, Lang.globalWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            MatchOperation.Instance.SendClue(ChatInput);
+
+            AddMessageToChat(ChatInput, true);
+            ChatInput = string.Empty;
+
+            if (_amISpymaster)
+            {
+                IsChatEnabled = false;
+                IsBoardEnabled = false;
+                TurnInstructions = string.Format(Lang.matchWaitForCompanion, CompanionUsername);
+
+                StopTimer();
+            }
+        }
+
+        private bool IsMessageIllegal(string message)
+        {
+            return _keywords.Values.Any(k => k.Equals(message, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private void AddMessageToChat(string text, bool isMine)
+        {
+            ChatMessages.Add(new ChatMessageDM
+            {
+                Message = text,
+                Author = isMine ? MyUsername : CompanionUsername,
+                IsMine = isMine,
+                Timestamp = DateTime.Now
+            });
+        }
+
+        public void SkipTurn()
+        {
+            var currentRole = _amISpymaster ? MatchRoleType.SPYMASTER : MatchRoleType.GUESSER;
+
+            MatchOperation.Instance.NotifyTurnTimeout(currentRole);
+            TimerTokens--;
+            IsBoardEnabled = false;
+            IsSkipButtonVisible = false;
+            IsChatEnabled = false;
+        }
+
+        #region Gameplay Logic
+        public void HandleAgentSelection(BoardCoordinatesDM coordinates)
+        {
+            AddTime(TurnLength);
+            MatchOperation.Instance.NotifyPickedAgent(coordinates, TurnTimer);
+        }
+
+        public void HandleBystanderSelection(BoardCoordinatesDM coordinates)
+        {
+            StopTimer();
+            TurnTimer = 0;
+            if (_match.Rules.gamemode != GamemodeDM.CUSTOM)
+            {
+                if (TimerTokens >= 0)
+                {
+                    TimerTokens--;
+                    MatchOperation.Instance.NotifyPickedBystander(coordinates);
+                }
+            }
+            else
+            {
+                if (BystanderTokens > 0)
+                {
+                    BystanderTokens--;
+                    MatchOperation.Instance.NotifyPickedBystander(coordinates);
+                }
+                else
+                {
+                    if (TimerTokens >= 0)
+                    {
+                        int auxTimerTokens = TimerTokens - MatchRulesDM.TIMER_TOKENS_TO_TAKE_CUSTOM;
+                        TimerTokens = auxTimerTokens >= 0 ? auxTimerTokens : 0;
+                        MatchOperation.Instance.NotifyPickedBystander(coordinates);
+                    }
+                }
+            }
+            
+            IsBoardEnabled = false;
+            IsSkipButtonVisible = false;
+        }
+
+        public void HandleAssassinSelection(BoardCoordinatesDM coordinates)
+        {
+            StopTimer();
+            MatchOperation.Instance.NotifyPickedAssassin(coordinates);
+        }
+
+        #endregion
 
         private void InitializeAgentNumbers()
         {
@@ -239,14 +659,14 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void InitializeMatchData(MatchDM match)
         {
-            _turnLenght = match.Rules.TurnTimer;
+            _turnLength = match.Rules.TurnTimer;
             _timerTokens = match.Rules.TimerTokens;
             _bystanderTokens = match.Rules.BystanderTokens;
         }
 
         private void InitializeTimer()
         {
-            _turnTimer = _turnLenght;
+            _turnTimer = _turnLength;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += TimerTick;
@@ -261,7 +681,26 @@ namespace CodenamesClient.GameUI.ViewModels
             else
             {
                 _timer.Stop();
+
+                if (_amISpymaster)
+                {
+                    MatchOperation.Instance.NotifyTurnTimeout(MatchRoleType.SPYMASTER);
+                }
+                else
+                {
+                    if (_isBoardEnabled)
+                    {
+                        MatchOperation.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
+                        TimerTokens--;
+                    }
+                }
             }
+        }
+
+        private void ResetTimer()
+        {
+            TurnTimer = _turnLength;
+            StartTimer();
         }
 
         public void StartTimer()
@@ -271,9 +710,8 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void AddTime(int seconds)
         {
-            const int MAX_TURN_LENGTH = 60;
             int turnLength = TurnTimer + seconds;
-            TurnTimer = turnLength < MAX_TURN_LENGTH ? turnLength : MAX_TURN_LENGTH;
+            TurnTimer = turnLength < MatchRulesDM.MAX_TURN_TIMER ? turnLength : MatchRulesDM.MAX_TURN_TIMER;
         }
 
         public void StopTimer()
@@ -337,6 +775,43 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 MessageBox.Show(feedbackMessage, Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        private void HandleMatchWon(object sender, string finalTime)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                StopTimer();
+                StopChronometer();
+
+                GameOverTitle = Lang.matchVictory;
+                GameOverMessage = string.Format(Lang.matchVictoryMessage);
+                OverlayColor = "#CC228B22";
+                ShowAssassinImage = false;
+
+                IsGameOverVisible = true;
+            });
+        }
+
+        private void HandleMatchTimeout(object sender, string finalTime)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                StopTimer();
+                StopChronometer();
+
+                GameOverTitle = Lang.matchDefeat;
+                GameOverMessage = Lang.matchDefeatTimeoutMessage;
+                OverlayColor = "#CC8B0000";
+                ShowAssassinImage = false;
+
+                IsGameOverVisible = true;
+            });
+        }
+
+        public void ShowGameOverScreen()
+        {
+            IsGameOverVisible = true;
         }
     }
 }

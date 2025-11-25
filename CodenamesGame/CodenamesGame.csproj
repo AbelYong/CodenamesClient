@@ -89,6 +89,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Domain\POCO\Match\BoardCoordinatesDM.cs" />
+    <Compile Include="Domain\POCO\ChatMessageDM.cs" />
     <Compile Include="Domain\POCO\Match\GamemodeDM.cs" />
     <Compile Include="Domain\POCO\Match\MatchConfigurationDM.cs" />
     <Compile Include="Domain\POCO\Match\MatchDM.cs" />

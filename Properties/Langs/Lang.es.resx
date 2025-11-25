@@ -564,4 +564,37 @@
   <data name="signInInvalidPassword" xml:space="preserve">
     <value>La contraseña no es válida.</value>
   </data>
+  <data name="matchSkipTurn" xml:space="preserve">
+    <value>Saltar turno</value>
+  </data>
+  <data name="matchWaitForCompanion" xml:space="preserve">
+    <value>Espera a que tu compañero elija las cartas</value>
+  </data>
+  <data name="errorIllegalClue" xml:space="preserve">
+    <value>No puedes usar una palabra que ya esté en el tablero como pista</value>
+  </data>
+  <data name="matchVictory" xml:space="preserve">
+    <value>¡Victoria!</value>
+  </data>
+  <data name="matchVictoryMessage" xml:space="preserve">
+    <value>Encontraron a todos los agentes. Misión cumplida</value>
+  </data>
+  <data name="matchDefeat" xml:space="preserve">
+    <value>Derrota</value>
+  </data>
+  <data name="matchDefeatTimeoutMessage" xml:space="preserve">
+    <value>Demasiados testigos involucrados, operación comprometida. Misión abortada</value>
+  </data>
+  <data name="matchDefeatAssassinMessage" xml:space="preserve">
+    <value>Te encontraste con el asesino y fuiste eliminado. Misión fallida</value>
+  </data>
+  <data name="matchDefeatAssassinCompanion" xml:space="preserve">
+    <value>{0} fue eliminado, has sido comprometido. Misión fallida</value>
+  </data>
+  <data name="errorCompanionLostConnection" xml:space="preserve">
+    <value>Tu compañero perdió la conexión, la misión ha sido cancelada.</value>
+  </data>
+  <data name="matchWaitForClue" xml:space="preserve">
+    <value>Espera a recibir la pista de tu compañero</value>
+  </data>
 </root>

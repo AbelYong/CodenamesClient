@@ -564,4 +564,37 @@
   <data name="signInInvalidPassword" xml:space="preserve">
     <value>Invalid password.</value>
   </data>
+  <data name="matchSkipTurn" xml:space="preserve">
+    <value>Skip turn</value>
+  </data>
+  <data name="matchWaitForCompanion" xml:space="preserve">
+    <value>Wait for you companion to pick cards</value>
+  </data>
+  <data name="errorIllegalClue" xml:space="preserve">
+    <value>You cannot use a word currently on the board as a clue</value>
+  </data>
+  <data name="matchVictory" xml:space="preserve">
+    <value>Victory!</value>
+  </data>
+  <data name="matchVictoryMessage" xml:space="preserve">
+    <value>All agents found. Mission complete</value>
+  </data>
+  <data name="matchDefeat" xml:space="preserve">
+    <value>Defeat</value>
+  </data>
+  <data name="matchDefeatTimeoutMessage" xml:space="preserve">
+    <value>Too many witnesses involved, operation compromised. Mission aborted</value>
+  </data>
+  <data name="matchDefeatAssassinMessage" xml:space="preserve">
+    <value>You found the assassin. Mission failed</value>
+  </data>
+  <data name="matchDefeatAssassinCompanion" xml:space="preserve">
+    <value>{0} found the assassin, you . Mission failed</value>
+  </data>
+  <data name="errorCompanionLostConnection" xml:space="preserve">
+    <value>Your partner lost connection, the mission has been canceled.</value>
+  </data>
+  <data name="matchWaitForClue" xml:space="preserve">
+    <value>Wait to receive the clue from your partner</value>
+  </data>
 </root>

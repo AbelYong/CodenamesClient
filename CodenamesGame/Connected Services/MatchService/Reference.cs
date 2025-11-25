@@ -1189,6 +1189,9 @@ namespace CodenamesGame.MatchService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyRolesChanged")]
         void NotifyRolesChanged();
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyGuesserTurnTimeout")]
+        void NotifyGuesserTurnTimeout(int timerTokens);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyAgentPicked")]
         void NotifyAgentPicked(CodenamesGame.MatchService.AgentPickedNotification notification);
         
