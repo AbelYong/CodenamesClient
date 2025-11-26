@@ -12,9 +12,16 @@ namespace CodenamesClient.Validation
         public const int PASSWORD_MIN_LENGTH = 10;
         public const int PASSWORD_MAX_LENGTH = 16;
 
-        private static readonly Regex GmailRegex =
+        private static readonly Regex _gmailRegex =
             new Regex(@"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$",
                       RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
+        private static readonly Regex _outlookRegex =
+            new Regex(@"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@outlook\.com$",
+                      RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
+        private static readonly Regex _uvEstudiantesMxRegex =
+            new Regex(@"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@estudiantes\.uv\.mx$",
+                      RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
+
 
         public static IEnumerable<string> ValidateEmail(string email)
         {
@@ -24,8 +31,10 @@ namespace CodenamesClient.Validation
                 yield break;
             }
 
-            if (!GmailRegex.IsMatch(email))
+            if (!_gmailRegex.IsMatch(email) && !_outlookRegex.IsMatch(email) && !_uvEstudiantesMxRegex.IsMatch(email))
+            {
                 yield return Lang.signInEmailInvalidFormat;
+            }
         }
 
         public static IEnumerable<string> ValidateUsername(string username)
@@ -33,6 +42,11 @@ namespace CodenamesClient.Validation
             if (string.IsNullOrWhiteSpace(username))
             {
                 yield return Lang.signInUsernameRequired;
+            }
+
+            if (username.Length > PlayerDM.USERNAME_MAX_LENGTH)
+            {
+                yield return Lang.profileUsernameMaxLength;
             }
         }
 
@@ -108,9 +122,10 @@ namespace CodenamesClient.Validation
             foreach (char c in normalized)
             {
                 if (!(char.IsLetter(c) || c == ' '))
+                {
                     return false;
+                }
             }
-
             return true;
         }
 

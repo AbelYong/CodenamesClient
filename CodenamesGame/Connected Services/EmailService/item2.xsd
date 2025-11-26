@@ -1,10 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="RequestResult">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9053/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+  <xs:import schemaLocation="http://localhost:9053/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:9053/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+  <xs:complexType name="CommunicationRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CommunicationRequest" nillable="true" type="tns:CommunicationRequest" />
+  <xs:complexType name="Request">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="StatusCode" type="q1:StatusCode" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RequestResult" nillable="true" type="tns:RequestResult" />
+  <xs:element name="Request" nillable="true" type="tns:Request" />
+  <xs:complexType name="LoginRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UserID" nillable="true" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="LoginRequest" nillable="true" type="tns:LoginRequest" />
+  <xs:complexType name="CreateLobbyRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="LobbyCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateLobbyRequest" nillable="true" type="tns:CreateLobbyRequest" />
+  <xs:complexType name="JoinPartyRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="Party" nillable="true" type="q2:Party" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="JoinPartyRequest" nillable="true" type="tns:JoinPartyRequest" />
+  <xs:complexType name="ConfirmEmailRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RemainingAttempts" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConfirmEmailRequest" nillable="true" type="tns:ConfirmEmailRequest" />
 </xs:schema>

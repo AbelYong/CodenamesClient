@@ -121,6 +121,24 @@
     <Compile Include="Util\NetworkUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.SignInRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AuthenticationService\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\CodenamesGame.EmailService.CommunicationRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EmailService\CodenamesGame.EmailService.ConfirmEmailRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\EmailService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\item31.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\LobbyService\CodenamesGame.LobbyService.CommunicationRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -174,9 +192,6 @@
     </None>
     <None Include="Connected Services\AuthenticationService\item4.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\EmailService\CodenamesGame.EmailService.RequestResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\EmailService\EmailService.wsdl" />
     <None Include="Connected Services\EmailService\item.xsd">

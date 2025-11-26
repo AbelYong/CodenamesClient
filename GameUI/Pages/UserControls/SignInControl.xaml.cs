@@ -1,9 +1,11 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
+using CodenamesClient.Util;
+using CodenamesGame.AuthenticationService;
+using CodenamesGame.Domain.POCO;
+using CodenamesGame.Network;
 using System;
-using Sv = CodenamesGame.AuthenticationService;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,7 +16,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
     public partial class SignInControl : UserControl
     {
         private readonly SignInViewModel _vm;
-        private Guid? _pendingRequestId = null;
         public event RoutedEventHandler ClickClose;
 
         public SignInControl()
@@ -50,46 +51,33 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             sb.Begin(MainRegisterGrid, true);
         }
 
-        private async void Click_SignIn(object sender, RoutedEventArgs e)
+        private void Click_SignIn(object sender, RoutedEventArgs e)
         {
             _vm.ValidateAll();
-            if (!_vm.CanSubmit) return;
-
-            try
+            if (!_vm.CanSubmit)
             {
-                using (var client = new Sv.AuthenticationManagerClient())
-                {
-                    var svUser = new Sv.User
-                    { 
-                        Email = _vm.Email,
-                        Password = _vm.Password 
-                    };
-                    var svPlayer = new Sv.Player
-                    { 
-                        Username = _vm.Username, 
-                        Name = _vm.FirstName, 
-                        LastName = _vm.LastName 
-                    };
-
-                    var begin = await Task.Run(() => client.BeginRegistration(svUser, svPlayer, _vm.Password));
-
-                    if (begin == null || !begin.Success || !begin.RequestId.HasValue)
-                    {
-                        MessageBox.Show(begin?.Message ?? Lang.signInRegistrationCouldNotBeStarted);
-                        return;
-                    }
-
-                    _pendingRequestId = begin.RequestId.Value;
-
-                    VerifyEmailLabel.Text = _vm.Email;
-                    VerifyCode.Text = string.Empty;
-                    ShowVerifyOverlay();
-                }
+                return;
             }
-            catch (Exception ex)
+            RequestEmailVerification();
+        }
+
+        private void RequestEmailVerification()
+        {
+            bool wasCodeSent = SendVerificationCode(_vm.Email);
+            if (wasCodeSent)
             {
-                MessageBox.Show(Lang.signInErrorStartingRegistration + ex.Message);
+                ShowVerifyOverlay();
             }
+        }
+
+        private static bool SendVerificationCode(string email)
+        {
+            CodenamesGame.EmailService.CommunicationRequest request = EmailOperation.SendVerificationEmail(email);
+            if (!request.IsSuccess)
+            {
+                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
+            }
+            return request.IsSuccess;
         }
 
         private void ShowVerifyOverlay()
@@ -119,68 +107,105 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             sb.Begin(VerifyGrid, true);
         }
 
-        private async void ConfirmVerify_Click(object sender, RoutedEventArgs e)
+        private void ConfirmVerify_Click(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            if (btn != null) btn.IsEnabled = false;
-
-            try
+            Button btn = sender as Button;
+            if (btn != null)
             {
-                var code = (VerifyCode.Text ?? "").Trim();
-                if (code.Length != 6 || !code.All(char.IsDigit))
-                {
-                    MessageBox.Show(Lang.signInCodeMustHave6Digits);
-                    return;
-                }
-                if (_pendingRequestId == null)
-                {
-                    MessageBox.Show(Lang.signInNoPendingRequests);
-                    return;
-                }
-
-                using (var client = new Sv.AuthenticationManagerClient())
-                {
-                    var result = await Task.Run(() =>
-                        client.ConfirmRegistration(_pendingRequestId.Value, code)
-                    );
-
-                    MessageBox.Show(result.Message,
-                                    Lang.signInRegister,
-                                    MessageBoxButton.OK,
-                                    result.Success ? MessageBoxImage.Information : MessageBoxImage.Warning);
-                }
+                btn.IsEnabled = false;
             }
-            catch (Exception ex)
+
+            if (SendEmailVerificationCode())
             {
-                MessageBox.Show(Lang.signInErrorConfirmingRegistration + ex.Message);
+                RequestSignIn();
             }
-            finally
+
+            btn.IsEnabled = true;
+        }
+
+        private bool SendEmailVerificationCode()
+        {
+            const int CODE_LENGTH = 6;
+            string code = (VerifyCode.Text ?? "").Trim();
+            if (code.Length != CODE_LENGTH || !code.All(char.IsDigit))
             {
-                if (btn != null) btn.IsEnabled = true;
+                MessageBox.Show(Lang.signInCodeMustHave6Digits);
+                return false;
+            }
+
+            CodenamesGame.EmailService.ConfirmEmailRequest request = EmailOperation.SendVerificationCode(_vm.Email, code);
+            if (request.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                string message;
+                if (request.StatusCode == CodenamesGame.EmailService.StatusCode.UNAUTHORIZED)
+                {
+                    message = string.Format(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode), request.RemainingAttempts);
+                }
+                else
+                {
+                    message = StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode);
+                }
+                MessageBox.Show(message);
+                return false;
             }
         }
 
-        private async void HideVerify_Click(object sender, RoutedEventArgs e)
+        private void RequestSignIn()
         {
-            try
+            UserDM user = new UserDM
             {
-                if (_pendingRequestId != null)
-                {
-                    using (var client = new Sv.AuthenticationManagerClient())
-                    {
-                        await Task.Run(() => client.CancelRegistration(_pendingRequestId.Value));
-                    }
-                }
-            }
-            catch
+                Email = _vm.Email,
+                Password = _vm.Password,
+            };
+
+            PlayerDM player = new PlayerDM
             {
-                /* best effort */
-            }
-            finally
+                Username = _vm.Username,
+                Name = _vm.FirstName,
+                LastName = _vm.LastName,
+            };
+            CodenamesGame.AuthenticationService.SignInRequest request =
+                CodenamesGame.Network.UserOperation.SignIn(user, player);
+            if (request.IsSuccess)
             {
-                _pendingRequestId = null;
+                MessageBox.Show(string.Format(Lang.signInSuccessfulWelcome, _vm.Username));
                 HideVerifyOverlay();
             }
+            else
+            {
+                MessageBox.Show(GetSignInErrorMessage(request));
+            }
+        }
+
+        private static string GetSignInErrorMessage(SignInRequest request)
+        {
+            string message;
+            switch (request.StatusCode)
+            {
+                case StatusCode.MISSING_DATA:
+                    return Lang.signInErrorMissingData;
+                case StatusCode.UNALLOWED:
+                    string emailDuplicateMessage = request.IsEmailDuplicate ? Lang.emailCannotUseAddressAlreadyInUse : string.Empty;
+                    string usernameInUseMessage = request.IsUsernameDuplicate ? Lang.profileErrorUsernameAlreadyInUse : string.Empty;
+                    message = string.Format("{0} \n{1}", emailDuplicateMessage, usernameInUseMessage);
+                    return message;
+                case StatusCode.WRONG_DATA:
+                    string emailInvalidMessage = request.IsEmailValid ? string.Empty : Lang.signInEmailInvalidFormat;
+                    string passwordInvalidMessage = request.IsPasswordValid ? string.Empty : Lang.signInInvalidPassword;
+                    message = string.Format("{0} \n{1}", emailInvalidMessage, passwordInvalidMessage);
+                    return message;
+                default:
+                    return Lang.globalUnknownServerError;
+            }
+        }
+
+        private void HideVerify_Click(object sender, RoutedEventArgs e)
+        {
+            HideVerifyOverlay();
         }
 
         private void Click_btnClose(object sender, RoutedEventArgs e)

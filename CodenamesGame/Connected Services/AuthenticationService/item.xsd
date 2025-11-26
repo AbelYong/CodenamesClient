@@ -2,8 +2,8 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
   <xs:element name="Login">
     <xs:complexType>
       <xs:sequence>
@@ -22,15 +22,14 @@
   <xs:element name="SignIn">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svUser" nillable="true" type="q2:User" />
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svPlayer" nillable="true" type="q3:Player" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svPlayer" nillable="true" type="q2:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SignInResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="SignInResult" nillable="true" type="q4:guid" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="SignInResult" nillable="true" type="q3:SignInRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -59,15 +58,15 @@
   <xs:element name="CompletePasswordResetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q5:ResetResult" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q4:ResetResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="BeginRegistration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svUser" nillable="true" type="q6:User" />
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svPlayer" nillable="true" type="q7:Player" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svUser" nillable="true" type="q5:User" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svPlayer" nillable="true" type="q6:Player" />
         <xs:element minOccurs="0" name="plainPassword" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -75,14 +74,14 @@
   <xs:element name="BeginRegistrationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="BeginRegistrationResult" nillable="true" type="q8:BeginRegistrationResult" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="BeginRegistrationResult" nillable="true" type="q7:BeginRegistrationResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConfirmRegistration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="requestId" type="q9:guid" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="requestId" type="q8:guid" />
         <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -90,14 +89,14 @@
   <xs:element name="ConfirmRegistrationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="ConfirmRegistrationResult" nillable="true" type="q10:ConfirmRegistrationResult" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="ConfirmRegistrationResult" nillable="true" type="q9:ConfirmRegistrationResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CancelRegistration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="requestId" type="q11:guid" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="requestId" type="q10:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

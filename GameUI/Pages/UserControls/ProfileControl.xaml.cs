@@ -1,5 +1,6 @@
 ﻿using CodenamesClient.Operation;
 using CodenamesClient.Properties.Langs;
+using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.EmailService;
 using CodenamesGame.Network;
@@ -77,27 +78,36 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private static bool SendVerificationCode(string email)
         {
-            RequestResult result = EmailOperation.SendVerificationEmail(email);
-            if (!result.IsSuccess)
+            CommunicationRequest request = EmailOperation.SendVerificationEmail(email);
+            if (!request.IsSuccess)
             {
-                MessageBox.Show(result.Message);
+                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
             }
-            return result.IsSuccess;
+            return request.IsSuccess;
         }
 
         private void Click_btnConfirmVerify(object sender, EventArgs e)
         {
             string newEmail = tBxEmail.Text;
             string code = tbxVerifyCode.Text;
-            RequestResult result = EmailOperation.SendVerificationCode(newEmail, code);
-            if (result.IsSuccess)
+            ConfirmEmailRequest request = EmailOperation.SendVerificationCode(newEmail, code);
+            if (request.IsSuccess)
             {
                 SaveProfile();
                 ClickSaveProfile?.Invoke();
             }
             else
             {
-                MessageBox.Show(result.Message);
+                string message;
+                if (request.StatusCode == StatusCode.UNAUTHORIZED)
+                {
+                    message = string.Format(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode), request.RemainingAttempts);
+                }
+                else
+                {
+                    message = StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode);
+                }
+                MessageBox.Show(message);
             }
         }
 

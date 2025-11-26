@@ -35,19 +35,27 @@ namespace CodenamesGame.Network
             return request;
         }
 
-        public static Guid? SignIn(UserDM user, PlayerDM player)
+        public static SignInRequest SignIn(UserDM user, PlayerDM player)
         {
+            SignInRequest request = new SignInRequest();
             var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
             try
             {
-                AuthenticationService.User svUser = UserDM.AssembleAuthSvUser(user);
                 AuthenticationService.Player svPlayer = PlayerDM.AssembleAuthSvPlayer(player);
-                return client.SignIn(svUser, svPlayer);
+                AuthenticationService.User svUser = UserDM.AssembleAuthSvUser(user);
+                svPlayer.User = svUser;
+                return client.SignIn(svPlayer);
+            }
+            catch (CommunicationException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
             }
             finally
             {
                 NetworkUtil.SafeClose(client);
             }
+            return request;
         }
 
         public static PlayerDM GetPlayer(Guid userID)

@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CodenamesClient.GameUI.Pages.UserControls"
+             xmlns:viewmodels="clr-namespace:CodenamesClient.GameUI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:SignInViewModel}"
              xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="500" Background="#FF1D1D1D">
@@ -86,7 +88,26 @@
             <StackPanel>
                 <Label Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource subtitle}" Margin="0,0,0,8"/>
                 <Label Content="{x:Static language:Lang.profileEmail}" Style="{StaticResource normal}" />
-                <TextBox Style="{StaticResource ValidatedTextBox}" Text="{Binding Email, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"/>
+                <Grid HorizontalAlignment="Center" Width="360">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Style="{StaticResource ValidatedTextBox}" Text="{Binding Email, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"/>
+                    <Border Grid.Column="1" Margin="10,0,-40,0" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
+                        <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
+                        <Border.ToolTip>
+                            <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
+                                <StackPanel Margin="5">
+                                    <TextBlock Text="{x:Static language:Lang.signInAcceptedEmailDomains}" FontWeight="Bold" Foreground="White" Margin="0,0,0,5"/>
+                                    <TextBlock Text="{x:Static language:Lang.emailGmailDomain}"/>
+                                    <TextBlock Text="{x:Static language:Lang.emailOutlookDomain}"/>
+                                    <TextBlock Text="{x:Static language:Lang.emailEstudiantesUvMxDomain}"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </Border.ToolTip>
+                    </Border>
+                </Grid>
                 <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource normal}" Margin="0,16,0,0"/>
                 <TextBox Style="{StaticResource ValidatedTextBox}" Text="{Binding Username, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"/>
 
@@ -109,7 +130,7 @@
                         <Border.ToolTip>
                             <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
                                 <StackPanel Margin="5">
-                                    <TextBlock Text="Requisitos:" FontWeight="Bold" Foreground="White" Margin="0,0,0,5"/>
+                                    <TextBlock Text="{x:Static language:Lang.signInPasswordRequirements}" FontWeight="Bold" Foreground="White" Margin="0,0,0,5"/>
                                     <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasMinLength}" Text="{Binding PwMinLengthText}"/>
                                     <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwWithinMaxLength}" Text="{Binding PwMaxLengthText}"/>
                                     <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasUpper}" Text="{x:Static language:Lang.signInPasswordAtLeastOneUppercaseLetter}"/>

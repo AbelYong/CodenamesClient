@@ -15,31 +15,6 @@ namespace CodenamesClient.Validation
         public const int PASSWORD_MIN_LENGTH = 10;
         public const int PASSWORD_MAX_LENGTH = 16;
 
-        private static readonly Regex GmailRegex =
-            new Regex(@"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$",
-                      RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
-
-        public static IEnumerable<string> ValidateEmail(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                yield return Lang.signInEmailRequired;
-                yield break;
-            }
-
-            if (!GmailRegex.IsMatch(email))
-                yield return Lang.signInEmailInvalidFormat;
-        }
-
-        public static IEnumerable<string> ValidateUsername(string username)
-        {
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                yield return Lang.signInUsernameRequired;
-                yield break;
-            }
-        }
-
         public static bool MeetsMinLength(string s) => !string.IsNullOrEmpty(s) && s.Length >= PASSWORD_MIN_LENGTH;
         public static bool WithinMaxLength(string s) => s != null && s.Length <= PASSWORD_MAX_LENGTH;
         public static bool HasUpper(string s) => !string.IsNullOrEmpty(s) && s.Any(char.IsUpper);
@@ -47,46 +22,6 @@ namespace CodenamesClient.Validation
         public static bool HasDigit(string s) => !string.IsNullOrEmpty(s) && s.Any(char.IsDigit);
         public static bool HasSpecial(string s) => !string.IsNullOrEmpty(s) && s.Any(c => !char.IsLetterOrDigit(c));
         public static bool NoConsecutiveRun(string s) => string.IsNullOrEmpty(s) || !HasRunOfConsecutiveDigits(s, 2);
-
-        private static bool IsLettersAndSpacesOnly(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-                return true;
-
-            string normalized = input.Normalize(NormalizationForm.FormC).Trim();
-
-            foreach (char c in normalized)
-            {
-                if (!(char.IsLetter(c) || c == ' '))
-                    return false;
-            }
-
-            return true;
-        }
-        public static IEnumerable<string> ValidateFirstName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                yield break;
-
-            if (!IsLettersAndSpacesOnly(name))
-                yield return Lang.signInFirstNameOnlyLettersSpacesAccents;
-
-            if (name.Length > PlayerDM.NAME_MAX_LENGTH)
-                yield return Lang.signInFirstNameMaxLength;
-        }
-
-        public static IEnumerable<string> ValidateLastName(string lastName)
-        {
-            if (string.IsNullOrWhiteSpace(lastName))
-                yield break;
-
-            if (!IsLettersAndSpacesOnly(lastName))
-                yield return Lang.signInLastNameOnlyLettersSpacesAccents;
-
-            if (lastName.Length > PlayerDM.LASTNAME_MAX_LENGTH)
-                yield return Lang.signInLastNameMaxLength;
-        }
-
 
         private static bool HasRunOfConsecutiveDigits(string s, int allowedRunLength)
         {
@@ -112,7 +47,9 @@ namespace CodenamesClient.Validation
                     }
 
                     if (incRun > allowedRunLength || decRun > allowedRunLength)
+                    {
                         return true;
+                    }
 
                     prevWasDigit = true;
                     prev = c;

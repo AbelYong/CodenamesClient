@@ -18,7 +18,10 @@ namespace CodenamesGame.AuthenticationService {
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.CommunicationRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.SignInRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.ConfirmEmailRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.CreateLobbyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.JoinPartyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.LoginRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -86,6 +89,100 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SignInRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class SignInRequest : CodenamesGame.AuthenticationService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmailDuplicateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmailValidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsPasswordValidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsUsernameDuplicateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmailDuplicate {
+            get {
+                return this.IsEmailDuplicateField;
+            }
+            set {
+                if ((this.IsEmailDuplicateField.Equals(value) != true)) {
+                    this.IsEmailDuplicateField = value;
+                    this.RaisePropertyChanged("IsEmailDuplicate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmailValid {
+            get {
+                return this.IsEmailValidField;
+            }
+            set {
+                if ((this.IsEmailValidField.Equals(value) != true)) {
+                    this.IsEmailValidField = value;
+                    this.RaisePropertyChanged("IsEmailValid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsPasswordValid {
+            get {
+                return this.IsPasswordValidField;
+            }
+            set {
+                if ((this.IsPasswordValidField.Equals(value) != true)) {
+                    this.IsPasswordValidField = value;
+                    this.RaisePropertyChanged("IsPasswordValid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsUsernameDuplicate {
+            get {
+                return this.IsUsernameDuplicateField;
+            }
+            set {
+                if ((this.IsUsernameDuplicateField.Equals(value) != true)) {
+                    this.IsUsernameDuplicateField = value;
+                    this.RaisePropertyChanged("IsUsernameDuplicate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ConfirmEmailRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class ConfirmEmailRequest : CodenamesGame.AuthenticationService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingAttemptsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingAttempts {
+            get {
+                return this.RemainingAttemptsField;
+            }
+            set {
+                if ((this.RemainingAttemptsField.Equals(value) != true)) {
+                    this.RemainingAttemptsField = value;
+                    this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CreateLobbyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class CreateLobbyRequest : CodenamesGame.AuthenticationService.Request {
@@ -102,6 +199,29 @@ namespace CodenamesGame.AuthenticationService {
                 if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
                     this.LobbyCodeField = value;
                     this.RaisePropertyChanged("LobbyCode");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JoinPartyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class JoinPartyRequest : CodenamesGame.AuthenticationService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.AuthenticationService.Party PartyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.AuthenticationService.Party Party {
+            get {
+                return this.PartyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyField, value) != true)) {
+                    this.PartyField = value;
+                    this.RaisePropertyChanged("Party");
                 }
             }
         }
@@ -147,65 +267,71 @@ namespace CodenamesGame.AuthenticationService {
         CONFLICT = 3,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        CLIENT_DISCONNECT = 4,
+        CLIENT_CANCEL = 4,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        CLIENT_UNREACHABLE = 5,
+        CLIENT_DISCONNECT = 5,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        MISSING_DATA = 6,
+        CLIENT_UNREACHABLE = 6,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        WRONG_DATA = 7,
+        CLIENT_TIMEOUT = 7,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        NOT_FOUND = 8,
+        MISSING_DATA = 8,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNAUTHORIZED = 9,
+        WRONG_DATA = 9,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        UNALLOWED = 10,
+        NOT_FOUND = 10,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_ERROR = 11,
+        UNAUTHORIZED = 11,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_UNAVAIBLE = 12,
+        UNALLOWED = 12,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        SERVER_TIMEOUT = 13,
+        SERVER_ERROR = 13,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ACCOUNT_BANNED = 14,
+        SERVER_UNAVAIBLE = 14,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_CREATED = 15,
+        SERVER_TIMEOUT = 15,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_DUPLICATED = 16,
+        ACCOUNT_BANNED = 16,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        USER_KICKED_AND_BANNED = 17,
+        REPORT_CREATED = 17,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_DUPLICATED = 18,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        USER_KICKED_AND_BANNED = 19,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Party : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
+        private string LobbyCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
+        private CodenamesGame.AuthenticationService.Player PartyGuestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Guid UserIDField;
+        private CodenamesGame.AuthenticationService.Player PartyHostField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -218,40 +344,40 @@ namespace CodenamesGame.AuthenticationService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
+        public string LobbyCode {
             get {
-                return this.EmailField;
+                return this.LobbyCodeField;
             }
             set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
+        public CodenamesGame.AuthenticationService.Player PartyGuest {
             get {
-                return this.PasswordField;
+                return this.PartyGuestField;
             }
             set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
+                if ((object.ReferenceEquals(this.PartyGuestField, value) != true)) {
+                    this.PartyGuestField = value;
+                    this.RaisePropertyChanged("PartyGuest");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Guid UserID {
+        public CodenamesGame.AuthenticationService.Player PartyHost {
             get {
-                return this.UserIDField;
+                return this.PartyHostField;
             }
             set {
-                if ((this.UserIDField.Equals(value) != true)) {
-                    this.UserIDField = value;
-                    this.RaisePropertyChanged("UserID");
+                if ((object.ReferenceEquals(this.PartyHostField, value) != true)) {
+                    this.PartyHostField = value;
+                    this.RaisePropertyChanged("PartyHost");
                 }
             }
         }
@@ -425,6 +551,83 @@ namespace CodenamesGame.AuthenticationService {
                 if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
                     this.UsernameField = value;
                     this.RaisePropertyChanged("Username");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid UserIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
                 }
             }
         }
@@ -668,10 +871,10 @@ namespace CodenamesGame.AuthenticationService {
         System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.LoginRequest> LoginAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/SignIn", ReplyAction="http://tempuri.org/IAuthenticationManager/SignInResponse")]
-        System.Nullable<System.Guid> SignIn(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer);
+        CodenamesGame.AuthenticationService.SignInRequest SignIn(CodenamesGame.AuthenticationService.Player svPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/SignIn", ReplyAction="http://tempuri.org/IAuthenticationManager/SignInResponse")]
-        System.Threading.Tasks.Task<System.Nullable<System.Guid>> SignInAsync(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer);
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.SignInRequest> SignInAsync(CodenamesGame.AuthenticationService.Player svPlayer);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse")]
         void BeginPasswordReset(string username, string email);
@@ -739,12 +942,12 @@ namespace CodenamesGame.AuthenticationService {
             return base.Channel.LoginAsync(username, password);
         }
         
-        public System.Nullable<System.Guid> SignIn(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer) {
-            return base.Channel.SignIn(svUser, svPlayer);
+        public CodenamesGame.AuthenticationService.SignInRequest SignIn(CodenamesGame.AuthenticationService.Player svPlayer) {
+            return base.Channel.SignIn(svPlayer);
         }
         
-        public System.Threading.Tasks.Task<System.Nullable<System.Guid>> SignInAsync(CodenamesGame.AuthenticationService.User svUser, CodenamesGame.AuthenticationService.Player svPlayer) {
-            return base.Channel.SignInAsync(svUser, svPlayer);
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.SignInRequest> SignInAsync(CodenamesGame.AuthenticationService.Player svPlayer) {
+            return base.Channel.SignInAsync(svPlayer);
         }
         
         public void BeginPasswordReset(string username, string email) {

@@ -70,6 +70,69 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, this email address is already in use.
+        /// </summary>
+        public static string emailCannotUseAddressAlreadyInUse {
+            get {
+                return ResourceManager.GetString("emailCannotUseAddressAlreadyInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t confirm your email because your verification code has expired, or you ran out of attempts.
+        /// </summary>
+        public static string emailConfirmationCodeExpiredOrRemoved {
+            get {
+                return ResourceManager.GetString("emailConfirmationCodeExpiredOrRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a example@estudiantes.uv.mx.
+        /// </summary>
+        public static string emailEstudiantesUvMxDomain {
+            get {
+                return ResourceManager.GetString("emailEstudiantesUvMxDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We&apos;ve received your request but couldn&apos;t send you a verification code, please try again later.
+        /// </summary>
+        public static string emailFailedToSendCodeToUser {
+            get {
+                return ResourceManager.GetString("emailFailedToSendCodeToUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a example@gmail.com.
+        /// </summary>
+        public static string emailGmailDomain {
+            get {
+                return ResourceManager.GetString("emailGmailDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a example@outlook.com.
+        /// </summary>
+        public static string emailOutlookDomain {
+            get {
+                return ResourceManager.GetString("emailOutlookDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The verification code is incorrect you have {0} attempts remaining.
+        /// </summary>
+        public static string emailVerificationFailedAttemptsRemainingX {
+            get {
+                return ResourceManager.GetString("emailVerificationFailedAttemptsRemainingX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Your partner lost connection, the mission has been canceled..
         /// </summary>
         public static string errorCompanionLostConnection {
@@ -970,6 +1033,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, this username is already in use.
+        /// </summary>
+        public static string profileErrorUsernameAlreadyInUse {
+            get {
+                return ResourceManager.GetString("profileErrorUsernameAlreadyInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Last name.
         /// </summary>
         public static string profileLastName {
@@ -1020,6 +1092,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string profileSocialNetwork {
             get {
                 return ResourceManager.GetString("profileSocialNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The maximum username length is 20 characters.
+        /// </summary>
+        public static string profileUsernameMaxLength {
+            get {
+                return ResourceManager.GetString("profileUsernameMaxLength", resourceCulture);
             }
         }
         
@@ -1177,6 +1258,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Accepted email addresses:.
+        /// </summary>
+        public static string signInAcceptedEmailDomains {
+            get {
+                return ResourceManager.GetString("signInAcceptedEmailDomains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Code must have 6 digits..
         /// </summary>
         public static string signInCodeMustHave6Digits {
@@ -1218,6 +1308,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string signInErrorConfirmingRegistration {
             get {
                 return ResourceManager.GetString("signInErrorConfirmingRegistration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t sign you in because your request is missing key information.
+        /// </summary>
+        public static string signInErrorMissingData {
+            get {
+                return ResourceManager.GetString("signInErrorMissingData", resourceCulture);
             }
         }
         
@@ -1375,6 +1474,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Password requirements.
+        /// </summary>
+        public static string signInPasswordRequirements {
+            get {
+                return ResourceManager.GetString("signInPasswordRequirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Passwords do not match.
         /// </summary>
         public static string signInPasswordsDoNotMatch {
@@ -1398,6 +1506,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string signInRegistrationCouldNotBeStarted {
             get {
                 return ResourceManager.GetString("signInRegistrationCouldNotBeStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We just signed you in, welcome agent {0}!.
+        /// </summary>
+        public static string signInSuccessfulWelcome {
+            get {
+                return ResourceManager.GetString("signInSuccessfulWelcome", resourceCulture);
             }
         }
         

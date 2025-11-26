@@ -12,6 +12,25 @@ namespace CodenamesClient.Util
                     return Lang.globalServerError;
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
+                case CodenamesGame.AuthenticationService.StatusCode.MISSING_DATA:
+                    return Lang.signInErrorMissingData;
+                default:
+                    return Lang.globalUnknownServerError;
+            }
+        }
+
+        public static string GetEmailServiceMessage(CodenamesGame.EmailService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.EmailService.StatusCode.SERVER_ERROR:
+                    return Lang.emailFailedToSendCodeToUser;
+                case CodenamesGame.EmailService.StatusCode.UNALLOWED:
+                    return Lang.emailCannotUseAddressAlreadyInUse;
+                case CodenamesGame.EmailService.StatusCode.NOT_FOUND:
+                    return Lang.emailConfirmationCodeExpiredOrRemoved;
+                case CodenamesGame.EmailService.StatusCode.UNAUTHORIZED:
+                    return Lang.emailVerificationFailedAttemptsRemainingX;
                 default:
                     return Lang.globalUnknownServerError;
             }

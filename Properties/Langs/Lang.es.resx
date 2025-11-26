@@ -597,4 +597,43 @@
   <data name="matchWaitForClue" xml:space="preserve">
     <value>Espera a recibir la pista de tu compañero</value>
   </data>
+  <data name="emailConfirmationCodeExpiredOrRemoved" xml:space="preserve">
+    <value>No pudimos confirmar tu correo por que el código ha expirado o te has quedado sin intentos</value>
+  </data>
+  <data name="emailFailedToSendCodeToUser" xml:space="preserve">
+    <value>Recibimos tu solicitud pero no pudimos enviarte un código de verificación, por favor inténtalo más tarde</value>
+  </data>
+  <data name="emailCannotUseAddressAlreadyInUse" xml:space="preserve">
+    <value>Lo sentimos, este correo electrónico ya esta en uso</value>
+  </data>
+  <data name="emailVerificationFailedAttemptsRemainingX" xml:space="preserve">
+    <value>El código de verificación es incorrecto, te quedan {0} intentos</value>
+  </data>
+  <data name="signInPasswordRequirements" xml:space="preserve">
+    <value>Requisitos de la contraseña</value>
+  </data>
+  <data name="signInAcceptedEmailDomains" xml:space="preserve">
+    <value>Direcciones de correo aceptadas:</value>
+  </data>
+  <data name="emailGmailDomain" xml:space="preserve">
+    <value>ejemplo@gmail.com</value>
+  </data>
+  <data name="emailOutlookDomain" xml:space="preserve">
+    <value>ejemplo@outlook.com</value>
+  </data>
+  <data name="emailEstudiantesUvMxDomain" xml:space="preserve">
+    <value>ejemplo@estudiantes.uv.mx</value>
+  </data>
+  <data name="signInSuccessfulWelcome" xml:space="preserve">
+    <value>Te hemos registrado, ¡bienvenido agente {0}!</value>
+  </data>
+  <data name="signInErrorMissingData" xml:space="preserve">
+    <value>Lo sentimos, no pudimos registrarte por que a tu solicitud le faltan datos críticos</value>
+  </data>
+  <data name="profileErrorUsernameAlreadyInUse" xml:space="preserve">
+    <value>Lo sentimos, este nombre de usuario ya esta en uso</value>
+  </data>
+  <data name="profileUsernameMaxLength" xml:space="preserve">
+    <value>La longitud máxima de un nombre de usuario es de 20 carácteres</value>
+  </data>
 </root>

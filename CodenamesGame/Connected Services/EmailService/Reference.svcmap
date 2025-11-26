@@ -22,10 +22,12 @@
     <MetadataSource Address="http://localhost:9053" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="EmailService.wsdl" MetadataType="Wsdl" ID="dd9434e8-9015-4bc3-bcc8-990d0e5ab173" SourceId="1" SourceUrl="http://localhost:9053/?wsdl" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="9af5dc93-85d9-41c7-9d9b-c7b1bdf0daa1" SourceId="1" SourceUrl="http://localhost:9053/?xsd=xsd4" />
     <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="8e962d1c-4bda-4de2-96a1-006cc96053bb" SourceId="1" SourceUrl="http://localhost:9053/?xsd=xsd1" />
     <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="7dcbffcb-6b4c-4fd8-a763-f6f0c286420a" SourceId="1" SourceUrl="http://localhost:9053/?xsd=xsd0" />
+    <MetadataFile FileName="item31.xsd" MetadataType="Schema" ID="4331d441-9187-4380-bb36-17638f48e125" SourceId="1" SourceUrl="http://localhost:9053/?xsd=xsd3" />
     <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="449742da-7083-43b3-a0dd-230b89326f0a" SourceId="1" SourceUrl="http://localhost:9053/?xsd=xsd2" />
-    <MetadataFile FileName="EmailService.wsdl" MetadataType="Wsdl" ID="dd9434e8-9015-4bc3-bcc8-990d0e5ab173" SourceId="1" SourceUrl="http://localhost:9053/?wsdl" />
     <MetadataFile FileName="item.disco" MetadataType="Disco" ID="1529f04c-ae2c-4fc3-a3cc-acb9ff22e082" SourceId="1" SourceUrl="http://localhost:9053/?disco" />
   </Metadata>
   <Extensions>

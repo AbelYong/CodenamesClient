@@ -597,4 +597,43 @@
   <data name="matchWaitForClue" xml:space="preserve">
     <value>Wait to receive the clue from your partner</value>
   </data>
+  <data name="emailConfirmationCodeExpiredOrRemoved" xml:space="preserve">
+    <value>We couldn't confirm your email because your verification code has expired, or you ran out of attempts</value>
+  </data>
+  <data name="emailFailedToSendCodeToUser" xml:space="preserve">
+    <value>We've received your request but couldn't send you a verification code, please try again later</value>
+  </data>
+  <data name="emailCannotUseAddressAlreadyInUse" xml:space="preserve">
+    <value>Sorry, this email address is already in use</value>
+  </data>
+  <data name="emailVerificationFailedAttemptsRemainingX" xml:space="preserve">
+    <value>The verification code is incorrect you have {0} attempts remaining</value>
+  </data>
+  <data name="signInPasswordRequirements" xml:space="preserve">
+    <value>Password requirements</value>
+  </data>
+  <data name="signInAcceptedEmailDomains" xml:space="preserve">
+    <value>Accepted email addresses:</value>
+  </data>
+  <data name="emailGmailDomain" xml:space="preserve">
+    <value>example@gmail.com</value>
+  </data>
+  <data name="emailOutlookDomain" xml:space="preserve">
+    <value>example@outlook.com</value>
+  </data>
+  <data name="emailEstudiantesUvMxDomain" xml:space="preserve">
+    <value>example@estudiantes.uv.mx</value>
+  </data>
+  <data name="signInSuccessfulWelcome" xml:space="preserve">
+    <value>We just signed you in, welcome agent {0}!</value>
+  </data>
+  <data name="signInErrorMissingData" xml:space="preserve">
+    <value>Sorry, we couldn't sign you in because your request is missing key information</value>
+  </data>
+  <data name="profileErrorUsernameAlreadyInUse" xml:space="preserve">
+    <value>Sorry, this username is already in use</value>
+  </data>
+  <data name="profileUsernameMaxLength" xml:space="preserve">
+    <value>The maximum username length is 20 characters</value>
+  </data>
 </root>

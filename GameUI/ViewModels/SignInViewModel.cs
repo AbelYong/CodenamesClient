@@ -23,17 +23,79 @@ namespace CodenamesClient.GameUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        public string Email { get => _email; set { if (Set(ref _email, value)) ValidateProperty(nameof(Email)); } }
-        public string Username { get => _username; set { if (Set(ref _username, value)) ValidateProperty(nameof(Username)); } }
-        public string FirstName { get => _firstName; set { if (Set(ref _firstName, value)) ValidateProperty(nameof(FirstName)); } }
-        public string LastName { get => _lastName; set { if (Set(ref _lastName, value)) ValidateProperty(nameof(LastName)); } }
+        public string Email
+        { 
+            get => _email;
+            set 
+            {
+                var trimmedEmail = value?.Trim() ?? string.Empty;
+                if (Set(ref _email, trimmedEmail))
+                {
+                    ValidateProperty(nameof(Email));
+                }
+                else if (value != trimmedEmail)
+                {
+                    OnPropertyChanged(nameof(Email));
+                }
+            } 
+        }
+        public string Username
+        { 
+            get => _username;
+            set 
+            {
+                var trimmedUsername = value?.Trim() ?? string.Empty;
+                if (Set(ref _username, trimmedUsername))
+                {
+                    ValidateProperty(nameof(Username));
+                }
+                else if (value != trimmedUsername)
+                {
+                    OnPropertyChanged(nameof(Username));
+                }
+            } 
+        }
+        public string FirstName
+        { 
+            get => _firstName;
+            set 
+            {
+                var trimmedFirstName = value?.Trim() ?? string.Empty;
+                if (Set(ref _firstName, trimmedFirstName))
+                {
+                    ValidateProperty(nameof(FirstName));
+                }
+                else if (value != trimmedFirstName)
+                {
+                    OnPropertyChanged(nameof(FirstName));
+                }
+            } 
+        }
+        public string LastName 
+        { 
+            get => _lastName;
+            set 
+            {
+                var trimmedLastName = value?.Trim() ?? string.Empty;
+                if (Set(ref _lastName, trimmedLastName))
+                {
+                    ValidateProperty(nameof(LastName));
+                }
+                else if (value != trimmedLastName)
+                {
+                    OnPropertyChanged(nameof(LastName));
+                }
+            } 
+        }
 
         public string Password
         {
             get => _password;
             set
             {
-                if (Set(ref _password, value))
+                var trimmedPassword = value?.Trim() ?? string.Empty;
+
+                if (Set(ref _password, trimmedPassword))
                 {
                     OnPropertyChanged(nameof(PwHasMinLength));
                     OnPropertyChanged(nameof(PwWithinMaxLength));
@@ -45,6 +107,10 @@ namespace CodenamesClient.GameUI.ViewModels
                     OnPropertyChanged(nameof(IsPasswordValid));
                     ValidateProperty(nameof(ConfirmPassword));
                     OnPropertyChanged(nameof(CanSubmit));
+                }
+                else if (value != trimmedPassword)
+                {
+                    OnPropertyChanged(nameof(Password));
                 }
             }
         }
@@ -67,8 +133,8 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public string PwMinLengthText => string.Format(Lang.signInPasswordMinLength, SignInValidation.PASSWORD_MIN_LENGTH);
-        public string PwMaxLengthText => string.Format(Lang.signInPasswordMaxLength, SignInValidation.PASSWORD_MAX_LENGTH);
+        public static string PwMinLengthText => string.Format(Lang.signInPasswordMinLength, SignInValidation.PASSWORD_MIN_LENGTH);
+        public static string PwMaxLengthText => string.Format(Lang.signInPasswordMaxLength, SignInValidation.PASSWORD_MAX_LENGTH);
 
         public bool PwHasMinLength => SignInValidation.MeetsMinLength(Password);
         public bool PwWithinMaxLength => SignInValidation.WithinMaxLength(Password);
@@ -108,19 +174,19 @@ namespace CodenamesClient.GameUI.ViewModels
             switch (propertyName)
             {
                 case nameof(Email):
-                    errors = SignInValidation.ValidateEmail(Email);
+                    errors = ProfileValidation.ValidateEmail(Email);
                     break;
 
                 case nameof(Username):
-                    errors = SignInValidation.ValidateUsername(Username);
+                    errors = ProfileValidation.ValidateUsername(Username);
                     break;
 
                 case nameof(FirstName):
-                    errors = SignInValidation.ValidateFirstName(FirstName);
+                    errors = ProfileValidation.ValidateFirstName(FirstName);
                     break;
 
                 case nameof(LastName):
-                    errors = SignInValidation.ValidateLastName(LastName);
+                    errors = ProfileValidation.ValidateLastName(LastName);
                     break;
 
                 case nameof(Password):
@@ -157,13 +223,18 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
         {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            if (EqualityComparer<T>.Default.Equals(field, value))
+            {
+                return false;
+            }
             field = value;
             OnPropertyChanged(propertyName);
             return true;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
