@@ -636,4 +636,7 @@
   <data name="profileUsernameMaxLength" xml:space="preserve">
     <value>The maximum username length is 20 characters</value>
   </data>
+  <data name="errorInvalidClueFormat" xml:space="preserve">
+    <value>The clue must consist of a single word (letters) and a number, separated by a space. Example: 'Animal 3'</value>
+  </data>
 </root>

@@ -636,4 +636,7 @@
   <data name="profileUsernameMaxLength" xml:space="preserve">
     <value>La longitud máxima de un nombre de usuario es de 20 carácteres</value>
   </data>
+  <data name="errorInvalidClueFormat" xml:space="preserve">
+    <value>La pista debe constar de una sola palabra (letras) y un número, separados por un espacio. Ejemplo: 'Animal 3'</value>
+  </data>
 </root>

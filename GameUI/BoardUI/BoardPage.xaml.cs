@@ -38,9 +38,9 @@ namespace CodenamesClient.GameUI.BoardUI
 
             _viewModel.GoBackToMenu += OnGoBackToMenu;
 
-            _viewModel.OnAgentLightRequested += FlashAgentLight;
-            _viewModel.OnBystanderLightRequested += FlashBystanderLight;
-            _viewModel.OnAssassinLightRequested += TriggerAssassinSequence;
+            _viewModel.OnAgentFlipRequested += HandleAgentFlip;
+            _viewModel.OnBystanderFlipRequested += HandleBystanderFlip;
+            _viewModel.OnAssassinFlipRequested += HandleAssassinFlip;
 
             this.DataContext = _viewModel;
             DrawWords();
@@ -61,6 +61,100 @@ namespace CodenamesClient.GameUI.BoardUI
             {
                 Console.WriteLine($"Error reproduciendo audio {fileName}: {ex.Message}");
             }
+        }
+
+        private void HandleAgentFlip(BoardCoordinatesDM coordinates)
+        {
+            FlashAgentLight();
+            FlipCardAt(coordinates, AGENT_CODE, false);
+        }
+
+        private void HandleBystanderFlip(BoardCoordinatesDM coordinates)
+        {
+            FlashBystanderLight();
+
+            ToggleButton btn = GetButtonAt(coordinates.Row, coordinates.Column);
+            bool iPickedIt = btn != null && (btn.IsChecked == true);
+
+            FlipCardAt(coordinates, BYSTANDER_CODE, !iPickedIt);
+        }
+
+        private void HandleAssassinFlip(BoardCoordinatesDM coordinates)
+        {
+            TriggerAssassinSequence();
+            FlipCardAt(coordinates, ASSASSIN_CODE, false);
+        }
+
+        private async void FlipCardAt(BoardCoordinatesDM coordinates, int code, bool keepInteractiveForSpymaster)
+        {
+            ToggleButton button = GetButtonAt(coordinates.Row, coordinates.Column);
+            if (button == null)
+            {
+                return;
+            }
+
+            button.IsChecked = true;
+            button.IsEnabled = false;
+
+            ImageBrush newBackground;
+            switch (code)
+            {
+                case AGENT_CODE:
+                    newBackground = GetAgentCardImage();
+                    break;
+                case BYSTANDER_CODE:
+                    newBackground = GetBystanderCardImage();
+                    break;
+                case ASSASSIN_CODE:
+                    newBackground = GetAssassinCardImage();
+                    break;
+                default:
+                    newBackground = new ImageBrush();
+                    break;
+            }
+
+            await AnimateCardFlip(button, isFlippingAway: true);
+
+            button.Background = newBackground;
+
+            if (keepInteractiveForSpymaster && code == BYSTANDER_CODE)
+            {
+                button.IsEnabled = true;
+                if (button.Content is string text && !string.IsNullOrEmpty(text))
+                {
+                    button.Content = new Border
+                    {
+                        Background = new SolidColorBrush(Color.FromArgb(180, 0, 0, 0)),
+                        CornerRadius = new CornerRadius(5),
+                        Padding = new Thickness(5),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Child = new TextBlock
+                        {
+                            Text = text,
+                            Foreground = Brushes.White,
+                            FontWeight = FontWeights.Bold,
+                            FontSize = 14,
+                            FontFamily = new FontFamily("Consolas"),
+                            TextWrapping = TextWrapping.Wrap,
+                            TextAlignment = TextAlignment.Center
+                        }
+                    };
+                }
+            }
+            else
+            {
+                button.Content = string.Empty;
+                button.IsEnabled = false;
+            }
+
+            await AnimateCardFlip(button, isFlippingAway: false);
+        }
+
+        private ToggleButton GetButtonAt(int row, int col)
+        {
+            return gridBoard.Children.OfType<ToggleButton>()
+                .FirstOrDefault(e => Grid.GetRow(e) == row && Grid.GetColumn(e) == col);
         }
 
         private async void FlashAgentLight()
@@ -153,9 +247,10 @@ namespace CodenamesClient.GameUI.BoardUI
             _viewModel.Disconnect();
 
             _viewModel.GoBackToMenu -= OnGoBackToMenu;
-            _viewModel.OnAgentLightRequested -= FlashAgentLight;
-            _viewModel.OnBystanderLightRequested -= FlashBystanderLight;
-            _viewModel.OnAssassinLightRequested -= TriggerAssassinSequence;
+
+            _viewModel.OnAgentFlipRequested -= HandleAgentFlip;
+            _viewModel.OnBystanderFlipRequested -= HandleBystanderFlip;
+            _viewModel.OnAssassinFlipRequested -= HandleAssassinFlip;
         }
 
         private void Click_QuitMatch(object sender, RoutedEventArgs e)
@@ -168,11 +263,21 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             if (sender is ToggleButton clickedButton)
             {
-                clickedButton.IsEnabled = false;
-
                 int row = Grid.GetRow(clickedButton);
                 int column = Grid.GetColumn(clickedButton);
                 int code = _viewModel.AgentsMatrix[row, column];
+
+                if (_viewModel.AmISpymaster && clickedButton.Content.ToString() != string.Empty)
+                {
+                    int trueCode = _viewModel.Keycard[row, column];
+
+                    FlipCardAt(new BoardCoordinatesDM(row, column), trueCode, false);
+                    return;
+                }
+
+                clickedButton.IsChecked = true;
+                clickedButton.IsEnabled = false;
+
                 ImageBrush newBackground;
                 switch (code)
                 {
@@ -215,6 +320,11 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private ImageBrush GetAgentCardImage()
         {
+            if (_viewModel.AgentNumbers.Count == 0)
+            {
+                return new ImageBrush();
+            }
+
             int remainingAgents = _viewModel.AgentNumbers.Count;
             int random = _random.Next(remainingAgents);
 
@@ -337,7 +447,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(slideXAnim, card);
-                    Storyboard.SetTargetProperty(slideXAnim, new PropertyPath("RenderTransform.Children[0].X"));
+                    Storyboard.SetTargetProperty(slideXAnim, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.X)"));
                     storyboard.Children.Add(slideXAnim);
 
                     var slideYAnim = new DoubleAnimation(startTranslateY, 0, TimeSpan.FromMilliseconds(animationDuration))
@@ -346,7 +456,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(slideYAnim, card);
-                    Storyboard.SetTargetProperty(slideYAnim, new PropertyPath("RenderTransform.Children[1].Y"));
+                    Storyboard.SetTargetProperty(slideYAnim, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(TranslateTransform.Y)"));
                     storyboard.Children.Add(slideYAnim);
 
                     var rotateAnim = new DoubleAnimation(startRotation, 0, TimeSpan.FromMilliseconds(animationDuration))
@@ -355,7 +465,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(rotateAnim, card);
-                    Storyboard.SetTargetProperty(rotateAnim, new PropertyPath("RenderTransform.Children[1].Angle"));
+                    Storyboard.SetTargetProperty(rotateAnim, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"));
                     storyboard.Children.Add(rotateAnim);
 
                     storyboard.Begin();

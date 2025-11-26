@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Threading;
 using CodenamesClient.Properties.Langs;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -24,11 +25,10 @@ namespace CodenamesClient.GameUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public event Action GoBackToMenu;
 
-        public event Action OnAgentLightRequested;
-        public event Action OnBystanderLightRequested;
-        public event Action OnAssassinLightRequested;
+        public event Action<BoardCoordinatesDM> OnAgentFlipRequested;
+        public event Action<BoardCoordinatesDM> OnBystanderFlipRequested;
+        public event Action<BoardCoordinatesDM> OnAssassinFlipRequested;
 
-        //The MAX_GLOBAL constants are used for selecting random images from the assets by setting limits for number-indexing
         public const int MAX_GLOBAL_AGENTS = 15;
         public const int MAX_GLOBAL_ASSASSINS = 3;
         public const int MAX_GLOBAL_BYSTANDERS = 7;
@@ -70,8 +70,10 @@ namespace CodenamesClient.GameUI.ViewModels
         private bool _isSkipButtonVisible;
         private bool _amISpymaster;
 
-        public ObservableCollection<ChatMessageDM> ChatMessages {  get; set; }
+        public ObservableCollection<ChatMessageDM> ChatMessages { get; set; }
         public List<int> AgentNumbers { get; set; }
+
+        public bool AmISpymaster => _amISpymaster;
 
         public string PlayerSTurn
         {
@@ -262,7 +264,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public string OverlayColor
         {
             get => _overlayColor;
@@ -349,7 +351,6 @@ namespace CodenamesClient.GameUI.ViewModels
         private void SetInitialTurn()
         {
             _amISpymaster = _me.PlayerID == _match.Requester.PlayerID;
-
             UpdateUIState();
         }
 
@@ -449,9 +450,9 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                OnAgentFlipRequested?.Invoke(e.Coordinates);
                 if (_amISpymaster)
                 {
-                    OnAgentLightRequested?.Invoke();
                     TurnTimer = e.NewTurnLength;
                     StartTimer();
                 }
@@ -462,11 +463,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (_amISpymaster)
-                {
-                    OnBystanderLightRequested?.Invoke();
-                }
-
+                OnBystanderFlipRequested?.Invoke(e.Coordinates);
                 if (e.TokenToUpdate == TokenType.TIMER)
                 {
                     TimerTokens = e.RemainingTokens;
@@ -491,11 +488,9 @@ namespace CodenamesClient.GameUI.ViewModels
                 GameOverImageSource = "/Assets/BoardUI/Assassins/assassin01.png";
                 ShowAssassinImage = true;
 
-                if (_amISpymaster)
-                {
-                    OnAssassinLightRequested?.Invoke();
-                }
-                else
+                OnAssassinFlipRequested?.Invoke(e.Coordinates);
+
+                if (!_amISpymaster)
                 {
                     ShowGameOverScreen();
                 }
@@ -523,15 +518,26 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 return;
             }
-            if (IsMessageIllegal(ChatInput))
+
+            string trimmedMessage = ChatInput.Trim();
+
+            if (!IsValidClueFormat(trimmedMessage))
+            {
+                MessageBox.Show(Lang.errorInvalidClueFormat, Lang.globalWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string wordPart = trimmedMessage.Split(' ')[0];
+
+            if (IsMessageIllegal(wordPart))
             {
                 MessageBox.Show(Lang.errorIllegalClue, Lang.globalWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            MatchOperation.Instance.SendClue(ChatInput);
+            MatchOperation.Instance.SendClue(trimmedMessage);
 
-            AddMessageToChat(ChatInput, true);
+            AddMessageToChat(trimmedMessage, true);
             ChatInput = string.Empty;
 
             if (_amISpymaster)
@@ -544,9 +550,59 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private bool IsMessageIllegal(string message)
+        private bool IsValidClueFormat(string message)
         {
-            return _keywords.Values.Any(k => k.Equals(message, StringComparison.InvariantCultureIgnoreCase));
+            string[] parts = message.Split(' ');
+            if (parts.Length != 2)
+            {
+                return false;
+            }
+
+            string word = parts[0];
+            string number = parts[1];
+
+            if (!Regex.IsMatch(word, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$"))
+            {
+                return false;
+            }
+
+            if (!int.TryParse(number, out _))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsMessageIllegal(string clueWord)
+        {
+            List<string> englishWords = GetWordsForCulture(new CultureInfo("en"));
+            List<string> spanishWords = GetWordsForCulture(new CultureInfo("es"));
+
+            foreach (int index in _keywords.Keys)
+            {
+                string boardWordCurrent = _keywords[index];
+                string boardWordEn = (index < englishWords.Count) ? englishWords[index] : string.Empty;
+                string boardWordEs = (index < spanishWords.Count) ? spanishWords[index] : string.Empty;
+
+                if (IsIllegalMatch(clueWord, boardWordCurrent) ||
+                    IsIllegalMatch(clueWord, boardWordEn) ||
+                    IsIllegalMatch(clueWord, boardWordEs))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsIllegalMatch(string clue, string boardWord)
+        {
+            if (string.IsNullOrEmpty(boardWord)) return false;
+
+            string c = clue.Trim().ToLowerInvariant();
+            string b = boardWord.Trim().ToLowerInvariant();
+
+            return c.Equals(b) || b.Contains(c) || c.Contains(b);
         }
 
         private void AddMessageToChat(string text, bool isMine)
@@ -571,7 +627,6 @@ namespace CodenamesClient.GameUI.ViewModels
             IsChatEnabled = false;
         }
 
-        #region Gameplay Logic
         public void HandleAgentSelection(BoardCoordinatesDM coordinates)
         {
             AddTime(TurnLength);
@@ -607,7 +662,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     }
                 }
             }
-            
+
             IsBoardEnabled = false;
             IsSkipButtonVisible = false;
         }
@@ -618,7 +673,6 @@ namespace CodenamesClient.GameUI.ViewModels
             MatchOperation.Instance.NotifyPickedAssassin(coordinates);
         }
 
-        #endregion
 
         private void InitializeAgentNumbers()
         {
@@ -637,20 +691,26 @@ namespace CodenamesClient.GameUI.ViewModels
             List<string> allWords = GetCurrentCultureWords();
             for (int i = 0; i < TOTAL_KEYCARDS; i++)
             {
-                _keywords.Add(i, allWords[wordlist[i]]);
+                if (wordlist[i] < allWords.Count)
+                {
+                    _keywords.Add(i, allWords[wordlist[i]]);
+                }
             }
         }
 
         private static List<string> GetCurrentCultureWords()
         {
+            return GetWordsForCulture(CultureInfo.CurrentUICulture);
+        }
+
+        private static List<string> GetWordsForCulture(CultureInfo culture)
+        {
             ResourceManager manager = Properties.Langs.GameWords.ResourceManager;
-            CultureInfo currentCulture = CultureInfo.CurrentUICulture;
-            ResourceSet resourceSet = manager.GetResourceSet(currentCulture, true, true);
+            ResourceSet resourceSet = manager.GetResourceSet(culture, true, true);
 
             if (resourceSet == null)
             {
                 return new List<string>();
-                //TODO: Notify world list could not be found, end match
             }
             List<string> allWords = resourceSet.OfType<DictionaryEntry>()
                 .Where(entry => entry.Value is string).Select(entry => (string)entry.Value).ToList();
@@ -740,7 +800,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public void StopChronometer()
         {
             _chronometer.Stop();
-            ElapsedTime =TimeSpan.Zero;
+            ElapsedTime = TimeSpan.Zero;
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
