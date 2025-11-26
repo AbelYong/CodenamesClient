@@ -88,6 +88,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The clue must consist of a single word (letters) and a number, separated by a space. Example: &apos;Animal 3&apos;.
+        /// </summary>
+        public static string errorInvalidClueFormat {
+            get {
+                return ResourceManager.GetString("errorInvalidClueFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Choose a gamemode.
         /// </summary>
         public static string gamemodeChooseAGamemode {

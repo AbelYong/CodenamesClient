@@ -597,4 +597,7 @@
   <data name="matchWaitForClue" xml:space="preserve">
     <value>Wait to receive the clue from your partner</value>
   </data>
+  <data name="errorInvalidClueFormat" xml:space="preserve">
+    <value>The clue must consist of a single word (letters) and a number, separated by a space. Example: 'Animal 3'</value>
+  </data>
 </root>

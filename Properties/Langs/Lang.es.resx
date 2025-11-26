@@ -597,4 +597,7 @@
   <data name="matchWaitForClue" xml:space="preserve">
     <value>Espera a recibir la pista de tu compañero</value>
   </data>
+  <data name="errorInvalidClueFormat" xml:space="preserve">
+    <value>La pista debe constar de una sola palabra (letras) y un número, separados por un espacio. Ejemplo: 'Animal 3'</value>
+  </data>
 </root>
