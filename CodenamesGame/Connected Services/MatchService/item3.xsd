@@ -47,12 +47,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendClueResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="NotifyTurnTimeout">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="senderID" type="q8:guid" />
         <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="currentRole" type="q9:MatchRoleType" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyTurnTimeoutResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyPickedAgent">
@@ -62,6 +72,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="NotifyPickedAgentResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="NotifyPickedBystander">
     <xs:complexType>
       <xs:sequence>
@@ -69,11 +84,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="NotifyPickedBystanderResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="NotifyPickedAssassin">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="notification" nillable="true" type="q12:AssassinPickedNotification" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyPickedAssassinResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyClueReceived">

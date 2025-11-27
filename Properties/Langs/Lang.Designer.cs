@@ -160,6 +160,105 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Friend added successfully..
+        /// </summary>
+        public static string friendAddedSuccess {
+            get {
+                return ResourceManager.GetString("friendAddedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You are already friends with this user..
+        /// </summary>
+        public static string friendErrorAlreadyFriends {
+            get {
+                return ResourceManager.GetString("friendErrorAlreadyFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Could not complete the friendship operation..
+        /// </summary>
+        public static string friendErrorOperationFailed {
+            get {
+                return ResourceManager.GetString("friendErrorOperationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You cannot send a request to yourself..
+        /// </summary>
+        public static string friendErrorSelfRequest {
+            get {
+                return ResourceManager.GetString("friendErrorSelfRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} accepted your friend request!.
+        /// </summary>
+        public static string friendNotificationAccepted {
+            get {
+                return ResourceManager.GetString("friendNotificationAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a New friend request from {0}!.
+        /// </summary>
+        public static string friendNotificationNewRequest {
+            get {
+                return ResourceManager.GetString("friendNotificationNewRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} rejected your friend request..
+        /// </summary>
+        public static string friendNotificationRejected {
+            get {
+                return ResourceManager.GetString("friendNotificationRejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} has removed you from their friends list..
+        /// </summary>
+        public static string friendNotificationRemoved {
+            get {
+                return ResourceManager.GetString("friendNotificationRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Friend removed successfully..
+        /// </summary>
+        public static string friendRemovedSuccess {
+            get {
+                return ResourceManager.GetString("friendRemovedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Friend request rejected..
+        /// </summary>
+        public static string friendRequestRejected {
+            get {
+                return ResourceManager.GetString("friendRequestRejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Friend request sent successfully..
+        /// </summary>
+        public static string friendRequestSentSuccess {
+            get {
+                return ResourceManager.GetString("friendRequestSentSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Choose a gamemode.
         /// </summary>
         public static string gamemodeChooseAGamemode {
@@ -237,6 +336,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalDisconnected {
             get {
                 return ResourceManager.GetString("globalDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error.
+        /// </summary>
+        public static string globalErrorTitle {
+            get {
+                return ResourceManager.GetString("globalErrorTitle", resourceCulture);
             }
         }
         
@@ -354,6 +462,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalStart {
             get {
                 return ResourceManager.GetString("globalStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Success.
+        /// </summary>
+        public static string globalSuccessTitle {
+            get {
+                return ResourceManager.GetString("globalSuccessTitle", resourceCulture);
             }
         }
         

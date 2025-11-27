@@ -28,6 +28,29 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="LoginRequest" nillable="true" type="tns:LoginRequest" />
+  <xs:complexType name="SignInRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsEmailDuplicate" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsEmailValid" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsPasswordValid" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsUsernameDuplicate" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SignInRequest" nillable="true" type="tns:SignInRequest" />
+  <xs:complexType name="ConfirmEmailRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RemainingAttempts" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConfirmEmailRequest" nillable="true" type="tns:ConfirmEmailRequest" />
   <xs:complexType name="CreateLobbyRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
@@ -48,14 +71,12 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="JoinPartyRequest" nillable="true" type="tns:JoinPartyRequest" />
-  <xs:complexType name="ConfirmEmailRequest">
+  <xs:complexType name="FriendshipRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="RemainingAttempts" type="xs:int" />
-        </xs:sequence>
+        <xs:sequence />
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="ConfirmEmailRequest" nillable="true" type="tns:ConfirmEmailRequest" />
+  <xs:element name="FriendshipRequest" nillable="true" type="tns:FriendshipRequest" />
 </xs:schema>

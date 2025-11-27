@@ -139,6 +139,15 @@
     <None Include="Connected Services\EmailService\item31.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\FriendService\CodenamesGame.FriendService.FriendshipRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\FriendService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\FriendService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\LobbyService\CodenamesGame.LobbyService.CommunicationRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -275,6 +284,9 @@
     <None Include="Connected Services\ModerationService\item3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ModerationService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ModerationService\ModerationService.wsdl" />
     <None Include="Connected Services\SessionService\CodenamesGame.SessionService.CommunicationRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -289,6 +301,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SessionService\item4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\SessionService.wsdl" />

@@ -36,17 +36,32 @@
   <wsdl:message name="IMatchManager_SendClue_InputMessage">
     <wsdl:part name="parameters" element="tns:SendClue" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_SendClue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendClueResponse" />
+  </wsdl:message>
   <wsdl:message name="IMatchManager_NotifyTurnTimeout_InputMessage">
     <wsdl:part name="parameters" element="tns:NotifyTurnTimeout" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyTurnTimeout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyTurnTimeoutResponse" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_NotifyPickedAgent_InputMessage">
     <wsdl:part name="parameters" element="tns:NotifyPickedAgent" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyPickedAgent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPickedAgentResponse" />
+  </wsdl:message>
   <wsdl:message name="IMatchManager_NotifyPickedBystander_InputMessage">
     <wsdl:part name="parameters" element="tns:NotifyPickedBystander" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyPickedBystander_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPickedBystanderResponse" />
+  </wsdl:message>
   <wsdl:message name="IMatchManager_NotifyPickedAssassin_InputMessage">
     <wsdl:part name="parameters" element="tns:NotifyPickedAssassin" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_NotifyPickedAssassin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyPickedAssassinResponse" />
   </wsdl:message>
   <wsdl:message name="IMatchManager_NotifyClueReceived_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClueReceived" />
@@ -95,18 +110,23 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendClue">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/SendClue" message="tns:IMatchManager_SendClue_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/SendClueResponse" message="tns:IMatchManager_SendClue_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyTurnTimeout">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyTurnTimeout" message="tns:IMatchManager_NotifyTurnTimeout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyTurnTimeoutResponse" message="tns:IMatchManager_NotifyTurnTimeout_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPickedAgent">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAgent" message="tns:IMatchManager_NotifyPickedAgent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAgentResponse" message="tns:IMatchManager_NotifyPickedAgent_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPickedBystander">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedBystander" message="tns:IMatchManager_NotifyPickedBystander_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedBystanderResponse" message="tns:IMatchManager_NotifyPickedBystander_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPickedAssassin">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAssassin" message="tns:IMatchManager_NotifyPickedAssassin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAssassinResponse" message="tns:IMatchManager_NotifyPickedAssassin_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyClueReceived">
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyClueReceived" message="tns:IMatchManager_NotifyClueReceived_OutputCallbackMessage" />
@@ -174,30 +194,45 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NotifyTurnTimeout">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyTurnTimeout" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NotifyPickedAgent">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyPickedAgent" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NotifyPickedBystander">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyPickedBystander" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NotifyPickedAssassin">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyPickedAssassin" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NotifyClueReceived">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyClueReceived" style="document" />

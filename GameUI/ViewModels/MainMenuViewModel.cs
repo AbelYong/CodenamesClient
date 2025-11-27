@@ -1,4 +1,5 @@
 ﻿using CodenamesClient.Properties.Langs;
+using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
 using CodenamesGame.Network.EventArguments;
@@ -25,18 +26,18 @@ namespace CodenamesClient.GameUI.ViewModels
         public ObservableCollection<PlayerDM> Requests { get; set; }
         public ObservableCollection<PlayerDM> SearchResults { get; set; }
 
-        public MainMenuViewModel(PlayerDM player, bool isGuest)
+        public MainMenuViewModel(PlayerDM player, bool isGuest)
         {
             Friends = new ObservableCollection<PlayerDM>();
             Requests = new ObservableCollection<PlayerDM>();
             SearchResults = new ObservableCollection<PlayerDM>();
 
-            IsPlayerGuest = isGuest;
+            IsPlayerGuest = isGuest;
             Player = player ?? AssembleGuest();
-            Username = Player.Username;
+            Username = Player.Username;
 
-            ConnectSocialService(Player);
-            if (!IsPlayerGuest)
+            ConnectSocialService(Player);
+            if (!IsPlayerGuest)
             {
                 LoadInitialFriendData();
             }
@@ -65,9 +66,9 @@ namespace CodenamesClient.GameUI.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private void ConnectSocialService(PlayerDM player)
+        private void ConnectSocialService(PlayerDM player)
         {
-            if (!IsPlayerGuest)
+            if (!IsPlayerGuest)
             {
                 try
                 {
@@ -76,7 +77,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error al conectar al servicio de amigos: {ex.Message}");
+                    MessageBox.Show(ex.Message, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -86,22 +87,20 @@ namespace CodenamesClient.GameUI.ViewModels
             if (_player != null)
             {
                 SessionOperation.Instance.Disconnect();
-                if (!IsPlayerGuest)
+                if (!IsPlayerGuest)
                 {
+                    UnsubscribeFromFriendEvents();
                     SocialOperation.Instance.Terminate();
-                    UnsubscribeFromFriendEvents();
                 }
             }
         }
 
-        private void SubscribeToFriendEvents()
+        private void SubscribeToFriendEvents()
         {
             FriendCallbackHandler.OnNewFriendRequest += HandleNewFriendRequest;
             FriendCallbackHandler.OnFriendRequestAccepted += HandleFriendRequestAccepted;
             FriendCallbackHandler.OnFriendRequestRejected += HandleFriendRequestRejected;
             FriendCallbackHandler.OnFriendRemoved += HandleFriendRemoved;
-            FriendCallbackHandler.OnOperationSuccess += HandleOperationSuccess;
-            FriendCallbackHandler.OnOperationFailure += HandleOperationFailure;
         }
 
         private void UnsubscribeFromFriendEvents()
@@ -110,15 +109,14 @@ namespace CodenamesClient.GameUI.ViewModels
             FriendCallbackHandler.OnFriendRequestAccepted -= HandleFriendRequestAccepted;
             FriendCallbackHandler.OnFriendRequestRejected -= HandleFriendRequestRejected;
             FriendCallbackHandler.OnFriendRemoved -= HandleFriendRemoved;
-            FriendCallbackHandler.OnOperationSuccess -= HandleOperationSuccess;
-            FriendCallbackHandler.OnOperationFailure -= HandleOperationFailure;
         }
 
-        private void HandleNewFriendRequest(object sender, PlayerEventArgs e)
+        private void HandleNewFriendRequest(object sender, PlayerEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show($"¡Nueva solicitud de amistad de {e.Player.Username}!");
+                string message = string.Format(Lang.friendNotificationNewRequest, e.Player.Username);
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 Requests.Add(e.Player);
             });
         }
@@ -127,16 +125,19 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show($"¡{e.Player.Username} aceptó tu solicitud!");
+                string message = string.Format(Lang.friendNotificationAccepted, e.Player.Username);
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+
                 LoadInitialFriendData();
-            });
+            });
         }
 
         private static void HandleFriendRequestRejected(object sender, PlayerEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show($"¡{e.Player.Username} rechazó tu solicitud!");
+                string message = string.Format(Lang.friendNotificationRejected, e.Player.Username);
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             });
         }
 
@@ -144,7 +145,9 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show($"¡{e.Player.Username} te ha eliminado de sus amigos!");
+                string message = string.Format(Lang.friendNotificationRemoved, e.Player.Username);
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+
                 var friend = Friends.FirstOrDefault(f => f.PlayerID == e.Player.PlayerID);
                 if (friend != null)
                 {
@@ -153,55 +156,123 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private void HandleOperationSuccess(object sender, OperationMessageEventArgs e)
+        public void SendFriendRequest(Guid targetPlayerId)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (IsPlayerGuest) return;
+
+            var response = SocialOperation.Instance.SendFriendRequest(targetPlayerId);
+            string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
+
+            if (response.IsSuccess)
             {
-                MessageBox.Show($"Éxito: {e.Message}", "Operación Exitosa", MessageBoxButton.OK, MessageBoxImage.Information);
-                LoadInitialFriendData();
-            });
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show(message, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
-        private static void HandleOperationFailure(object sender, OperationMessageEventArgs e)
+        public void AcceptFriendRequest(PlayerDM requester)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (IsPlayerGuest || requester == null || requester.PlayerID == null) return;
+
+            var response = SocialOperation.Instance.AcceptFriendRequest(requester.PlayerID.Value);
+            string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
+
+            if (response.IsSuccess)
             {
-                MessageBox.Show($"Error: {e.Message}", "Operación Fallida", MessageBoxButton.OK, MessageBoxImage.Error);
-            });
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+
+                Requests.Remove(requester);
+                Friends.Add(requester);
+            }
+            else
+            {
+                MessageBox.Show(message, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        public void LoadInitialFriendData()
+        public void RejectFriendRequest(PlayerDM requester)
+        {
+            if (IsPlayerGuest || requester == null || requester.PlayerID == null) return;
+
+            var response = SocialOperation.Instance.RejectFriendRequest(requester.PlayerID.Value);
+            string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
+
+            if (response.IsSuccess)
+            {
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                Requests.Remove(requester);
+            }
+            else
+            {
+                MessageBox.Show(message, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void RemoveFriend(PlayerDM friend)
+        {
+            if (IsPlayerGuest || friend == null || friend.PlayerID == null) return;
+
+            var response = SocialOperation.Instance.RemoveFriend(friend.PlayerID.Value);
+            string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
+
+            if (response.IsSuccess)
+            {
+                MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                Friends.Remove(friend);
+            }
+            else
+            {
+                MessageBox.Show(message, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void LoadInitialFriendData()
         {
             if (IsPlayerGuest)
             {
                 return;
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
+            Task.Run(() =>
             {
                 var friendsList = SocialOperation.Instance.GetFriends();
                 var requestsList = SocialOperation.Instance.GetIncomingRequests();
 
-                Friends.Clear();
-                Requests.Clear();
-                foreach (var friend in friendsList)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Friends.Add(friend);
-                }
-                foreach (var req in requestsList)
-                {
-                    Requests.Add(req);
-                }
+                    Friends.Clear();
+                    Requests.Clear();
+                    foreach (var friend in friendsList)
+                    {
+                        Friends.Add(friend);
+                    }
+                    foreach (var req in requestsList)
+                    {
+                        Requests.Add(req);
+                    }
+                });
             });
         }
 
         public void SearchPlayers(string query)
         {
-            var searchList = SocialOperation.Instance.SearchPlayers(query);
-            Application.Current.Dispatcher.Invoke(() =>
+            if (IsPlayerGuest) return;
+
+            Task.Run(() =>
             {
-                SearchResults.Clear();
-                foreach (var player in searchList) SearchResults.Add(player);
+                var searchList = SocialOperation.Instance.SearchPlayers(query);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    SearchResults.Clear();
+                    foreach (var player in searchList)
+                    {
+                        if (player.PlayerID != Player.PlayerID)
+                            SearchResults.Add(player);
+                    }
+                });
             });
         }
 

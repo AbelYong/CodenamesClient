@@ -197,5 +197,34 @@ namespace CodenamesClient.Util
                     return Lang.globalUnknownServerError;
             }
         }
+
+        public static string GetFriendServiceMessage(CodenamesGame.FriendService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.FriendService.StatusCode.FRIEND_REQUEST_SENT:
+                    return Lang.friendRequestSentSuccess;
+                case CodenamesGame.FriendService.StatusCode.FRIEND_ADDED:
+                    return Lang.friendAddedSuccess;
+                case CodenamesGame.FriendService.StatusCode.FRIEND_REMOVED:
+                    return Lang.friendRemovedSuccess;
+                case CodenamesGame.FriendService.StatusCode.FRIEND_REQUEST_REJECTED:
+                    return Lang.friendRequestRejected;
+                case CodenamesGame.FriendService.StatusCode.ALREADY_FRIENDS:
+                    return Lang.friendErrorAlreadyFriends;
+                case CodenamesGame.FriendService.StatusCode.CONFLICT:
+                    return Lang.friendErrorOperationFailed;
+                case CodenamesGame.FriendService.StatusCode.UNALLOWED:
+                    return Lang.friendErrorSelfRequest;
+                case CodenamesGame.FriendService.StatusCode.SERVER_ERROR:
+                    return Lang.globalServerError;
+                case CodenamesGame.FriendService.StatusCode.SERVER_UNAVAIBLE:
+                    return Lang.globalConnectionLost;
+                case CodenamesGame.FriendService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalTimeoutError;
+                default:
+                    return Lang.globalUnknownServerError;
+            }
+        }
     }
 }
