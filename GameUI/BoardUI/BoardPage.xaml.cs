@@ -81,8 +81,15 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private void HandleAssassinFlip(BoardCoordinatesDM coordinates)
         {
-            TriggerAssassinSequence();
             FlipCardAt(coordinates, ASSASSIN_CODE, false);
+            if (_viewModel.AmISpymaster)
+            {
+                TriggerAssassinSequence();
+            }
+            else
+            {
+                TriggerKilledSequence();
+            }
         }
 
         private async void FlipCardAt(BoardCoordinatesDM coordinates, int code, bool keepInteractiveForSpymaster)
@@ -225,6 +232,24 @@ namespace CodenamesClient.GameUI.BoardUI
             _mediaPlayer.Stop();
             LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, null);
             LightAssassinOn.Opacity = 0;
+
+            _viewModel.ShowGameOverScreen();
+        }
+
+        private async void TriggerKilledSequence()
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Close();
+            PlayAudioFile("shot.mp3");
+
+            await Task.Delay(2800);
+
+            if (BrokenScreenImage != null)
+            {
+                BrokenScreenImage.Visibility = Visibility.Visible;
+            }
+
+            await Task.Delay(1200);
 
             _viewModel.ShowGameOverScreen();
         }

@@ -248,9 +248,10 @@
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
+            <Image x:Name="BrokenScreenImage" Source="/Assets/BoardUI/brokenScreen.png" Visibility="Collapsed"
+                       Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
             <Grid x:Name="GameOverContainer" Visibility="{Binding IsGameOverVisible, Converter={StaticResource BoolToVis}}">
                 <Border Background="{Binding OverlayColor}" />
-
                 <Grid x:Name="GameOverGrid" Width="500" Height="500" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Grid.RenderTransform>
                         <TranslateTransform Y="640"/>

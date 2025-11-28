@@ -489,11 +489,6 @@ namespace CodenamesClient.GameUI.ViewModels
                 ShowAssassinImage = true;
 
                 OnAssassinFlipRequested?.Invoke(e.Coordinates);
-
-                if (!_amISpymaster)
-                {
-                    ShowGameOverScreen();
-                }
             });
         }
 
