@@ -92,14 +92,16 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private static string GenerateGuestSuffix()
         {
-            const string chars = "0123456789";
-            const int suffixLength = 4;
-            StringBuilder sequence = new StringBuilder(suffixLength);
+            const string numbers = "0123456789";
+            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const int suffixLength = 6;
 
+            StringBuilder sequence = new StringBuilder(suffixLength);
             for (int i = 0; i < suffixLength; i++)
             {
-                int index = _random.Next(chars.Length);
-                sequence.Append(chars[index]);
+                int index = i % 2 == 0 ? _random.Next(numbers.Length) : _random.Next(letters.Length);
+                char auxChar = i % 2 == 0 ? numbers[index] : letters[index]; 
+                sequence.Append(auxChar);
             }
             return string.Format("#{0}", sequence.ToString());
         }

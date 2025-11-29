@@ -12,26 +12,46 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:9051/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9051/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:9051/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+      <xsd:import schemaLocation="http://localhost:9051/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
+      <xsd:import schemaLocation="http://localhost:9051/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+      <xsd:import schemaLocation="http://localhost:9051/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IFriendManager_Connect_InputMessage">
     <wsdl:part name="parameters" element="tns:Connect" />
   </wsdl:message>
+  <wsdl:message name="IFriendManager_Connect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectResponse" />
+  </wsdl:message>
   <wsdl:message name="IFriendManager_Disconnect_InputMessage">
     <wsdl:part name="parameters" element="tns:Disconnect" />
+  </wsdl:message>
+  <wsdl:message name="IFriendManager_Disconnect_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DisconnectResponse" />
   </wsdl:message>
   <wsdl:message name="IFriendManager_SendFriendRequest_InputMessage">
     <wsdl:part name="parameters" element="tns:SendFriendRequest" />
   </wsdl:message>
+  <wsdl:message name="IFriendManager_SendFriendRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendFriendRequestResponse" />
+  </wsdl:message>
   <wsdl:message name="IFriendManager_AcceptFriendRequest_InputMessage">
     <wsdl:part name="parameters" element="tns:AcceptFriendRequest" />
+  </wsdl:message>
+  <wsdl:message name="IFriendManager_AcceptFriendRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AcceptFriendRequestResponse" />
   </wsdl:message>
   <wsdl:message name="IFriendManager_RejectFriendRequest_InputMessage">
     <wsdl:part name="parameters" element="tns:RejectFriendRequest" />
   </wsdl:message>
+  <wsdl:message name="IFriendManager_RejectFriendRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RejectFriendRequestResponse" />
+  </wsdl:message>
   <wsdl:message name="IFriendManager_RemoveFriend_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoveFriend" />
+  </wsdl:message>
+  <wsdl:message name="IFriendManager_RemoveFriend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFriendResponse" />
   </wsdl:message>
   <wsdl:message name="IFriendManager_SearchPlayers_InputMessage">
     <wsdl:part name="parameters" element="tns:SearchPlayers" />
@@ -72,21 +92,27 @@
   <wsdl:portType name="IFriendManager">
     <wsdl:operation name="Connect">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/Connect" message="tns:IFriendManager_Connect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/ConnectResponse" message="tns:IFriendManager_Connect_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Disconnect">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/Disconnect" message="tns:IFriendManager_Disconnect_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/DisconnectResponse" message="tns:IFriendManager_Disconnect_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SendFriendRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/SendFriendRequest" message="tns:IFriendManager_SendFriendRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/SendFriendRequestResponse" message="tns:IFriendManager_SendFriendRequest_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AcceptFriendRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/AcceptFriendRequest" message="tns:IFriendManager_AcceptFriendRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/AcceptFriendRequestResponse" message="tns:IFriendManager_AcceptFriendRequest_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RejectFriendRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/RejectFriendRequest" message="tns:IFriendManager_RejectFriendRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/RejectFriendRequestResponse" message="tns:IFriendManager_RejectFriendRequest_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RemoveFriend">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/RemoveFriend" message="tns:IFriendManager_RemoveFriend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/RemoveFriendResponse" message="tns:IFriendManager_RemoveFriend_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SearchPlayers">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/SearchPlayers" message="tns:IFriendManager_SearchPlayers_InputMessage" />
@@ -127,36 +153,54 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="Disconnect">
       <soap12:operation soapAction="http://tempuri.org/IFriendManager/Disconnect" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendFriendRequest">
       <soap12:operation soapAction="http://tempuri.org/IFriendManager/SendFriendRequest" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AcceptFriendRequest">
       <soap12:operation soapAction="http://tempuri.org/IFriendManager/AcceptFriendRequest" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="RejectFriendRequest">
       <soap12:operation soapAction="http://tempuri.org/IFriendManager/RejectFriendRequest" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="RemoveFriend">
       <soap12:operation soapAction="http://tempuri.org/IFriendManager/RemoveFriend" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SearchPlayers">
       <soap12:operation soapAction="http://tempuri.org/IFriendManager/SearchPlayers" style="document" />

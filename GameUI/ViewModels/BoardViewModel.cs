@@ -550,7 +550,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private bool IsValidClueFormat(string message)
+        private static bool IsValidClueFormat(string message)
         {
             string[] parts = message.Split(' ');
             if (parts.Length != 2)
@@ -595,9 +595,12 @@ namespace CodenamesClient.GameUI.ViewModels
             return false;
         }
 
-        private bool IsIllegalMatch(string clue, string boardWord)
+        private static bool IsIllegalMatch(string clue, string boardWord)
         {
-            if (string.IsNullOrEmpty(boardWord)) return false;
+            if (string.IsNullOrEmpty(boardWord))
+            {
+                return false;
+            }
 
             string c = clue.Trim().ToLowerInvariant();
             string b = boardWord.Trim().ToLowerInvariant();

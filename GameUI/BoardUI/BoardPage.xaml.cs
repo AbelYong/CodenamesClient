@@ -128,7 +128,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         CornerRadius = new CornerRadius(5),
                         Padding = new Thickness(5),
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Bottom,
                         Child = new TextBlock
                         {
                             Text = text,

@@ -15,6 +15,411 @@ namespace CodenamesGame.FriendService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.CommunicationRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.SignInRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.ConfirmEmailRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.CreateLobbyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.JoinPartyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.FriendshipRequest))]
+    public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSuccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.FriendService.StatusCode StatusCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSuccess {
+            get {
+                return this.IsSuccessField;
+            }
+            set {
+                if ((this.IsSuccessField.Equals(value) != true)) {
+                    this.IsSuccessField = value;
+                    this.RaisePropertyChanged("IsSuccess");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.FriendService.StatusCode StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CommunicationRequest : CodenamesGame.FriendService.Request {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class LoginRequest : CodenamesGame.FriendService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> UserIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SignInRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class SignInRequest : CodenamesGame.FriendService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmailDuplicateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmailValidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsPasswordValidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsUsernameDuplicateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmailDuplicate {
+            get {
+                return this.IsEmailDuplicateField;
+            }
+            set {
+                if ((this.IsEmailDuplicateField.Equals(value) != true)) {
+                    this.IsEmailDuplicateField = value;
+                    this.RaisePropertyChanged("IsEmailDuplicate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmailValid {
+            get {
+                return this.IsEmailValidField;
+            }
+            set {
+                if ((this.IsEmailValidField.Equals(value) != true)) {
+                    this.IsEmailValidField = value;
+                    this.RaisePropertyChanged("IsEmailValid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsPasswordValid {
+            get {
+                return this.IsPasswordValidField;
+            }
+            set {
+                if ((this.IsPasswordValidField.Equals(value) != true)) {
+                    this.IsPasswordValidField = value;
+                    this.RaisePropertyChanged("IsPasswordValid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsUsernameDuplicate {
+            get {
+                return this.IsUsernameDuplicateField;
+            }
+            set {
+                if ((this.IsUsernameDuplicateField.Equals(value) != true)) {
+                    this.IsUsernameDuplicateField = value;
+                    this.RaisePropertyChanged("IsUsernameDuplicate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ConfirmEmailRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class ConfirmEmailRequest : CodenamesGame.FriendService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingAttemptsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingAttempts {
+            get {
+                return this.RemainingAttemptsField;
+            }
+            set {
+                if ((this.RemainingAttemptsField.Equals(value) != true)) {
+                    this.RemainingAttemptsField = value;
+                    this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CreateLobbyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CreateLobbyRequest : CodenamesGame.FriendService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LobbyCodeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LobbyCode {
+            get {
+                return this.LobbyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JoinPartyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class JoinPartyRequest : CodenamesGame.FriendService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.FriendService.Party PartyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.FriendService.Party Party {
+            get {
+                return this.PartyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyField, value) != true)) {
+                    this.PartyField = value;
+                    this.RaisePropertyChanged("Party");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FriendshipRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class FriendshipRequest : CodenamesGame.FriendService.Request {
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    public enum StatusCode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OK = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CREATED = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UPDATED = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CONFLICT = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_CANCEL = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_DISCONNECT = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_UNREACHABLE = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_TIMEOUT = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        MISSING_DATA = 8,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WRONG_DATA = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NOT_FOUND = 10,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNAUTHORIZED = 11,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNALLOWED = 12,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_ERROR = 13,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNAVAIBLE = 14,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_TIMEOUT = 15,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ACCOUNT_BANNED = 16,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_CREATED = 17,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_DUPLICATED = 18,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        USER_KICKED_AND_BANNED = 19,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_SENT = 20,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_ADDED = 21,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REMOVED = 22,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_REJECTED = 23,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ALREADY_FRIENDS = 24,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_ALREADY_SENT = 25,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class Party : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LobbyCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.FriendService.Player PartyGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.FriendService.Player PartyHostField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LobbyCode {
+            get {
+                return this.LobbyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.FriendService.Player PartyGuest {
+            get {
+                return this.PartyGuestField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyGuestField, value) != true)) {
+                    this.PartyGuestField = value;
+                    this.RaisePropertyChanged("PartyGuest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.FriendService.Player PartyHost {
+            get {
+                return this.PartyHostField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyHostField, value) != true)) {
+                    this.PartyHostField = value;
+                    this.RaisePropertyChanged("PartyHost");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
     [System.SerializableAttribute()]
     public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -267,41 +672,41 @@ namespace CodenamesGame.FriendService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="FriendService.IFriendManager", CallbackContract=typeof(CodenamesGame.FriendService.IFriendManagerCallback))]
     public interface IFriendManager {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Connect")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/Connect", ReplyAction="http://tempuri.org/IFriendManager/ConnectResponse")]
         void Connect(System.Guid mePlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Connect")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/Connect", ReplyAction="http://tempuri.org/IFriendManager/ConnectResponse")]
         System.Threading.Tasks.Task ConnectAsync(System.Guid mePlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Disconnect")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/Disconnect", ReplyAction="http://tempuri.org/IFriendManager/DisconnectResponse")]
         void Disconnect(System.Guid mePlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/Disconnect")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/Disconnect", ReplyAction="http://tempuri.org/IFriendManager/DisconnectResponse")]
         System.Threading.Tasks.Task DisconnectAsync(System.Guid mePlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/SendFriendRequest")]
-        void SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/SendFriendRequestResponse")]
+        CodenamesGame.FriendService.FriendshipRequest SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/SendFriendRequest")]
-        System.Threading.Tasks.Task SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SendFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/SendFriendRequestResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/AcceptFriendRequest")]
-        void AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/AcceptFriendRequestResponse")]
+        CodenamesGame.FriendService.FriendshipRequest AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/AcceptFriendRequest")]
-        System.Threading.Tasks.Task AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/AcceptFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/AcceptFriendRequestResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RejectFriendRequest")]
-        void RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RejectFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/RejectFriendRequestResponse")]
+        CodenamesGame.FriendService.FriendshipRequest RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RejectFriendRequest")]
-        System.Threading.Tasks.Task RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RejectFriendRequest", ReplyAction="http://tempuri.org/IFriendManager/RejectFriendRequestResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RemoveFriend")]
-        void RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RemoveFriend", ReplyAction="http://tempuri.org/IFriendManager/RemoveFriendResponse")]
+        CodenamesGame.FriendService.FriendshipRequest RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IFriendManager/RemoveFriend")]
-        System.Threading.Tasks.Task RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/RemoveFriend", ReplyAction="http://tempuri.org/IFriendManager/RemoveFriendResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SearchPlayers", ReplyAction="http://tempuri.org/IFriendManager/SearchPlayersResponse")]
         CodenamesGame.FriendService.Player[] SearchPlayers(string query, System.Guid mePlayerId, int limit);
@@ -388,35 +793,35 @@ namespace CodenamesGame.FriendService {
             return base.Channel.DisconnectAsync(mePlayerId);
         }
         
-        public void SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId) {
-            base.Channel.SendFriendRequest(fromPlayerId, toPlayerId);
+        public CodenamesGame.FriendService.FriendshipRequest SendFriendRequest(System.Guid fromPlayerId, System.Guid toPlayerId) {
+            return base.Channel.SendFriendRequest(fromPlayerId, toPlayerId);
         }
         
-        public System.Threading.Tasks.Task SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> SendFriendRequestAsync(System.Guid fromPlayerId, System.Guid toPlayerId) {
             return base.Channel.SendFriendRequestAsync(fromPlayerId, toPlayerId);
         }
         
-        public void AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
-            base.Channel.AcceptFriendRequest(mePlayerId, requesterPlayerId);
+        public CodenamesGame.FriendService.FriendshipRequest AcceptFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+            return base.Channel.AcceptFriendRequest(mePlayerId, requesterPlayerId);
         }
         
-        public System.Threading.Tasks.Task AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> AcceptFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
             return base.Channel.AcceptFriendRequestAsync(mePlayerId, requesterPlayerId);
         }
         
-        public void RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
-            base.Channel.RejectFriendRequest(mePlayerId, requesterPlayerId);
+        public CodenamesGame.FriendService.FriendshipRequest RejectFriendRequest(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+            return base.Channel.RejectFriendRequest(mePlayerId, requesterPlayerId);
         }
         
-        public System.Threading.Tasks.Task RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> RejectFriendRequestAsync(System.Guid mePlayerId, System.Guid requesterPlayerId) {
             return base.Channel.RejectFriendRequestAsync(mePlayerId, requesterPlayerId);
         }
         
-        public void RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId) {
-            base.Channel.RemoveFriend(mePlayerId, friendPlayerId);
+        public CodenamesGame.FriendService.FriendshipRequest RemoveFriend(System.Guid mePlayerId, System.Guid friendPlayerId) {
+            return base.Channel.RemoveFriend(mePlayerId, friendPlayerId);
         }
         
-        public System.Threading.Tasks.Task RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId) {
             return base.Channel.RemoveFriendAsync(mePlayerId, friendPlayerId);
         }
         
