@@ -103,15 +103,6 @@ namespace CodenamesGame.Domain.POCO
             };
         }
 
-        public static AuthenticationService.Player AssembleAuthSvPlayer(PlayerDM player)
-        {
-            AuthenticationService.Player svPlayer = new AuthenticationService.Player();
-            svPlayer.Username = player.Username;
-            svPlayer.Name = player.Name;
-            svPlayer.LastName = player.LastName;
-            return svPlayer;
-        }
-
         public static UserService.Player AssembleUserSvPlayer(PlayerDM player)
         {
             UserService.Player svPlayer = new UserService.Player();

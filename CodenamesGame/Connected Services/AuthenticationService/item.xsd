@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
   <xs:element name="Login">
     <xs:complexType>
@@ -15,20 +14,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="LoginResult" nillable="true" type="q1:LoginRequest" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SignIn">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svPlayer" nillable="true" type="q2:Player" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SignInResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="SignInResult" nillable="true" type="q3:SignInRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -57,7 +42,7 @@
   <xs:element name="CompletePasswordResetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q4:ResetResult" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q2:ResetResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -96,6 +96,7 @@
     <Compile Include="Domain\POCO\Match\MatchRulesDM.cs" />
     <Compile Include="Domain\POCO\PlayerDM.cs" />
     <Compile Include="Domain\POCO\UserDM.cs" />
+    <Compile Include="Network\AuthenticationOperation.cs" />
     <Compile Include="Network\EmailOperation.cs" />
     <Compile Include="Network\EventArguments\AgentPickedEventArgs.cs" />
     <Compile Include="Network\EventArguments\AssassinPickedEventArgs.cs" />
@@ -121,9 +122,6 @@
     <Compile Include="Util\NetworkUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.SignInRequest.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\AuthenticationService\item5.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -301,10 +299,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\SessionService\SessionService.wsdl" />
+    <None Include="Connected Services\UserService\CodenamesGame.UserService.CommunicationRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\UserService\CodenamesGame.UserService.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\UserService\CodenamesGame.UserService.UpdateResult.datasource">
+    <None Include="Connected Services\UserService\CodenamesGame.UserService.SignInRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\UserService\item.xsd">
@@ -317,6 +318,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\UserService\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\item4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\UserService\UserService.wsdl" />

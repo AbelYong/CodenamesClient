@@ -40,7 +40,7 @@ namespace CodenamesClient.GameUI.Pages
 
             if (ValidateLoginData(username, password))
             {
-                LoginRequest request = UserOperation.Authenticate(username, password);
+                LoginRequest request = AuthenticationOperation.Authenticate(username, password);
                 if (request.IsSuccess)
                 {
                     await BeginSession(request.UserID);
@@ -205,7 +205,7 @@ namespace CodenamesClient.GameUI.Pages
                 }
 
                 await Task.Run(() =>
-                    UserOperation.BeginPasswordReset(user, email)
+                    AuthenticationOperation.BeginPasswordReset(user, email)
                 );
 
                 MessageBox.Show(Lang.resetCodeSend);
@@ -244,7 +244,7 @@ namespace CodenamesClient.GameUI.Pages
                 }
 
                 var result = await Task.Run(() =>
-                    UserOperation.CompletePasswordReset(user, code, p1)
+                    AuthenticationOperation.CompletePasswordReset(user, code, p1)
                 );
 
                 MessageBox.Show(result.Message);

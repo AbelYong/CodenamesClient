@@ -1,7 +1,7 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
-using CodenamesGame.AuthenticationService;
+using CodenamesGame.UserService;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
 using System;
@@ -168,8 +168,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 Name = _vm.FirstName,
                 LastName = _vm.LastName,
             };
-            CodenamesGame.AuthenticationService.SignInRequest request =
-                CodenamesGame.Network.UserOperation.SignIn(user, player);
+            SignInRequest request = UserOperation.SignIn(user, player);
             if (request.IsSuccess)
             {
                 MessageBox.Show(string.Format(Lang.signInSuccessfulWelcome, _vm.Username));

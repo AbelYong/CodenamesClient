@@ -678,4 +678,16 @@
   <data name="globalErrorTitle" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="profileCouldNotUpdateCheckData" xml:space="preserve">
+    <value>No pudimos actualizar tu perfil por que alguno de los datos no es valido, por favor revisa y vuelve a intentarlo</value>
+  </data>
+  <data name="profileErrorCouldNotFindProfile" xml:space="preserve">
+    <value>No pudimos actualizar tu perfil por que no pudimos encontrar tu perfil, inténtalo más tarde. Contacta a un administrador si el problema persiste.</value>
+  </data>
+  <data name="profileErrorEmailOrUsernameInUse" xml:space="preserve">
+    <value>Lo sentimos, no pudimos actualizar tu perfil porque este correo electrónico o este nombre de usuario ya están en uso</value>
+  </data>
+  <data name="profileUpdateSucessful" xml:space="preserve">
+    <value>Tu perfil ha sido actualizado</value>
+  </data>
 </root>

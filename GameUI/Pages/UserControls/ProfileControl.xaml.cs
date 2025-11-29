@@ -63,8 +63,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         private void SaveProfile()
         {
             PlayerDM updatedPlayer = PrepareUpdatedPlayer();
-            UpdateResult result = UserOperation.UpdateProfile(updatedPlayer);
-            MessageBox.Show(result.Message);
+            CodenamesGame.UserService.CommunicationRequest request = UserOperation.UpdateProfile(updatedPlayer);
+            MessageBox.Show(Util.StatusToMessageMapper.GetUserServiceMessage(request.StatusCode));
         }
 
         private void VerifyEmail()
@@ -78,7 +78,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private static bool SendVerificationCode(string email)
         {
-            CommunicationRequest request = EmailOperation.SendVerificationEmail(email);
+            CodenamesGame.EmailService.CommunicationRequest request = EmailOperation.SendVerificationEmail(email);
             if (!request.IsSuccess)
             {
                 MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
@@ -90,7 +90,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         {
             string newEmail = tBxEmail.Text;
             string code = tbxVerifyCode.Text;
-            ConfirmEmailRequest request = EmailOperation.SendVerificationCode(newEmail, code);
+            CodenamesGame.EmailService.ConfirmEmailRequest request = EmailOperation.SendVerificationCode(newEmail, code);
             if (request.IsSuccess)
             {
                 SaveProfile();
@@ -99,7 +99,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             else
             {
                 string message;
-                if (request.StatusCode == StatusCode.UNAUTHORIZED)
+                if (request.StatusCode == CodenamesGame.EmailService.StatusCode.UNAUTHORIZED)
                 {
                     message = string.Format(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode), request.RemainingAttempts);
                 }

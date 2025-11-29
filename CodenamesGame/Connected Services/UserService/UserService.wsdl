@@ -13,7 +13,8 @@
       <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
-      <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
+      <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
+      <xsd:import schemaLocation="http://localhost:9049/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserManager_GetPlayerByUserID_InputMessage">
@@ -21,6 +22,12 @@
   </wsdl:message>
   <wsdl:message name="IUserManager_GetPlayerByUserID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlayerByUserIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_SignIn_InputMessage">
+    <wsdl:part name="parameters" element="tns:SignIn" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_SignIn_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SignInResponse" />
   </wsdl:message>
   <wsdl:message name="IUserManager_UpdateProfile_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateProfile" />
@@ -33,6 +40,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/GetPlayerByUserID" message="tns:IUserManager_GetPlayerByUserID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/GetPlayerByUserIDResponse" message="tns:IUserManager_GetPlayerByUserID_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SignIn">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/SignIn" message="tns:IUserManager_SignIn_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/SignInResponse" message="tns:IUserManager_SignIn_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="UpdateProfile">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/UpdateProfile" message="tns:IUserManager_UpdateProfile_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/UpdateProfileResponse" message="tns:IUserManager_UpdateProfile_OutputMessage" />
@@ -43,6 +54,15 @@
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="GetPlayerByUserID">
       <soap12:operation soapAction="http://tempuri.org/IUserManager/GetPlayerByUserID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SignIn">
+      <soap12:operation soapAction="http://tempuri.org/IUserManager/SignIn" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -1150,11 +1150,38 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t update your profile because one or more fields are not valid, please check and try again.
+        /// </summary>
+        public static string profileCouldNotUpdateCheckData {
+            get {
+                return ResourceManager.GetString("profileCouldNotUpdateCheckData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Email.
         /// </summary>
         public static string profileEmail {
             get {
                 return ResourceManager.GetString("profileEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t update your profile because we couldn&apos;t find it, please try again later. Contact an administrator if the issue persists.
+        /// </summary>
+        public static string profileErrorCouldNotFindProfile {
+            get {
+                return ResourceManager.GetString("profileErrorCouldNotFindProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t update your profile because this email or username is already in use.
+        /// </summary>
+        public static string profileErrorEmailOrUsernameInUse {
+            get {
+                return ResourceManager.GetString("profileErrorEmailOrUsernameInUse", resourceCulture);
             }
         }
         
@@ -1218,6 +1245,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string profileSocialNetwork {
             get {
                 return ResourceManager.GetString("profileSocialNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your profile has been updated.
+        /// </summary>
+        public static string profileUpdateSucessful {
+            get {
+                return ResourceManager.GetString("profileUpdateSucessful", resourceCulture);
             }
         }
         

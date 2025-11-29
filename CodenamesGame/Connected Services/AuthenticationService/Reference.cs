@@ -740,12 +740,6 @@ namespace CodenamesGame.AuthenticationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Login", ReplyAction="http://tempuri.org/IAuthenticationManager/LoginResponse")]
         System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.LoginRequest> LoginAsync(string username, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/SignIn", ReplyAction="http://tempuri.org/IAuthenticationManager/SignInResponse")]
-        CodenamesGame.AuthenticationService.SignInRequest SignIn(CodenamesGame.AuthenticationService.Player svPlayer);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/SignIn", ReplyAction="http://tempuri.org/IAuthenticationManager/SignInResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.SignInRequest> SignInAsync(CodenamesGame.AuthenticationService.Player svPlayer);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse")]
         void BeginPasswordReset(string username, string email);
         
@@ -792,14 +786,6 @@ namespace CodenamesGame.AuthenticationService {
         
         public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.LoginRequest> LoginAsync(string username, string password) {
             return base.Channel.LoginAsync(username, password);
-        }
-        
-        public CodenamesGame.AuthenticationService.SignInRequest SignIn(CodenamesGame.AuthenticationService.Player svPlayer) {
-            return base.Channel.SignIn(svPlayer);
-        }
-        
-        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.SignInRequest> SignInAsync(CodenamesGame.AuthenticationService.Player svPlayer) {
-            return base.Channel.SignInAsync(svPlayer);
         }
         
         public void BeginPasswordReset(string username, string email) {

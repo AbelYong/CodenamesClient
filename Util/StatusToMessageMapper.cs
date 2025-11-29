@@ -19,6 +19,25 @@ namespace CodenamesClient.Util
             }
         }
 
+        public static string GetUserServiceMessage(CodenamesGame.UserService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.UserService.StatusCode.UPDATED:
+                    return Lang.profileUpdateSucessful;
+                case CodenamesGame.UserService.StatusCode.SERVER_ERROR:
+                    return Lang.globalServerError;
+                case CodenamesGame.UserService.StatusCode.WRONG_DATA:
+                    return Lang.profileCouldNotUpdateCheckData;
+                case CodenamesGame.UserService.StatusCode.NOT_FOUND:
+                    return Lang.profileErrorCouldNotFindProfile;
+                case CodenamesGame.UserService.StatusCode.UNALLOWED:
+                    return Lang.profileErrorEmailOrUsernameInUse;
+                default:
+                    return Lang.globalUnknownServerError;
+            }
+        }
+
         public static string GetEmailServiceMessage(CodenamesGame.EmailService.StatusCode code)
         {
             switch (code)
