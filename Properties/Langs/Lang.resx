@@ -639,4 +639,43 @@
   <data name="errorInvalidClueFormat" xml:space="preserve">
     <value>The clue must consist of a single word (letters) and a number, separated by a space. Example: 'Animal 3'</value>
   </data>
+  <data name="friendRequestSentSuccess" xml:space="preserve">
+    <value>Friend request sent successfully.</value>
+  </data>
+  <data name="friendAddedSuccess" xml:space="preserve">
+    <value>Friend added successfully.</value>
+  </data>
+  <data name="friendRemovedSuccess" xml:space="preserve">
+    <value>Friend removed successfully.</value>
+  </data>
+  <data name="friendRequestRejected" xml:space="preserve">
+    <value>Friend request rejected.</value>
+  </data>
+  <data name="friendErrorAlreadyFriends" xml:space="preserve">
+    <value>You are already friends with this user.</value>
+  </data>
+  <data name="friendErrorOperationFailed" xml:space="preserve">
+    <value>Could not complete the friendship operation.</value>
+  </data>
+  <data name="friendErrorSelfRequest" xml:space="preserve">
+    <value>You cannot send a request to yourself.</value>
+  </data>
+  <data name="friendNotificationNewRequest" xml:space="preserve">
+    <value>New friend request from {0}!</value>
+  </data>
+  <data name="friendNotificationAccepted" xml:space="preserve">
+    <value>{0} accepted your friend request!</value>
+  </data>
+  <data name="friendNotificationRejected" xml:space="preserve">
+    <value>{0} rejected your friend request.</value>
+  </data>
+  <data name="friendNotificationRemoved" xml:space="preserve">
+    <value>{0} has removed you from their friends list.</value>
+  </data>
+  <data name="globalSuccessTitle" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="globalErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
 </root>

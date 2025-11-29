@@ -45,6 +45,12 @@
       <xs:enumeration value="REPORT_CREATED" />
       <xs:enumeration value="REPORT_DUPLICATED" />
       <xs:enumeration value="USER_KICKED_AND_BANNED" />
+      <xs:enumeration value="FRIEND_REQUEST_SENT" />
+      <xs:enumeration value="FRIEND_ADDED" />
+      <xs:enumeration value="FRIEND_REMOVED" />
+      <xs:enumeration value="FRIEND_REQUEST_REJECTED" />
+      <xs:enumeration value="ALREADY_FRIENDS" />
+      <xs:enumeration value="FRIEND_REQUEST_ALREADY_SENT" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="StatusCode" nillable="true" type="tns:StatusCode" />

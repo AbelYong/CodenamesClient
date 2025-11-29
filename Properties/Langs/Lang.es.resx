@@ -639,4 +639,43 @@
   <data name="errorInvalidClueFormat" xml:space="preserve">
     <value>La pista debe constar de una sola palabra (letras) y un número, separados por un espacio. Ejemplo: 'Animal 3'</value>
   </data>
+  <data name="friendRequestSentSuccess" xml:space="preserve">
+    <value>Solicitud de amistad enviada exitosamente.</value>
+  </data>
+  <data name="friendAddedSuccess" xml:space="preserve">
+    <value>Amigo agregado exitosamente.</value>
+  </data>
+  <data name="friendRemovedSuccess" xml:space="preserve">
+    <value>Amigo eliminado exitosamente.</value>
+  </data>
+  <data name="friendRequestRejected" xml:space="preserve">
+    <value>Solicitud de amistad rechazada.</value>
+  </data>
+  <data name="friendErrorAlreadyFriends" xml:space="preserve">
+    <value>Ya eres amigo de este agente.</value>
+  </data>
+  <data name="friendErrorOperationFailed" xml:space="preserve">
+    <value>No se pudo completar la operación de amistad.</value>
+  </data>
+  <data name="friendErrorSelfRequest" xml:space="preserve">
+    <value>No puedes enviarte una solicitud a ti mismo.</value>
+  </data>
+  <data name="friendNotificationNewRequest" xml:space="preserve">
+    <value>¡Nueva solicitud de amistad de {0}!</value>
+  </data>
+  <data name="friendNotificationAccepted" xml:space="preserve">
+    <value>¡{0} aceptó tu solicitud!</value>
+  </data>
+  <data name="friendNotificationRejected" xml:space="preserve">
+    <value>¡{0} rechazó tu solicitud!</value>
+  </data>
+  <data name="friendNotificationRemoved" xml:space="preserve">
+    <value>¡{0} te ha eliminado de sus amigos!</value>
+  </data>
+  <data name="globalSuccessTitle" xml:space="preserve">
+    <value>Éxito</value>
+  </data>
+  <data name="globalErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
 </root>

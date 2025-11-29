@@ -18,7 +18,7 @@ namespace CodenamesClient.GameUI.Pages
     {
         private MainMenuViewModel _viewModel;
         private ProfileControl _profileControl;
-        private MediaPlayer _mediaPlayer;
+        // private MediaPlayer _mediaPlayer;
 
         public MainMenuPage(PlayerDM player, bool isGuest)
         {
@@ -32,17 +32,11 @@ namespace CodenamesClient.GameUI.Pages
             _mediaPlayer.MediaEnded += (s, e) => _mediaPlayer.Position = TimeSpan.Zero;*/
         }
 
-        //This method is needed by the MainWindow to close the session if the user closes the window
         public MainMenuViewModel GetViewModel()
         {
             return _viewModel;
         }
 
-        /*
-         * ProfileControl is created in code instead of the XAML, because WPF cannot find
-         * the resources needed to generate ProfileControl in design time, so we instantiate it
-         * directly in code, thus event handling logic (close, save profile) is more code reliant 
-         */
         private void Click_btnPlayer(object sender, RoutedEventArgs e)
         {
             if (!_viewModel.IsPlayerGuest)
@@ -83,6 +77,17 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
+        private void SetPlayerAfterProfileUpdate(Guid? userID)
+        {
+            if (userID != null)
+            {
+                Guid auxUserID = (Guid)userID;
+                PlayerDM player = UserOperation.GetPlayer(auxUserID);
+                _viewModel.Player = player;
+                btnPlayer.Content = player.Username;
+            }
+        }
+
         private void Click_btnLogout(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player != null)
@@ -91,6 +96,12 @@ namespace CodenamesClient.GameUI.Pages
             }
             LoginPage login = new LoginPage();
             NavigationService.Navigate(login);
+        }
+
+        private void Click_btnQuit(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Disconnect();
+            Application.Current.Shutdown();
         }
 
         private void Click_ShowSettings(object sender, RoutedEventArgs e)
@@ -112,14 +123,8 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_btnSave(object sender, RoutedEventArgs e)
         {
-            // TODO
+            // TODO: Implement settings saving
             Click_HideSettings(sender, e);
-        }
-
-        private void Click_btnQuit(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Disconnect();
-            Application.Current.Shutdown();
         }
 
         private void Click_ShowFriends(object sender, RoutedEventArgs e)
@@ -174,6 +179,26 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Enter) return;
+            if (_viewModel.Player?.PlayerID == null) return;
+
+            var q = SearchBox.Text?.Trim();
+            
+            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend)
+            {
+                FriendsAndRequestsView.Visibility = Visibility.Collapsed;
+                SearchView.Visibility = Visibility.Visible;
+                return;
+            }
+
+            _viewModel.SearchPlayers(q);
+
+            FriendsAndRequestsView.Visibility = Visibility.Collapsed;
+            SearchView.Visibility = Visibility.Visible;
+        }
+
         private void Click_ShowGameMode(object sender, RoutedEventArgs e)
         {
             var slideInAnimation = (Storyboard)FindResource("SlideInGameModeAnimation");
@@ -191,26 +216,13 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void Click_NormalGameMode(object sender, RoutedEventArgs e)
-        {
-            GamemodeDM mode = GamemodeDM.NORMAL;
-            GoToLobby(mode);
-        }
-        private void Click_CustomGameMode(object sender, RoutedEventArgs e)
-        {
-            GamemodeDM mode = GamemodeDM.CUSTOM;
-            GoToLobby(mode);
-        }
-        private void Click_CounterintelligenceMode(object sender, RoutedEventArgs e)
-        {
-            GamemodeDM mode = GamemodeDM.COUNTERINTELLIGENCE;
-            GoToLobby(mode);
-        }
+        private void Click_NormalGameMode(object sender, RoutedEventArgs e) => GoToLobby(GamemodeDM.NORMAL);
+        private void Click_CustomGameMode(object sender, RoutedEventArgs e) => GoToLobby(GamemodeDM.CUSTOM);
+        private void Click_CounterintelligenceMode(object sender, RoutedEventArgs e) => GoToLobby(GamemodeDM.COUNTERINTELLIGENCE);
 
         private void GoToLobby(GamemodeDM mode)
         {
             LobbyPage lobby = new LobbyPage(_viewModel.Player, mode);
-
             NavigationService.Navigate(lobby);
             GameModeGrid.Visibility = Visibility.Collapsed;
         }
@@ -232,99 +244,46 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void SetPlayerAfterProfileUpdate(Guid? userID)
-        {
-            if (userID != null)
-            {
-                Guid auxUserID = (Guid)userID;
-                PlayerDM player = UserOperation.GetPlayer(auxUserID);
-                _viewModel.Player = player;
-                btnPlayer.Content = player.Username;
-            }
-        }
-
         private static PlayerDM ItemFromButton(Button btn) => btn?.DataContext as PlayerDM;
-
-        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key != Key.Enter)
-            {
-                return;
-            }
-            if (_viewModel.Player?.PlayerID == null)
-            {
-                return;
-            }
-
-            var q = SearchBox.Text?.Trim();
-            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend)
-            {
-                return;
-            }
-            _viewModel.SearchPlayers(q);
-
-            FriendsAndRequestsView.Visibility = Visibility.Collapsed;
-            SearchView.Visibility = Visibility.Visible;
-        }
 
         private void Click_SendRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null)
-            {
-                return;
-            }
-            var target = ItemFromButton((Button)sender);
-            if (target?.PlayerID == null)
-            {
-                return;
-            }
+            if (_viewModel.Player?.PlayerID == null) return;
 
-            SocialOperation.Instance.SendFriendRequest(target.PlayerID.Value);
+            var target = ItemFromButton((Button)sender);
+            if (target?.PlayerID == null) return;
+
+            _viewModel.SendFriendRequest(target.PlayerID.Value);
         }
 
         private void Click_AcceptRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null)
-            {
-                return;
-            }
-            var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null)
-            {
-                return;
-            }
+            if (_viewModel.Player?.PlayerID == null) return;
 
-            SocialOperation.Instance.AcceptFriendRequest(requester.PlayerID.Value);
+            var requester = ItemFromButton((Button)sender);
+            if (requester?.PlayerID == null) return;
+
+            _viewModel.AcceptFriendRequest(requester);
         }
 
         private void Click_RejectRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null)
-            {
-                return;
-            }
-            var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null)
-            {
-                return;
-            }
+            if (_viewModel.Player?.PlayerID == null) return;
 
-            SocialOperation.Instance.RejectFriendRequest(requester.PlayerID.Value);
+            var requester = ItemFromButton((Button)sender);
+            if (requester?.PlayerID == null) return;
+
+            _viewModel.RejectFriendRequest(requester);
         }
 
         private void Click_RemoveFriend(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null)
-            {
-                return;
-            }
-            var friend = ItemFromButton((Button)sender);
-            if (friend?.PlayerID == null)
-            {
-                return;
-            }
+            if (_viewModel.Player?.PlayerID == null) return;
 
-            SocialOperation.Instance.RemoveFriend(friend.PlayerID.Value);
+            var friend = ItemFromButton((Button)sender);
+            if (friend?.PlayerID == null) return;
+
+            _viewModel.RemoveFriend(friend);
         }
     }
 }

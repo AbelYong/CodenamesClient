@@ -34,7 +34,6 @@ namespace CodenamesGame.Network
         /// Initializes the duplex client and connects to the server.
         /// Must be called after login.
         /// </summary>
-        /// <param name="mePlayerId">The player ID for the current session.</param>
         public void Initialize(Guid mePlayerId)
         {
             FriendCallbackHandler callbackHandler;
@@ -66,9 +65,6 @@ namespace CodenamesGame.Network
             }
         }
 
-        /// <summary>
-        /// Closes the duplex connection. Must be called when logging out.
-        /// </summary>
         public void Terminate()
         {
             if (_client != null && _client.State == CommunicationState.Opened)
@@ -77,10 +73,7 @@ namespace CodenamesGame.Network
                 {
                     _client.Disconnect(_currentPlayerId);
                 }
-                catch (Exception)
-                {
-
-                }
+                catch (Exception) { }
                 finally
                 {
                     NetworkUtil.SafeClose(_client);
@@ -90,16 +83,15 @@ namespace CodenamesGame.Network
             }
         }
 
-        /// <summary>
-        /// Gets the WCF client, ensuring that it is open and ready.
-        /// </summary>
-        /// <returns>The FriendManagerClient instance.
         private FriendManagerClient GetClient()
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (_client == null ||
+                _client.State == CommunicationState.Closed ||
+                _client.State == CommunicationState.Faulted)
             {
-                throw new InvalidOperationException("Friend service connection is not available or has been closed.");
+                Initialize(_currentPlayerId);
             }
+
             return _client;
         }
 
@@ -112,8 +104,17 @@ namespace CodenamesGame.Network
             }
             catch (Exception ex)
             {
-                OnOperationFailure(ex);
-                return new List<PlayerDM>();
+                try
+                {
+                    Initialize(_currentPlayerId);
+                    var list = GetClient().SearchPlayers(query ?? "", _currentPlayerId, limit);
+                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                }
+                catch
+                {
+                    OnOperationFailure(ex);
+                    return new List<PlayerDM>();
+                }
             }
         }
 
@@ -145,51 +146,74 @@ namespace CodenamesGame.Network
             }
         }
 
-        /// <summary>
-        /// Sends a friend request. The result will be received
-        /// through the OnOperationSuccess/OnOperationFailure events.
-        /// </summary>
-        /// <param name="toPlayerId">The ID of the player to whom it is sent.</param>
-        public void SendFriendRequest(Guid toPlayerId)
+        public FriendshipRequest SendFriendRequest(Guid toPlayerId)
         {
             try
             {
-                GetClient().SendFriendRequest(_currentPlayerId, toPlayerId);
+                return GetClient().SendFriendRequest(_currentPlayerId, toPlayerId);
             }
-            catch (Exception ex) { OnOperationFailure(ex); }
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new FriendshipRequest
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCode.SERVER_ERROR
+                };
+            }
         }
 
-        public void AcceptFriendRequest(Guid requesterPlayerId)
+        public FriendshipRequest AcceptFriendRequest(Guid requesterPlayerId)
         {
             try
             {
-                GetClient().AcceptFriendRequest(_currentPlayerId, requesterPlayerId);
+                return GetClient().AcceptFriendRequest(_currentPlayerId, requesterPlayerId);
             }
-            catch (Exception ex) { OnOperationFailure(ex); }
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new FriendshipRequest
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCode.SERVER_ERROR
+                };
+            }
         }
 
-        public void RejectFriendRequest(Guid requesterPlayerId)
+        public FriendshipRequest RejectFriendRequest(Guid requesterPlayerId)
         {
             try
             {
-                GetClient().RejectFriendRequest(_currentPlayerId, requesterPlayerId);
+                return GetClient().RejectFriendRequest(_currentPlayerId, requesterPlayerId);
             }
-            catch (Exception ex) { OnOperationFailure(ex); }
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new FriendshipRequest
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCode.SERVER_ERROR
+                };
+            }
         }
 
-        public void RemoveFriend(Guid friendPlayerId)
+        public FriendshipRequest RemoveFriend(Guid friendPlayerId)
         {
             try
             {
-                GetClient().RemoveFriend(_currentPlayerId, friendPlayerId);
+                return GetClient().RemoveFriend(_currentPlayerId, friendPlayerId);
             }
-            catch (Exception ex) { OnOperationFailure(ex); }
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new FriendshipRequest
+                {
+                    IsSuccess = false,
+                    StatusCode = StatusCode.SERVER_ERROR
+                };
+            }
         }
 
-        /// <summary>
-        /// Helper method to trigger the failure event in case of
-        /// a transport exception (e.g., server down).
-        /// </summary>
         private static void OnOperationFailure(Exception ex)
         {
             FriendCallbackHandler.RaiseOperationFailure($"Error de conexión: {ex.Message}");

@@ -71,4 +71,12 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="JoinPartyRequest" nillable="true" type="tns:JoinPartyRequest" />
+  <xs:complexType name="FriendshipRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Request">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FriendshipRequest" nillable="true" type="tns:FriendshipRequest" />
 </xs:schema>
