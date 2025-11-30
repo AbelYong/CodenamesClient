@@ -177,23 +177,17 @@
                     <StackPanel Grid.Row="1" Margin="20,0,20,20">
                         <Label Content="{x:Static language:Lang.soundMasterVolume}" Style="{StaticResource subtitle}" Foreground="White"
                        HorizontalAlignment="Left" Margin="0,10,0,0"/>
-                        <Slider Minimum="0" Maximum="100" Value="50"/>
+                        <Slider x:Name="sliderMaster" Minimum="0" Maximum="100" Value="50" ValueChanged="Slider_ValueChanged"/>
                         <Label Content="{x:Static language:Lang.soundGameEffects}" Style="{StaticResource subtitle}" Foreground="White"
                        HorizontalAlignment="Left" Margin="0,20,0,0"/>
-                        <Slider Minimum="0" Maximum="100" Value="50"/>
+                        <Slider x:Name="sliderSFX" Minimum="0" Maximum="100" Value="50" ValueChanged="Slider_ValueChanged"/>
                         <Label Content="{x:Static language:Lang.soundMusicVolume}" Style="{StaticResource subtitle}" Foreground="White"
                        HorizontalAlignment="Left" Margin="0,20,0,0"/>
-                        <Slider Minimum="0" Maximum="100" Value="50"/>
+                        <Slider x:Name="sliderMusic" Minimum="0" Maximum="100" Value="50" ValueChanged="Slider_ValueChanged"/>
                     </StackPanel>
                     <Grid Grid.Row="2" Margin="0,10,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
-                        Width="180" Height="40" Click="Click_HideSettings"/>
-                        <Button Grid.Column="1" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}"
-                        Width="180" Height="40" Click="Click_btnSave"/>
+                        <Button Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
+                                Width="180" Height="40" Click="Click_HideSettings" HorizontalAlignment="Center"/>
                     </Grid>
                 </Grid>
             </Grid>

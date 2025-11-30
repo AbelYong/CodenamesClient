@@ -18,7 +18,6 @@ namespace CodenamesClient.GameUI.Pages
     {
         private MainMenuViewModel _viewModel;
         private ProfileControl _profileControl;
-        // private MediaPlayer _mediaPlayer;
 
         public MainMenuPage(PlayerDM player, bool isGuest)
         {
@@ -26,10 +25,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel = new MainMenuViewModel(player, isGuest);
             DataContext = _viewModel;
 
-            /*_mediaPlayer = new MediaPlayer();
-            _mediaPlayer.Open(new Uri("Main Theme (NOT FINAL).mp3", UriKind.Relative));
-            _mediaPlayer.Play();
-            _mediaPlayer.MediaEnded += (s, e) => _mediaPlayer.Position = TimeSpan.Zero;*/
+            AudioManager.StartMusic("Main Theme.mp3");
         }
 
         public MainMenuViewModel GetViewModel()
@@ -119,12 +115,6 @@ namespace CodenamesClient.GameUI.Pages
                 SettingsGrid.Visibility = Visibility.Collapsed;
             };
             slideOutAnimation.Begin();
-        }
-
-        private void Click_btnSave(object sender, RoutedEventArgs e)
-        {
-            // TODO: Implement settings saving
-            Click_HideSettings(sender, e);
         }
 
         private void Click_ShowFriends(object sender, RoutedEventArgs e)
@@ -284,6 +274,31 @@ namespace CodenamesClient.GameUI.Pages
             if (friend?.PlayerID == null) return;
 
             _viewModel.RemoveFriend(friend);
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (sliderMaster == null || sliderMusic == null || sliderSFX == null)
+            {
+                return;
+            }
+
+            var slider = sender as Slider;
+            double volume0to1 = slider.Value / 100.0;
+
+            if (slider == sliderMaster)
+            {
+                AudioManager.SetMasterVolume(volume0to1);
+            }
+            else if (slider == sliderMusic)
+            {
+                AudioManager.SetMusicVolume(volume0to1);
+            }
+            else if (slider == sliderSFX)
+            {
+                AudioManager.SetSfxVolume(volume0to1);
+                AudioManager.PlaySoundEffect("Assets/AudioGame/oof.mp3"); 
+            }
         }
     }
 }

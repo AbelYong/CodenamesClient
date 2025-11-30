@@ -49,20 +49,6 @@ namespace CodenamesClient.GameUI.BoardUI
             _viewModel.StartTimer();
         }
 
-        private void PlayAudioFile(string fileName)
-        {
-            try
-            {
-                string soundPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "AudioGame", fileName);
-                _mediaPlayer.Open(new Uri(soundPath, UriKind.RelativeOrAbsolute));
-                _mediaPlayer.Play();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error reproduciendo audio {fileName}: {ex.Message}");
-            }
-        }
-
         private void HandleAgentFlip(BoardCoordinatesDM coordinates)
         {
             FlashAgentLight();
@@ -172,7 +158,7 @@ namespace CodenamesClient.GameUI.BoardUI
             LightAgentOn.Opacity = 0;
 
             LightAgentOn.Opacity = 1;
-            PlayAudioFile("friend.mp3");
+            AudioManager.PlaySoundEffect("Assets/AudioGame/friend.mp3");
 
             await Task.Delay(4000);
 
@@ -196,7 +182,7 @@ namespace CodenamesClient.GameUI.BoardUI
             LightBystanderOn.Opacity = 0;
 
             LightBystanderOn.Opacity = 1;
-            PlayAudioFile("cDown.mp3");
+            AudioManager.PlaySoundEffect("Assets/AudioGame/cDown.mp3");
 
             await Task.Delay(5000);
 
@@ -225,7 +211,7 @@ namespace CodenamesClient.GameUI.BoardUI
 
             LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, blink);
 
-            PlayAudioFile("sos.mp3");
+            AudioManager.PlaySoundEffect("Assets/AudioGame/sos.mp3");
 
             await Task.Delay(4000);
 
@@ -240,7 +226,7 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Close();
-            PlayAudioFile("shot.mp3");
+            AudioManager.PlaySoundEffect("Assets/AudioGame/shot.mp3");
 
             await Task.Delay(2800);
 
