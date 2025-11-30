@@ -25,7 +25,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel = new MainMenuViewModel(player, isGuest);
             DataContext = _viewModel;
 
-            AudioManager.StartMusic("Main Theme.mp3");
+            AudioManager.Instance.StartPlayback("Main");
         }
 
         public MainMenuViewModel GetViewModel()
@@ -288,16 +288,16 @@ namespace CodenamesClient.GameUI.Pages
 
             if (slider == sliderMaster)
             {
-                AudioManager.SetMasterVolume(volume0to1);
+                AudioManager.Instance.SetMasterVolume(volume0to1);
             }
             else if (slider == sliderMusic)
             {
-                AudioManager.SetMusicVolume(volume0to1);
+                AudioManager.Instance.SetMusicVolume(volume0to1);
             }
             else if (slider == sliderSFX)
             {
-                AudioManager.SetSfxVolume(volume0to1);
-                AudioManager.PlaySoundEffect("Assets/AudioGame/oof.mp3"); 
+                AudioManager.Instance.SetSfxVolume(volume0to1);
+                AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/oof.mp3"); 
             }
         }
     }

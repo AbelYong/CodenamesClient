@@ -190,8 +190,13 @@ namespace CodenamesClient.GameUI.ViewModels
             get => _timerTokens;
             set
             {
-                _timerTokens = value;
-                OnPropertyChanged();
+                if (_timerTokens != value)
+                {
+                    _timerTokens = value;
+                    OnPropertyChanged();
+
+                    UpdateDynamicMusic();
+                }
             }
         }
 
@@ -352,6 +357,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             _amISpymaster = _me.PlayerID == _match.Requester.PlayerID;
             UpdateUIState();
+            UpdateDynamicMusic();
         }
 
         private void UpdateUIState()
@@ -443,6 +449,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 _amISpymaster = !_amISpymaster;
                 UpdateUIState();
                 ResetTimer();
+                UpdateDynamicMusic();
             });
         }
 
@@ -870,6 +877,24 @@ namespace CodenamesClient.GameUI.ViewModels
         public void ShowGameOverScreen()
         {
             IsGameOverVisible = true;
+        }
+
+        private void UpdateDynamicMusic()
+        {
+            if (TimerTokens == 0)
+            {
+                AudioManager.Instance.TransitionTo("TieBreaker");
+                return;
+            }
+
+            if (AmISpymaster)
+            {
+                AudioManager.Instance.TransitionTo("Spymaster");
+            }
+            else
+            {
+                AudioManager.Instance.TransitionTo("Guesser");
+            }
         }
     }
 }

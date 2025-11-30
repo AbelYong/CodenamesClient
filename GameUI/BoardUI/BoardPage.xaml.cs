@@ -158,7 +158,7 @@ namespace CodenamesClient.GameUI.BoardUI
             LightAgentOn.Opacity = 0;
 
             LightAgentOn.Opacity = 1;
-            AudioManager.PlaySoundEffect("Assets/AudioGame/friend.mp3");
+            AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/friend.mp3");
 
             await Task.Delay(4000);
 
@@ -182,7 +182,7 @@ namespace CodenamesClient.GameUI.BoardUI
             LightBystanderOn.Opacity = 0;
 
             LightBystanderOn.Opacity = 1;
-            AudioManager.PlaySoundEffect("Assets/AudioGame/cDown.mp3");
+            AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/cDown.mp3");
 
             await Task.Delay(5000);
 
@@ -211,7 +211,7 @@ namespace CodenamesClient.GameUI.BoardUI
 
             LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, blink);
 
-            AudioManager.PlaySoundEffect("Assets/AudioGame/sos.mp3");
+            AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/sos.mp3");
 
             await Task.Delay(4000);
 
@@ -226,7 +226,7 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Close();
-            AudioManager.PlaySoundEffect("Assets/AudioGame/shot.mp3");
+            AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/shot.mp3");
 
             await Task.Delay(2800);
 

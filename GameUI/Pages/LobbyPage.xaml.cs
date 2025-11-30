@@ -45,6 +45,8 @@ namespace CodenamesClient.GameUI.Pages
                 _viewModel.SubscribeToSessionEvents();
 
                 _viewModel.BeginMatch += OnBeginMatch;
+
+                AudioManager.Instance.TransitionTo("Main");
             }
         }
 

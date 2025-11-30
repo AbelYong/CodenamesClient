@@ -2,6 +2,7 @@
 using CodenamesGame.Network;
 using CodenamesGame.SessionService;
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using System.Windows;
 
@@ -14,6 +15,16 @@ namespace CodenamesClient.GameUI
             InitializeComponent();
             Closed += MainWindowClosed;
             SessionCallbackHandler.OnKicked += OnKickedFromServer;
+
+            var gameTracks = new Dictionary<string, string>
+            {
+                { "Main", "Assets/AudioGame/Main Theme.mp3" },
+                { "Guesser", "Assets/AudioGame/Guesser Theme.mp3" },
+                { "Spymaster", "Assets/AudioGame/Spymaster Theme.mp3" },
+                { "TieBreaker", "Assets/AudioGame/Tie-breaker Theme.mp3" }
+            };
+
+            AudioManager.Instance.LoadTracks(gameTracks);
         }
 
         private void MainWindowClosed(object sender, EventArgs e)
