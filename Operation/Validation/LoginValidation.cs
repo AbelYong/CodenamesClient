@@ -20,7 +20,7 @@ namespace CodenamesClient.Validation
             {
                 return Lang.loginUsernameTooLong;
             }
-            return "OK";
+            return string.Empty;
         }
 
         public static string ValidatePassword(string password)
@@ -33,7 +33,7 @@ namespace CodenamesClient.Validation
             {
                 return Lang.loginPasswordTooLong;
             }
-            return "OK";
+            return string.Empty;
         }
     }
 }

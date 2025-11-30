@@ -1,10 +1,7 @@
 ﻿using CodenamesClient.GameUI.Pages.UserControls;
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
-using CodenamesClient.Validation;
-using CodenamesGame.AuthenticationService;
 using CodenamesGame.Domain.POCO;
-using CodenamesGame.Network;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,7 +21,20 @@ namespace CodenamesClient.GameUI.Pages
             InitializeComponent();
             _viewModel = new LoginViewModel();
             DataContext = _viewModel;
+            Loaded += OnLoginPageLoaded;
+            Unloaded += OnLoginPageUnloaded;
+        }
+
+        private void OnLoginPageLoaded(object sender, RoutedEventArgs e)
+        {
             _viewModel.ConnectionLost += ShowConnectionLostMessage;
+            _viewModel.NavigateToMainMenu += GoToMainMenuWindow;
+        }
+
+        private void OnLoginPageUnloaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ConnectionLost -= ShowConnectionLostMessage;
+            _viewModel.NavigateToMainMenu -= GoToMainMenuWindow;
         }
 
         private void ShowConnectionLostMessage()
@@ -35,28 +45,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private async void Click_btnLogin(object sender, RoutedEventArgs e)
         {
-            string username = tBxUsername.Text;
-            string password = pBxPassword.Password;
-
-            if (ValidateLoginData(username, password))
-            {
-                LoginRequest request = AuthenticationOperation.Authenticate(username, password);
-                if (request.IsSuccess)
-                {
-                    await BeginSession(request.UserID);
-                }
-                else
-                {
-                    if (request.StatusCode == StatusCode.UNAUTHORIZED)
-                    {
-                        ShowFailedLoginMessage();
-                    }
-                    else
-                    {
-                        MessageBox.Show(Util.StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode));
-                    }
-                }
-            }
+            await _viewModel.Login(tBxUsername.Text, pBxPassword.Password);
         }
 
         private void Click_btnSignIn(object sender, RoutedEventArgs e)
@@ -75,56 +64,17 @@ namespace CodenamesClient.GameUI.Pages
 
         private async void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
         {
-            await BeginSession(null);
+            await _viewModel.BeginSession(null);
         }
 
-        private async Task BeginSession(Guid? userID)
-        {
-            if (userID != null)
-            {
-                Guid auxUserID = userID.Value;
-                PlayerDM player = UserOperation.GetPlayer(auxUserID);
-                await _viewModel.Connect(player);
-                GoToMainMenuWindow(player, false);
-            }
-            else
-            {
-                PlayerDM guest = LoginViewModel.AssembleGuest();
-                await _viewModel.Connect(guest);
-                GoToMainMenuWindow(guest, true);
-            }
-        }
-
-        private void GoToMainMenuWindow(PlayerDM player, bool isGuest)
+        private void GoToMainMenuWindow(object sender, PlayerDM player)
         {
             if (_viewModel.HasPlayerConnection)
             {
-                MainMenuPage mainMenu = new MainMenuPage(player, isGuest);
+                MainMenuPage mainMenu = new MainMenuPage(player, player.IsGuest);
+                _viewModel.ConnectionLost -= ShowConnectionLostMessage;
                 NavigationService.Navigate(mainMenu);
             }
-        }
-
-        private bool ValidateLoginData(string username, string password)
-        {
-            ClearFields();
-            string usernameMessage = LoginValidation.ValidateUsername(username);
-            lblUsernameErrorMessage.Content = (usernameMessage.Equals("OK") ? "" : usernameMessage);
-
-            string passwordMessage = LoginValidation.ValidatePassword(password);
-            lblPasswordErrorMessage.Content = (passwordMessage.Equals("OK") ? "" : passwordMessage);
-
-            return usernameMessage.Equals("OK") && passwordMessage.Equals("OK");
-        }
-
-        private void ClearFields()
-        {
-            lblUsernameErrorMessage.Content = "";
-            lblPasswordErrorMessage.Content = "";
-        }
-        private void ShowFailedLoginMessage()
-        {
-            lblUsernameErrorMessage.Content = Lang.loginWrongCredentials;
-            lblPasswordErrorMessage.Content = Lang.loginWrongCredentials;
         }
 
         private void ForgotLink_Click(object sender, MouseButtonEventArgs e)
@@ -204,9 +154,7 @@ namespace CodenamesClient.GameUI.Pages
                     return;
                 }
 
-                await Task.Run(() =>
-                    AuthenticationOperation.BeginPasswordReset(user, email)
-                );
+                await Task.Run(() => _viewModel.BeginPasswordReset(user, email));
 
                 MessageBox.Show(Lang.resetCodeSend);
             }
@@ -244,7 +192,7 @@ namespace CodenamesClient.GameUI.Pages
                 }
 
                 var result = await Task.Run(() =>
-                    AuthenticationOperation.CompletePasswordReset(user, code, p1)
+                    _viewModel.CompletePasswordReset(user, code, p1)
                 );
 
                 MessageBox.Show(result.Message);

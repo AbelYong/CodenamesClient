@@ -114,6 +114,8 @@
     <Compile Include="Network\FriendCallbackHandler.cs" />
     <Compile Include="Network\MatchOperation.cs" />
     <Compile Include="Network\ModerationOperation.cs" />
+    <Compile Include="Network\Proxies\Wrappers\AuthenticationProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\IAuthenticationProxy.cs" />
     <Compile Include="Network\SessionCallbackHandler.cs" />
     <Compile Include="Network\SessionOperation.cs" />
     <Compile Include="Network\SocialOperation.cs" />
@@ -471,5 +473,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,6 @@
 ﻿using CodenamesClient.Validation;
 using NUnit.Framework;
+using CodenamesClient.Properties.Langs;
 using System;
 
 namespace CodenamesClient.Tests
@@ -13,7 +14,7 @@ namespace CodenamesClient.Tests
         public void ValidateUsername_UsernameEmpty_ReturnsUsernameRequired(string username)
         {
             string result = LoginValidation.ValidateUsername(username);
-            Assert.That(result, Is.EqualTo(CodenamesClient.Properties.Langs.Lang.loginUsernameRequired));
+            Assert.That(result, Is.EqualTo(Lang.loginUsernameRequired));
         }
 
         [Test]
@@ -21,7 +22,7 @@ namespace CodenamesClient.Tests
         {
             string username = "paricularly long user"; //21 characters
             string result = LoginValidation.ValidateUsername(username);
-            Assert.That(result, Is.EqualTo(CodenamesClient.Properties.Langs.Lang.loginUsernameTooLong));
+            Assert.That(result, Is.EqualTo(Lang.loginUsernameTooLong));
         }
 
         [Test]
@@ -30,7 +31,7 @@ namespace CodenamesClient.Tests
         public void ValidatePassword_PasswordEmpty_ReturnsPasswordRequired(string password)
         {
             string result = LoginValidation.ValidatePassword(password);
-            Assert.That(result, Is.EqualTo(CodenamesClient.Properties.Langs.Lang.loginPasswordRequired));
+            Assert.That(result, Is.EqualTo(Lang.loginPasswordRequired));
         }
 
         [Test]
@@ -38,7 +39,7 @@ namespace CodenamesClient.Tests
         {
             string password = "long_____password"; //17 characters
             string result = LoginValidation.ValidatePassword(password);
-            Assert.That(result, Is.EqualTo(CodenamesClient.Properties.Langs.Lang.loginPasswordTooLong));
+            Assert.That(result, Is.EqualTo(Lang.loginPasswordTooLong));
         }
 
         [Test]
@@ -46,7 +47,7 @@ namespace CodenamesClient.Tests
         {
             string username = "valid username"; //14 characters
             string result = LoginValidation.ValidateUsername(username);
-            Assert.That(result, Is.EqualTo("OK"));
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
 
         [Test]
@@ -54,7 +55,7 @@ namespace CodenamesClient.Tests
         {
             string password = "valid password"; //14 characters
             string result = LoginValidation.ValidatePassword(password);
-            Assert.That(result, Is.EqualTo("OK"));
+            Assert.That(result, Is.EqualTo(string.Empty));
         }
     }
 }

@@ -1,65 +1,33 @@
 ﻿using CodenamesGame.AuthenticationService;
-using CodenamesGame.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
+using CodenamesGame.Network.Proxies.Interfaces;
+using CodenamesGame.Network.Proxies.Wrappers;
 
 namespace CodenamesGame.Network
 {
-    public static class AuthenticationOperation
+    public class AuthenticationOperation
     {
-        private const string _AUTHENTICATION_ENDPOINT_NAME = "NetTcpBinding_IAuthenticationManager";
+        private readonly IAuthenticationProxy _proxy;
 
-        public static LoginRequest Authenticate(string username, string password)
+        public AuthenticationOperation() : this (new AuthenticationProxy()) { }
+
+        public AuthenticationOperation(IAuthenticationProxy proxy)
         {
-            LoginRequest request = new LoginRequest();
-            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
-            try
-            {
-                request = client.Login(username, password);
-            }
-            catch (EndpointNotFoundException)
-            {
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-            }
-            catch (TimeoutException)
-            {
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-            }
-            finally
-            {
-                NetworkUtil.SafeClose(client);
-            }
-            return request;
+            _proxy = proxy;
         }
 
-        public static void BeginPasswordReset(string username, string email)
+        public LoginRequest Authenticate(string username, string password)
         {
-            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
-            try
-            {
-                client.BeginPasswordReset(username, email);
-            }
-            finally
-            {
-                NetworkUtil.SafeClose(client);
-            }
+            return _proxy.Authenticate(username, password);
         }
 
-        public static ResetResult CompletePasswordReset(string username, string code, string newPassword)
+        public void BeginPasswordReset(string username, string email)
         {
-            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
-            try
-            {
-                return client.CompletePasswordReset(username, code, newPassword);
-            }
-            finally
-            {
-                NetworkUtil.SafeClose(client);
-            }
+            _proxy.BeginPasswordReset(username, email);
+        }
+
+        public ResetResult CompletePasswordReset(string username, string code, string newPassword)
+        {
+            return _proxy.CompletePasswordReset(username, code, newPassword);
         }
     }
 }

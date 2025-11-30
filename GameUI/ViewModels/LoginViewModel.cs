@@ -1,7 +1,7 @@
 ﻿using CodenamesClient.Properties.Langs;
+using CodenamesClient.Validation;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
-using CodenamesGame.SessionService;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,16 +12,21 @@ namespace CodenamesClient.GameUI.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
+        private readonly AuthenticationOperation _authenticationOperation;
         private static readonly Random _random = new Random();
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<PlayerDM> NavigateToMainMenu;
         public event Action ConnectionLost;
         private bool _hasPlayerConnection;
         private bool _btnLoginEnabled;
         private bool _btnSignInGuestEnabled;
         private string _requestErrorMessage;
+        private string _usernameErrorMessage;
+        private string _passwordErrorMessage;
 
         public LoginViewModel()
         {
+            _authenticationOperation = new AuthenticationOperation();
             BtnLoginEnabled = true;
             BtnSignInGuestEnabled = true;
         }
@@ -56,13 +61,106 @@ namespace CodenamesClient.GameUI.ViewModels
             get => _requestErrorMessage;
         }
 
-        public async Task Connect(PlayerDM player)
+        public string UsernameErrorMessage
+        {
+            get => _usernameErrorMessage;
+            set
+            {
+                _usernameErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string PasswordErrorMessage
+        {
+            get => _passwordErrorMessage;
+            set
+            {
+                _passwordErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public async Task Login(string username, string password)
+        {
+            CodenamesGame.AuthenticationService.LoginRequest request = _authenticationOperation.Authenticate(username, password);
+            if (ValidateLoginData(username, password))
+            {
+                if (request.IsSuccess)
+                {
+                    await BeginSession(request.UserID);
+                }
+                else
+                {
+                    if (request.StatusCode == CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED)
+                    {
+                        ShowFailedLoginMessage();
+                    }
+                    else
+                    {
+                        _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode);
+                        ConnectionLost?.Invoke();
+                    }
+                }
+            }
+        }
+
+        private bool ValidateLoginData(string username, string password)
+        {
+            ClearFields();
+            UsernameErrorMessage = LoginValidation.ValidateUsername(username);
+
+            PasswordErrorMessage = LoginValidation.ValidatePassword(password);
+
+            return string.IsNullOrEmpty(UsernameErrorMessage) && string.IsNullOrEmpty(PasswordErrorMessage);
+        }
+
+        private void ClearFields()
+        {
+            UsernameErrorMessage = string.Empty;
+            PasswordErrorMessage = string.Empty;
+        }
+
+        private void ShowFailedLoginMessage()
+        {
+            UsernameErrorMessage = Lang.loginWrongCredentials;
+            PasswordErrorMessage = Lang.loginWrongCredentials;
+        }
+
+        public void BeginPasswordReset(string user, string email)
+        {
+            _authenticationOperation.BeginPasswordReset(user, email);
+        }
+
+        public CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string user, string code, string password)
+        {
+            return _authenticationOperation.CompletePasswordReset(user, code, password);
+        }
+
+        public async Task BeginSession(Guid? userID)
+        {
+            if (userID != null)
+            {
+                Guid auxUserID = userID.Value;
+                PlayerDM player = UserOperation.GetPlayer(auxUserID);
+                await Connect(player);
+                NavigateToMainMenu?.Invoke(this, player);
+            }
+            else
+            {
+                PlayerDM guest = LoginViewModel.AssembleGuest();
+                await Connect(guest);
+                NavigateToMainMenu?.Invoke(this, guest);
+            }
+        }
+
+        private async Task Connect(PlayerDM player)
         {
             if (player != null)
             {
                 BtnLoginEnabled = false;
                 BtnSignInGuestEnabled = false;
-                CommunicationRequest request = await Task.Run(() => SessionOperation.Instance.Initialize(player));
+                CodenamesGame.SessionService.CommunicationRequest request = await Task.Run(() => SessionOperation.Instance.Initialize(player));
                 if (request.IsSuccess)
                 {
                     _hasPlayerConnection = true;
@@ -84,6 +182,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             const int DEFAULT_AVATAR = 0;
             PlayerDM guest = new PlayerDM();
+            guest.IsGuest = true;
             guest.PlayerID = Guid.NewGuid();
             guest.Username = string.Format("{0}{1}", Lang.globalGuest, GenerateGuestSuffix());
             guest.AvatarID = DEFAULT_AVATAR;

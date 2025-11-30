@@ -8,6 +8,7 @@ namespace CodenamesGame.Domain.POCO
         public const int NAME_MAX_LENGTH = 20;
         public const int LASTNAME_MAX_LENGTH = 30;
         public const int SOCIALMEDIA_MAX_LENGTH = 30;
+        public bool IsGuest { get; set; }
         public Guid? PlayerID { get; set; }
         public string Username { get; set; }
         public int AvatarID { get; set; }
