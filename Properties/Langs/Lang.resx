@@ -504,9 +504,6 @@
   <data name="kickMessagePerm" xml:space="preserve">
     <value>You have been permanently banned due to repeated misconduct.</value>
   </data>
-  <data name="confirmReportMessage" xml:space="preserve">
-    <value>Are you sure you want to report {0} for unsportsmanlike conduct?</value>
-  </data>
   <data name="reportSuccess" xml:space="preserve">
     <value>Player reported successfully.</value>
   </data>
@@ -689,5 +686,17 @@
   </data>
   <data name="profileUpdateSucessful" xml:space="preserve">
     <value>Your profile has been updated</value>
+  </data>
+  <data name="errorAudioFileNotFound" xml:space="preserve">
+    <value>Audio file not found.</value>
+  </data>
+  <data name="errorPlayingAudio" xml:space="preserve">
+    <value>Error playing audio:</value>
+  </data>
+  <data name="confirmReportMessage" xml:space="preserve">
+    <value>Are you sure you want to report {0} for unsportsmanlike conduct?</value>
+  </data>
+  <data name="errorAudioError" xml:space="preserve">
+    <value>Audio error</value>
   </data>
 </root>

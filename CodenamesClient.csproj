@@ -92,6 +92,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameWords.resx</DependentUpon>
     </Compile>
+    <Compile Include="Util\AudioManager.cs" />
     <Compile Include="Util\LobbyOperationType.cs" />
     <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\BoardUI\BoardPage.xaml">
@@ -219,6 +220,9 @@
     <Content Include="Assets\AudioGame\friend.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\AudioGame\oof.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\AudioGame\shot.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -228,7 +232,7 @@
     <Content Include="Assets\BoardUI\brokenScreen.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Main Theme %28NOT FINAL%29.mp3">
+    <Content Include="Main Theme.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

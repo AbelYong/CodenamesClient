@@ -133,6 +133,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Audio error.
+        /// </summary>
+        public static string errorAudioError {
+            get {
+                return ResourceManager.GetString("errorAudioError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Audio file not found..
+        /// </summary>
+        public static string errorAudioFileNotFound {
+            get {
+                return ResourceManager.GetString("errorAudioFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Your partner lost connection, the mission has been canceled..
         /// </summary>
         public static string errorCompanionLostConnection {
@@ -156,6 +174,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string errorInvalidClueFormat {
             get {
                 return ResourceManager.GetString("errorInvalidClueFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error playing audio:.
+        /// </summary>
+        public static string errorPlayingAudio {
+            get {
+                return ResourceManager.GetString("errorPlayingAudio", resourceCulture);
             }
         }
         

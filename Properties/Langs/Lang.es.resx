@@ -504,9 +504,6 @@
   <data name="kickMessagePerm" xml:space="preserve">
     <value>Has sido vetado permanentemente debido a conducta inapropiada reiterada.</value>
   </data>
-  <data name="confirmReportMessage" xml:space="preserve">
-    <value>¿Estás seguro de que deseas reportar a {0} por conducta antideportiva?</value>
-  </data>
   <data name="reportSuccess" xml:space="preserve">
     <value>Jugador reportado exitosamente.</value>
   </data>
@@ -689,5 +686,17 @@
   </data>
   <data name="profileUpdateSucessful" xml:space="preserve">
     <value>Tu perfil ha sido actualizado</value>
+  </data>
+  <data name="errorAudioFileNotFound" xml:space="preserve">
+    <value>Archivo de audio no encontrado.</value>
+  </data>
+  <data name="errorPlayingAudio" xml:space="preserve">
+    <value>Error al reproducir audio:</value>
+  </data>
+  <data name="confirmReportMessage" xml:space="preserve">
+    <value>¿Estás seguro de que deseas reportar a {0} por conducta antideportiva?</value>
+  </data>
+  <data name="errorAudioError" xml:space="preserve">
+    <value>Error de audio</value>
   </data>
 </root>
