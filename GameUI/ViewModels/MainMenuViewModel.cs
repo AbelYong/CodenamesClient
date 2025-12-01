@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using CodenamesClient.Operation;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -22,15 +23,17 @@ namespace CodenamesClient.GameUI.ViewModels
         private string _username;
         private bool _isPlayerGuest;
 
-        public ObservableCollection<PlayerDM> Friends { get; set; }
-        public ObservableCollection<PlayerDM> Requests { get; set; }
-        public ObservableCollection<PlayerDM> SearchResults { get; set; }
+        private HashSet<Guid> _sentRequestIds = new HashSet<Guid>();
+
+        public ObservableCollection<FriendItem> Friends { get; set; }
+        public ObservableCollection<FriendItem> Requests { get; set; }
+        public ObservableCollection<SearchItem> SearchResults { get; set; }
 
         public MainMenuViewModel(PlayerDM player, bool isGuest)
         {
-            Friends = new ObservableCollection<PlayerDM>();
-            Requests = new ObservableCollection<PlayerDM>();
-            SearchResults = new ObservableCollection<PlayerDM>();
+            Friends = new ObservableCollection<FriendItem>();
+            Requests = new ObservableCollection<FriendItem>();
+            SearchResults = new ObservableCollection<SearchItem>();
 
             IsPlayerGuest = isGuest;
             Player = player ?? AssembleGuest();
@@ -117,7 +120,13 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 string message = string.Format(Lang.friendNotificationNewRequest, e.Player.Username);
                 MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-                Requests.Add(e.Player);
+
+                Requests.Add(new FriendItem
+                {
+                    Player = e.Player,
+                    ProfilePicturePath = PictureHandler.GetImagePath(e.Player.AvatarID),
+                    IsOnline = false
+                });
             });
         }
 
@@ -148,7 +157,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 string message = string.Format(Lang.friendNotificationRemoved, e.Player.Username);
                 MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
-                var friend = Friends.FirstOrDefault(f => f.PlayerID == e.Player.PlayerID);
+                var friend = Friends.FirstOrDefault(f => f.Player.PlayerID == e.Player.PlayerID);
                 if (friend != null)
                 {
                     Friends.Remove(friend);
@@ -156,16 +165,21 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        public void SendFriendRequest(Guid targetPlayerId)
+        public void SendFriendRequest(SearchItem item)
         {
-            if (IsPlayerGuest) return;
+            if (IsPlayerGuest || item?.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            var response = SocialOperation.Instance.SendFriendRequest(targetPlayerId);
+            var response = SocialOperation.Instance.SendFriendRequest(item.Player.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
             {
                 MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                item.IsPending = true;
+                _sentRequestIds.Add(item.Player.PlayerID.Value);
             }
             else
             {
@@ -173,19 +187,22 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public void AcceptFriendRequest(PlayerDM requester)
+        public void AcceptFriendRequest(FriendItem item)
         {
-            if (IsPlayerGuest || requester == null || requester.PlayerID == null) return;
+            if (IsPlayerGuest || item?.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            var response = SocialOperation.Instance.AcceptFriendRequest(requester.PlayerID.Value);
+            var response = SocialOperation.Instance.AcceptFriendRequest(item.Player.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
             {
                 MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
-                Requests.Remove(requester);
-                Friends.Add(requester);
+                Requests.Remove(item);
+                Friends.Add(item);
             }
             else
             {
@@ -193,17 +210,20 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public void RejectFriendRequest(PlayerDM requester)
+        public void RejectFriendRequest(FriendItem item)
         {
-            if (IsPlayerGuest || requester == null || requester.PlayerID == null) return;
+            if (IsPlayerGuest || item?.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            var response = SocialOperation.Instance.RejectFriendRequest(requester.PlayerID.Value);
+            var response = SocialOperation.Instance.RejectFriendRequest(item.Player.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
             {
                 MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-                Requests.Remove(requester);
+                Requests.Remove(item);
             }
             else
             {
@@ -211,17 +231,25 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public void RemoveFriend(PlayerDM friend)
+        public void RemoveFriend(PlayerDM friendPlayer)
         {
-            if (IsPlayerGuest || friend == null || friend.PlayerID == null) return;
+            if (IsPlayerGuest || friendPlayer == null || friendPlayer.PlayerID == null)
+            {
+                return;
+            }
 
-            var response = SocialOperation.Instance.RemoveFriend(friend.PlayerID.Value);
+            var response = SocialOperation.Instance.RemoveFriend(friendPlayer.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
             {
                 MessageBox.Show(message, Lang.globalSuccessTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-                Friends.Remove(friend);
+
+                var itemToRemove = Friends.FirstOrDefault(f => f.Player.PlayerID == friendPlayer.PlayerID);
+                if (itemToRemove != null)
+                {
+                    Friends.Remove(itemToRemove);
+                }
             }
             else
             {
@@ -240,18 +268,38 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 var friendsList = SocialOperation.Instance.GetFriends();
                 var requestsList = SocialOperation.Instance.GetIncomingRequests();
+                var sentList = SocialOperation.Instance.GetSentRequests();
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Friends.Clear();
                     Requests.Clear();
+                    _sentRequestIds.Clear();
+
                     foreach (var friend in friendsList)
                     {
-                        Friends.Add(friend);
+                        Friends.Add(new FriendItem
+                        {
+                            Player = friend,
+                            ProfilePicturePath = PictureHandler.GetImagePath(friend.AvatarID),
+                            IsOnline = false
+                        });
                     }
+
                     foreach (var req in requestsList)
                     {
-                        Requests.Add(req);
+                        Requests.Add(new FriendItem
+                        {
+                            Player = req,
+                            ProfilePicturePath = PictureHandler.GetImagePath(req.AvatarID),
+                            IsOnline = false
+                        });
+                    }
+
+                    foreach (var sent in sentList)
+                    {
+                        if (sent.PlayerID.HasValue)
+                            _sentRequestIds.Add(sent.PlayerID.Value);
                     }
                 });
             });
@@ -259,7 +307,10 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void SearchPlayers(string query)
         {
-            if (IsPlayerGuest) return;
+            if (IsPlayerGuest)
+            {
+                return;
+            }
 
             Task.Run(() =>
             {
@@ -270,7 +321,16 @@ namespace CodenamesClient.GameUI.ViewModels
                     foreach (var player in searchList)
                     {
                         if (player.PlayerID != Player.PlayerID)
-                            SearchResults.Add(player);
+                        {
+                            bool isAlreadySent = player.PlayerID.HasValue && _sentRequestIds.Contains(player.PlayerID.Value);
+
+                            SearchResults.Add(new SearchItem
+                            {
+                                Player = player,
+                                IsPending = isAlreadySent,
+                                ProfilePicturePath = PictureHandler.GetImagePath(player.AvatarID)
+                            });
+                        }
                     }
                 });
             });
@@ -284,6 +344,65 @@ namespace CodenamesClient.GameUI.ViewModels
             guest.Username = Lang.globalGuest;
             guest.AvatarID = DEFAULT_AVATAR;
             return guest;
+        }
+
+        public class SearchItem : INotifyPropertyChanged
+        {
+            private bool _isPending;
+            private string _profilePicturePath;
+
+            public PlayerDM Player { get; set; }
+
+            public string ProfilePicturePath
+            {
+                get => _profilePicturePath;
+                set { _profilePicturePath = value; OnPropertyChanged(); }
+            }
+
+            public bool IsPending
+            {
+                get => _isPending;
+                set { _isPending = value; OnPropertyChanged(); }
+            }
+
+            public Visibility ButtonVisibility => IsPending ? Visibility.Collapsed : Visibility.Visible;
+            public Visibility TextVisibility => IsPending ? Visibility.Visible : Visibility.Collapsed;
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged([CallerMemberName] string name = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+                if (name == nameof(IsPending))
+                {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ButtonVisibility)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TextVisibility)));
+                }
+            }
+        }
+
+        public class FriendItem : INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
+            private bool _isOnline;
+            private string _profilePicturePath;
+            public PlayerDM Player { get; set; }
+
+            public string ProfilePicturePath
+            {
+                get => _profilePicturePath;
+                set { _profilePicturePath = value; OnPropertyChanged(); }
+            }
+
+            public bool IsOnline
+            {
+                get => _isOnline;
+                set { _isOnline = value; OnPropertyChanged(); }
+            }
+
+            protected void OnPropertyChanged([CallerMemberName] string name = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
         }
     }
 }

@@ -8,7 +8,6 @@
              mc:Ignorable="d" 
              Height="450" Width="600" Background="#FF1D1D1D">
     <UserControl.Resources>
-        <!-- Profile picture animations -->
         <Storyboard x:Key="SlideInAnimation">
             <DoubleAnimation Storyboard.TargetName="gridProfilePictures"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -27,7 +26,6 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-        <!-- Verification overlay animations -->
         <Storyboard x:Key="SlideInVerifyAnimation">
             <DoubleAnimation Storyboard.TargetName="gridVerify"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -73,9 +71,9 @@
                     <Button Click="Click_btnBack" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="200">
-                    <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" />
+                    <Label x:Name="lblPassword" Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" />
                     <Button Name="tBxAddress"  Content="{x:Static language:Lang.resetChangePassword}" 
-                            Style="{StaticResource buttonCustomFocus}" FontSize="16" IsEnabled="False" />
+                    Style="{StaticResource buttonCustomFocus}" FontSize="16" IsEnabled="False" />
                     <Label Content="Facebook" Style="{StaticResource normal}" />
                     <TextBox Name="tBxFacebook" Text="" 
                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
@@ -85,7 +83,8 @@
                     <Label Content="Discord" Style="{StaticResource normal}" />
                     <TextBox Name="tBxDiscord"  Text=""
                              Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
-                    <Button Click="Click_btnSave" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
+
+                    <Button x:Name="btnSave" Click="Click_btnSave" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -233,7 +232,6 @@
                 </Button.Background>
             </Button>
         </Grid>
-        <!-- ===== Verification overlay ===== -->
         <Grid x:Name="gridVerify"
           Width="540" Height="300"
           Background="#272727"

@@ -131,31 +131,45 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetSentRequests">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="mePlayerId" type="q21:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSentRequestsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="GetSentRequestsResult" nillable="true" type="q22:ArrayOfPlayer" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="NotifyNewFriendRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="fromPlayer" nillable="true" type="q21:Player" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="fromPlayer" nillable="true" type="q23:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyFriendRequestAccepted">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q22:Player" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q24:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyFriendRequestRejected">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q23:Player" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q25:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyFriendRemoved">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q24:Player" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q26:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

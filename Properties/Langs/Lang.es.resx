@@ -699,4 +699,7 @@
   <data name="errorAudioError" xml:space="preserve">
     <value>Error de audio</value>
   </data>
+  <data name="friendPending" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
 </root>

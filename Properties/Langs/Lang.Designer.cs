@@ -259,6 +259,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Pending.
+        /// </summary>
+        public static string friendPending {
+            get {
+                return ResourceManager.GetString("friendPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Friend removed successfully..
         /// </summary>
         public static string friendRemovedSuccess {

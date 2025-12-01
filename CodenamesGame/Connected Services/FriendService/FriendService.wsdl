@@ -71,6 +71,12 @@
   <wsdl:message name="IFriendManager_GetIncomingRequests_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetIncomingRequestsResponse" />
   </wsdl:message>
+  <wsdl:message name="IFriendManager_GetSentRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSentRequests" />
+  </wsdl:message>
+  <wsdl:message name="IFriendManager_GetSentRequests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSentRequestsResponse" />
+  </wsdl:message>
   <wsdl:message name="IFriendManager_NotifyNewFriendRequest_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyNewFriendRequest" />
   </wsdl:message>
@@ -125,6 +131,10 @@
     <wsdl:operation name="GetIncomingRequests">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/GetIncomingRequests" message="tns:IFriendManager_GetIncomingRequests_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/GetIncomingRequestsResponse" message="tns:IFriendManager_GetIncomingRequests_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSentRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendManager/GetSentRequests" message="tns:IFriendManager_GetSentRequests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/GetSentRequestsResponse" message="tns:IFriendManager_GetSentRequests_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="NotifyNewFriendRequest">
       <wsdl:output wsaw:Action="http://tempuri.org/IFriendManager/NotifyNewFriendRequest" message="tns:IFriendManager_NotifyNewFriendRequest_OutputCallbackMessage" />
@@ -222,6 +232,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetIncomingRequests">
       <soap12:operation soapAction="http://tempuri.org/IFriendManager/GetIncomingRequests" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSentRequests">
+      <soap12:operation soapAction="http://tempuri.org/IFriendManager/GetSentRequests" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

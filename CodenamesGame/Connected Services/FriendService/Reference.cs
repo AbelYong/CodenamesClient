@@ -725,6 +725,12 @@ namespace CodenamesGame.FriendService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetIncomingRequests", ReplyAction="http://tempuri.org/IFriendManager/GetIncomingRequestsResponse")]
         System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetIncomingRequestsAsync(System.Guid mePlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetSentRequests", ReplyAction="http://tempuri.org/IFriendManager/GetSentRequestsResponse")]
+        CodenamesGame.FriendService.Player[] GetSentRequests(System.Guid mePlayerId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetSentRequests", ReplyAction="http://tempuri.org/IFriendManager/GetSentRequestsResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetSentRequestsAsync(System.Guid mePlayerId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -847,6 +853,14 @@ namespace CodenamesGame.FriendService {
         
         public System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetIncomingRequestsAsync(System.Guid mePlayerId) {
             return base.Channel.GetIncomingRequestsAsync(mePlayerId);
+        }
+        
+        public CodenamesGame.FriendService.Player[] GetSentRequests(System.Guid mePlayerId) {
+            return base.Channel.GetSentRequests(mePlayerId);
+        }
+        
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetSentRequestsAsync(System.Guid mePlayerId) {
+            return base.Channel.GetSentRequestsAsync(mePlayerId);
         }
     }
 }

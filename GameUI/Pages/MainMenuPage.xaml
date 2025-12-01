@@ -198,24 +198,30 @@
 
                 <Grid.Resources>
                     <DataTemplate x:Key="FriendItemTemplate">
-                        <StackPanel Orientation="Horizontal" Width="600">
-                            <Image Source="/Assets/BoardUI/Agents/agent01.png" Width="30" Height="30" Margin="0,0,10,0"/>
-                            <TextBlock Text="{Binding Username}" Width="450" VerticalAlignment="Center" Foreground="White"/>
-                            <Button Content="{x:Static language:Lang.socialDeleteFriend}" Width="90" Click="Click_RemoveFriend"/>
+                        <StackPanel Orientation="Horizontal" Width="600" Background="Transparent" MouseLeftButtonUp="Click_OpenFriendProfile" Cursor="Hand">
+                            <Image Source="{Binding ProfilePicturePath}" Width="30" Height="30" Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding Player.Username}" Width="450" VerticalAlignment="Center" Foreground="White"/>
+                            <Button Content="{x:Static language:Lang.socialDeleteFriend}" Width="110" Click="Click_RemoveFriend"
+                                    Style="{StaticResource buttonCustomFocus}" FontSize="12"/>
                         </StackPanel>
                     </DataTemplate>
                     <DataTemplate x:Key="RequestItemTemplate">
                         <StackPanel Orientation="Horizontal" Width="600">
-                            <Image Source="/Assets/BoardUI/Agents/agent01.png" Width="30" Height="30" Margin="0,0,10,0"/>
-                            <Button Content="{x:Static language:Lang.socialAccept}" Width="90" Click="Click_AcceptRequest"/>
-                            <Button Content="{x:Static language:Lang.socialReject}" Width="90" Click="Click_RejectRequest"/>
+                            <Image Source="{Binding ProfilePicturePath}" Width="30" Height="30" Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding Player.Username}" Width="350" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
+                            <Button Content="{x:Static language:Lang.socialAccept}" Width="90" Click="Click_AcceptRequest" Style="{StaticResource buttonCustomFocus}" Margin="0,0,10,0" FontSize="12"/>
+                            <Button Content="{x:Static language:Lang.socialReject}" Width="90" Click="Click_RejectRequest" Style="{StaticResource buttonCustomFocus}" FontSize="12"/>
                         </StackPanel>
                     </DataTemplate>
                     <DataTemplate x:Key="SearchItemTemplate">
                         <StackPanel Orientation="Horizontal" Width="600">
-                            <Image Source="/Assets/BoardUI/Agents/agent01.png" Width="30" Height="30" Margin="0,0,10,0"/>
-                            <TextBlock Text="{Binding Username}" Width="450" VerticalAlignment="Center" Foreground="White"/>
-                            <Button Content="{x:Static language:Lang.socialAddFriend}" Width="110" Click="Click_SendRequest"/>
+                            <Image Source="{Binding ProfilePicturePath}" Width="30" Height="30" Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding Player.Username}" Width="450" VerticalAlignment="Center" Foreground="White"/>
+                            <Button Content="{x:Static language:Lang.socialAddFriend}" Width="110" Click="Click_SendRequest"
+                                    Visibility="{Binding ButtonVisibility}" Style="{StaticResource buttonCustomFocus}" FontSize="12"/>
+                            <TextBlock Text="{x:Static language:Lang.friendPending}" Foreground="Gray" FontStyle="Italic"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" Width="110"
+                                       Visibility="{Binding TextVisibility}"/>
                         </StackPanel>
                     </DataTemplate>
                 </Grid.Resources>

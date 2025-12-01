@@ -20,17 +20,63 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         public event Action ClickCloseProfile;
         public event Action ClickSaveProfile;
 
-        public ProfileControl(PlayerDM player)
+        public ProfileControl(PlayerDM player, bool isReadOnly = false)
         {
             InitializeComponent();
             _player = player;
             _tempAvatarID = player.AvatarID;
             FillProfileFields(player);
+
+            if (isReadOnly)
+            {
+                SetReadOnlyMode();
+            }
+        }
+
+        private void SetReadOnlyMode()
+        {
+            void DisableInteraction(TextBox tb)
+            {
+                if (tb == null)
+                {
+                    return;
+                }
+                tb.IsReadOnly = true;
+                tb.IsHitTestVisible = false;
+                tb.Focusable = false;
+            }
+
+            DisableInteraction(tBxUsername);
+            DisableInteraction(tBxEmail);
+            DisableInteraction(tBxName);
+            DisableInteraction(tBxLastName);
+            DisableInteraction(tBxFacebook);
+            DisableInteraction(tBxInstagram);
+            DisableInteraction(tBxDiscord);
+
+            btnProfilePicture.IsEnabled = false;
+
+            if (btnSave != null)
+            {
+                btnSave.Visibility = Visibility.Collapsed;
+            }
+            if (tBxAddress != null)
+            {
+                tBxAddress.Visibility = Visibility.Collapsed;
+            }
+            if (lblPassword != null)
+            {
+                lblPassword.Visibility = Visibility.Collapsed;
+            }
+            if (VerifyEmailLabel != null)
+            {
+                VerifyEmailLabel.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void Click_btnSave(object sender, RoutedEventArgs e)
         {
-            var errors = CodenamesClient.Validation.ProfileValidation.ValidateAll(
+            var errors = Validation.ProfileValidation.ValidateAll(
                 username: tBxUsername.Text?.Trim(),
                 email: tBxEmail.Text?.Trim(),
                 firstName: tBxName.Text?.Trim(),
@@ -43,7 +89,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             var list = new List<string>(errors);
             if (list.Count > 0)
             {
-                System.Windows.MessageBox.Show(string.Join("\n", list), Lang.globalInvalidData,
+                MessageBox.Show(string.Join("\n", list), Lang.globalInvalidData,
                     MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
@@ -64,7 +110,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         {
             PlayerDM updatedPlayer = PrepareUpdatedPlayer();
             CodenamesGame.UserService.CommunicationRequest request = UserOperation.UpdateProfile(updatedPlayer);
-            MessageBox.Show(Util.StatusToMessageMapper.GetUserServiceMessage(request.StatusCode));
+            MessageBox.Show(StatusToMessageMapper.GetUserServiceMessage(request.StatusCode));
         }
 
         private void VerifyEmail()

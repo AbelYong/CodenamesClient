@@ -146,6 +146,21 @@ namespace CodenamesGame.Network
             }
         }
 
+        public List<PlayerDM> GetSentRequests()
+        {
+            try
+            {
+                var list = GetClient().GetSentRequests(_currentPlayerId);
+
+                return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+            }
+            catch (Exception ex)
+            {
+                OnOperationFailure(ex);
+                return new List<PlayerDM>();
+            }
+        }
+
         public FriendshipRequest SendFriendRequest(Guid toPlayerId)
         {
             try

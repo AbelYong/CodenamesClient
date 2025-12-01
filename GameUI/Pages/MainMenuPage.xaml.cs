@@ -19,6 +19,10 @@ namespace CodenamesClient.GameUI.Pages
         private MainMenuViewModel _viewModel;
         private ProfileControl _profileControl;
 
+        private static MainMenuViewModel.SearchItem ItemFromSearchButton(Button btn) => btn?.DataContext as MainMenuViewModel.SearchItem;
+
+        private static MainMenuViewModel.FriendItem ItemFromFriendButton(Button btn) => btn?.DataContext as MainMenuViewModel.FriendItem;
+
         public MainMenuPage(PlayerDM player, bool isGuest)
         {
             InitializeComponent();
@@ -136,7 +140,7 @@ namespace CodenamesClient.GameUI.Pages
                 SearchView.Visibility = Visibility.Collapsed;
                 SearchBox.Text = Lang.socialSearchForAFriend;
                 SearchBox.FontStyle = FontStyles.Italic;
-                SearchResultsList.ItemsSource = null;
+                _viewModel.SearchResults.Clear();
             };
             slideOutAnimation.Begin();
         }
@@ -145,7 +149,7 @@ namespace CodenamesClient.GameUI.Pages
         {
             SearchBox.Text = string.Empty;
             SearchBox.Focus();
-            SearchResultsList.ItemsSource = null;
+            _viewModel.SearchResults.Clear();
 
             FriendsAndRequestsView.Visibility = Visibility.Visible;
             SearchView.Visibility = Visibility.Collapsed;
@@ -171,11 +175,18 @@ namespace CodenamesClient.GameUI.Pages
 
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.Enter) return;
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (e.Key != Key.Enter)
+            {
+                return;
+            }
+
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
 
             var q = SearchBox.Text?.Trim();
-            
+
             if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend)
             {
                 FriendsAndRequestsView.Visibility = Visibility.Collapsed;
@@ -234,46 +245,84 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private static PlayerDM ItemFromButton(Button btn) => btn?.DataContext as PlayerDM;
-
         private void Click_SendRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            var target = ItemFromButton((Button)sender);
-            if (target?.PlayerID == null) return;
+            var item = ItemFromSearchButton((Button)sender);
+            if (item?.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            _viewModel.SendFriendRequest(target.PlayerID.Value);
+            _viewModel.SendFriendRequest(item);
         }
 
         private void Click_AcceptRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null) return;
+            var requesterItem = ItemFromFriendButton((Button)sender);
+            if (requesterItem?.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            _viewModel.AcceptFriendRequest(requester);
+            _viewModel.AcceptFriendRequest(requesterItem);
         }
 
         private void Click_RejectRequest(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            var requester = ItemFromButton((Button)sender);
-            if (requester?.PlayerID == null) return;
+            var requesterItem = ItemFromFriendButton((Button)sender);
+            if (requesterItem?.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            _viewModel.RejectFriendRequest(requester);
+            _viewModel.RejectFriendRequest(requesterItem);
         }
 
         private void Click_RemoveFriend(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.Player?.PlayerID == null) return;
+            if (_viewModel.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            var friend = ItemFromButton((Button)sender);
-            if (friend?.PlayerID == null) return;
+            var friendItem = ItemFromFriendButton((Button)sender);
+            if (friendItem?.Player?.PlayerID == null)
+            {
+                return;
+            }
 
-            _viewModel.RemoveFriend(friend);
+            _viewModel.RemoveFriend(friendItem.Player);
+        }
+
+        private void Click_OpenFriendProfile(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is StackPanel panel && panel.DataContext is MainMenuViewModel.FriendItem friendItem)
+            {
+                Overlay.Visibility = Visibility.Visible;
+                _profileControl = new ProfileControl(friendItem.Player, true);
+
+                _profileControl.VerticalAlignment = VerticalAlignment.Center;
+                _profileControl.HorizontalAlignment = HorizontalAlignment.Center;
+                _profileControl.Visibility = Visibility.Visible;
+
+                _profileControl.ClickCloseProfile += CloseProfile;
+                gridMainMenu.Children.Add(_profileControl);
+            }
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -297,7 +346,7 @@ namespace CodenamesClient.GameUI.Pages
             else if (slider == sliderSFX)
             {
                 AudioManager.Instance.SetSfxVolume(volume0to1);
-                AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/oof.mp3"); 
+                AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/oof.mp3");
             }
         }
     }
