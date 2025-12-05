@@ -108,7 +108,9 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         {
             PlayerDM updatedPlayer = PrepareUpdatedPlayer();
             CodenamesGame.UserService.CommunicationRequest request = OnewayNetworkManager.Instance.UpdateProfile(updatedPlayer);
-            MessageBox.Show(StatusToMessageMapper.GetUserServiceMessage(request.StatusCode));
+            string message = request.StatusCode == CodenamesGame.UserService.StatusCode.NOT_FOUND ?
+                Lang.profileUpdateErrorProfileNotFound : StatusToMessageMapper.GetUserServiceMessage(request.StatusCode);
+            MessageBox.Show(message);
         }
 
         private void VerifyEmail()
@@ -243,11 +245,11 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             updatedPlayer.PlayerID = _player.PlayerID;
             updatedPlayer.Username = tBxUsername.Text;
             updatedPlayer.AvatarID = _tempAvatarID;
-            updatedPlayer.Name = (!String.IsNullOrEmpty(tBxName.Text) ? tBxName.Text : null);
-            updatedPlayer.LastName = (!String.IsNullOrEmpty(tBxLastName.Text) ? tBxLastName.Text : null);
-            updatedPlayer.FacebookUsername = (!String.IsNullOrEmpty(tBxFacebook.Text) ? tBxFacebook.Text : null);
-            updatedPlayer.InstagramUsername = (!String.IsNullOrEmpty(tBxInstagram.Text) ? tBxInstagram.Text : null);
-            updatedPlayer.DiscordUsername = (!String.IsNullOrEmpty(tBxDiscord.Text) ? tBxDiscord.Text : null);
+            updatedPlayer.Name = (!string.IsNullOrEmpty(tBxName.Text) ? tBxName.Text : null);
+            updatedPlayer.LastName = (!string.IsNullOrEmpty(tBxLastName.Text) ? tBxLastName.Text : null);
+            updatedPlayer.FacebookUsername = (!string.IsNullOrEmpty(tBxFacebook.Text) ? tBxFacebook.Text : null);
+            updatedPlayer.InstagramUsername = (!string.IsNullOrEmpty(tBxInstagram.Text) ? tBxInstagram.Text : null);
+            updatedPlayer.DiscordUsername = (!string.IsNullOrEmpty(tBxDiscord.Text) ? tBxDiscord.Text : null);
             return updatedPlayer;
         }
     }

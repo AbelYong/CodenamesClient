@@ -349,6 +349,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Something went wrong and your request couldn&apos;t be processed, please contact the developers if the issue persists.
+        /// </summary>
+        public static string globalClientError {
+            get {
+                return ResourceManager.GetString("globalClientError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Confirm.
         /// </summary>
         public static string globalConfirm {
@@ -372,6 +381,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalDisconnected {
             get {
                 return ResourceManager.GetString("globalDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t find your profile. Contact an administrator if the issue persists.
+        /// </summary>
+        public static string globalErrorProfileNotFound {
+            get {
+                return ResourceManager.GetString("globalErrorProfileNotFound", resourceCulture);
             }
         }
         
@@ -480,6 +498,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalServerError {
             get {
                 return ResourceManager.GetString("globalServerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t find the Codenames: Duet server, it might be offline or down for maintenance. Please try again later.
+        /// </summary>
+        public static string globalServerNotFound {
+            get {
+                return ResourceManager.GetString("globalServerNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Seems like the Codenames: Duet server took too long answer, please try again.
+        /// </summary>
+        public static string globalServerTimeout {
+            get {
+                return ResourceManager.GetString("globalServerTimeout", resourceCulture);
             }
         }
         
@@ -853,15 +889,6 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t log you in because we couldn&apos;t find your profile. Contact an administrator if the issue persists.
-        /// </summary>
-        public static string loginErrorProfileNotFound {
-            get {
-                return ResourceManager.GetString("loginErrorProfileNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Forgot your password.
         /// </summary>
         public static string loginForgotPassword {
@@ -1042,7 +1069,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a {0} found the assassin, you . Mission failed.
+        ///   Busca una cadena traducida similar a {0} was eliminated, you&apos;ve been compromised. Mission failed.
         /// </summary>
         public static string matchDefeatAssassinCompanion {
             get {
@@ -1051,7 +1078,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a You found the assassin. Mission failed.
+        ///   Busca una cadena traducida similar a You have been eliminated by an assassin. Mission failed.
         /// </summary>
         public static string matchDefeatAssassinMessage {
             get {
@@ -1213,15 +1240,6 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a We couldn&apos;t update your profile because we couldn&apos;t find it, please try again later. Contact an administrator if the issue persists.
-        /// </summary>
-        public static string profileErrorCouldNotFindProfile {
-            get {
-                return ResourceManager.GetString("profileErrorCouldNotFindProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t update your profile because this email or username is already in use.
         /// </summary>
         public static string profileErrorEmailOrUsernameInUse {
@@ -1290,6 +1308,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string profileSocialNetwork {
             get {
                 return ResourceManager.GetString("profileSocialNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t update your profile because we couldn&apos;t find it, contact an administrator if the issue persists.
+        /// </summary>
+        public static string profileUpdateErrorProfileNotFound {
+            get {
+                return ResourceManager.GetString("profileUpdateErrorProfileNotFound", resourceCulture);
             }
         }
         

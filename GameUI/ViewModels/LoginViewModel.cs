@@ -149,7 +149,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 }
                 else
                 {
-                    _requestErrorMessage = Lang.loginErrorProfileNotFound;
+                    _requestErrorMessage = Lang.globalErrorProfileNotFound;
                     RaiseError?.Invoke();
                 }
             }

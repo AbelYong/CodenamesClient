@@ -10,8 +10,14 @@ namespace CodenamesClient.Util
             {
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
+                case CodenamesGame.AuthenticationService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.AuthenticationService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
+                case CodenamesGame.AuthenticationService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
                 case CodenamesGame.AuthenticationService.StatusCode.MISSING_DATA:
                     return Lang.signInErrorMissingData;
                 default:
@@ -30,9 +36,17 @@ namespace CodenamesClient.Util
                 case CodenamesGame.UserService.StatusCode.WRONG_DATA:
                     return Lang.profileCouldNotUpdateCheckData;
                 case CodenamesGame.UserService.StatusCode.NOT_FOUND:
-                    return Lang.profileErrorCouldNotFindProfile;
+                    return Lang.globalErrorProfileNotFound;
                 case CodenamesGame.UserService.StatusCode.UNALLOWED:
                     return Lang.profileErrorEmailOrUsernameInUse;
+                case CodenamesGame.UserService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.UserService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
+                case CodenamesGame.UserService.StatusCode.SERVER_UNAVAIBLE:
+                    return Lang.globalConnectionLost;
+                case CodenamesGame.UserService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
                 default:
                     return Lang.globalUnknownServerError;
             }
@@ -50,6 +64,14 @@ namespace CodenamesClient.Util
                     return Lang.emailConfirmationCodeExpiredOrRemoved;
                 case CodenamesGame.EmailService.StatusCode.UNAUTHORIZED:
                     return Lang.emailVerificationFailedAttemptsRemainingX;
+                case CodenamesGame.EmailService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.EmailService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
+                case CodenamesGame.EmailService.StatusCode.SERVER_UNAVAIBLE:
+                    return Lang.globalConnectionLost;
+                case CodenamesGame.EmailService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
                 default:
                     return Lang.globalUnknownServerError;
             }
@@ -63,10 +85,14 @@ namespace CodenamesClient.Util
                     return Lang.loginAlreadyLoggedInError;
                 case CodenamesGame.SessionService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
+                case CodenamesGame.SessionService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.SessionService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.SessionService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
-                case CodenamesGame.SessionService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
+                case CodenamesGame.SessionService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
                 default:
                     return Lang.globalUnknownServerError;
             }
@@ -94,10 +120,14 @@ namespace CodenamesClient.Util
             {
                 case CodenamesGame.LobbyService.StatusCode.UNAUTHORIZED:
                     return Lang.loginAlreadyLoggedInError;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.LobbyService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
-                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
+                case CodenamesGame.LobbyService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
             }
             return Lang.globalUnknownServerError;
         }
@@ -110,10 +140,14 @@ namespace CodenamesClient.Util
                     return Lang.globalServerError;
                 case CodenamesGame.LobbyService.StatusCode.UNALLOWED:
                     return Lang.lobbyErrorAlreadyPartyHost;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.LobbyService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
-                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
+                case CodenamesGame.LobbyService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
             }
             return Lang.globalUnknownServerError;
         }
@@ -132,10 +166,14 @@ namespace CodenamesClient.Util
                     return Lang.lobbyErrorLobbyFull;
                 case CodenamesGame.LobbyService.StatusCode.CLIENT_UNREACHABLE:
                     return Lang.lobbyInfoFriendNotOnlineEmailSent;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.LobbyService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
-                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
+                case CodenamesGame.LobbyService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
             }
             return Lang.globalUnknownServerError;
         }
@@ -154,10 +192,14 @@ namespace CodenamesClient.Util
                     return Lang.lobbyErrorLobbyFull;
                 case CodenamesGame.LobbyService.StatusCode.CLIENT_UNREACHABLE:
                     return Lang.lobbyErrorPartyHostNotFound;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.LobbyService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
-                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
+                case CodenamesGame.LobbyService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
             }
             return Lang.globalUnknownServerError;
         }
@@ -176,14 +218,18 @@ namespace CodenamesClient.Util
                     return Lang.lobbyCantStartPlayerBusy;
                 case CodenamesGame.MatchmakingService.StatusCode.CLIENT_UNREACHABLE:
                     return Lang.lobbyCantStartCompanionDisconnect;
-                case CodenamesGame.MatchmakingService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
                 case CodenamesGame.MatchmakingService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
                 case CodenamesGame.MatchmakingService.StatusCode.CLIENT_TIMEOUT:
                     return Lang.lobbyMatchCanceledTimeout;
+                case CodenamesGame.MatchmakingService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.MatchmakingService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.MatchmakingService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
+                case CodenamesGame.MatchmakingService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
             }
             return Lang.globalUnknownServerError;
         }
@@ -192,12 +238,16 @@ namespace CodenamesClient.Util
         {
             switch (code)
             {
-                case CodenamesGame.MatchService.StatusCode.SERVER_UNAVAIBLE:
-                    return Lang.globalConnectionLost;
-                case CodenamesGame.MatchService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
                 case CodenamesGame.MatchService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
+                case CodenamesGame.MatchService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.MatchService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
+                case CodenamesGame.MatchService.StatusCode.SERVER_UNAVAIBLE:
+                    return Lang.globalConnectionLost;
+                case CodenamesGame.MatchService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
             }
             return Lang.globalUnknownServerError;
         }
@@ -212,6 +262,14 @@ namespace CodenamesClient.Util
                     return Lang.reportDuplicate;
                 case CodenamesGame.ModerationService.StatusCode.USER_KICKED_AND_BANNED:
                     return Lang.reportUserBanned;
+                case CodenamesGame.ModerationService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.ModerationService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
+                case CodenamesGame.ModerationService.StatusCode.SERVER_UNAVAIBLE:
+                    return Lang.globalConnectionLost;
+                case CodenamesGame.ModerationService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
                 default:
                     return Lang.globalUnknownServerError;
             }
@@ -237,10 +295,14 @@ namespace CodenamesClient.Util
                     return Lang.friendErrorSelfRequest;
                 case CodenamesGame.FriendService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
+                case CodenamesGame.FriendService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.FriendService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
                 case CodenamesGame.FriendService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
-                case CodenamesGame.FriendService.StatusCode.SERVER_TIMEOUT:
-                    return Lang.globalTimeoutError;
+                case CodenamesGame.FriendService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
                 default:
                     return Lang.globalUnknownServerError;
             }

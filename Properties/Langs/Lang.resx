@@ -583,10 +583,10 @@
     <value>Too many witnesses involved, operation compromised. Mission aborted</value>
   </data>
   <data name="matchDefeatAssassinMessage" xml:space="preserve">
-    <value>You found the assassin. Mission failed</value>
+    <value>You have been eliminated by an assassin. Mission failed</value>
   </data>
   <data name="matchDefeatAssassinCompanion" xml:space="preserve">
-    <value>{0} found the assassin, you . Mission failed</value>
+    <value>{0} was eliminated, you've been compromised. Mission failed</value>
   </data>
   <data name="errorCompanionLostConnection" xml:space="preserve">
     <value>Your partner lost connection, the mission has been canceled.</value>
@@ -702,7 +702,19 @@
   <data name="friendPending" xml:space="preserve">
     <value>Pending</value>
   </data>
-  <data name="loginErrorProfileNotFound" xml:space="preserve">
-    <value>Sorry, we couldn't log you in because we couldn't find your profile. Contact an administrator if the issue persists</value>
+  <data name="globalErrorProfileNotFound" xml:space="preserve">
+    <value>Sorry, we couldn't find your profile. Contact an administrator if the issue persists</value>
+  </data>
+  <data name="globalServerTimeout" xml:space="preserve">
+    <value>Seems like the Codenames: Duet server took too long answer, please try again</value>
+  </data>
+  <data name="globalServerNotFound" xml:space="preserve">
+    <value>Sorry, we couldn't find the Codenames: Duet server, it might be offline or down for maintenance. Please try again later</value>
+  </data>
+  <data name="globalClientError" xml:space="preserve">
+    <value>Something went wrong and your request couldn't be processed, please contact the developers if the issue persists</value>
+  </data>
+  <data name="profileUpdateErrorProfileNotFound" xml:space="preserve">
+    <value>Sorry, we couldn't update your profile because we couldn't find it, contact an administrator if the issue persists</value>
   </data>
 </root>

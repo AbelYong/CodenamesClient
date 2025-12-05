@@ -583,7 +583,7 @@
     <value>Demasiados testigos involucrados, operación comprometida. Misión abortada</value>
   </data>
   <data name="matchDefeatAssassinMessage" xml:space="preserve">
-    <value>Te encontraste con el asesino y fuiste eliminado. Misión fallida</value>
+    <value>Fuiste eliminado por un asesino. Misión fallida</value>
   </data>
   <data name="matchDefeatAssassinCompanion" xml:space="preserve">
     <value>{0} fue eliminado, has sido comprometido. Misión fallida</value>
@@ -702,7 +702,19 @@
   <data name="friendPending" xml:space="preserve">
     <value>Pendiente</value>
   </data>
-  <data name="loginErrorProfileNotFound" xml:space="preserve">
-    <value>Lo sentimos, no pudimos conectarte por que no pudimos encontrar tu perfil, contacta a un administrador si el problema persiste</value>
+  <data name="globalErrorProfileNotFound" xml:space="preserve">
+    <value>Lo sentimos, no pudimos encontrar tu perfil, contacta a un administrador si el problema persiste</value>
+  </data>
+  <data name="globalServerTimeout" xml:space="preserve">
+    <value>Parece que el servidor de Codenames: Duet tardo demasiado en responder, por favor inténtalo de nuevo</value>
+  </data>
+  <data name="globalServerNotFound" xml:space="preserve">
+    <value>Lo sentimos, no pudimos encontrar el servidor Codenames: Duet, puede que esté apagado o inactivo por mantenimiento. Por favor inténtalo de nuevo más tarde.</value>
+  </data>
+  <data name="globalClientError" xml:space="preserve">
+    <value>Algo salió mal y tu solicitud no se pudo procesar. Comuníquese con los desarrolladores si el problema persiste.</value>
+  </data>
+  <data name="profileUpdateErrorProfileNotFound" xml:space="preserve">
+    <value>Lo sentimos, no pudimos actualizar su perfil porque no pudimos encontrarlo. Comuníquese con un administrador si el problema persiste.</value>
   </data>
 </root>
