@@ -2,13 +2,9 @@
 using CodenamesGame.MatchmakingService;
 using CodenamesGame.Network.EventArguments;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CodenamesGame.Network
+namespace CodenamesGame.Network.Proxies.CallbackHandlers
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class MatchmakingCallbackHandler : IMatchmakingManagerCallback

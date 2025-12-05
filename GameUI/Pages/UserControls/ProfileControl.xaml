@@ -72,7 +72,7 @@
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="200">
                     <Label x:Name="lblPassword" Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" />
-                    <Button Name="tBxAddress"  Content="{x:Static language:Lang.resetChangePassword}" 
+                    <Button Name="tBxChangePassword"  Content="{x:Static language:Lang.resetChangePassword}" 
                     Style="{StaticResource buttonCustomFocus}" FontSize="16" IsEnabled="False" />
                     <Label Content="Facebook" Style="{StaticResource normal}" />
                     <TextBox Name="tBxFacebook" Text="" 

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CodenamesClient.Properties.Langs;
 using CodenamesGame.Network;
+using CodenamesGame.Network.Proxies.CallbackHandlers;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System;
@@ -13,6 +14,8 @@ using CodenamesGame.Domain.POCO.Match;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using CodenamesClient.Operation;
+using CodenamesClient.Util;
+using CodenamesClient.Operation.Network.Duplex;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -26,6 +29,7 @@ namespace CodenamesClient.GameUI.ViewModels
         private PlayerDM _partyGuest;
         private GamemodeDM _gamemode;
         private string _gamemodeName;
+        private string _gamemodePicturePath;
         private string _readyOrCancelTgBtnContent;
         private string _lobbyCode = string.Empty;
         private string _visibleLobbyCodeTag = string.Empty;
@@ -78,14 +82,27 @@ namespace CodenamesClient.GameUI.ViewModels
                 {
                     case GamemodeDM.NORMAL:
                         IsCustomGame = false;
+                        GamemodePicturePath = "/Assets/GameUI/agent.png";
                         break;
                     case GamemodeDM.CUSTOM:
                         IsCustomGame = true;
+                        GamemodePicturePath = "/Assets/GameUI/agentCustom.png";
                         break;
                     case GamemodeDM.COUNTERINTELLIGENCE:
+                        GamemodePicturePath = "/Assets/GameUI/agentCounterintelligence.png";
                         IsCustomGame = false;
                         break;
                 }
+            }
+        }
+
+        public string GamemodePicturePath
+        {
+            get => _gamemodePicturePath;
+            set
+            {
+                _gamemodePicturePath = value;
+                OnPropertyChanged();
             }
         }
 
@@ -192,6 +209,9 @@ namespace CodenamesClient.GameUI.ViewModels
                     if (_canMatchBeCanceled)
                     {
                         RequestCancel();
+                        PlayBtnEnabled = true;
+                        PlayBtnVisibility = Visibility.Visible;
+                        ReadyOrCancelTgBtnVisibility = Visibility.Collapsed;
                     }
 
                     ReadyOrCancelTgBtnContent = "Ready";
@@ -287,8 +307,6 @@ namespace CodenamesClient.GameUI.ViewModels
 
             Friends = new ObservableCollection<FriendItem>();
             LoadFriends();
-            ConnectToLobbyService(player);
-            ConnectToMatchmakingService(player);
 
             switch (gamemode)
             {
@@ -346,10 +364,10 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private void ConnectToLobbyService(PlayerDM player)
+        public void ConnectToLobbyService(PlayerDM player)
         {
             Guid playerID = (Guid)player.PlayerID;
-            CodenamesGame.LobbyService.CommunicationRequest request = LobbyOperation.Instance.Initialize(playerID);
+            CodenamesGame.LobbyService.CommunicationRequest request = DuplexNetworkManager.Instance.ConnectLobbyService(playerID);
             if (request.IsSuccess)
             {
                 SuscribeToLobbyEvents();
@@ -363,10 +381,10 @@ namespace CodenamesClient.GameUI.ViewModels
         public void DisconnectFromLobbyService()
         {
             UnsuscribeFromLobbyEvents();
-            LobbyOperation.Instance.Disconnect();
+            DuplexNetworkManager.Instance.DisconnectFromLobbyService();
         }
 
-        private void SuscribeToLobbyEvents()
+        public void SuscribeToLobbyEvents()
         {
             LobbyCallbackHandler.OnInvitationReceived += HandleInvitationReceived;
             LobbyCallbackHandler.OnPlayerJoined += HandlePlayerJoined;
@@ -395,7 +413,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void JoinParty(string lobbyCode)
         {
-            CodenamesGame.LobbyService.JoinPartyRequest request = LobbyOperation.Instance.JoinParty(_me, lobbyCode);
+            CodenamesGame.LobbyService.JoinPartyRequest request = DuplexNetworkManager.Instance.JoinParty(_me, lobbyCode);
             if (request.IsSuccess)
             {
                 IsPartyFull = true;
@@ -414,7 +432,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public void CreateLobby()
         {
-            CodenamesGame.LobbyService.CreateLobbyRequest request = LobbyOperation.Instance.CreateLobby(_me);
+            CodenamesGame.LobbyService.CreateLobbyRequest request = DuplexNetworkManager.Instance.CreateLobby(_me);
             if (request.IsSuccess)
             {
                 _lobbyCode = request.LobbyCode;
@@ -434,7 +452,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (_lobbyCode != string.Empty && PartyHost == _me)
             {
-                CodenamesGame.LobbyService.CommunicationRequest request = LobbyOperation.Instance.InviteToParty(_me, friendID, _lobbyCode);
+                CodenamesGame.LobbyService.CommunicationRequest request = DuplexNetworkManager.Instance.InviteToParty(_me, friendID, _lobbyCode);
                 if (!request.IsSuccess)
                 {
                     MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INVITE_TO_PARTY, request.StatusCode));
@@ -462,10 +480,10 @@ namespace CodenamesClient.GameUI.ViewModels
             InviteBtnVisibility = Visibility.Visible;
         }
 
-        private void ConnectToMatchmakingService(PlayerDM player)
+        public void ConnectToMatchmakingService(PlayerDM player)
         {
             Guid playerID = (Guid)player.PlayerID;
-            CodenamesGame.MatchmakingService.CommunicationRequest request = MatchmakingOperation.Instance.Initialize(playerID);
+            CodenamesGame.MatchmakingService.CommunicationRequest request = DuplexNetworkManager.Instance.ConnectMatchmakingService(playerID);
             if (request.IsSuccess)
             {
                 SuscribeToMatchmakingEvents();
@@ -479,7 +497,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public void DisconnectFromMatchmakingService()
         {
             UnsuscribeFromMatchmakingEvents();
-            MatchmakingOperation.Instance.Disconnect();
+            DuplexNetworkManager.Instance.DisconnectFromMatchmakingService();
         }
 
         public async Task RequestArrangedMatch()
@@ -488,7 +506,7 @@ namespace CodenamesClient.GameUI.ViewModels
             if (configuration != null)
             {
                 PlayBtnEnabled = false;
-                CodenamesGame.MatchmakingService.CommunicationRequest request = await MatchmakingOperation.Instance.RequestArrangedMatch(configuration);
+                CodenamesGame.MatchmakingService.CommunicationRequest request = await DuplexNetworkManager.Instance.RequestArrangedMatch(configuration);
                 if (!request.IsSuccess)
                 {
                     PlayBtnEnabled = true;
@@ -531,13 +549,13 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (_match != null)
             {
-                MatchmakingOperation.Instance.ConfirmMatch(_match.MatchID);
+                DuplexNetworkManager.Instance.ConfirmMatch(_match.MatchID);
             }
         }
 
         private static void RequestCancel()
         {
-            MatchmakingOperation.Instance.CancelMatch();
+            DuplexNetworkManager.Instance.CancelMatch();
         }
 
         private void SuscribeToMatchmakingEvents()
@@ -613,32 +631,25 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void LoadFriends()
         {
-            try
+            var allFriends = DuplexNetworkManager.Instance.GetFriends();
+
+            var onlineFriendsList = SessionCallbackHandler.GetOnlineFriendsList();
+            var onlineIds = new HashSet<Guid>(onlineFriendsList.Select(p => p.PlayerID.Value));
+
+            Friends.Clear();
+            foreach (var friend in allFriends)
             {
-                var allFriends = SocialOperation.Instance.GetFriends();
-
-                var onlineFriendsList = SessionCallbackHandler.GetOnlineFriendsList();
-                var onlineIds = new HashSet<Guid>(onlineFriendsList.Select(p => p.PlayerID.Value));
-
-                Friends.Clear();
-                foreach (var friend in allFriends)
+                if (friend.PlayerID.HasValue)
                 {
-                    if (friend.PlayerID.HasValue)
-                    {
-                        bool isOnline = onlineIds.Contains(friend.PlayerID.Value);
-                        Friends.Add(
-                            new FriendItem
-                            {
-                                Player = friend,
-                                ProfilePicturePath = PictureHandler.GetImagePath(friend.AvatarID),
-                                IsOnline = isOnline
-                            });
-                    }
+                    bool isOnline = onlineIds.Contains(friend.PlayerID.Value);
+                    Friends.Add(
+                        new FriendItem
+                        {
+                            Player = friend,
+                            ProfilePicturePath = PictureHandler.GetImagePath(friend.AvatarID),
+                            IsOnline = isOnline
+                        });
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error loading friends: " + ex.Message);
             }
         }
 

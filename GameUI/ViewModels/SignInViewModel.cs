@@ -133,23 +133,70 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public static string PwMinLengthText => string.Format(Lang.signInPasswordMinLength, SignInValidation.PASSWORD_MIN_LENGTH);
-        public static string PwMaxLengthText => string.Format(Lang.signInPasswordMaxLength, SignInValidation.PASSWORD_MAX_LENGTH);
+        public static string PwMinLengthText
+        {
+            get => string.Format(Lang.signInPasswordMinLength, SignInValidation.PASSWORD_MIN_LENGTH);
+        }
+        public static string PwMaxLengthText
+        {
+            get => string.Format(Lang.signInPasswordMaxLength, SignInValidation.PASSWORD_MAX_LENGTH);
+        }
 
-        public bool PwHasMinLength => SignInValidation.MeetsMinLength(Password);
-        public bool PwWithinMaxLength => SignInValidation.WithinMaxLength(Password);
-        public bool PwHasUpper => SignInValidation.HasUpper(Password);
-        public bool PwHasLower => SignInValidation.HasLower(Password);
-        public bool PwHasDigit => SignInValidation.HasDigit(Password);
-        public bool PwHasSpecial => SignInValidation.HasSpecial(Password);
-        public bool PwNoConsecutiveRun => SignInValidation.NoConsecutiveRun(Password);
-        public bool IsPasswordValid => PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial && PwNoConsecutiveRun;
+        public bool PwHasMinLength
+        {
+            get => SignInValidation.MeetsMinLength(Password);
+        }
 
-        public bool CanSubmit => !HasErrors && IsPasswordValid && PasswordsMatch;
+        public bool PwWithinMaxLength
+        {
+            get => SignInValidation.WithinMaxLength(Password);
+        }
 
-        private bool PasswordsMatch => !string.IsNullOrEmpty(ConfirmPassword) && ConfirmPassword == Password;
+        public bool PwHasUpper
+        {
+            get => SignInValidation.HasUpper(Password);
+        }
 
-        public bool HasErrors => _errors.Any(kv => kv.Value?.Count > 0);
+        public bool PwHasLower
+        {
+            get => SignInValidation.HasLower(Password);
+        }
+
+        public bool PwHasDigit
+        {
+            get => SignInValidation.HasDigit(Password);
+        }
+
+        public bool PwHasSpecial
+        {
+            get => SignInValidation.HasSpecial(Password);
+        }
+
+        public bool PwNoConsecutiveRun
+        {
+            get => SignInValidation.NoConsecutiveRun(Password);
+        }
+
+        public bool IsPasswordValid
+        {
+            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial && PwNoConsecutiveRun);
+        }
+
+        public bool CanSubmit
+        {
+            get => (!HasErrors && IsPasswordValid && PasswordsMatch);
+        }
+
+        private bool PasswordsMatch
+        {
+            get => (!string.IsNullOrEmpty(ConfirmPassword) && ConfirmPassword == Password);
+        }
+
+        public bool HasErrors
+        {
+            get => (_errors.Any(kv => kv.Value?.Count > 0));
+        }
+
         public IEnumerable GetErrors(string propertyName)
         {
             if (string.IsNullOrEmpty(propertyName)) return _errors.SelectMany(kv => kv.Value);
@@ -198,7 +245,9 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 case nameof(ConfirmPassword):
                     if (IsPasswordValid && !string.IsNullOrWhiteSpace(ConfirmPassword) && ConfirmPassword != Password)
+                    {
                         errors = new[] { Lang.signInPasswordsDoNotMatch };
+                    }
                     break;
             }
 

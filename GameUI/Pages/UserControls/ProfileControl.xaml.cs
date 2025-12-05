@@ -1,10 +1,8 @@
 ﻿using CodenamesClient.Operation;
+using CodenamesClient.Operation.Network.Oneway;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
-using CodenamesGame.EmailService;
-using CodenamesGame.Network;
-using CodenamesGame.UserService;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -20,7 +18,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         public event Action ClickCloseProfile;
         public event Action ClickSaveProfile;
 
-        public ProfileControl(PlayerDM player, bool isReadOnly = false)
+        public ProfileControl(PlayerDM player, bool isReadOnly)
         {
             InitializeComponent();
             _player = player;
@@ -60,9 +58,9 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             {
                 btnSave.Visibility = Visibility.Collapsed;
             }
-            if (tBxAddress != null)
+            if (tBxChangePassword != null)
             {
-                tBxAddress.Visibility = Visibility.Collapsed;
+                tBxChangePassword.Visibility = Visibility.Collapsed;
             }
             if (lblPassword != null)
             {
@@ -109,7 +107,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         private void SaveProfile()
         {
             PlayerDM updatedPlayer = PrepareUpdatedPlayer();
-            CodenamesGame.UserService.CommunicationRequest request = UserOperation.UpdateProfile(updatedPlayer);
+            CodenamesGame.UserService.CommunicationRequest request = OnewayNetworkManager.Instance.UpdateProfile(updatedPlayer);
             MessageBox.Show(StatusToMessageMapper.GetUserServiceMessage(request.StatusCode));
         }
 
@@ -124,7 +122,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private static bool SendVerificationCode(string email)
         {
-            CodenamesGame.EmailService.CommunicationRequest request = EmailOperation.SendVerificationEmail(email);
+            CodenamesGame.EmailService.CommunicationRequest request = OnewayNetworkManager.Instance.SendVerificationEmail(email);
             if (!request.IsSuccess)
             {
                 MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
@@ -136,7 +134,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         {
             string newEmail = tBxEmail.Text;
             string code = tbxVerifyCode.Text;
-            CodenamesGame.EmailService.ConfirmEmailRequest request = EmailOperation.SendVerificationCode(newEmail, code);
+            CodenamesGame.EmailService.ConfirmEmailRequest request = OnewayNetworkManager.Instance.SendVerificationCode(newEmail, code);
             if (request.IsSuccess)
             {
                 SaveProfile();

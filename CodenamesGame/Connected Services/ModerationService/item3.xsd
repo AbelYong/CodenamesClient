@@ -5,8 +5,8 @@
   <xs:element name="ReportPlayer">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="reporterUserID" type="q1:guid" />
-        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="reportedUserID" type="q2:guid" />
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="reporterPlayerID" type="q1:guid" />
+        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="reportedPlayerID" type="q2:guid" />
         <xs:element minOccurs="0" name="reason" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>

@@ -1,5 +1,6 @@
 ﻿using CodenamesClient.GameUI.Pages;
-using CodenamesGame.Network;
+using CodenamesClient.Operation.Network.Duplex;
+using CodenamesGame.Network.Proxies.CallbackHandlers;
 using CodenamesGame.SessionService;
 using System;
 using System.Collections.Generic;
@@ -31,15 +32,19 @@ namespace CodenamesClient.GameUI
         {
             try
             {
-                SessionOperation.Instance.Disconnect();
-                SocialOperation.Instance.Terminate();
-                LobbyOperation.Instance.Disconnect();
-                MatchmakingOperation.Instance.Disconnect();
-                MatchOperation.Instance.Disconnect();
+                DuplexNetworkManager.Instance.DisconnectFromSessionService();
+                DuplexNetworkManager.Instance.DisconnectFromFriendService();
+                DuplexNetworkManager.Instance.DisconnectFromLobbyService();
+                DuplexNetworkManager.Instance.DisconnectFromMatchmakingService();
+                DuplexNetworkManager.Instance.DisconnectFromMatchService();
             }
-            catch (Exception ex) when (ex is CommunicationException || ex is CommunicationObjectFaultedException || ex is CommunicationObjectFaultedException)
+            catch (Exception ex) when (ex is CommunicationException || ex is TimeoutException)
             {
                 //Do nothing
+            }
+            catch (Exception ex)
+            {
+                CodenamesGame.Util.CodenamesGameLogger.Log.Error("Unexpected exception on main window closed: ", ex);
             }
         }
 

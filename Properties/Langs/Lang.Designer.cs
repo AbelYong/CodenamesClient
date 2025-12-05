@@ -853,6 +853,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t log you in because we couldn&apos;t find your profile. Contact an administrator if the issue persists.
+        /// </summary>
+        public static string loginErrorProfileNotFound {
+            get {
+                return ResourceManager.GetString("loginErrorProfileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Forgot your password.
         /// </summary>
         public static string loginForgotPassword {

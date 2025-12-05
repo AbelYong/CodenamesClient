@@ -702,4 +702,7 @@
   <data name="friendPending" xml:space="preserve">
     <value>Pending</value>
   </data>
+  <data name="loginErrorProfileNotFound" xml:space="preserve">
+    <value>Sorry, we couldn't log you in because we couldn't find your profile. Contact an administrator if the issue persists</value>
+  </data>
 </root>

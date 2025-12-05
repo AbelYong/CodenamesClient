@@ -18,13 +18,22 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 request = client.Login(username, password);
             }
-            catch (Exception ex) when (ex is EndpointNotFoundException || ex is CommunicationException)
-            {
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-            }
             catch (TimeoutException)
             {
                 request.StatusCode = StatusCode.SERVER_TIMEOUT;
+            }
+            catch (EndpointNotFoundException)
+            {
+                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+            }
+            catch (CommunicationException)
+            {
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception on authentication attempt: ", ex);
+                request.StatusCode = StatusCode.CLIENT_ERROR;
             }
             finally
             {
@@ -40,12 +49,21 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 client.BeginPasswordReset(username, email);
             }
-            catch (Exception ex) when (ex is EndpointNotFoundException || ex is CommunicationException)
+            catch (TimeoutException)
             {
                 NetworkUtil.SafeClose(client);
             }
-            catch (TimeoutException)
+            catch (EndpointNotFoundException)
             {
+                NetworkUtil.SafeClose(client);
+            }
+            catch (CommunicationException)
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception on password reset: ", ex);
                 NetworkUtil.SafeClose(client);
             }
             finally
@@ -63,12 +81,21 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 return client.CompletePasswordReset(username, code, newPassword);
             }
-            catch (Exception ex) when (ex is EndpointNotFoundException || ex is CommunicationException)
+            catch (TimeoutException)
             {
                 NetworkUtil.SafeClose(client);
             }
-            catch (TimeoutException)
+            catch (EndpointNotFoundException)
             {
+                NetworkUtil.SafeClose(client);
+            }
+            catch (CommunicationException)
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception on password reset completion: ", ex);
                 NetworkUtil.SafeClose(client);
             }
             finally

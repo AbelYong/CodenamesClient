@@ -26,6 +26,11 @@ namespace CodenamesGame.Domain.POCO
 
         public static PlayerDM AssemblePlayer(UserService.Player svPlayer)
         {
+            if (svPlayer == null)
+            {
+                return new PlayerDM { PlayerID = Guid.Empty };
+            }
+
             PlayerDM player = new PlayerDM
             {
                 PlayerID = svPlayer.PlayerID,

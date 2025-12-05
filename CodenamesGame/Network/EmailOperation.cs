@@ -1,69 +1,31 @@
 ﻿using CodenamesGame.EmailService;
-using CodenamesGame.Util;
-using System;
-using System.ServiceModel;
+using CodenamesGame.Network.Proxies.Interfaces;
+using CodenamesGame.Network.Proxies.Wrappers;
 
 namespace CodenamesGame.Network
 {
-    public static class EmailOperation
+    public class EmailOperation
     {
-        private const string _ENDPOINT_NAME = "NetTcpBinding_IEmailManager";
-        public static CommunicationRequest SendVerificationEmail(string email)
+        private readonly IEmailProxy _proxy;
+
+        public EmailOperation() : this (new EmailProxy())
         {
-            CommunicationRequest request = new CommunicationRequest();
-            var client = new EmailManagerClient(_ENDPOINT_NAME);
-            try
-            {
-                return client.SendVerificationCode(email);
-            }
-            catch (TimeoutException)
-            {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
-            }
-            catch (CommunicationException)
-            {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-            }
-            catch (Exception)
-            {
-                request.IsSuccess = false;
-            }
-            finally
-            {
-                NetworkUtil.SafeClose(client);
-            }
-            return request;
+
         }
 
-        public static ConfirmEmailRequest SendVerificationCode(string email, string code)
+        public EmailOperation(IEmailProxy proxy)
         {
-            ConfirmEmailRequest request = new ConfirmEmailRequest();
-            var client = new EmailManagerClient(_ENDPOINT_NAME);
-            try
-            {
-                return client.ValidateVerificationCode(email, code);
-            }
-            catch (TimeoutException)
-            {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
-            }
-            catch (CommunicationException)
-            {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-            }
-            catch (Exception)
-            {
-                request.IsSuccess = false;
-            }
-            finally
-            {
-                NetworkUtil.SafeClose(client);
-            }
-            return request;
+            _proxy = proxy;
+        }
+
+        public CommunicationRequest SendVerificationEmail(string email)
+        {
+            return _proxy.SendVerificationEmail(email);
+        }
+
+        public ConfirmEmailRequest SendVerificationCode(string email, string code)
+        {
+            return _proxy.SendVerificationCode(email, code);
         }
     }
 }

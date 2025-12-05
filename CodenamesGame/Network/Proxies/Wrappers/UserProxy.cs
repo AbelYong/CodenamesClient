@@ -1,0 +1,120 @@
+﻿using CodenamesGame.Domain.POCO;
+using CodenamesGame.Network.Proxies.Interfaces;
+using CodenamesGame.UserService;
+using CodenamesGame.Util;
+using System;
+using System.ServiceModel;
+
+namespace CodenamesGame.Network.Proxies.Wrappers
+{
+    public class UserProxy : IUserProxy
+    {
+        private const string _USER_ENDPOINT_NAME = "NetTcpBinding_IUserManager";
+
+        public SignInRequest SignIn(UserDM user, PlayerDM player)
+        {
+            SignInRequest request = new SignInRequest();
+            var client = new UserManagerClient(_USER_ENDPOINT_NAME);
+            try
+            {
+                player.User = user;
+                Player svPlayer = PlayerDM.AssembleUserSvPlayer(player);
+                return client.SignIn(svPlayer);
+            }
+            catch (TimeoutException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+            }
+            catch (EndpointNotFoundException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+            }
+            catch (CommunicationException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception on sign in: ", ex);
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.CLIENT_ERROR;
+            }
+            finally
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            return request;
+        }
+
+        public PlayerDM GetPlayer(Guid userID)
+        {
+            var client = new UserManagerClient(_USER_ENDPOINT_NAME);
+            try
+            {
+                Player svPlayer = client.GetPlayerByUserID(userID);
+                return PlayerDM.AssemblePlayer(svPlayer);
+            }
+            catch (TimeoutException)
+            {
+                return new PlayerDM { PlayerID = Guid.Empty };
+            }
+            catch (EndpointNotFoundException)
+            {
+                return new PlayerDM { PlayerID = Guid.Empty };
+            }
+            catch (CommunicationException)
+            {
+                return new PlayerDM { PlayerID = Guid.Empty };
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while trying to get a Player by UserID", ex);
+                return new PlayerDM { PlayerID = Guid.Empty };
+            }
+            finally
+            {
+                NetworkUtil.SafeClose(client);
+            }
+        }
+
+        public CommunicationRequest UpdateProfile(PlayerDM player)
+        {
+            CommunicationRequest request = new CommunicationRequest();
+            var client = new UserManagerClient(_USER_ENDPOINT_NAME);
+            try
+            {
+                Player svPlayer = PlayerDM.AssembleUserSvPlayer(player);
+                return client.UpdateProfile(svPlayer);
+            }
+            catch (TimeoutException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+            }
+            catch (EndpointNotFoundException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+            }
+            catch (CommunicationException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception on profile update: ", ex);
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.CLIENT_ERROR;
+            }
+            finally
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            return request;
+        }
+    }
+}

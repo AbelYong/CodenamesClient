@@ -16,6 +16,7 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LobbyPage : Page
     {
         private LobbyViewModel _viewModel;
+        private PlayerDM _me;
         private Guid _myID;
         private Storyboard _slideInOnlineFriends;
         private Storyboard _slideOutOnlineFriends;
@@ -26,6 +27,7 @@ namespace CodenamesClient.GameUI.Pages
         public LobbyPage(PlayerDM player, GamemodeDM gamemode)
         {
             InitializeComponent();
+            _me = player;
             _myID = (Guid)player.PlayerID;
             _viewModel = new LobbyViewModel(player, gamemode);
             DataContext = _viewModel;
@@ -44,17 +46,22 @@ namespace CodenamesClient.GameUI.Pages
 
                 _viewModel.SubscribeToSessionEvents();
 
-                _viewModel.BeginMatch += OnBeginMatch;
+                _viewModel.ConnectToLobbyService(_me);
+                _viewModel.ConnectToMatchmakingService(_me);
 
+                _viewModel.BeginMatch += OnBeginMatch;
                 AudioManager.Instance.TransitionTo("Main");
             }
         }
 
         private void OnLobbyPageUnloaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.UnsubscribeFromSessionEvents();
+            if (DataContext is LobbyViewModel)
+            {
+                _viewModel.UnsubscribeFromSessionEvents();
 
-            _viewModel.BeginMatch -= OnBeginMatch;
+                _viewModel.BeginMatch -= OnBeginMatch;
+            }
         }
 
         private void NumberValidation(object sender, TextCompositionEventArgs e)
@@ -178,11 +185,8 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
         {
-            _viewModel.DisconnectFromLobbyService();
             _viewModel.DisconnectFromMatchmakingService();
-            _viewModel.UnsuscribeFromLobbyEvents();
-            _viewModel.UnsubscribeFromSessionEvents();
-            _viewModel.UnsuscribeFromMatchmakingEvents();
+            _viewModel.DisconnectFromLobbyService();
             NavigationService.GoBack();
         }
 
@@ -253,8 +257,6 @@ namespace CodenamesClient.GameUI.Pages
                 {
                     Guid friendID = (Guid)friendToInvite.PlayerID;
                     _viewModel.InviteToParty(friendID);
-
-                    MessageBox.Show($"Invitación enviada a {friendToInvite.Username}");
                 }
             }
         }

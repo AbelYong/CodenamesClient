@@ -311,34 +311,40 @@ namespace CodenamesGame.ModerationService {
         SERVER_TIMEOUT = 15,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ACCOUNT_BANNED = 16,
+        SERVER_UNREACHABLE = 16,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_CREATED = 17,
+        CLIENT_ERROR = 17,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_DUPLICATED = 18,
+        ACCOUNT_BANNED = 18,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        USER_KICKED_AND_BANNED = 19,
+        REPORT_CREATED = 19,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REQUEST_SENT = 20,
+        REPORT_DUPLICATED = 20,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_ADDED = 21,
+        USER_KICKED_AND_BANNED = 21,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REMOVED = 22,
+        FRIEND_REQUEST_SENT = 22,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REQUEST_REJECTED = 23,
+        FRIEND_ADDED = 23,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ALREADY_FRIENDS = 24,
+        FRIEND_REMOVED = 24,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REQUEST_ALREADY_SENT = 25,
+        FRIEND_REQUEST_REJECTED = 25,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ALREADY_FRIENDS = 26,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_ALREADY_SENT = 27,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -673,10 +679,10 @@ namespace CodenamesGame.ModerationService {
     public interface IModerationManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IModerationManager/ReportPlayer", ReplyAction="http://tempuri.org/IModerationManager/ReportPlayerResponse")]
-        CodenamesGame.ModerationService.CommunicationRequest ReportPlayer(System.Guid reporterUserID, System.Guid reportedUserID, string reason);
+        CodenamesGame.ModerationService.CommunicationRequest ReportPlayer(System.Guid reporterPlayerID, System.Guid reportedPlayerID, string reason);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IModerationManager/ReportPlayer", ReplyAction="http://tempuri.org/IModerationManager/ReportPlayerResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.ModerationService.CommunicationRequest> ReportPlayerAsync(System.Guid reporterUserID, System.Guid reportedUserID, string reason);
+        System.Threading.Tasks.Task<CodenamesGame.ModerationService.CommunicationRequest> ReportPlayerAsync(System.Guid reporterPlayerID, System.Guid reportedPlayerID, string reason);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -706,12 +712,12 @@ namespace CodenamesGame.ModerationService {
                 base(binding, remoteAddress) {
         }
         
-        public CodenamesGame.ModerationService.CommunicationRequest ReportPlayer(System.Guid reporterUserID, System.Guid reportedUserID, string reason) {
-            return base.Channel.ReportPlayer(reporterUserID, reportedUserID, reason);
+        public CodenamesGame.ModerationService.CommunicationRequest ReportPlayer(System.Guid reporterPlayerID, System.Guid reportedPlayerID, string reason) {
+            return base.Channel.ReportPlayer(reporterPlayerID, reportedPlayerID, reason);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.ModerationService.CommunicationRequest> ReportPlayerAsync(System.Guid reporterUserID, System.Guid reportedUserID, string reason) {
-            return base.Channel.ReportPlayerAsync(reporterUserID, reportedUserID, reason);
+        public System.Threading.Tasks.Task<CodenamesGame.ModerationService.CommunicationRequest> ReportPlayerAsync(System.Guid reporterPlayerID, System.Guid reportedPlayerID, string reason) {
+            return base.Channel.ReportPlayerAsync(reporterPlayerID, reportedPlayerID, reason);
         }
     }
 }

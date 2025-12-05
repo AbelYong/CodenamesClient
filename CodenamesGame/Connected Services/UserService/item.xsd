@@ -41,6 +41,8 @@
       <xs:enumeration value="SERVER_ERROR" />
       <xs:enumeration value="SERVER_UNAVAIBLE" />
       <xs:enumeration value="SERVER_TIMEOUT" />
+      <xs:enumeration value="SERVER_UNREACHABLE" />
+      <xs:enumeration value="CLIENT_ERROR" />
       <xs:enumeration value="ACCOUNT_BANNED" />
       <xs:enumeration value="REPORT_CREATED" />
       <xs:enumeration value="REPORT_DUPLICATED" />

@@ -31,10 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=3.2.0.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.3.2.0\lib\net462\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -106,21 +111,38 @@
     <Compile Include="Network\EventArguments\MatchPendingEventArgs.cs" />
     <Compile Include="Network\EventArguments\OperationMessageEventArgs.cs" />
     <Compile Include="Network\EventArguments\PlayerEventArgs.cs" />
-    <Compile Include="Network\LobbyCallbackHandler.cs" />
+    <Compile Include="Network\Proxies\CallbackHandlers\LobbyCallbackHandler.cs" />
     <Compile Include="Network\LobbyOperation.cs" />
-    <Compile Include="Network\MatchCallbackHandler.cs" />
-    <Compile Include="Network\MatchmakingCallbackHandler.cs" />
+    <Compile Include="Network\Proxies\CallbackHandlers\MatchCallbackHandler.cs" />
+    <Compile Include="Network\Proxies\CallbackHandlers\MatchmakingCallbackHandler.cs" />
     <Compile Include="Network\MatchmakingOperation.cs" />
-    <Compile Include="Network\FriendCallbackHandler.cs" />
+    <Compile Include="Network\Proxies\CallbackHandlers\FriendCallbackHandler.cs" />
     <Compile Include="Network\MatchOperation.cs" />
     <Compile Include="Network\ModerationOperation.cs" />
+    <Compile Include="Network\Proxies\Interfaces\IEmailProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\ILobbyProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\IMatchmakingProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\IMatchProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\IModerationProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\ISessionProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\ISocialProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\IUserProxy.cs" />
     <Compile Include="Network\Proxies\Wrappers\AuthenticationProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\IAuthenticationProxy.cs" />
-    <Compile Include="Network\SessionCallbackHandler.cs" />
+    <Compile Include="Network\Proxies\CallbackHandlers\SessionCallbackHandler.cs" />
+    <Compile Include="Network\Proxies\Wrappers\EmailProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\LobbyProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\MatchmakingProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\MatchProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\ModerationProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\SessionProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\SocialProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\UserProxy.cs" />
     <Compile Include="Network\SessionOperation.cs" />
     <Compile Include="Network\SocialOperation.cs" />
     <Compile Include="Network\UserOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CodenamesGameLogger.cs" />
     <Compile Include="Util\NetworkUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +196,7 @@
     </None>
     <None Include="Connected Services\LobbyService\LobbyService.wsdl" />
     <None Include="Connected Services\MatchmakingService\item.disco" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

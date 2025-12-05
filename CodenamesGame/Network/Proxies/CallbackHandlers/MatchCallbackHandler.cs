@@ -4,7 +4,7 @@ using CodenamesGame.Network.EventArguments;
 using System;
 using System.ServiceModel;
 
-namespace CodenamesGame.Network
+namespace CodenamesGame.Network.Proxies.CallbackHandlers
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     public class MatchCallbackHandler : IMatchManagerCallback

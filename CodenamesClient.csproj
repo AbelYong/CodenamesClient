@@ -35,9 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=3.2.0.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>packages\log4net.3.2.0\lib\net462\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -83,6 +88,8 @@
     <Compile Include="GameUI\ViewModels\LoginViewModel.cs" />
     <Compile Include="GameUI\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />
+    <Compile Include="Operation\Network\Oneway\IOnewayNetworkManager.cs" />
+    <Compile Include="Operation\Network\Oneway\OnewayNetworkManager.cs" />
     <Compile Include="Operation\PictureHandler.cs" />
     <Compile Include="Operation\Validation\LoginValidation.cs" />
     <Compile Include="Operation\Validation\ProfileValidation.cs" />
@@ -93,7 +100,9 @@
       <DependentUpon>GameWords.resx</DependentUpon>
     </Compile>
     <Compile Include="Util\AudioManager.cs" />
+    <Compile Include="Operation\Network\Duplex\IDuplexNetworkManager.cs" />
     <Compile Include="Util\LobbyOperationType.cs" />
+    <Compile Include="Operation\Network\Duplex\DuplexNetworkManager.cs" />
     <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\BoardUI\BoardPage.xaml">
       <SubType>Designer</SubType>
@@ -169,6 +178,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,6 +202,8 @@
     <Resource Include="Assets\GameUI\usFlag.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\GameUI\agentCounterintelligence.png" />
+    <Resource Include="Assets\GameUI\agentCustom.png" />
     <Resource Include="Assets\GameUI\spyMap.png" />
     <Resource Include="Assets\GameUI\agent.png" />
     <Resource Include="Assets\BoardUI\Agents\agent01.png" />

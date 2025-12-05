@@ -3,13 +3,13 @@ using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
 using CodenamesGame.UserService;
 using CodenamesGame.Domain.POCO;
-using CodenamesGame.Network;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using CodenamesClient.Operation.Network.Oneway;
 
 namespace CodenamesClient.GameUI.Pages.UserControls
 {
@@ -72,7 +72,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private static bool SendVerificationCode(string email)
         {
-            CodenamesGame.EmailService.CommunicationRequest request = EmailOperation.SendVerificationEmail(email);
+            CodenamesGame.EmailService.CommunicationRequest request = OnewayNetworkManager.Instance.SendVerificationEmail(email);
             if (!request.IsSuccess)
             {
                 MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
@@ -133,7 +133,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 return false;
             }
 
-            CodenamesGame.EmailService.ConfirmEmailRequest request = EmailOperation.SendVerificationCode(_vm.Email, code);
+            CodenamesGame.EmailService.ConfirmEmailRequest request = OnewayNetworkManager.Instance.SendVerificationCode(_vm.Email, code);
             if (request.IsSuccess)
             {
                 return true;
@@ -168,7 +168,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 Name = _vm.FirstName,
                 LastName = _vm.LastName,
             };
-            SignInRequest request = UserOperation.SignIn(user, player);
+            SignInRequest request = OnewayNetworkManager.Instance.SignIn(user, player);
             if (request.IsSuccess)
             {
                 MessageBox.Show(string.Format(Lang.signInSuccessfulWelcome, _vm.Username));

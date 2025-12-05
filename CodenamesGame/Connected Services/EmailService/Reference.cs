@@ -311,34 +311,40 @@ namespace CodenamesGame.EmailService {
         SERVER_TIMEOUT = 15,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ACCOUNT_BANNED = 16,
+        SERVER_UNREACHABLE = 16,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_CREATED = 17,
+        CLIENT_ERROR = 17,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        REPORT_DUPLICATED = 18,
+        ACCOUNT_BANNED = 18,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        USER_KICKED_AND_BANNED = 19,
+        REPORT_CREATED = 19,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REQUEST_SENT = 20,
+        REPORT_DUPLICATED = 20,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_ADDED = 21,
+        USER_KICKED_AND_BANNED = 21,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REMOVED = 22,
+        FRIEND_REQUEST_SENT = 22,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REQUEST_REJECTED = 23,
+        FRIEND_ADDED = 23,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        ALREADY_FRIENDS = 24,
+        FRIEND_REMOVED = 24,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        FRIEND_REQUEST_ALREADY_SENT = 25,
+        FRIEND_REQUEST_REJECTED = 25,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ALREADY_FRIENDS = 26,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_ALREADY_SENT = 27,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

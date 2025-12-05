@@ -3,11 +3,8 @@ using CodenamesGame.Network.EventArguments;
 using CodenamesGame.SessionService;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CodenamesGame.Network
+namespace CodenamesGame.Network.Proxies.CallbackHandlers
 {
     public class SessionCallbackHandler : ISessionManagerCallback
     {

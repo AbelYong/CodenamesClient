@@ -1,4 +1,6 @@
 ﻿using CodenamesGame.ModerationService;
+using CodenamesGame.Network.Proxies.Interfaces;
+using CodenamesGame.Network.Proxies.Wrappers;
 using System;
 using System.ServiceModel;
 
@@ -6,41 +8,18 @@ namespace CodenamesGame.Network
 {
     public class ModerationOperation
     {
-        private const string _ENDPOINT_NAME = "NetTcpBinding_IModerationManager";
-        private readonly ModerationManagerClient _client;
+        private readonly IModerationProxy _proxy;
 
-        public ModerationOperation()
+        public ModerationOperation() : this (new ModerationProxy()) { }
+
+        public ModerationOperation(IModerationProxy proxy)
         {
-            _client = new ModerationManagerClient(_ENDPOINT_NAME);
+            _proxy = proxy;
         }
 
         public CommunicationRequest ReportPlayer(Guid reporterUserID, Guid reportedUserID, string reason)
         {
-            CommunicationRequest response = new CommunicationRequest();
-            try
-            {
-                response = _client.ReportPlayer(reporterUserID, reportedUserID, reason);
-            }
-            catch (EndpointNotFoundException)
-            {
-                response.IsSuccess = false;
-                response.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-                Util.NetworkUtil.SafeClose(_client);
-            }
-            catch (TimeoutException)
-            {
-                response.IsSuccess = false;
-                response.StatusCode = StatusCode.SERVER_TIMEOUT;
-                Util.NetworkUtil.SafeClose(_client);
-            }
-            catch (Exception)
-            {
-                response.IsSuccess = false;
-                response.StatusCode = StatusCode.SERVER_ERROR;
-                Util.NetworkUtil.SafeClose(_client);
-            }
-
-            return response;
+            return _proxy.ReportPlayer(reporterUserID, reportedUserID, reason);
         }
     }
 }

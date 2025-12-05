@@ -1,155 +1,50 @@
 ﻿using CodenamesGame.Domain.POCO.Match;
 using CodenamesGame.MatchmakingService;
-using CodenamesGame.Util;
+using CodenamesGame.Network.Proxies.CallbackHandlers;
+using CodenamesGame.Network.Proxies.Interfaces;
+using CodenamesGame.Network.Proxies.Wrappers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CodenamesGame.Network
 {
     public class MatchmakingOperation
     {
-        private const string _ENDPOINT_NAME = "NetTcpBinding_IMatchmakingManager";
-        private static readonly Lazy<MatchmakingOperation> _instance = new Lazy<MatchmakingOperation>(() => new MatchmakingOperation());
-        private MatchmakingManagerClient _client;
-        private Guid _currentPlayerID;
+        private readonly IMatchmakingProxy _proxy;
 
-        public static MatchmakingOperation Instance
+        public MatchmakingOperation() : this(MatchmakingProxy.Instance)
         {
-            get => _instance.Value;
+
         }
 
-        private MatchmakingOperation() { }
+        public MatchmakingOperation(IMatchmakingProxy proxy)
+        {
+            _proxy = proxy;
+        }
 
         public CommunicationRequest Initialize(Guid playerID)
         {
-            CommunicationRequest request = new CommunicationRequest();
-
-            if (_client != null && _client.State == CommunicationState.Opened)
-            {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.UNAUTHORIZED;
-                return request;
-            }
-
-            if (playerID == Guid.Empty)
-            {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.MISSING_DATA;
-                return request;
-            }
-
-            _currentPlayerID = playerID;
-            MatchmakingCallbackHandler _callbackHandler = new MatchmakingCallbackHandler(_currentPlayerID);
-            InstanceContext context = new InstanceContext(_callbackHandler);
-            _client = new MatchmakingManagerClient(context, _ENDPOINT_NAME);
-
-            try
-            {
-                _client.Open();
-                request = _client.Connect(_currentPlayerID);
-            }
-            catch (CommunicationException)
-            {
-                CloseProxy();
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-            }
-            catch (TimeoutException)
-            {
-                CloseProxy();
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
-            }
-            return request;
+            return _proxy.Initialize(playerID);
         }
-
 
         public void Disconnect()
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
-            {
-                try
-                {
-                    _client.DisconnectAsync(_currentPlayerID);
-                    CloseProxy();
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                    _currentPlayerID = Guid.Empty;
-                }
-            }
+            _proxy.Disconnect();
         }
 
-        public async Task<CommunicationRequest> RequestArrangedMatch(MatchConfigurationDM matchConfig)
+        public Task<CommunicationRequest> RequestArrangedMatch(MatchConfigurationDM matchConfig)
         {
-            CommunicationRequest request = new CommunicationRequest();
-            MatchConfiguration configuration = MatchConfigurationDM.AssembleMatchmakingSvMatchConfig(matchConfig);
-            try
-            {
-                request = await _client.RequestArrangedMatchAsync(configuration);
-            }
-            catch (CommunicationException)
-            {
-                CloseProxy();
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-                request.IsSuccess = false;
-            }
-            catch (TimeoutException)
-            {
-                CloseProxy();
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
-                request.IsSuccess = false;
-            }
-            return request;
+            return _proxy.RequestArrangedMatch(matchConfig);
         }
 
         public void ConfirmMatch(Guid matchID)
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
-            {
-                try
-                {
-                    _client.ConfirmMatchReceivedAsync(_currentPlayerID, matchID);
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-            }
+            _proxy.ConfirmMatch(matchID);
         }
 
         public void CancelMatch()
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
-            {
-                try
-                {
-                    _client.RequestMatchCancelAsync(_currentPlayerID);
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-            }
-        }
-
-        private void CloseProxy()
-        {
-            NetworkUtil.SafeClose(_client);
-            _client = null;
+            _proxy.CancelMatch();
         }
     }
 }

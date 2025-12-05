@@ -1,5 +1,6 @@
 ﻿using CodenamesClient.GameUI.Pages.UserControls;
 using CodenamesClient.GameUI.ViewModels;
+using CodenamesClient.Operation.Network.Oneway;
 using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
@@ -18,14 +19,13 @@ namespace CodenamesClient.GameUI.Pages
     {
         private MainMenuViewModel _viewModel;
         private ProfileControl _profileControl;
-
         private static MainMenuViewModel.SearchItem ItemFromSearchButton(Button btn) => btn?.DataContext as MainMenuViewModel.SearchItem;
-
         private static MainMenuViewModel.FriendItem ItemFromFriendButton(Button btn) => btn?.DataContext as MainMenuViewModel.FriendItem;
 
         public MainMenuPage(PlayerDM player, bool isGuest)
         {
             InitializeComponent();
+
             _viewModel = new MainMenuViewModel(player, isGuest);
             DataContext = _viewModel;
 
@@ -42,7 +42,7 @@ namespace CodenamesClient.GameUI.Pages
             if (!_viewModel.IsPlayerGuest)
             {
                 Overlay.Visibility = Visibility.Visible;
-                _profileControl = new ProfileControl(_viewModel.Player);
+                _profileControl = new ProfileControl(_viewModel.Player, false);
                 _profileControl.VerticalAlignment = VerticalAlignment.Center;
                 _profileControl.HorizontalAlignment = HorizontalAlignment.Center;
                 _profileControl.Visibility = Visibility.Visible;
@@ -82,9 +82,16 @@ namespace CodenamesClient.GameUI.Pages
             if (userID != null)
             {
                 Guid auxUserID = (Guid)userID;
-                PlayerDM player = UserOperation.GetPlayer(auxUserID);
-                _viewModel.Player = player;
-                btnPlayer.Content = player.Username;
+                PlayerDM player = OnewayNetworkManager.Instance.GetPlayer(auxUserID);
+                if (player != null && player.PlayerID != Guid.Empty)
+                {
+                    _viewModel.Player = player;
+                    btnPlayer.Content = player.Username;
+                }
+                else
+                {
+                    MessageBox.Show(Util.StatusToMessageMapper.GetUserServiceMessage(CodenamesGame.UserService.StatusCode.NOT_FOUND));
+                }
             }
         }
 

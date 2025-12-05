@@ -27,17 +27,17 @@ namespace CodenamesClient.GameUI.Pages
 
         private void OnLoginPageLoaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.ConnectionLost += ShowConnectionLostMessage;
+            _viewModel.RaiseError += ShowErrorMessage;
             _viewModel.NavigateToMainMenu += GoToMainMenuWindow;
         }
 
         private void OnLoginPageUnloaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.ConnectionLost -= ShowConnectionLostMessage;
+            _viewModel.RaiseError -= ShowErrorMessage;
             _viewModel.NavigateToMainMenu -= GoToMainMenuWindow;
         }
 
-        private void ShowConnectionLostMessage()
+        private void ShowErrorMessage()
         {
             string message = _viewModel.RequestErrorMessage;
             MessageBox.Show(message);
@@ -72,7 +72,7 @@ namespace CodenamesClient.GameUI.Pages
             if (_viewModel.HasPlayerConnection)
             {
                 MainMenuPage mainMenu = new MainMenuPage(player, player.IsGuest);
-                _viewModel.ConnectionLost -= ShowConnectionLostMessage;
+                _viewModel.RaiseError -= ShowErrorMessage;
                 NavigationService.Navigate(mainMenu);
             }
         }
@@ -154,7 +154,7 @@ namespace CodenamesClient.GameUI.Pages
                     return;
                 }
 
-                await Task.Run(() => _viewModel.BeginPasswordReset(user, email));
+                await Task.Run(() => LoginViewModel.BeginPasswordReset(user, email));
 
                 MessageBox.Show(Lang.resetCodeSend);
             }
@@ -192,7 +192,7 @@ namespace CodenamesClient.GameUI.Pages
                 }
 
                 var result = await Task.Run(() =>
-                    _viewModel.CompletePasswordReset(user, code, p1)
+                    LoginViewModel.CompletePasswordReset(user, code, p1)
                 );
 
                 MessageBox.Show(result.Message);

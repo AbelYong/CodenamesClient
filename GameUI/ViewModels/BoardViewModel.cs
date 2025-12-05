@@ -1,7 +1,7 @@
 ﻿using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
-using CodenamesGame.Network;
 using CodenamesGame.Network.EventArguments;
+using CodenamesGame.Network.Proxies.CallbackHandlers;
 using CodenamesGame.MatchService;
 using CodenamesClient.Util;
 using System;
@@ -17,6 +17,8 @@ using System.Windows.Threading;
 using CodenamesClient.Properties.Langs;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using CodenamesClient.Operation.Network.Duplex;
+using CodenamesClient.Operation.Network.Oneway;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -35,7 +37,6 @@ namespace CodenamesClient.GameUI.ViewModels
         public const int MAX_TURN_LENGTH = 60;
 
         private readonly MatchDM _match;
-        private readonly ModerationOperation _moderationOperation;
 
         private PlayerDM _me;
         private PlayerDM _companion;
@@ -283,9 +284,8 @@ namespace CodenamesClient.GameUI.ViewModels
         public BoardViewModel(MatchDM match, Guid myID)
         {
             _match = match;
-            MatchOperation.Instance.Initialize(myID);
-            MatchOperation.Instance.JoinMatch(match);
-            _moderationOperation = new ModerationOperation();
+            DuplexNetworkManager.Instance.ConnectMatchService(myID);
+            DuplexNetworkManager.Instance.JoinMatch(match);
             ChatMessages = new ObservableCollection<ChatMessageDM>();
 
             SetPlayers(myID);
@@ -511,7 +511,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public void Disconnect()
         {
             UnsubscribeCallbacks();
-            MatchOperation.Instance.Disconnect();
+            DuplexNetworkManager.Instance.DisconnectFromMatchService();
         }
 
         public void SendMessage()
@@ -537,7 +537,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 return;
             }
 
-            MatchOperation.Instance.SendClue(trimmedMessage);
+            DuplexNetworkManager.Instance.SendClue(trimmedMessage);
 
             AddMessageToChat(trimmedMessage, true);
             ChatInput = string.Empty;
@@ -625,7 +625,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             var currentRole = _amISpymaster ? MatchRoleType.SPYMASTER : MatchRoleType.GUESSER;
 
-            MatchOperation.Instance.NotifyTurnTimeout(currentRole);
+            DuplexNetworkManager.Instance.NotifyTurnTimeout(currentRole);
             TimerTokens--;
             IsBoardEnabled = false;
             IsSkipButtonVisible = false;
@@ -635,7 +635,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public void HandleAgentSelection(BoardCoordinatesDM coordinates)
         {
             AddTime(TurnLength);
-            MatchOperation.Instance.NotifyPickedAgent(coordinates, TurnTimer);
+            DuplexNetworkManager.Instance.NotifyPickedAgent(coordinates, TurnTimer);
         }
 
         public void HandleBystanderSelection(BoardCoordinatesDM coordinates)
@@ -647,7 +647,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 if (TimerTokens >= 0)
                 {
                     TimerTokens--;
-                    MatchOperation.Instance.NotifyPickedBystander(coordinates);
+                    DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
                 }
             }
             else
@@ -655,7 +655,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 if (BystanderTokens > 0)
                 {
                     BystanderTokens--;
-                    MatchOperation.Instance.NotifyPickedBystander(coordinates);
+                    DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
                 }
                 else
                 {
@@ -663,7 +663,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     {
                         int auxTimerTokens = TimerTokens - MatchRulesDM.TIMER_TOKENS_TO_TAKE_CUSTOM;
                         TimerTokens = auxTimerTokens >= 0 ? auxTimerTokens : 0;
-                        MatchOperation.Instance.NotifyPickedBystander(coordinates);
+                        DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
                     }
                 }
             }
@@ -675,7 +675,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public void HandleAssassinSelection(BoardCoordinatesDM coordinates)
         {
             StopTimer();
-            MatchOperation.Instance.NotifyPickedAssassin(coordinates);
+            DuplexNetworkManager.Instance.NotifyPickedAssassin(coordinates);
         }
 
 
@@ -749,13 +749,13 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 if (_amISpymaster)
                 {
-                    MatchOperation.Instance.NotifyTurnTimeout(MatchRoleType.SPYMASTER);
+                    DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.SPYMASTER);
                 }
                 else
                 {
                     if (_isBoardEnabled)
                     {
-                        MatchOperation.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
+                        DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
                         TimerTokens--;
                     }
                 }
@@ -830,13 +830,10 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 string reason = "Conducta antideportiva";
 
-                var serverResponse = _moderationOperation.ReportPlayer(
-                    _me.PlayerID.Value,
-                    _companion.PlayerID.Value,
-                    reason
-                );
+                CodenamesGame.ModerationService.CommunicationRequest request = 
+                    OnewayNetworkManager.Instance.ReportPlayer(_me.PlayerID.Value,  _companion.PlayerID.Value, reason);
 
-                string feedbackMessage = StatusToMessageMapper.GetModerationMessage(serverResponse.StatusCode);
+                string feedbackMessage = StatusToMessageMapper.GetModerationMessage(request.StatusCode);
 
                 MessageBox.Show(feedbackMessage, Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }

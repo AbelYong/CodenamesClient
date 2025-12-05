@@ -1,7 +1,8 @@
-﻿using CodenamesClient.Properties.Langs;
+﻿using CodenamesClient.Operation.Network.Oneway;
+using CodenamesClient.Operation.Network.Duplex;
+using CodenamesClient.Properties.Langs;
 using CodenamesClient.Validation;
 using CodenamesGame.Domain.POCO;
-using CodenamesGame.Network;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,11 +13,10 @@ namespace CodenamesClient.GameUI.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private readonly AuthenticationOperation _authenticationOperation;
         private static readonly Random _random = new Random();
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<PlayerDM> NavigateToMainMenu;
-        public event Action ConnectionLost;
+        public event Action RaiseError;
         private bool _hasPlayerConnection;
         private bool _btnLoginEnabled;
         private bool _btnSignInGuestEnabled;
@@ -26,7 +26,6 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public LoginViewModel()
         {
-            _authenticationOperation = new AuthenticationOperation();
             BtnLoginEnabled = true;
             BtnSignInGuestEnabled = true;
         }
@@ -83,7 +82,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public async Task Login(string username, string password)
         {
-            CodenamesGame.AuthenticationService.LoginRequest request = _authenticationOperation.Authenticate(username, password);
+            CodenamesGame.AuthenticationService.LoginRequest request = OnewayNetworkManager.Instance.Authenticate(username, password);
             if (ValidateLoginData(username, password))
             {
                 if (request.IsSuccess)
@@ -99,7 +98,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     else
                     {
                         _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode);
-                        ConnectionLost?.Invoke();
+                        RaiseError?.Invoke();
                     }
                 }
             }
@@ -127,14 +126,14 @@ namespace CodenamesClient.GameUI.ViewModels
             PasswordErrorMessage = Lang.loginWrongCredentials;
         }
 
-        public void BeginPasswordReset(string user, string email)
+        public static void BeginPasswordReset(string user, string email)
         {
-            _authenticationOperation.BeginPasswordReset(user, email);
+            OnewayNetworkManager.Instance.BeginPasswordReset(user, email);
         }
 
-        public CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string user, string code, string password)
+        public static CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string user, string code, string password)
         {
-            return _authenticationOperation.CompletePasswordReset(user, code, password);
+            return OnewayNetworkManager.Instance.CompletePasswordReset(user, code, password);
         }
 
         public async Task BeginSession(Guid? userID)
@@ -142,9 +141,17 @@ namespace CodenamesClient.GameUI.ViewModels
             if (userID != null)
             {
                 Guid auxUserID = userID.Value;
-                PlayerDM player = UserOperation.GetPlayer(auxUserID);
-                await Connect(player);
-                NavigateToMainMenu?.Invoke(this, player);
+                PlayerDM player = OnewayNetworkManager.Instance.GetPlayer(auxUserID);
+                if (player != null && player.PlayerID != Guid.Empty)
+                {
+                    await Connect(player);
+                    NavigateToMainMenu?.Invoke(this, player);
+                }
+                else
+                {
+                    _requestErrorMessage = Lang.loginErrorProfileNotFound;
+                    RaiseError?.Invoke();
+                }
             }
             else
             {
@@ -160,7 +167,7 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 BtnLoginEnabled = false;
                 BtnSignInGuestEnabled = false;
-                CodenamesGame.SessionService.CommunicationRequest request = await Task.Run(() => SessionOperation.Instance.Initialize(player));
+                CodenamesGame.SessionService.CommunicationRequest request = await Task.Run(() => DuplexNetworkManager.Instance.ConnectToSessionService(player));
                 if (request.IsSuccess)
                 {
                     _hasPlayerConnection = true;
@@ -173,7 +180,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     _requestErrorMessage = Util.StatusToMessageMapper.GetSessionServiceMessage(request.StatusCode);
                     BtnLoginEnabled = true;
                     BtnSignInGuestEnabled = true;
-                    ConnectionLost?.Invoke();
+                    RaiseError?.Invoke();
                 }
             }
         }

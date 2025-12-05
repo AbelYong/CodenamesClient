@@ -3,7 +3,7 @@ using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
 using CodenamesGame.Network.EventArguments;
-using CodenamesGame.SessionService;
+using CodenamesGame.Network.Proxies.CallbackHandlers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using CodenamesClient.Operation;
+using CodenamesClient.Operation.Network.Duplex;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -23,7 +24,7 @@ namespace CodenamesClient.GameUI.ViewModels
         private string _username;
         private bool _isPlayerGuest;
 
-        private HashSet<Guid> _sentRequestIds = new HashSet<Guid>();
+        private readonly HashSet<Guid> _sentRequestIds = new HashSet<Guid>();
 
         public ObservableCollection<FriendItem> Friends { get; set; }
         public ObservableCollection<FriendItem> Requests { get; set; }
@@ -75,7 +76,7 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 try
                 {
-                    SocialOperation.Instance.Initialize(player.PlayerID.Value);
+                    DuplexNetworkManager.Instance.ConnectToFriendService(player.PlayerID.Value);
                     SubscribeToFriendEvents();
                 }
                 catch (Exception ex)
@@ -89,11 +90,11 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (_player != null)
             {
-                SessionOperation.Instance.Disconnect();
+                DuplexNetworkManager.Instance.DisconnectFromSessionService();
                 if (!IsPlayerGuest)
                 {
                     UnsubscribeFromFriendEvents();
-                    SocialOperation.Instance.Terminate();
+                    DuplexNetworkManager.Instance.DisconnectFromFriendService();
                 }
             }
         }
@@ -172,7 +173,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 return;
             }
 
-            var response = SocialOperation.Instance.SendFriendRequest(item.Player.PlayerID.Value);
+            var response = DuplexNetworkManager.Instance.SendFriendRequest(item.Player.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
@@ -194,7 +195,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 return;
             }
 
-            var response = SocialOperation.Instance.AcceptFriendRequest(item.Player.PlayerID.Value);
+            var response = DuplexNetworkManager.Instance.AcceptFriendRequest(item.Player.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
@@ -217,7 +218,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 return;
             }
 
-            var response = SocialOperation.Instance.RejectFriendRequest(item.Player.PlayerID.Value);
+            var response = DuplexNetworkManager.Instance.RejectFriendRequest(item.Player.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
@@ -238,7 +239,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 return;
             }
 
-            var response = SocialOperation.Instance.RemoveFriend(friendPlayer.PlayerID.Value);
+            var response = DuplexNetworkManager.Instance.RemoveFriend(friendPlayer.PlayerID.Value);
             string message = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
 
             if (response.IsSuccess)
@@ -266,9 +267,9 @@ namespace CodenamesClient.GameUI.ViewModels
 
             Task.Run(() =>
             {
-                var friendsList = SocialOperation.Instance.GetFriends();
-                var requestsList = SocialOperation.Instance.GetIncomingRequests();
-                var sentList = SocialOperation.Instance.GetSentRequests();
+                var friendsList = DuplexNetworkManager.Instance.GetFriends();
+                var requestsList = DuplexNetworkManager.Instance.GetIncomingRequests();
+                var sentList = DuplexNetworkManager.Instance.GetSentRequests();
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -314,7 +315,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
             Task.Run(() =>
             {
-                var searchList = SocialOperation.Instance.SearchPlayers(query);
+                var searchList = DuplexNetworkManager.Instance.SearchPlayers(query);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     SearchResults.Clear();

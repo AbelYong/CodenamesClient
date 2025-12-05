@@ -164,7 +164,7 @@
                     Style="{StaticResource buttonCustomFocus}" Height="40" 
                     Click="Click_btnJoinParty"/>
                 </StackPanel>
-                <Image Source="/Assets/GameUI/agent.png" Height="450"/>
+                <Image Source="{Binding GamemodePicturePath}" Height="450"/>
             </DockPanel>
 
             <Border x:Name="Overlay" Visibility="Collapsed" Background="#80000000" />
