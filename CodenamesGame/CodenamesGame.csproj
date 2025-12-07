@@ -83,6 +83,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\ScoreboardService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\SessionService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -100,6 +105,7 @@
     <Compile Include="Domain\POCO\Match\MatchDM.cs" />
     <Compile Include="Domain\POCO\Match\MatchRulesDM.cs" />
     <Compile Include="Domain\POCO\PlayerDM.cs" />
+    <Compile Include="Domain\POCO\ScoreboardDM.cs" />
     <Compile Include="Domain\POCO\UserDM.cs" />
     <Compile Include="Network\AuthenticationOperation.cs" />
     <Compile Include="Network\EmailOperation.cs" />
@@ -111,6 +117,7 @@
     <Compile Include="Network\EventArguments\MatchPendingEventArgs.cs" />
     <Compile Include="Network\EventArguments\OperationMessageEventArgs.cs" />
     <Compile Include="Network\EventArguments\PlayerEventArgs.cs" />
+    <Compile Include="Network\EventArguments\ScoreboardEventArgs.cs" />
     <Compile Include="Network\Proxies\CallbackHandlers\LobbyCallbackHandler.cs" />
     <Compile Include="Network\LobbyOperation.cs" />
     <Compile Include="Network\Proxies\CallbackHandlers\MatchCallbackHandler.cs" />
@@ -119,6 +126,7 @@
     <Compile Include="Network\Proxies\CallbackHandlers\FriendCallbackHandler.cs" />
     <Compile Include="Network\MatchOperation.cs" />
     <Compile Include="Network\ModerationOperation.cs" />
+    <Compile Include="Network\Proxies\CallbackHandlers\ScoreboardCallbackHandler.cs" />
     <Compile Include="Network\Proxies\Interfaces\IEmailProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\ILobbyProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\IMatchmakingProxy.cs" />
@@ -135,9 +143,11 @@
     <Compile Include="Network\Proxies\Wrappers\MatchmakingProxy.cs" />
     <Compile Include="Network\Proxies\Wrappers\MatchProxy.cs" />
     <Compile Include="Network\Proxies\Wrappers\ModerationProxy.cs" />
+    <Compile Include="Network\Proxies\Wrappers\ScoreboardProxy.cs" />
     <Compile Include="Network\Proxies\Wrappers\SessionProxy.cs" />
     <Compile Include="Network\Proxies\Wrappers\SocialProxy.cs" />
     <Compile Include="Network\Proxies\Wrappers\UserProxy.cs" />
+    <Compile Include="Network\ScoreboardOperation.cs" />
     <Compile Include="Network\SessionOperation.cs" />
     <Compile Include="Network\SocialOperation.cs" />
     <Compile Include="Network\UserOperation.cs" />
@@ -196,6 +206,19 @@
     </None>
     <None Include="Connected Services\LobbyService\LobbyService.wsdl" />
     <None Include="Connected Services\MatchmakingService\item.disco" />
+    <None Include="Connected Services\ScoreboardService\CodenamesGame.ScoreboardService.Scoreboard.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ScoreboardService\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ScoreboardService\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ScoreboardService\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ScoreboardService\ScoreboardService.wsdl" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -358,6 +381,7 @@
     <WCFMetadataStorage Include="Connected Services\MatchmakingService\" />
     <WCFMetadataStorage Include="Connected Services\MatchService\" />
     <WCFMetadataStorage Include="Connected Services\ModerationService\" />
+    <WCFMetadataStorage Include="Connected Services\ScoreboardService\" />
     <WCFMetadataStorage Include="Connected Services\SessionService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
@@ -496,6 +520,20 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Connected Services\ScoreboardService\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ScoreboardService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ScoreboardService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ScoreboardService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

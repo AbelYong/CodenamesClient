@@ -1,9 +1,12 @@
-﻿using CodenamesClient.Properties.Langs;
+﻿using CodenamesClient.Operation;
+using CodenamesClient.Operation.Network.Duplex;
+using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network;
 using CodenamesGame.Network.EventArguments;
 using CodenamesGame.Network.Proxies.CallbackHandlers;
+using CodenamesGame.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,8 +15,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using CodenamesClient.Operation;
-using CodenamesClient.Operation.Network.Duplex;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -29,12 +30,20 @@ namespace CodenamesClient.GameUI.ViewModels
         public ObservableCollection<FriendItem> Friends { get; set; }
         public ObservableCollection<FriendItem> Requests { get; set; }
         public ObservableCollection<SearchItem> SearchResults { get; set; }
+        public ObservableCollection<ScoreboardDM> TopWinsEntries { get; set; }
+        public ObservableCollection<ScoreboardDM> TopSpeedEntries { get; set; }
+        public ObservableCollection<ScoreboardDM> TopAssassinsEntries { get; set; }
 
         public MainMenuViewModel(PlayerDM player, bool isGuest)
         {
             Friends = new ObservableCollection<FriendItem>();
             Requests = new ObservableCollection<FriendItem>();
             SearchResults = new ObservableCollection<SearchItem>();
+            TopWinsEntries = new ObservableCollection<ScoreboardDM>();
+            TopSpeedEntries = new ObservableCollection<ScoreboardDM>();
+            TopAssassinsEntries = new ObservableCollection<ScoreboardDM>();
+
+            ScoreboardCallbackHandler.OnLeaderboardUpdateReceived += HandleLeaderboardUpdate;
 
             IsPlayerGuest = isGuest;
             Player = player ?? AssembleGuest();
@@ -403,6 +412,87 @@ namespace CodenamesClient.GameUI.ViewModels
             protected void OnPropertyChanged([CallerMemberName] string name = null)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        private void HandleLeaderboardUpdate(object sender, ScoreboardEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                TopWinsEntries.Clear();
+                TopSpeedEntries.Clear();
+                TopAssassinsEntries.Clear();
+
+                if (e.Leaderboard != null)
+                {
+                    var wins = e.Leaderboard.OrderByDescending(x => x.GamesWon).Take(10);
+                    foreach (var item in wins) TopWinsEntries.Add(item);
+
+                    var speed = e.Leaderboard
+                                .Where(x => x.FastestMatch != "--:--" && !string.IsNullOrEmpty(x.FastestMatch))
+                                .OrderBy(x => x.FastestMatch)
+                                .Take(10);
+                    foreach (var item in speed) TopSpeedEntries.Add(item);
+
+                    var assassins = e.Leaderboard.OrderByDescending(x => x.AssassinsRevealed).Take(10);
+                    foreach (var item in assassins) TopAssassinsEntries.Add(item);
+                }
+            });
+        }
+
+        public void OpenScoreboard()
+        {
+            if (!IsPlayerGuest && Player?.PlayerID != null)
+            {
+                var playerId = Player.PlayerID.Value;
+
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        DuplexNetworkManager.Instance.ConnectToScoreboardService(playerId);
+                    }
+                    catch (System.ServiceModel.CommunicationException ex)
+                    {
+                        CodenamesGameLogger.Log.Error("Error connecting to Scoreboard Service: ", ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        CodenamesGameLogger.Log.Error("Unexpected error in OpenScoreboard: ", ex);
+                    }
+                });
+            }
+        }
+
+        public void CloseScoreboard()
+        {
+            if (!IsPlayerGuest)
+            {
+                DuplexNetworkManager.Instance.DisconnectFromScoreboardService();
+            }
+        }
+
+        public void ShowMyPersonalScore()
+        {
+            if (!IsPlayerGuest && Player?.PlayerID != null)
+            {
+                Task.Run(() =>
+                {
+                    var myScore = DuplexNetworkManager.Instance.GetMyScore(Player.PlayerID.Value);
+                    if (myScore != null)
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            TopWinsEntries.Clear();
+                            TopSpeedEntries.Clear();
+                            TopAssassinsEntries.Clear();
+
+                            TopWinsEntries.Add(myScore);
+                            TopSpeedEntries.Add(myScore);
+                            TopAssassinsEntries.Add(myScore);
+                        });
+                    }
+                });
             }
         }
     }

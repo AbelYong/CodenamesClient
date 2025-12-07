@@ -717,4 +717,13 @@
   <data name="profileUpdateErrorProfileNotFound" xml:space="preserve">
     <value>Lo sentimos, no pudimos actualizar su perfil porque no pudimos encontrarlo. Comuníquese con un administrador si el problema persiste.</value>
   </data>
+  <data name="scoresMostWins" xml:space="preserve">
+    <value>Más partidas ganadas</value>
+  </data>
+  <data name="scoresFastest" xml:space="preserve">
+    <value>Partidas más rápidas</value>
+  </data>
+  <data name="scoresAssassins" xml:space="preserve">
+    <value>Más asesinos revelados</value>
+  </data>
 </root>
