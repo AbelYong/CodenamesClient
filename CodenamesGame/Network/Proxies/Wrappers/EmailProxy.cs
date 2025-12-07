@@ -9,13 +9,14 @@ namespace CodenamesGame.Network.Proxies.Wrappers
     public class EmailProxy : IEmailProxy
     {
         private const string _ENDPOINT_NAME = "NetTcpBinding_IEmailManager";
-        public CommunicationRequest SendVerificationEmail(string email)
+
+        public CommunicationRequest SendVerificationEmail(string email, EmailType emailType)
         {
             CommunicationRequest request = new CommunicationRequest();
             var client = new EmailManagerClient(_ENDPOINT_NAME);
             try
             {
-                return client.SendVerificationCode(email);
+                return client.SendVerificationCode(email, emailType);
             }
             catch (TimeoutException)
             {
@@ -45,13 +46,13 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
-        public ConfirmEmailRequest SendVerificationCode(string email, string code)
+        public ConfirmEmailRequest SendVerificationCode(string email, string code, EmailType emailType)
         {
             ConfirmEmailRequest request = new ConfirmEmailRequest();
             var client = new EmailManagerClient(_ENDPOINT_NAME);
             try
             {
-                return client.ValidateVerificationCode(email, code);
+                return client.ValidateVerificationCode(email, code, emailType);
             }
             catch (TimeoutException)
             {

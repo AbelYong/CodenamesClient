@@ -3,7 +3,7 @@
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
-  <xs:complexType name="LoginRequest">
+  <xs:complexType name="AuthenticationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
@@ -12,7 +12,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="LoginRequest" nillable="true" type="tns:LoginRequest" />
+  <xs:element name="AuthenticationRequest" nillable="true" type="tns:AuthenticationRequest" />
   <xs:complexType name="Request">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />

@@ -72,7 +72,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private static bool SendVerificationCode(string email)
         {
-            CodenamesGame.EmailService.CommunicationRequest request = OnewayNetworkManager.Instance.SendVerificationEmail(email);
+            CodenamesGame.EmailService.CommunicationRequest request =
+                OnewayNetworkManager.Instance.SendVerificationEmail(email, CodenamesGame.EmailService.EmailType.EMAIL_VERIFICATION);
             if (!request.IsSuccess)
             {
                 MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
@@ -133,7 +134,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 return false;
             }
 
-            CodenamesGame.EmailService.ConfirmEmailRequest request = OnewayNetworkManager.Instance.SendVerificationCode(_vm.Email, code);
+            CodenamesGame.EmailService.ConfirmEmailRequest request =
+                OnewayNetworkManager.Instance.SendVerificationCode(_vm.Email, code, CodenamesGame.EmailService.EmailType.EMAIL_VERIFICATION);
             if (request.IsSuccess)
             {
                 return true;

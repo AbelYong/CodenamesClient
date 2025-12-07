@@ -1,4 +1,5 @@
-﻿using CodenamesClient.Operation;
+﻿using CodenamesClient.GameUI.ViewModels;
+using CodenamesClient.Operation;
 using CodenamesClient.Operation.Network.Oneway;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
@@ -13,7 +14,9 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 {
     public partial class ProfileControl : UserControl
     {
+        private readonly ProfileViewModel _viewModel;
         private PlayerDM _player;
+        private string _auxAuthReason;
         private int _tempAvatarID;
         public event Action ClickCloseProfile;
         public event Action ClickSaveProfile;
@@ -21,6 +24,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         public ProfileControl(PlayerDM player, bool isReadOnly)
         {
             InitializeComponent();
+            _viewModel = new ProfileViewModel();
+            DataContext = _viewModel;
             _player = player;
             _tempAvatarID = player.AvatarID;
             FillProfileFields(player);
@@ -29,6 +34,11 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             {
                 SetReadOnlyMode();
             }
+        }
+
+        public void Click_btnBack(object sender, RoutedEventArgs e)
+        {
+            ClickCloseProfile?.Invoke();
         }
 
         private void SetReadOnlyMode()
@@ -72,6 +82,83 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             }
         }
 
+        private void ShowGridAuthenticate(AuthtenticationReason reason)
+        {
+            _auxAuthReason = reason.ToString();
+            stackPanelProfileForm.Visibility = Visibility.Hidden;
+            var slideInAnimation = (Storyboard)FindResource("SlideInAuthenticateAnimation");
+            gridAuthenticate.Visibility = Visibility.Visible;
+            slideInAnimation.Begin();
+        }
+
+        private void HideGridAuthenticate(bool isCancelAuth)
+        {
+            var slideOutAnimation = (Storyboard)FindResource("SlideOutAuthenticateAnimation");
+            slideOutAnimation.Completed += (s, ev) =>
+            {
+                gridAuthenticate.Visibility = Visibility.Collapsed;
+                stackPanelProfileForm.Visibility = isCancelAuth ? Visibility.Visible : Visibility.Hidden;
+            };
+            slideOutAnimation.Begin();
+        }
+
+        private void Click_btnAuthenticate(object sender, RoutedEventArgs e)
+        {
+            bool parseSuccess = Enum.TryParse(_auxAuthReason, out AuthtenticationReason reason);
+            if (parseSuccess)
+            {
+                if (Authenticate())
+                {
+                    switch (reason)
+                    {
+                        case AuthtenticationReason.EMAIL_UPDATE:
+                            HideGridAuthenticate(isCancelAuth: false);
+                            VerifyEmail();
+                            ClearPasswordFields();
+                            break;
+                        case AuthtenticationReason.PASSWORD_RESET:
+                            HideGridAuthenticate(isCancelAuth: false);
+                            ShowGridResetPassword();
+                            break;
+                        default:
+                            return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show(Lang.globalClientError);
+            }
+        }
+
+        private bool Authenticate()
+        {
+            CodenamesGame.AuthenticationService.AuthenticationRequest request =
+                OnewayNetworkManager.Instance.Authenticate(_player.Username, _viewModel.CurrentPassword);
+            if (request.IsSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode));
+                return false;
+            }
+        }
+
+        private void Click_btnCancelAuthentication(object sender, RoutedEventArgs e)
+        {
+            HideGridAuthenticate(isCancelAuth: true);
+            ClearPasswordFields();
+        }
+
+        private void ClearPasswordFields()
+        {
+            _viewModel.CurrentPassword = string.Empty;
+            _viewModel.NewPassword = string.Empty;
+            _viewModel.ConfirmPassword = string.Empty;
+        }
+
         public void Click_btnSave(object sender, RoutedEventArgs e)
         {
             var errors = Validation.ProfileValidation.ValidateAll(
@@ -99,7 +186,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 }
                 else
                 {
-                    VerifyEmail();
+                    ShowGridAuthenticate(AuthtenticationReason.EMAIL_UPDATE);
                 }
             }
         }
@@ -124,7 +211,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private static bool SendVerificationCode(string email)
         {
-            CodenamesGame.EmailService.CommunicationRequest request = OnewayNetworkManager.Instance.SendVerificationEmail(email);
+            CodenamesGame.EmailService.CommunicationRequest request =
+                OnewayNetworkManager.Instance.SendVerificationEmail(email, CodenamesGame.EmailService.EmailType.EMAIL_VERIFICATION);
             if (!request.IsSuccess)
             {
                 MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
@@ -136,7 +224,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         {
             string newEmail = tBxEmail.Text;
             string code = tbxVerifyCode.Text;
-            CodenamesGame.EmailService.ConfirmEmailRequest request = OnewayNetworkManager.Instance.SendVerificationCode(newEmail, code);
+            CodenamesGame.EmailService.ConfirmEmailRequest request =
+                OnewayNetworkManager.Instance.SendVerificationCode(newEmail, code, CodenamesGame.EmailService.EmailType.EMAIL_VERIFICATION);
             if (request.IsSuccess)
             {
                 SaveProfile();
@@ -160,6 +249,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         private void ShowgGridVerify()
         {
             stackPanelProfileForm.Visibility = Visibility.Hidden;
+            _viewModel.EmailVerification = tBxEmail.Text;
             var slideInAnimation = (Storyboard)FindResource("SlideInVerifyAnimation");
             gridVerify.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
@@ -181,9 +271,54 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             slideOutAnimation.Begin();
         }
 
-        public void Click_btnBack(object sender, RoutedEventArgs e)
+        private void Click_btnResetPassword(object sender, RoutedEventArgs e)
         {
-            ClickCloseProfile?.Invoke();
+            ShowGridAuthenticate(AuthtenticationReason.PASSWORD_RESET);
+        }
+
+        private void ShowGridResetPassword()
+        {
+            stackPanelProfileForm.Visibility = Visibility.Hidden;
+            var slideInAnimation = (Storyboard)FindResource("SlideInResetPasswordAnimation");
+            gridResetPassword.Visibility = Visibility.Visible;
+            slideInAnimation.Begin();
+        }
+
+        private void Click_btnHideResetPassword(object sender, RoutedEventArgs e)
+        {
+            HideGridResetPassword();
+        }
+
+        private void Click_btnConfirmResetPassword(object sender, RoutedEventArgs e)
+        {
+            CodenamesGame.AuthenticationService.CommunicationRequest request =
+                OnewayNetworkManager.Instance.UpdatePassword(_player.Username, _viewModel.CurrentPassword, _viewModel.NewPassword);
+            if (request.IsSuccess)
+            {
+                MessageBox.Show("Tu contraseña ha sido actualizada"); //fixme
+                HideGridResetPassword();
+            }
+            else
+            {
+                MessageBox.Show(request.StatusCode.ToString());
+            }
+            ClearPasswordFields();
+        }
+
+        private void HideGridResetPassword()
+        {
+            var slideOutAnimation = (Storyboard)FindResource("SlideOutResetPasswordAnimation");
+            slideOutAnimation.Completed += (s, ev) =>
+            {
+                gridResetPassword.Visibility = Visibility.Collapsed;
+                stackPanelProfileForm.Visibility = Visibility.Visible;
+            };
+            slideOutAnimation.Begin();
+        }
+
+        private void PasswordInput_LostFocus(object sender, RoutedEventArgs e)
+        {
+            _viewModel.TriggerPasswordValidation();
         }
 
         private void Click_btnProfilePicture(object sender, RoutedEventArgs e)
@@ -251,6 +386,12 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             updatedPlayer.InstagramUsername = (!string.IsNullOrEmpty(tBxInstagram.Text) ? tBxInstagram.Text : null);
             updatedPlayer.DiscordUsername = (!string.IsNullOrEmpty(tBxDiscord.Text) ? tBxDiscord.Text : null);
             return updatedPlayer;
+        }
+
+        private enum AuthtenticationReason
+        {
+            EMAIL_UPDATE,
+            PASSWORD_RESET
         }
     }
 }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
-  <xs:element name="Login">
+  <xs:element name="Authenticate">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
@@ -10,30 +9,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="LoginResponse">
+  <xs:element name="AuthenticateResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="LoginResult" nillable="true" type="q1:LoginRequest" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="AuthenticateResult" nillable="true" type="q1:AuthenticationRequest" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BeginPasswordReset">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BeginPasswordResetResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="CompletePasswordReset">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="newPassword" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -42,7 +28,23 @@
   <xs:element name="CompletePasswordResetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q2:ResetResult" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q2:CommunicationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePassword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="currentPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="newPassword" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatePasswordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="UpdatePasswordResult" nillable="true" type="q3:CommunicationRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -3,6 +3,13 @@
   <xs:import schemaLocation="http://localhost:9053/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
   <xs:import schemaLocation="http://localhost:9053/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:9053/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+  <xs:simpleType name="EmailType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EMAIL_VERIFICATION" />
+      <xs:enumeration value="PASSWORD_RESET" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EmailType" nillable="true" type="tns:EmailType" />
   <xs:complexType name="CommunicationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
@@ -18,7 +25,7 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Request" nillable="true" type="tns:Request" />
-  <xs:complexType name="LoginRequest">
+  <xs:complexType name="AuthenticationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
@@ -27,7 +34,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="LoginRequest" nillable="true" type="tns:LoginRequest" />
+  <xs:element name="AuthenticationRequest" nillable="true" type="tns:AuthenticationRequest" />
   <xs:complexType name="SignInRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">

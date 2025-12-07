@@ -10,13 +10,13 @@ namespace CodenamesGame.Network.Proxies.Wrappers
     {
         private const string _AUTHENTICATION_ENDPOINT_NAME = "NetTcpBinding_IAuthenticationManager";
 
-        public LoginRequest Authenticate(string username, string password)
+        public AuthenticationRequest Authenticate(string username, string password)
         {
-            LoginRequest request = new LoginRequest();
+            AuthenticationRequest request = new AuthenticationRequest();
             var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
             try
             {
-                request = client.Login(username, password);
+                request = client.Authenticate(username, password);
             }
             catch (TimeoutException)
             {
@@ -42,44 +42,13 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
-        public void BeginPasswordReset(string username, string email)
+        public CommunicationRequest CompletePasswordReset(string email, string code, string newPassword)
         {
+            CommunicationRequest request = new CommunicationRequest();
             var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
             try
             {
-                client.BeginPasswordReset(username, email);
-            }
-            catch (TimeoutException)
-            {
-                NetworkUtil.SafeClose(client);
-            }
-            catch (EndpointNotFoundException)
-            {
-                NetworkUtil.SafeClose(client);
-            }
-            catch (CommunicationException)
-            {
-                NetworkUtil.SafeClose(client);
-            }
-            catch (Exception ex)
-            {
-                CodenamesGameLogger.Log.Error("Unexpected exception on password reset: ", ex);
-                NetworkUtil.SafeClose(client);
-            }
-            finally
-            {
-                NetworkUtil.SafeClose(client);
-            }
-        }
-
-        public ResetResult CompletePasswordReset(string username, string code, string newPassword)
-        {
-            ResetResult result = new ResetResult();
-            result.Success = false;
-            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
-            try
-            {
-                return client.CompletePasswordReset(username, code, newPassword);
+                return client.CompletePasswordReset(email, code, newPassword);
             }
             catch (TimeoutException)
             {
@@ -102,8 +71,39 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 NetworkUtil.SafeClose(client);
             }
-            return result;
+            return request;
         }
 
+        public CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword)
+        {
+            CommunicationRequest request = new CommunicationRequest();
+            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
+            try
+            {
+                return client.UpdatePassword(username, currentPassword, newPassword);
+            }
+            catch (TimeoutException)
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            catch (EndpointNotFoundException)
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            catch (CommunicationException)
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception on password reset completion: ", ex);
+                NetworkUtil.SafeClose(client);
+            }
+            finally
+            {
+                NetworkUtil.SafeClose(client);
+            }
+            return request;
+        }
     }
 }

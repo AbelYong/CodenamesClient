@@ -1,6 +1,7 @@
 ﻿using CodenamesClient.GameUI.Pages.UserControls;
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
+using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
 using System;
 using System.Threading.Tasks;
@@ -135,7 +136,7 @@ namespace CodenamesClient.GameUI.Pages
             sb.Begin(ResetGrid, true);
         }
 
-        private async void SendCode_Click(object sender, RoutedEventArgs e)
+        private void SendCode_Click(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             if (btn != null)
@@ -145,18 +146,24 @@ namespace CodenamesClient.GameUI.Pages
 
             try
             {
-                var user = ResetUsername.Text.Trim();
                 var email = ResetEmail.Text.Trim();
 
-                if (string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(email))
+                if (string.IsNullOrWhiteSpace(email))
                 {
-                    MessageBox.Show(Lang.resetMissingUserOrEmail);
+                    MessageBox.Show(Lang.resetMissingUserOrEmail); //fixme
                     return;
                 }
 
-                await Task.Run(() => LoginViewModel.BeginPasswordReset(user, email));
+                CodenamesGame.EmailService.CommunicationRequest request = LoginViewModel.SendPasswordResetEmail(email);
 
-                MessageBox.Show(Lang.resetCodeSend);
+                if (request.IsSuccess)
+                {
+                    MessageBox.Show(Lang.resetCodeSend);
+                }
+                else
+                {
+                    MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
+                }
             }
             catch (Exception ex)
             {
@@ -175,7 +182,7 @@ namespace CodenamesClient.GameUI.Pages
 
             try
             {
-                var user = ResetUsername.Text.Trim();
+                var email = ResetEmail.Text.Trim();
                 var code = ResetCode.Text.Trim();
                 var p1 = NewPass1.Password;
                 var p2 = NewPass2.Password;
@@ -192,11 +199,11 @@ namespace CodenamesClient.GameUI.Pages
                 }
 
                 var result = await Task.Run(() =>
-                    LoginViewModel.CompletePasswordReset(user, code, p1)
+                    LoginViewModel.CompletePasswordReset(email, code, p1)
                 );
 
-                MessageBox.Show(result.Message);
-                if (result.Success)
+                MessageBox.Show(result.StatusCode.ToString()); //fixme
+                if (result.IsSuccess)
                 {
                     HideResetOverlay();
                 }

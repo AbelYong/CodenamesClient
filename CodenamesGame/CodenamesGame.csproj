@@ -146,8 +146,11 @@
     <Compile Include="Util\NetworkUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthenticationService\item5.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.AuthenticationRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.CommunicationRequest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\EmailService\CodenamesGame.EmailService.CommunicationRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -204,12 +207,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Connected Services\AuthenticationService\AuthenticationService.wsdl" />
-    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.LoginRequest.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.ResetResult.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\AuthenticationService\item.xsd">
       <SubType>Designer</SubType>
     </None>

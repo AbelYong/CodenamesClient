@@ -23,7 +23,7 @@ namespace CodenamesGame.AuthenticationService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.CreateLobbyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.JoinPartyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.FriendshipRequest))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.AuthenticationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -237,9 +237,9 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class LoginRequest : CodenamesGame.AuthenticationService.Request {
+    public partial class AuthenticationRequest : CodenamesGame.AuthenticationService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.Guid> UserIDField;
@@ -674,89 +674,27 @@ namespace CodenamesGame.AuthenticationService {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ResetResult", Namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Manag" +
-        "ers")]
-    [System.SerializableAttribute()]
-    public partial class ResetResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool SuccessField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
-            get {
-                return this.MessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
-                    this.MessageField = value;
-                    this.RaisePropertyChanged("Message");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
-            get {
-                return this.SuccessField;
-            }
-            set {
-                if ((this.SuccessField.Equals(value) != true)) {
-                    this.SuccessField = value;
-                    this.RaisePropertyChanged("Success");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AuthenticationService.IAuthenticationManager")]
     public interface IAuthenticationManager {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Login", ReplyAction="http://tempuri.org/IAuthenticationManager/LoginResponse")]
-        CodenamesGame.AuthenticationService.LoginRequest Login(string username, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Authenticate", ReplyAction="http://tempuri.org/IAuthenticationManager/AuthenticateResponse")]
+        CodenamesGame.AuthenticationService.AuthenticationRequest Authenticate(string username, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Login", ReplyAction="http://tempuri.org/IAuthenticationManager/LoginResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.LoginRequest> LoginAsync(string username, string password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse")]
-        void BeginPasswordReset(string username, string email);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse")]
-        System.Threading.Tasks.Task BeginPasswordResetAsync(string username, string email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/Authenticate", ReplyAction="http://tempuri.org/IAuthenticationManager/AuthenticateResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.AuthenticationRequest> AuthenticateAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse")]
-        CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string username, string code, string newPassword);
+        CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ResetResult> CompletePasswordResetAsync(string username, string code, string newPassword);
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.CommunicationRequest> CompletePasswordResetAsync(string email, string code, string newPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/UpdatePassword", ReplyAction="http://tempuri.org/IAuthenticationManager/UpdatePasswordResponse")]
+        CodenamesGame.AuthenticationService.CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/UpdatePassword", ReplyAction="http://tempuri.org/IAuthenticationManager/UpdatePasswordResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.CommunicationRequest> UpdatePasswordAsync(string username, string currentPassword, string newPassword);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -786,28 +724,28 @@ namespace CodenamesGame.AuthenticationService {
                 base(binding, remoteAddress) {
         }
         
-        public CodenamesGame.AuthenticationService.LoginRequest Login(string username, string password) {
-            return base.Channel.Login(username, password);
+        public CodenamesGame.AuthenticationService.AuthenticationRequest Authenticate(string username, string password) {
+            return base.Channel.Authenticate(username, password);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.LoginRequest> LoginAsync(string username, string password) {
-            return base.Channel.LoginAsync(username, password);
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.AuthenticationRequest> AuthenticateAsync(string username, string password) {
+            return base.Channel.AuthenticateAsync(username, password);
         }
         
-        public void BeginPasswordReset(string username, string email) {
-            base.Channel.BeginPasswordReset(username, email);
+        public CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string newPassword) {
+            return base.Channel.CompletePasswordReset(email, code, newPassword);
         }
         
-        public System.Threading.Tasks.Task BeginPasswordResetAsync(string username, string email) {
-            return base.Channel.BeginPasswordResetAsync(username, email);
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.CommunicationRequest> CompletePasswordResetAsync(string email, string code, string newPassword) {
+            return base.Channel.CompletePasswordResetAsync(email, code, newPassword);
         }
         
-        public CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string username, string code, string newPassword) {
-            return base.Channel.CompletePasswordReset(username, code, newPassword);
+        public CodenamesGame.AuthenticationService.CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword) {
+            return base.Channel.UpdatePassword(username, currentPassword, newPassword);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.ResetResult> CompletePasswordResetAsync(string username, string code, string newPassword) {
-            return base.Channel.CompletePasswordResetAsync(username, code, newPassword);
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.CommunicationRequest> UpdatePasswordAsync(string username, string currentPassword, string newPassword) {
+            return base.Channel.UpdatePasswordAsync(username, currentPassword, newPassword);
         }
     }
 }

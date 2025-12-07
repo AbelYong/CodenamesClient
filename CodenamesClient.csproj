@@ -87,6 +87,7 @@
     <Compile Include="GameUI\ViewModels\LobbyViewModel.cs" />
     <Compile Include="GameUI\ViewModels\LoginViewModel.cs" />
     <Compile Include="GameUI\ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="GameUI\ViewModels\ProfileViewModel.cs" />
     <Compile Include="GameUI\ViewModels\SignInViewModel.cs" />
     <Compile Include="Operation\Network\Oneway\IOnewayNetworkManager.cs" />
     <Compile Include="Operation\Network\Oneway\OnewayNetworkManager.cs" />

@@ -28,7 +28,6 @@
     <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="8b34f76b-cad5-4900-8b49-b08337ea846c" SourceId="1" SourceUrl="http://localhost:9047/?xsd=xsd0" />
     <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="3690a931-6e36-44e7-ba73-92002fc421c3" SourceId="1" SourceUrl="http://localhost:9047/?xsd=xsd3" />
     <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="fb3151b1-35aa-408b-ab5c-716c92894867" SourceId="1" SourceUrl="http://localhost:9047/?xsd=xsd2" />
-    <MetadataFile FileName="item5.xsd" MetadataType="Schema" ID="9f54d818-8f28-4141-99d7-a2c530e15088" SourceId="1" SourceUrl="http://localhost:9047/?xsd=xsd5" />
     <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="55f1daac-6a30-431f-8947-be069672831f" SourceId="1" SourceUrl="http://localhost:9047/?xsd=xsd4" />
   </Metadata>
   <Extensions>

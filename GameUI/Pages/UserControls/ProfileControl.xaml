@@ -4,10 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CodenamesClient.GameUI.Pages.UserControls"
+             xmlns:viewmodels="clr-namespace:CodenamesClient.GameUI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:ProfileViewModel}"
              xmlns:language="clr-namespace:CodenamesClient.Properties.Langs"
              mc:Ignorable="d" 
              Height="450" Width="600" Background="#FF1D1D1D">
     <UserControl.Resources>
+        
         <Storyboard x:Key="SlideInAnimation">
             <DoubleAnimation Storyboard.TargetName="gridProfilePictures"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -26,6 +29,26 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+
+        <Storyboard x:Key="SlideInAuthenticateAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridAuthenticate"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="640" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="SlideOutAuthenticateAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridAuthenticate"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="0" To="800" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
         <Storyboard x:Key="SlideInVerifyAnimation">
             <DoubleAnimation Storyboard.TargetName="gridVerify"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -35,7 +58,6 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-
         <Storyboard x:Key="SlideOutVerifyAnimation">
             <DoubleAnimation Storyboard.TargetName="gridVerify"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -45,6 +67,54 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+
+        <Storyboard x:Key="SlideInResetPasswordAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridResetPassword"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="640" To="0" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="SlideOutResetPasswordAnimation">
+            <DoubleAnimation Storyboard.TargetName="gridResetPassword"
+                     Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                     From="0" To="800" Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseIn"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Style x:Key="ChecklistItemStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Tomato"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,2,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                    <Setter Property="Foreground" Value="LimeGreen"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <ControlTemplate x:Key="BelowTextValidationTemplate">
+            <DockPanel LastChildFill="True">
+                <TextBlock Margin="0,4,0,0" Foreground="Tomato" FontSize="12" TextWrapping="Wrap" DockPanel.Dock="Bottom"
+                   Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                <AdornedElementPlaceholder x:Name="adorner"/>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="ValidatedTextBox" TargetType="TextBox" BasedOn="{StaticResource textBoxCustomFocus}">
+            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource BelowTextValidationTemplate}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="360"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="BorderBrush" Value="Tomato"/>
+                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <StackPanel x:Name="stackPanelProfileForm">
@@ -72,8 +142,8 @@
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="200">
                     <Label x:Name="lblPassword" Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" />
-                    <Button Name="tBxChangePassword"  Content="{x:Static language:Lang.resetChangePassword}" 
-                    Style="{StaticResource buttonCustomFocus}" FontSize="16" IsEnabled="False" />
+                    <Button Name="tBxChangePassword" Click="Click_btnResetPassword" Content="{x:Static language:Lang.resetChangePassword}"
+                            Style="{StaticResource buttonCustomFocus}" FontSize="16"/>
                     <Label Content="Facebook" Style="{StaticResource normal}" />
                     <TextBox Name="tBxFacebook" Text="" 
                             Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
@@ -232,6 +302,48 @@
                 </Button.Background>
             </Button>
         </Grid>
+        <Grid x:Name="gridAuthenticate"
+              Width="540" Height="275"
+              Background="#272727"
+              Visibility="Visible"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Panel.ZIndex="10">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="640"/>
+            </Grid.RenderTransform>
+
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Content="Autenticación Requerida"
+                       Style="{StaticResource title}" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+                
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Esta operación es sensible"
+                       Style="{StaticResource subtitle}" Margin="0,0,0,10"/>
+                    <TextBlock Text="Por favor ingresa tu contraseña actual" Margin="0,0,0,10"
+                               Style="{StaticResource normal}"/>
+                    <TextBox Text="{Binding CurrentPassword}"
+                             Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320" Height="30" MaxLength="16" HorizontalContentAlignment="Center"/>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                    Click="Click_btnCancelAuthentication"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                    Click="Click_btnAuthenticate"/>
+                </Grid>
+            </Grid>
+        </Grid>
         <Grid x:Name="gridVerify"
           Width="540" Height="300"
           Background="#272727"
@@ -256,7 +368,7 @@
 
                 <StackPanel Grid.Row="1">
                     <TextBlock Text="{x:Static language:Lang.loginCode6DigitsSent}" Style="{StaticResource normal}"/>
-                    <TextBlock x:Name="VerifyEmailLabel" Style="{StaticResource normal}" FontWeight="Bold" Margin="0,0,0,8"/>
+                    <TextBlock x:Name="VerifyEmailLabel" Text="{Binding EmailVerification}" Style="{StaticResource normal}" FontWeight="Bold" Margin="0,0,0,8"/>
 
                     <TextBlock Text="{x:Static language:Lang.loginVerificationCode}" Style="{StaticResource normal}"/>
                     <TextBox x:Name="tbxVerifyCode" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320" MaxLength="6"/>
@@ -271,6 +383,78 @@
                         Click="Click_btnHideVerify"/>
                     <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
                         Click="Click_btnConfirmVerify"/>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid x:Name="gridResetPassword"
+              Width="540" Height="300"
+              Background="#272727"
+              Visibility="Collapsed"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Panel.ZIndex="10">
+            <Grid.RenderTransform>
+                <TranslateTransform Y="640"/>
+            </Grid.RenderTransform>
+
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Content="Cambiar contraseña"
+                       Style="{StaticResource subtitle}" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Ingresa la nueva contraseña"
+                               Style="{StaticResource normal}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Text="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" FontSize="16" LostFocus="PasswordInput_LostFocus"
+                                 Style="{StaticResource ValidatedTextBox}" Margin="0,2,60,25" Height="30" Width="320" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
+                        <Border Grid.Column="1" Margin="0,0,0,20" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
+                            <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
+                            <Border.ToolTip>
+                                <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
+                                    <StackPanel Margin="5">
+                                        <TextBlock Text="{x:Static language:Lang.signInPasswordRequirements}" FontWeight="Bold" Foreground="White" Margin="0,0,0,5"/>
+                                        <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasMinLength}" Text="{Binding PwMinLengthText}"/>
+                                        <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwWithinMaxLength}" Text="{Binding PwMaxLengthText}"/>
+                                        <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasUpper}" Text="{x:Static language:Lang.signInPasswordAtLeastOneUppercaseLetter}"/>
+                                        <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasLower}" Text="{x:Static language:Lang.signInPasswordAtLeastOneLowercaseLetter}"/>
+                                        <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasDigit}" Text="{x:Static language:Lang.signInPasswordAtLeastOneDigit}"/>
+                                        <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasSpecial}" Text="{x:Static language:Lang.signInPasswordAtLeastOneSpecialCharacter}"/>
+                                        <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwNoConsecutiveRun}" Text="{x:Static language:Lang.signInPasswordNotContainMoreThan3ConsecutiveDigits}"/>
+                                    </StackPanel>
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
+                    </Grid>
+                    <TextBlock Text="Confirma tu nueva contraseña" Style="{StaticResource normal}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Text="{Binding ConfirmPassword, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"
+                                 Style="{StaticResource ValidatedTextBox}" Margin="0,2,90,20" Width="320" Height="30" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="2" Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                            Click="Click_btnHideResetPassword"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" IsEnabled="{Binding CanSubmit}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                            Click="Click_btnConfirmResetPassword"/>
                 </Grid>
             </Grid>
         </Grid>

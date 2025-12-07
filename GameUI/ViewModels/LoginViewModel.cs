@@ -82,7 +82,8 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public async Task Login(string username, string password)
         {
-            CodenamesGame.AuthenticationService.LoginRequest request = OnewayNetworkManager.Instance.Authenticate(username, password);
+            CodenamesGame.AuthenticationService.AuthenticationRequest request = 
+                OnewayNetworkManager.Instance.Authenticate(username, password);
             if (ValidateLoginData(username, password))
             {
                 if (request.IsSuccess)
@@ -126,14 +127,14 @@ namespace CodenamesClient.GameUI.ViewModels
             PasswordErrorMessage = Lang.loginWrongCredentials;
         }
 
-        public static void BeginPasswordReset(string user, string email)
+        public static CodenamesGame.EmailService.CommunicationRequest SendPasswordResetEmail (string email)
         {
-            OnewayNetworkManager.Instance.BeginPasswordReset(user, email);
+            return OnewayNetworkManager.Instance.SendVerificationEmail(email, CodenamesGame.EmailService.EmailType.PASSWORD_RESET);
         }
 
-        public static CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string user, string code, string password)
+        public static CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string password)
         {
-            return OnewayNetworkManager.Instance.CompletePasswordReset(user, code, password);
+            return OnewayNetworkManager.Instance.CompletePasswordReset(email, code, password);
         }
 
         public async Task BeginSession(Guid? userID)

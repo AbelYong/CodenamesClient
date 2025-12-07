@@ -15,19 +15,19 @@ namespace CodenamesGame.Network
             _proxy = proxy;
         }
 
-        public LoginRequest Authenticate(string username, string password)
+        public AuthenticationRequest Authenticate(string username, string password)
         {
             return _proxy.Authenticate(username, password);
         }
 
-        public void BeginPasswordReset(string username, string email)
+        public CommunicationRequest CompletePasswordReset(string email, string code, string newPassword)
         {
-            _proxy.BeginPasswordReset(username, email);
+            return _proxy.CompletePasswordReset(email, code, newPassword);
         }
 
-        public ResetResult CompletePasswordReset(string username, string code, string newPassword)
+        public CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword)
         {
-            return _proxy.CompletePasswordReset(username, code, newPassword);
+            return _proxy.UpdatePassword(username, currentPassword, newPassword);
         }
     }
 }

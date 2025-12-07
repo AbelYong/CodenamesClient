@@ -1,4 +1,5 @@
 ﻿using CodenamesGame.Domain.POCO;
+using CodenamesGame.EmailService;
 using CodenamesGame.Network;
 using System;
 
@@ -26,19 +27,19 @@ namespace CodenamesClient.Operation.Network.Oneway
         }
 
         // Authentication Service
-        public CodenamesGame.AuthenticationService.LoginRequest Authenticate(string username, string password)
+        public CodenamesGame.AuthenticationService.AuthenticationRequest Authenticate(string username, string password)
         {
             return _authenticationOperation.Authenticate(username, password);
         }
 
-        public void BeginPasswordReset(string username, string email)
+        public CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string newPassword)
         {
-            _authenticationOperation.BeginPasswordReset(username, email);
+            return _authenticationOperation.CompletePasswordReset(email, code, newPassword);
         }
 
-        public CodenamesGame.AuthenticationService.ResetResult CompletePasswordReset(string username, string code, string newPassword)
+        public CodenamesGame.AuthenticationService.CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword)
         {
-            return _authenticationOperation.CompletePasswordReset(username, code, newPassword);
+            return _authenticationOperation.UpdatePassword(username, currentPassword, newPassword);
         }
 
         // User service
@@ -58,14 +59,14 @@ namespace CodenamesClient.Operation.Network.Oneway
         }
 
         //Email Service
-        public CodenamesGame.EmailService.CommunicationRequest SendVerificationEmail(string email)
+        public CodenamesGame.EmailService.CommunicationRequest SendVerificationEmail(string email, EmailType emailType)
         {
-            return _emailOperation.SendVerificationEmail(email);
+            return _emailOperation.SendVerificationEmail(email, emailType);
         }
 
-        public CodenamesGame.EmailService.ConfirmEmailRequest SendVerificationCode(string email, string code)
+        public CodenamesGame.EmailService.ConfirmEmailRequest SendVerificationCode(string email, string code, EmailType emailType)
         {
-            return _emailOperation.SendVerificationCode(email, code);
+            return _emailOperation.SendVerificationCode(email, code, emailType);
         }
 
         public CodenamesGame.ModerationService.CommunicationRequest ReportPlayer(Guid reporterUserID, Guid reportedUserID, string reason)

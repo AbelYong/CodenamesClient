@@ -4,8 +4,8 @@ namespace CodenamesGame.Network.Proxies.Interfaces
 {
     public interface IAuthenticationProxy
     {
-        LoginRequest Authenticate(string username, string password);
-        void BeginPasswordReset(string username, string email);
-        ResetResult CompletePasswordReset(string username, string code, string newPassword);
+        AuthenticationRequest Authenticate(string username, string password);
+        CommunicationRequest CompletePasswordReset(string email, string code, string newPassword);
+        CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword);
     }
 }

@@ -15,20 +15,13 @@
       <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
       <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
       <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
-      <xsd:import schemaLocation="http://localhost:9047/?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Services.Contracts.ServiceContracts.Managers" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IAuthenticationManager_Login_InputMessage">
-    <wsdl:part name="parameters" element="tns:Login" />
+  <wsdl:message name="IAuthenticationManager_Authenticate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
   </wsdl:message>
-  <wsdl:message name="IAuthenticationManager_Login_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LoginResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAuthenticationManager_BeginPasswordReset_InputMessage">
-    <wsdl:part name="parameters" element="tns:BeginPasswordReset" />
-  </wsdl:message>
-  <wsdl:message name="IAuthenticationManager_BeginPasswordReset_OutputMessage">
-    <wsdl:part name="parameters" element="tns:BeginPasswordResetResponse" />
+  <wsdl:message name="IAuthenticationManager_Authenticate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
   </wsdl:message>
   <wsdl:message name="IAuthenticationManager_CompletePasswordReset_InputMessage">
     <wsdl:part name="parameters" element="tns:CompletePasswordReset" />
@@ -36,34 +29,31 @@
   <wsdl:message name="IAuthenticationManager_CompletePasswordReset_OutputMessage">
     <wsdl:part name="parameters" element="tns:CompletePasswordResetResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_UpdatePassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePassword" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationManager_UpdatePassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePasswordResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAuthenticationManager">
-    <wsdl:operation name="Login">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/Login" message="tns:IAuthenticationManager_Login_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/LoginResponse" message="tns:IAuthenticationManager_Login_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="BeginPasswordReset">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/BeginPasswordReset" message="tns:IAuthenticationManager_BeginPasswordReset_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/BeginPasswordResetResponse" message="tns:IAuthenticationManager_BeginPasswordReset_OutputMessage" />
+    <wsdl:operation name="Authenticate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/Authenticate" message="tns:IAuthenticationManager_Authenticate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/AuthenticateResponse" message="tns:IAuthenticationManager_Authenticate_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CompletePasswordReset">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset" message="tns:IAuthenticationManager_CompletePasswordReset_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse" message="tns:IAuthenticationManager_CompletePasswordReset_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationManager/UpdatePassword" message="tns:IAuthenticationManager_UpdatePassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationManager/UpdatePasswordResponse" message="tns:IAuthenticationManager_UpdatePassword_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IAuthenticationManager" type="tns:IAuthenticationManager">
     <wsp:PolicyReference URI="#NetTcpBinding_IAuthenticationManager_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="Login">
-      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/Login" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BeginPasswordReset">
-      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/BeginPasswordReset" style="document" />
+    <wsdl:operation name="Authenticate">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/Authenticate" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -73,6 +63,15 @@
     </wsdl:operation>
     <wsdl:operation name="CompletePasswordReset">
       <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/CompletePasswordReset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePassword">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationManager/UpdatePassword" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -18,14 +18,14 @@ namespace CodenamesGame.Network
             _proxy = proxy;
         }
 
-        public CommunicationRequest SendVerificationEmail(string email)
+        public CommunicationRequest SendVerificationEmail(string email, EmailType emailType)
         {
-            return _proxy.SendVerificationEmail(email);
+            return _proxy.SendVerificationEmail(email, emailType);
         }
 
-        public ConfirmEmailRequest SendVerificationCode(string email, string code)
+        public ConfirmEmailRequest SendVerificationCode(string email, string code, EmailType emailType)
         {
-            return _proxy.SendVerificationCode(email, code);
+            return _proxy.SendVerificationCode(email, code, emailType);
         }
     }
 }

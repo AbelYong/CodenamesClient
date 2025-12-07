@@ -13,11 +13,22 @@ namespace CodenamesGame.EmailService {
     using System;
     
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EmailType", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    public enum EmailType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        EMAIL_VERIFICATION = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PASSWORD_RESET = 1,
+    }
+    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.AuthenticationRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.SignInRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.ConfirmEmailRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.CreateLobbyRequest))]
@@ -83,9 +94,9 @@ namespace CodenamesGame.EmailService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class LoginRequest : CodenamesGame.EmailService.Request {
+    public partial class AuthenticationRequest : CodenamesGame.EmailService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.Guid> UserIDField;
@@ -679,16 +690,16 @@ namespace CodenamesGame.EmailService {
     public interface IEmailManager {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmailManager/SendVerificationCode", ReplyAction="http://tempuri.org/IEmailManager/SendVerificationCodeResponse")]
-        CodenamesGame.EmailService.CommunicationRequest SendVerificationCode(string email);
+        CodenamesGame.EmailService.CommunicationRequest SendVerificationCode(string email, CodenamesGame.EmailService.EmailType emailType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmailManager/SendVerificationCode", ReplyAction="http://tempuri.org/IEmailManager/SendVerificationCodeResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.EmailService.CommunicationRequest> SendVerificationCodeAsync(string email);
+        System.Threading.Tasks.Task<CodenamesGame.EmailService.CommunicationRequest> SendVerificationCodeAsync(string email, CodenamesGame.EmailService.EmailType emailType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmailManager/ValidateVerificationCode", ReplyAction="http://tempuri.org/IEmailManager/ValidateVerificationCodeResponse")]
-        CodenamesGame.EmailService.ConfirmEmailRequest ValidateVerificationCode(string email, string code);
+        CodenamesGame.EmailService.ConfirmEmailRequest ValidateVerificationCode(string email, string code, CodenamesGame.EmailService.EmailType emailType);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmailManager/ValidateVerificationCode", ReplyAction="http://tempuri.org/IEmailManager/ValidateVerificationCodeResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.EmailService.ConfirmEmailRequest> ValidateVerificationCodeAsync(string email, string code);
+        System.Threading.Tasks.Task<CodenamesGame.EmailService.ConfirmEmailRequest> ValidateVerificationCodeAsync(string email, string code, CodenamesGame.EmailService.EmailType emailType);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -718,20 +729,20 @@ namespace CodenamesGame.EmailService {
                 base(binding, remoteAddress) {
         }
         
-        public CodenamesGame.EmailService.CommunicationRequest SendVerificationCode(string email) {
-            return base.Channel.SendVerificationCode(email);
+        public CodenamesGame.EmailService.CommunicationRequest SendVerificationCode(string email, CodenamesGame.EmailService.EmailType emailType) {
+            return base.Channel.SendVerificationCode(email, emailType);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.EmailService.CommunicationRequest> SendVerificationCodeAsync(string email) {
-            return base.Channel.SendVerificationCodeAsync(email);
+        public System.Threading.Tasks.Task<CodenamesGame.EmailService.CommunicationRequest> SendVerificationCodeAsync(string email, CodenamesGame.EmailService.EmailType emailType) {
+            return base.Channel.SendVerificationCodeAsync(email, emailType);
         }
         
-        public CodenamesGame.EmailService.ConfirmEmailRequest ValidateVerificationCode(string email, string code) {
-            return base.Channel.ValidateVerificationCode(email, code);
+        public CodenamesGame.EmailService.ConfirmEmailRequest ValidateVerificationCode(string email, string code, CodenamesGame.EmailService.EmailType emailType) {
+            return base.Channel.ValidateVerificationCode(email, code, emailType);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.EmailService.ConfirmEmailRequest> ValidateVerificationCodeAsync(string email, string code) {
-            return base.Channel.ValidateVerificationCodeAsync(email, code);
+        public System.Threading.Tasks.Task<CodenamesGame.EmailService.ConfirmEmailRequest> ValidateVerificationCodeAsync(string email, string code, CodenamesGame.EmailService.EmailType emailType) {
+            return base.Channel.ValidateVerificationCodeAsync(email, code, emailType);
         }
     }
 }
