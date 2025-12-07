@@ -15,6 +15,7 @@ namespace CodenamesClient.Operation.Network.Duplex
         private readonly LobbyOperation _lobbyOperation;
         private readonly MatchmakingOperation _matchmakingOperation;
         private readonly MatchOperation _matchOperation;
+        private readonly ScoreboardOperation _scoreboardOperation;
 
         public static DuplexNetworkManager Instance
         {
@@ -28,6 +29,7 @@ namespace CodenamesClient.Operation.Network.Duplex
             _lobbyOperation = new LobbyOperation();
             _matchmakingOperation = new MatchmakingOperation();
             _matchOperation = new MatchOperation();
+            _scoreboardOperation = new ScoreboardOperation();
         }
 
         // Session Service
@@ -183,6 +185,22 @@ namespace CodenamesClient.Operation.Network.Duplex
         public void NotifyPickedAssassin(BoardCoordinatesDM coordinates)
         {
             _matchOperation.NotifyPickedAssassin(coordinates);
+        }
+
+        //Scoreboard Service
+        public void ConnectToScoreboardService(Guid playerID)
+        {
+            _scoreboardOperation.Initialize(playerID);
+        }
+
+        public void DisconnectFromScoreboardService()
+        {
+            _scoreboardOperation.Disconnect();
+        }
+
+        public ScoreboardDM GetMyScore(Guid playerID)
+        {
+            return _scoreboardOperation.GetMyScore(playerID);
         }
     }
 }

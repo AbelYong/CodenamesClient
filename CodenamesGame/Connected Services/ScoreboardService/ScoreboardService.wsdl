@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ScoreboardService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IScoreboardManager_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:9071/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:9071/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:9071/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IScoreboardManager_SubscribeToScoreboardUpdates_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeToScoreboardUpdates" />
+  </wsdl:message>
+  <wsdl:message name="IScoreboardManager_SubscribeToScoreboardUpdates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeToScoreboardUpdatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IScoreboardManager_UnsubscribeFromScoreboardUpdates_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeFromScoreboardUpdates" />
+  </wsdl:message>
+  <wsdl:message name="IScoreboardManager_UnsubscribeFromScoreboardUpdates_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeFromScoreboardUpdatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IScoreboardManager_GetMyScore_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMyScore" />
+  </wsdl:message>
+  <wsdl:message name="IScoreboardManager_GetMyScore_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMyScoreResponse" />
+  </wsdl:message>
+  <wsdl:message name="IScoreboardManager_NotifyLeaderboardUpdate_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NotifyLeaderboardUpdate" />
+  </wsdl:message>
+  <wsdl:portType name="IScoreboardManager">
+    <wsdl:operation name="SubscribeToScoreboardUpdates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IScoreboardManager/SubscribeToScoreboardUpdates" message="tns:IScoreboardManager_SubscribeToScoreboardUpdates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IScoreboardManager/SubscribeToScoreboardUpdatesResponse" message="tns:IScoreboardManager_SubscribeToScoreboardUpdates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeFromScoreboardUpdates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IScoreboardManager/UnsubscribeFromScoreboardUpdates" message="tns:IScoreboardManager_UnsubscribeFromScoreboardUpdates_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IScoreboardManager/UnsubscribeFromScoreboardUpdatesResponse" message="tns:IScoreboardManager_UnsubscribeFromScoreboardUpdates_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMyScore">
+      <wsdl:input wsaw:Action="http://tempuri.org/IScoreboardManager/GetMyScore" message="tns:IScoreboardManager_GetMyScore_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IScoreboardManager/GetMyScoreResponse" message="tns:IScoreboardManager_GetMyScore_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifyLeaderboardUpdate">
+      <wsdl:output wsaw:Action="http://tempuri.org/IScoreboardManager/NotifyLeaderboardUpdate" message="tns:IScoreboardManager_NotifyLeaderboardUpdate_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IScoreboardManager" type="tns:IScoreboardManager">
+    <wsp:PolicyReference URI="#NetTcpBinding_IScoreboardManager_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="SubscribeToScoreboardUpdates">
+      <soap12:operation soapAction="http://tempuri.org/IScoreboardManager/SubscribeToScoreboardUpdates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeFromScoreboardUpdates">
+      <soap12:operation soapAction="http://tempuri.org/IScoreboardManager/UnsubscribeFromScoreboardUpdates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMyScore">
+      <soap12:operation soapAction="http://tempuri.org/IScoreboardManager/GetMyScore" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyLeaderboardUpdate">
+      <soap12:operation soapAction="http://tempuri.org/IScoreboardManager/NotifyLeaderboardUpdate" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ScoreboardService">
+    <wsdl:port name="NetTcpBinding_IScoreboardManager" binding="tns:NetTcpBinding_IScoreboardManager">
+      <soap12:address location="net.tcp://localhost:9072/ScoreboardService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:9072/ScoreboardService</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

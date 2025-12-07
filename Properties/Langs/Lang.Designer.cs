@@ -1240,6 +1240,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t update your profile because we couldn&apos;t find it, please try again later. Contact an administrator if the issue persists.
+        /// </summary>
+        public static string profileErrorCouldNotFindProfile {
+            get {
+                return ResourceManager.GetString("profileErrorCouldNotFindProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t update your profile because this email or username is already in use.
         /// </summary>
         public static string profileErrorEmailOrUsernameInUse {
@@ -1470,6 +1479,33 @@ namespace CodenamesClient.Properties.Langs {
         public static string resetTitle {
             get {
                 return ResourceManager.GetString("resetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a More assassins revealed.
+        /// </summary>
+        public static string scoresAssassins {
+            get {
+                return ResourceManager.GetString("scoresAssassins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Fastest games.
+        /// </summary>
+        public static string scoresFastest {
+            get {
+                return ResourceManager.GetString("scoresFastest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a More games won.
+        /// </summary>
+        public static string scoresMostWins {
+            get {
+                return ResourceManager.GetString("scoresMostWins", resourceCulture);
             }
         }
         

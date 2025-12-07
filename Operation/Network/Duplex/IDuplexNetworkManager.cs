@@ -47,5 +47,10 @@ namespace CodenamesClient.Operation.Network.Duplex
         void NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength);
         void NotifyPickedBystander(BoardCoordinatesDM coordinates);
         void NotifyPickedAssassin(BoardCoordinatesDM coordinates);
+
+        // Scoreboard Service
+        void ConnectToScoreboardService(Guid playerID);
+        void DisconnectFromScoreboardService();
+        ScoreboardDM GetMyScore(Guid playerID);
     }
 }

@@ -240,16 +240,31 @@ namespace CodenamesClient.GameUI.Pages
             var slideInAnimation = (Storyboard)FindResource("SlideInScoreboardsAnimation");
             ScoreboardsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
+
+            _viewModel.OpenScoreboard();
         }
 
         private void Click_HideScoreboards(object sender, RoutedEventArgs e)
         {
+            _viewModel.CloseScoreboard();
+
             var slideOutAnimation = (Storyboard)FindResource("SlideOutScoreboardsAnimation");
             slideOutAnimation.Completed += (s, ev) =>
             {
                 ScoreboardsGrid.Visibility = Visibility.Collapsed;
             };
             slideOutAnimation.Begin();
+        }
+
+        private void Click_MyScore(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ShowMyPersonalScore();
+        }
+
+        private void Click_RefreshScoreboard(object sender, RoutedEventArgs e)
+        {
+            _viewModel.CloseScoreboard();
+            _viewModel.OpenScoreboard();
         }
 
         private void Click_SendRequest(object sender, RoutedEventArgs e)
