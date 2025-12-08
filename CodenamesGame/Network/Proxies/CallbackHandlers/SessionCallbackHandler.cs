@@ -12,7 +12,7 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
         public static event EventHandler<PlayerEventArgs> OnFriendOnline;
         public static event EventHandler<Guid> OnFriendOffline;
         public static event EventHandler<List<PlayerDM>> OnOnlineFriendsReceived;
-        public static event EventHandler<BanReason> OnKicked;
+        public static event EventHandler<KickReason> OnKicked;
         
         public SessionCallbackHandler()
         {
@@ -59,7 +59,7 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
             OnOnlineFriendsReceived?.Invoke(null, _onlineFriends);
         }
 
-        public void NotifyKicked(BanReason reason)
+        public void NotifyKicked(KickReason reason)
         {
             OnKicked?.Invoke(null, reason);
         }

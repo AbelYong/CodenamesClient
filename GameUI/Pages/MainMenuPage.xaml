@@ -360,8 +360,8 @@
                           HorizontalGridLinesBrush="#555555" Margin="0,15,0,0"
                           CanUserSortColumns="False" CanUserResizeColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Jugador" Binding="{Binding Username}" Width="*"/>
-                                    <DataGridTextColumn Header="Victorias" Binding="{Binding GamesWon}" Width="Auto" MinWidth="180"/>
+                                    <DataGridTextColumn Header="{x:Static language:Lang.mainMenuPlayer}" Binding="{Binding Username}" Width="*"/>
+                                    <DataGridTextColumn Header="{x:Static language:Lang.scoresWins}" Binding="{Binding GamesWon}" Width="Auto" MinWidth="180"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
@@ -374,8 +374,8 @@
                           HorizontalGridLinesBrush="#555555" Margin="0,15,0,0"
                           CanUserSortColumns="False" CanUserResizeColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Jugador" Binding="{Binding Username}" Width="*"/>
-                                    <DataGridTextColumn Header="Tiempo Récord" Binding="{Binding FastestMatch}" Width="Auto" MinWidth="180"/>
+                                    <DataGridTextColumn Header="{x:Static language:Lang.mainMenuPlayer}" Binding="{Binding Username}" Width="*"/>
+                                    <DataGridTextColumn Header="{x:Static language:Lang.scoresRecordTime}" Binding="{Binding FastestMatch}" Width="Auto" MinWidth="180"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
@@ -388,8 +388,8 @@
                           HorizontalGridLinesBrush="#555555" Margin="0,15,0,0"
                           CanUserSortColumns="False" CanUserResizeColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Jugador" Binding="{Binding Username}" Width="*"/>
-                                    <DataGridTextColumn Header="Asesinos Revelados" Binding="{Binding AssassinsRevealed}" Width="Auto" MinWidth="200"/>
+                                    <DataGridTextColumn Header="{x:Static language:Lang.mainMenuPlayer}" Binding="{Binding Username}" Width="*"/>
+                                    <DataGridTextColumn Header="{x:Static language:Lang.scoresAssassinsRevealed}" Binding="{Binding AssassinsRevealed}" Width="Auto" MinWidth="200"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>

@@ -726,4 +726,40 @@
   <data name="scoresAssassins" xml:space="preserve">
     <value>Más asesinos revelados</value>
   </data>
+  <data name="profileAuthenticationRequired" xml:space="preserve">
+    <value>Autenticación requerida</value>
+  </data>
+  <data name="profileSensibleOperation" xml:space="preserve">
+    <value>Esta operación es sensible</value>
+  </data>
+  <data name="profileTypeCurrentPassword" xml:space="preserve">
+    <value>Por favor ingresa tu contraseña actual</value>
+  </data>
+  <data name="profileChangePassword" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="emailPasswordUpdateFailedAddressNotFound" xml:space="preserve">
+    <value>No pudimos actualizar tu contraseña por que no pudimos encontrar tu correo, por favor inténtalo más tarde</value>
+  </data>
+  <data name="profileNewPasswordNotValid" xml:space="preserve">
+    <value>La nueva contraseña no es válida</value>
+  </data>
+  <data name="profilePasswordHasBeenUpdated" xml:space="preserve">
+    <value>Tu contraseña ha sido actualizada</value>
+  </data>
+  <data name="mainMenuPlayer" xml:space="preserve">
+    <value>Jugador</value>
+  </data>
+  <data name="scoresAssassinsRevealed" xml:space="preserve">
+    <value>Asesinos revelados</value>
+  </data>
+  <data name="scoresRecordTime" xml:space="preserve">
+    <value>Tiempo Récord</value>
+  </data>
+  <data name="scoresWins" xml:space="preserve">
+    <value>Victorias</value>
+  </data>
+  <data name="profilePasswordErrorTypedPasswordIncorrect" xml:space="preserve">
+    <value>La contraseña no es correcta</value>
+  </data>
 </root>

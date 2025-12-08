@@ -141,7 +141,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             }
             else
             {
-                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.AUTHENTICATION, request.StatusCode));
                 return false;
             }
         }
@@ -295,12 +295,12 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 OnewayNetworkManager.Instance.UpdatePassword(_player.Username, _viewModel.CurrentPassword, _viewModel.NewPassword);
             if (request.IsSuccess)
             {
-                MessageBox.Show("Tu contraseña ha sido actualizada"); //fixme
+                MessageBox.Show(Lang.profilePasswordHasBeenUpdated);
                 HideGridResetPassword();
             }
             else
             {
-                MessageBox.Show(request.StatusCode.ToString());
+                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.PASS_UPDATE, request.StatusCode));
             }
             ClearPasswordFields();
         }

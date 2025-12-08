@@ -267,7 +267,7 @@ namespace CodenamesGame.SessionService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.AuthenticationRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.SignInRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.ConfirmEmailRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.SessionService.CreateLobbyRequest))]
@@ -333,9 +333,9 @@ namespace CodenamesGame.SessionService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class LoginRequest : CodenamesGame.SessionService.Request {
+    public partial class AuthenticationRequest : CodenamesGame.SessionService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.Guid> UserIDField;
@@ -675,14 +675,17 @@ namespace CodenamesGame.SessionService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BanReason", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
-    public enum BanReason : int {
+    [System.Runtime.Serialization.DataContractAttribute(Name="KickReason", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    public enum KickReason : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        TemporaryBan = 0,
+        TEMPORARY_BAN = 0,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
-        PermanentBan = 1,
+        PERMANTENT_BAN = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DUPLICATE_LOGIN = 2,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -727,7 +730,7 @@ namespace CodenamesGame.SessionService {
         void ReceiveOnlineFriends(CodenamesGame.SessionService.Player[] friends);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/NotifyKicked")]
-        void NotifyKicked(CodenamesGame.SessionService.BanReason reason);
+        void NotifyKicked(CodenamesGame.SessionService.KickReason reason);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

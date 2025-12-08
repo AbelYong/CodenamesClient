@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Util\AudioManager.cs" />
     <Compile Include="Operation\Network\Duplex\IDuplexNetworkManager.cs" />
+    <Compile Include="Util\AuthOperationType.cs" />
     <Compile Include="Util\LobbyOperationType.cs" />
     <Compile Include="Operation\Network\Duplex\DuplexNetworkManager.cs" />
     <Compile Include="Util\StatusToMessageMapper.cs" />

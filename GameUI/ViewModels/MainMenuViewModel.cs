@@ -366,13 +366,21 @@ namespace CodenamesClient.GameUI.ViewModels
             public string ProfilePicturePath
             {
                 get => _profilePicturePath;
-                set { _profilePicturePath = value; OnPropertyChanged(); }
+                set
+                { 
+                    _profilePicturePath = value;
+                    OnPropertyChanged();
+                }
             }
 
             public bool IsPending
             {
                 get => _isPending;
-                set { _isPending = value; OnPropertyChanged(); }
+                set 
+                { 
+                    _isPending = value;
+                    OnPropertyChanged(); 
+                }
             }
 
             public Visibility ButtonVisibility => IsPending ? Visibility.Collapsed : Visibility.Visible;
@@ -400,7 +408,11 @@ namespace CodenamesClient.GameUI.ViewModels
             public string ProfilePicturePath
             {
                 get => _profilePicturePath;
-                set { _profilePicturePath = value; OnPropertyChanged(); }
+                set
+                { 
+                    _profilePicturePath = value;
+                    OnPropertyChanged();
+                }
             }
 
             public bool IsOnline

@@ -132,6 +132,7 @@
     <Compile Include="Network\Proxies\Interfaces\IMatchmakingProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\IMatchProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\IModerationProxy.cs" />
+    <Compile Include="Network\Proxies\Interfaces\IScoreboardProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\ISessionProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\ISocialProxy.cs" />
     <Compile Include="Network\Proxies\Interfaces\IUserProxy.cs" />

@@ -64,7 +64,7 @@
   <xs:element name="NotifyKicked">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="reason" type="q11:BanReason" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="reason" type="q11:KickReason" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

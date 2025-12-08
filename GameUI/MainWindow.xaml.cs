@@ -48,17 +48,17 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        private void OnKickedFromServer(object sender, BanReason reason)
+        private void OnKickedFromServer(object sender, KickReason reason)
         {
             Dispatcher.Invoke(() =>
             {
                 string message = "";
                 switch (reason)
                 {
-                    case BanReason.TemporaryBan:
+                    case KickReason.TEMPORARY_BAN:
                         message = Properties.Langs.Lang.kickMessageTemp;
                         break;
-                    case BanReason.PermanentBan:
+                    case KickReason.PERMANTENT_BAN:
                         message = Properties.Langs.Lang.kickMessagePerm;
                         break;
                     default:

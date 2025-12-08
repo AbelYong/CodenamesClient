@@ -124,6 +124,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t update your password because we couldn&apos;t find your email, please try again later.
+        /// </summary>
+        public static string emailPasswordUpdateFailedAddressNotFound {
+            get {
+                return ResourceManager.GetString("emailPasswordUpdateFailedAddressNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a The verification code is incorrect you have {0} attempts remaining.
         /// </summary>
         public static string emailVerificationFailedAttemptsRemainingX {
@@ -1024,6 +1033,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Player.
+        /// </summary>
+        public static string mainMenuPlayer {
+            get {
+                return ResourceManager.GetString("mainMenuPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Quit.
         /// </summary>
         public static string mainMenuQuit {
@@ -1222,6 +1240,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Authentication required.
+        /// </summary>
+        public static string profileAuthenticationRequired {
+            get {
+                return ResourceManager.GetString("profileAuthenticationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Change password.
+        /// </summary>
+        public static string profileChangePassword {
+            get {
+                return ResourceManager.GetString("profileChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a We couldn&apos;t update your profile because one or more fields are not valid, please check and try again.
         /// </summary>
         public static string profileCouldNotUpdateCheckData {
@@ -1285,6 +1321,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The new password is not valid.
+        /// </summary>
+        public static string profileNewPasswordNotValid {
+            get {
+                return ResourceManager.GetString("profileNewPasswordNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Last name (optional).
         /// </summary>
         public static string profileOptionalLastName {
@@ -1303,6 +1348,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a The password is not correct.
+        /// </summary>
+        public static string profilePasswordErrorTypedPasswordIncorrect {
+            get {
+                return ResourceManager.GetString("profilePasswordErrorTypedPasswordIncorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your password has been updated.
+        /// </summary>
+        public static string profilePasswordHasBeenUpdated {
+            get {
+                return ResourceManager.GetString("profilePasswordHasBeenUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Profile.
         /// </summary>
         public static string profileProfile {
@@ -1312,11 +1375,29 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a This is a sensible operation.
+        /// </summary>
+        public static string profileSensibleOperation {
+            get {
+                return ResourceManager.GetString("profileSensibleOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Social media links only support 30 characters.
         /// </summary>
         public static string profileSocialNetwork {
             get {
                 return ResourceManager.GetString("profileSocialNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Please type your current password.
+        /// </summary>
+        public static string profileTypeCurrentPassword {
+            get {
+                return ResourceManager.GetString("profileTypeCurrentPassword", resourceCulture);
             }
         }
         
@@ -1492,6 +1573,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Assassins Revealed.
+        /// </summary>
+        public static string scoresAssassinsRevealed {
+            get {
+                return ResourceManager.GetString("scoresAssassinsRevealed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Fastest games.
         /// </summary>
         public static string scoresFastest {
@@ -1519,11 +1609,29 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Record Time.
+        /// </summary>
+        public static string scoresRecordTime {
+            get {
+                return ResourceManager.GetString("scoresRecordTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Refresh.
         /// </summary>
         public static string scoresRefresh {
             get {
                 return ResourceManager.GetString("scoresRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Wins.
+        /// </summary>
+        public static string scoresWins {
+            get {
+                return ResourceManager.GetString("scoresWins", resourceCulture);
             }
         }
         

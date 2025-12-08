@@ -98,7 +98,7 @@
                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseLeftButtonUp="HideReset_Click"/>
 
             <!-- ===== Sliding overlay for password reset ===== -->
-            <Grid x:Name="ResetGrid" Width="640" Height="520" Background="#272727" Visibility="Collapsed"
+            <Grid x:Name="ResetGrid" Width="640" Height="470" Background="#272727" Visibility="Visible"
                   HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="10">
                 <Grid.RenderTransform>
                     <TranslateTransform Y="640"/>
@@ -118,11 +118,8 @@
                        Margin="0,10,0,16"/>
 
                     <StackPanel Grid.Row="1">
-                        <TextBlock Text="{x:Static language:Lang.globalUsername}" Style="{StaticResource normal}" />
-                        <TextBox x:Name="ResetUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320"/>
-
                         <TextBlock Text="{x:Static language:Lang.resetEmail}" Style="{StaticResource normal}" />
-                        <TextBox x:Name="ResetEmail" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,12" Width="320"/>
+                        <TextBox x:Name="ResetEmail" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,12" MaxLength="30" Width="320"/>
 
                         <Button x:Name="SendCodeBtn" Content="{x:Static language:Lang.resetSendCode}"
                             Style="{StaticResource buttonCustomFocus}"
@@ -133,8 +130,9 @@
                         <TextBox x:Name="ResetCode" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320"/>
 
                         <TextBlock Text="{x:Static language:Lang.resetNewPassword}" Style="{StaticResource normal}" />
-                        <PasswordBox x:Name="NewPass1" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,8" Width="320"/>
-                        <PasswordBox x:Name="NewPass2" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,0" Width="320"/>
+                        <PasswordBox x:Name="NewPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,8" MaxLength="16" Width="320"/>
+                        <TextBlock Text="{x:Static language:Lang.signInConfirmPassword}" Style="{StaticResource normal}" />
+                        <PasswordBox x:Name="ConfirmPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,0" MaxLength="16" Width="320"/>
                     </StackPanel>
 
                     <Grid Grid.Row="2" Margin="0,14,0,0">

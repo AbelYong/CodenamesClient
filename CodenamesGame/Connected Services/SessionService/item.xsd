@@ -62,11 +62,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfPlayer" nillable="true" type="tns:ArrayOfPlayer" />
-  <xs:simpleType name="BanReason">
+  <xs:simpleType name="KickReason">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="TemporaryBan" />
-      <xs:enumeration value="PermanentBan" />
+      <xs:enumeration value="TEMPORARY_BAN" />
+      <xs:enumeration value="PERMANTENT_BAN" />
+      <xs:enumeration value="DUPLICATE_LOGIN" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="BanReason" nillable="true" type="tns:BanReason" />
+  <xs:element name="KickReason" nillable="true" type="tns:KickReason" />
 </xs:schema>

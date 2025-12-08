@@ -726,4 +726,40 @@
   <data name="scoresAssassins" xml:space="preserve">
     <value>More assassins revealed</value>
   </data>
+  <data name="profileAuthenticationRequired" xml:space="preserve">
+    <value>Authentication required</value>
+  </data>
+  <data name="profileSensibleOperation" xml:space="preserve">
+    <value>This is a sensible operation</value>
+  </data>
+  <data name="profileTypeCurrentPassword" xml:space="preserve">
+    <value>Please type your current password</value>
+  </data>
+  <data name="profileChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="emailPasswordUpdateFailedAddressNotFound" xml:space="preserve">
+    <value>We couldn't update your password because we couldn't find your email, please try again later</value>
+  </data>
+  <data name="profileNewPasswordNotValid" xml:space="preserve">
+    <value>The new password is not valid</value>
+  </data>
+  <data name="profilePasswordHasBeenUpdated" xml:space="preserve">
+    <value>Your password has been updated</value>
+  </data>
+  <data name="mainMenuPlayer" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="scoresAssassinsRevealed" xml:space="preserve">
+    <value>Assassins Revealed</value>
+  </data>
+  <data name="scoresRecordTime" xml:space="preserve">
+    <value>Record Time</value>
+  </data>
+  <data name="scoresWins" xml:space="preserve">
+    <value>Wins</value>
+  </data>
+  <data name="profilePasswordErrorTypedPasswordIncorrect" xml:space="preserve">
+    <value>The password is not correct</value>
+  </data>
 </root>

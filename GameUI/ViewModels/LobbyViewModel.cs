@@ -710,11 +710,19 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 get
                 {
-                    if (string.IsNullOrEmpty(_profilePicturePath))
+                    if (!string.IsNullOrEmpty(_profilePicturePath))
                     {
-                        return PictureHandler.GetImagePath(Player.AvatarID);
+                        return _profilePicturePath;
                     }
-                    return _profilePicturePath;
+                    if (Player != null)
+                    {
+                        string path = PictureHandler.GetImagePath(Player.AvatarID);
+                        if (string.IsNullOrEmpty(path))
+                        {
+                            return path;
+                        }
+                    }
+                    return "/Assets/BoardUI/Agents/agent01.png";
                 }
                 set
                 {

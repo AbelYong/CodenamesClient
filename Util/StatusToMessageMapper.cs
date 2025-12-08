@@ -4,10 +4,16 @@ namespace CodenamesClient.Util
 {
     public static class StatusToMessageMapper
     {
-        public static string GetAuthServiceMessage(CodenamesGame.AuthenticationService.StatusCode code)
+        public static string GetAuthServiceMessage(AuthOperationType operationType, CodenamesGame.AuthenticationService.StatusCode code)
         {
             switch (code)
             {
+                case CodenamesGame.AuthenticationService.StatusCode.WRONG_DATA:
+                    return Lang.profileNewPasswordNotValid;
+                case CodenamesGame.AuthenticationService.StatusCode.NOT_FOUND:
+                    return Lang.emailPasswordUpdateFailedAddressNotFound;
+                case CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED:
+                    return GetUnauthorizedAuthMessage(operationType);
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_TIMEOUT:
@@ -23,6 +29,20 @@ namespace CodenamesClient.Util
                 default:
                     return Lang.globalUnknownServerError;
             }
+        }
+
+        private static string GetUnauthorizedAuthMessage(AuthOperationType operationType)
+        {
+            switch (operationType)
+            {
+                case AuthOperationType.AUTHENTICATION:
+                    return Lang.profilePasswordErrorTypedPasswordIncorrect;
+                case AuthOperationType.PASS_RESET:
+                    return Lang.emailVerificationFailedAttemptsRemainingX;
+                case AuthOperationType.PASS_UPDATE:
+                    return Lang.profilePasswordErrorTypedPasswordIncorrect;
+            }
+            return Lang.globalUnknownServerError;
         }
 
         public static string GetUserServiceMessage(CodenamesGame.UserService.StatusCode code)

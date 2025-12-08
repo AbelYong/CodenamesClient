@@ -98,7 +98,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     }
                     else
                     {
-                        _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode);
+                        _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(Util.AuthOperationType.AUTHENTICATION, request.StatusCode);
                         RaiseError?.Invoke();
                     }
                 }

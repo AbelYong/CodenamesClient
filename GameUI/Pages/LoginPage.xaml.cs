@@ -2,6 +2,7 @@
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
+using CodenamesClient.Validation;
 using CodenamesGame.Domain.POCO;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +17,8 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LoginPage : Page
     {
         private LoginViewModel _viewModel;
-        
+        private int _remainingResetAttempts;
+
         public LoginPage()
         {
             InitializeComponent();
@@ -95,15 +97,10 @@ namespace CodenamesClient.GameUI.Pages
 
         private void PrefillResetFields()
         {
-            if (string.IsNullOrWhiteSpace(ResetUsername.Text))
-            {
-                ResetUsername.Text = tBxUsername.Text;
-            }
-
             ResetEmail.Text = "";
             ResetCode.Text = "";
-            NewPass1.Password = "";
-            NewPass2.Password = "";
+            NewPassword.Password = "";
+            ConfirmPassword.Password = "";
         }
 
         private void ShowResetOverlay()
@@ -150,7 +147,7 @@ namespace CodenamesClient.GameUI.Pages
 
                 if (string.IsNullOrWhiteSpace(email))
                 {
-                    MessageBox.Show(Lang.resetMissingUserOrEmail); //fixme
+                    MessageBox.Show(Lang.signInEmailRequired);
                     return;
                 }
 
@@ -158,6 +155,8 @@ namespace CodenamesClient.GameUI.Pages
 
                 if (request.IsSuccess)
                 {
+                    int initialResetAttempts = 3;
+                    _remainingResetAttempts = initialResetAttempts;
                     MessageBox.Show(Lang.resetCodeSend);
                 }
                 else
@@ -177,47 +176,40 @@ namespace CodenamesClient.GameUI.Pages
 
         private async void ConfirmReset_Click(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            if (btn != null) btn.IsEnabled = false;
+            var email = ResetEmail.Text.Trim();
+            var code = ResetCode.Text.Trim();
+            var p1 = NewPassword.Password;
+            var p2 = ConfirmPassword.Password;
 
-            try
+            if (p1 != p2)
             {
-                var email = ResetEmail.Text.Trim();
-                var code = ResetCode.Text.Trim();
-                var p1 = NewPass1.Password;
-                var p2 = NewPass2.Password;
-
-                if (p1 != p2)
-                {
-                    MessageBox.Show(Lang.resetPasswordsDoNotMatch);
-                    return;
-                }
-                if (string.IsNullOrWhiteSpace(p1) || p1.Length < 10 || p1.Length > 16)
-                {
-                    MessageBox.Show(Lang.resetPasswordLengthInvalid);
-                    return;
-                }
-
-                var result = await Task.Run(() =>
-                    LoginViewModel.CompletePasswordReset(email, code, p1)
-                );
-
-                MessageBox.Show(result.StatusCode.ToString()); //fixme
-                if (result.IsSuccess)
-                {
-                    HideResetOverlay();
-                }
+                MessageBox.Show(Lang.resetPasswordsDoNotMatch);
+                return;
             }
-            catch (Exception ex)
+            if (string.IsNullOrWhiteSpace(p1) || p1.Length < ProfileValidation.PASSWORD_MIN_LENGTH || p1.Length > ProfileValidation.PASSWORD_MAX_LENGTH)
             {
-                MessageBox.Show(Lang.resetPasswordChangeFailed + ": " + ex.Message);
+                MessageBox.Show(Lang.resetPasswordLengthInvalid);
+                return;
             }
-            finally
+
+            var result = await Task.Run(() =>
+                LoginViewModel.CompletePasswordReset(email, code, p1)
+            );
+
+            if (result.IsSuccess)
             {
-                if (btn != null)
+                MessageBox.Show(Lang.profilePasswordHasBeenUpdated);
+                HideResetOverlay();
+            }
+            else
+            {
+                _remainingResetAttempts = _remainingResetAttempts == 0 ? 0 : _remainingResetAttempts - 1; //fixme
+                string message = StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.PASS_RESET, result.StatusCode);
+                if (result.StatusCode == CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED)
                 {
-                    btn.IsEnabled = true;
+                    message = string.Format(message, _remainingResetAttempts);
                 }
+                MessageBox.Show(message);
             }
         }
     }
