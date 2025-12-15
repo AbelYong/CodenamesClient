@@ -523,7 +523,7 @@
     <value>An unknown error occurred</value>
   </data>
   <data name="globalDisconnected" xml:space="preserve">
-    <value>You have been disconnected from the server.</value>
+    <value>The connection to the server has been lost.</value>
   </data>
   <data name="matchReport" xml:space="preserve">
     <value>Report</value>
@@ -761,5 +761,8 @@
   </data>
   <data name="profilePasswordErrorTypedPasswordIncorrect" xml:space="preserve">
     <value>The password is not correct</value>
+  </data>
+  <data name="connectionLostTitle" xml:space="preserve">
+    <value>Connection Lost</value>
   </data>
 </root>

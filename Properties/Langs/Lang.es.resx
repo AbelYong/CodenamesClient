@@ -523,7 +523,7 @@
     <value>Ocurrió un error desconocido.</value>
   </data>
   <data name="globalDisconnected" xml:space="preserve">
-    <value>Has sido desconectado del servidor.</value>
+    <value>Se ha perdido la conexión con el servidor.</value>
   </data>
   <data name="matchReport" xml:space="preserve">
     <value>Reportar</value>
@@ -761,5 +761,8 @@
   </data>
   <data name="profilePasswordErrorTypedPasswordIncorrect" xml:space="preserve">
     <value>La contraseña no es correcta</value>
+  </data>
+  <data name="connectionLostTitle" xml:space="preserve">
+    <value>Conexión Perdida</value>
   </data>
 </root>

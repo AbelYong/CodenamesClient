@@ -70,6 +70,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Connection Lost.
+        /// </summary>
+        public static string connectionLostTitle {
+            get {
+                return ResourceManager.GetString("connectionLostTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sorry, this email address is already in use.
         /// </summary>
         public static string emailCannotUseAddressAlreadyInUse {
@@ -385,7 +394,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a You have been disconnected from the server..
+        ///   Busca una cadena traducida similar a The connection to the server has been lost..
         /// </summary>
         public static string globalDisconnected {
             get {
