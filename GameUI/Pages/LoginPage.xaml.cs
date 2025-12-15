@@ -30,6 +30,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void OnLoginPageLoaded(object sender, RoutedEventArgs e)
         {
+            AudioManager.Instance.StopAllAudio();
             _viewModel.RaiseError += ShowErrorMessage;
             _viewModel.NavigateToMainMenu += GoToMainMenuWindow;
         }
