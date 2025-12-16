@@ -1114,11 +1114,20 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Too many witnesses involved, operation compromised. Mission aborted.
+        ///   Busca una cadena traducida similar a Time and operational resources have been exhausted. Mission aborted..
         /// </summary>
         public static string matchDefeatTimeoutMessage {
             get {
                 return ResourceManager.GetString("matchDefeatTimeoutMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Too many witnesses involved, operation compromised. Mission aborted.
+        /// </summary>
+        public static string matchDefeatWitnessesInvolved {
+            get {
+                return ResourceManager.GetString("matchDefeatWitnessesInvolved", resourceCulture);
             }
         }
         

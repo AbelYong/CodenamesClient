@@ -17,7 +17,7 @@ namespace CodenamesGame.MatchService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.AuthenticationRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.SignInRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.ConfirmEmailRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchService.CreateLobbyRequest))]
@@ -83,9 +83,9 @@ namespace CodenamesGame.MatchService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class LoginRequest : CodenamesGame.MatchService.Request {
+    public partial class AuthenticationRequest : CodenamesGame.MatchService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.Guid> UserIDField;
@@ -1333,7 +1333,7 @@ namespace CodenamesGame.MatchService {
         void NotifyMatchWon(string finalMatchLength);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyMatchTimeout")]
-        void NotifyMatchTimeout(string finalMatchLength);
+        void NotifyMatchTimeout(string finalMatchLength, bool isTimeOut);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchManager/NotifyCompanionDisconnect")]
         void NotifyCompanionDisconnect();

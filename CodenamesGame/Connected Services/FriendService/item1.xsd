@@ -26,7 +26,7 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="CommunicationRequest" nillable="true" type="tns:CommunicationRequest" />
-  <xs:complexType name="LoginRequest">
+  <xs:complexType name="AuthenticationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
@@ -35,7 +35,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="LoginRequest" nillable="true" type="tns:LoginRequest" />
+  <xs:element name="AuthenticationRequest" nillable="true" type="tns:AuthenticationRequest" />
   <xs:complexType name="SignInRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">

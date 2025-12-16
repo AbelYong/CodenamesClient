@@ -17,7 +17,7 @@ namespace CodenamesGame.MatchmakingService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.LoginRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.AuthenticationRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.SignInRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.ConfirmEmailRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.CreateLobbyRequest))]
@@ -83,9 +83,9 @@ namespace CodenamesGame.MatchmakingService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LoginRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
-    public partial class LoginRequest : CodenamesGame.MatchmakingService.Request {
+    public partial class AuthenticationRequest : CodenamesGame.MatchmakingService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.Guid> UserIDField;

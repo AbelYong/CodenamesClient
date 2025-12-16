@@ -624,12 +624,14 @@ namespace CodenamesClient.GameUI.ViewModels
         public void SkipTurn()
         {
             var currentRole = _amISpymaster ? MatchRoleType.SPYMASTER : MatchRoleType.GUESSER;
-
             DuplexNetworkManager.Instance.NotifyTurnTimeout(currentRole);
-            TimerTokens--;
             IsBoardEnabled = false;
             IsSkipButtonVisible = false;
             IsChatEnabled = false;
+            if (TimerTokens > 0)
+            {
+                TimerTokens--;
+            }
         }
 
         public void HandleAgentSelection(BoardCoordinatesDM coordinates)
@@ -756,7 +758,6 @@ namespace CodenamesClient.GameUI.ViewModels
                     if (_isBoardEnabled)
                     {
                         DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
-                        TimerTokens--;
                     }
                 }
             }
@@ -855,7 +856,7 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private void HandleMatchTimeout(object sender, string finalTime)
+        private void HandleMatchTimeout(string finalTime, bool isTimeOut)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -863,7 +864,14 @@ namespace CodenamesClient.GameUI.ViewModels
                 StopChronometer();
 
                 GameOverTitle = Lang.matchDefeat;
-                GameOverMessage = Lang.matchDefeatTimeoutMessage;
+                if (isTimeOut)
+                {
+                    GameOverMessage = Lang.matchDefeatTimeoutMessage;
+                }
+                else
+                {
+                    GameOverMessage = Lang.matchDefeatWitnessesInvolved;
+                }
                 OverlayColor = "#CC8B0000";
                 ShowAssassinImage = false;
 
