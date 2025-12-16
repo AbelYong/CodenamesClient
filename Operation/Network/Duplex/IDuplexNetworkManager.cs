@@ -42,11 +42,11 @@ namespace CodenamesClient.Operation.Network.Duplex
         CodenamesGame.MatchService.CommunicationRequest ConnectMatchService(Guid playerID);
         void DisconnectFromMatchService();
         CodenamesGame.MatchService.CommunicationRequest JoinMatch(MatchDM match);
-        void SendClue(string clue);
-        void NotifyTurnTimeout(CodenamesGame.MatchService.MatchRoleType currentRole);
-        void NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength);
-        void NotifyPickedBystander(BoardCoordinatesDM coordinates);
-        void NotifyPickedAssassin(BoardCoordinatesDM coordinates);
+        Task SendClue(string clue);
+        Task NotifyTurnTimeout(CodenamesGame.MatchService.MatchRoleType currentRole);
+        Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength);
+        Task NotifyPickedBystander(BoardCoordinatesDM coordinates);
+        Task NotifyPickedAssassin(BoardCoordinatesDM coordinates);
 
         // Scoreboard Service
         void ConnectToScoreboardService(Guid playerID);

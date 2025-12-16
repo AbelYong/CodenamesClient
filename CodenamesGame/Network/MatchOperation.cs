@@ -3,6 +3,7 @@ using CodenamesGame.MatchService;
 using CodenamesGame.Network.Proxies.Interfaces;
 using CodenamesGame.Network.Proxies.Wrappers;
 using System;
+using System.Threading.Tasks;
 
 namespace CodenamesGame.Network
 {
@@ -32,28 +33,28 @@ namespace CodenamesGame.Network
             return _proxy.JoinMatch(match);
         }
 
-        public void SendClue(string clue)
+        public async Task SendClue(string clue)
         {
-            _proxy.SendClue(clue);
+            await _proxy.SendClue(clue);
         }
 
-        public void NotifyTurnTimeout(MatchRoleType currentRole)
+        public async Task NotifyTurnTimeout(MatchRoleType currentRole)
         {
-            _proxy.NotifyTurnTimeout(currentRole);
+            await _proxy.NotifyTurnTimeout(currentRole);
         }
 
-        public void NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
+        public async Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
         {
-            _proxy.NotifyPickedAgent(coordinates, newTurnLength);
+            await _proxy.NotifyPickedAgent(coordinates, newTurnLength);
         }
-        public void NotifyPickedBystander(BoardCoordinatesDM coordinates)
+        public async Task NotifyPickedBystander(BoardCoordinatesDM coordinates)
         {
-            _proxy.NotifyPickedBystander(coordinates);
+            await _proxy.NotifyPickedBystander(coordinates);
         }
 
-        public void NotifyPickedAssassin(BoardCoordinatesDM coordinates)
+        public async Task NotifyPickedAssassin(BoardCoordinatesDM coordinates)
         {
-            _proxy.NotifyPickedAssassin(coordinates);
+            await _proxy.NotifyPickedAssassin(coordinates);
         }
     }
 }

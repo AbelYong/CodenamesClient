@@ -5,6 +5,7 @@ using CodenamesGame.Network.Proxies.Interfaces;
 using CodenamesGame.Util;
 using System;
 using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace CodenamesGame.Network.Proxies.Wrappers
 {
@@ -109,202 +110,223 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         public CommunicationRequest JoinMatch(MatchDM match)
         {
             CommunicationRequest request = new CommunicationRequest();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client == null || _client.State != CommunicationState.Opened)
             {
-                try
-                {
-                    Match auxMatch = MatchDM.AssembleMatchSvMatch(match);
-                    return _client.JoinMatch(auxMatch, _currentPlayerID);
-                }
-                catch (TimeoutException)
-                {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
-                    CloseProxy();
-                }
-                catch (CommunicationException)
-                {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
-                    CloseProxy();
-                }
-                catch (Exception ex)
-                {
-                    CodenamesGameLogger.Log.Error("Unexpected exception on join match attempt: ", ex);
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.CLIENT_ERROR;
-                    CloseProxy();
-                }
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                CloseProxy();
+                return request;
+            }
+
+            try
+            {
+                Match auxMatch = MatchDM.AssembleMatchSvMatch(match);
+                return _client.JoinMatch(auxMatch, _currentPlayerID);
+            }
+            catch (TimeoutException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                CloseProxy();
+            }
+            catch (CommunicationException)
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception on join match attempt: ", ex);
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.CLIENT_ERROR;
+                CloseProxy();
             }
             return request;
         }
 
-        public void SendClue(string clue)
+        public async Task SendClue(string clue)
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client == null || _client.State != CommunicationState.Opened)
             {
-                try
-                {
-                    _client.SendClueAsync(_currentPlayerID, clue);
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                }
-                catch (Exception ex)
-                {
-                    CodenamesGameLogger.Log.Error("Unexpected exception while sending clue: ", ex);
-                    CloseProxy();
-                }
+                CloseProxy();
+                return;
+            }
+
+            try
+            {
+                await _client.SendClueAsync(_currentPlayerID, clue);
+            }
+            catch (TimeoutException)
+            {
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException)
+            {
+                CloseProxy();
+            }
+            catch (CommunicationException)
+            {
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while sending clue: ", ex);
+                CloseProxy();
             }
         }
 
-        public void NotifyTurnTimeout(MatchRoleType currentRole)
+        public async Task NotifyTurnTimeout(MatchRoleType currentRole)
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client == null || _client.State != CommunicationState.Opened)
             {
-                try
-                {
-                    _client.NotifyTurnTimeoutAsync(_currentPlayerID, currentRole);
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                }
-                catch (Exception ex)
-                {
-                    CodenamesGameLogger.Log.Error("Unexpected exception while notifying turn timeout: ", ex);
-                    CloseProxy();
-                }
+                CloseProxy();
+                return;
+            }
+
+            try
+            {
+                await _client.NotifyTurnTimeoutAsync(_currentPlayerID, currentRole);
+            }
+            catch (TimeoutException)
+            {
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException)
+            {
+                CloseProxy();
+            }
+            catch (CommunicationException)
+            {
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while notifying turn timeout: ", ex);
+                CloseProxy();
             }
         }
 
-        public void NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
+        public async Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client == null || _client.State != CommunicationState.Opened)
             {
-                try
+                CloseProxy();
+                return;
+            }
+
+            try
+            {
+                AgentPickedNotification notification = new AgentPickedNotification
                 {
-                    AgentPickedNotification notification = new AgentPickedNotification
-                    {
-                        SenderID = _currentPlayerID,
-                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates),
-                        NewTurnLength = newTurnLength
-                    };
-                    _client.NotifyPickedAgentAsync(notification);
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                }
-                catch (Exception ex)
-                {
-                    CodenamesGameLogger.Log.Error("Unexpected exception while sending picked agent notification: ", ex);
-                    CloseProxy();
-                }
+                    SenderID = _currentPlayerID,
+                    Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates),
+                    NewTurnLength = newTurnLength
+                };
+                await _client.NotifyPickedAgentAsync(notification);
+            }
+            catch (TimeoutException)
+            {
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException)
+            {
+                CloseProxy();
+            }
+            catch (CommunicationException)
+            {
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while sending picked agent notification: ", ex);
+                CloseProxy();
             }
         }
 
-        public void NotifyPickedBystander(BoardCoordinatesDM coordinates)
+        public async Task NotifyPickedBystander(BoardCoordinatesDM coordinates)
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client == null || _client.State != CommunicationState.Opened)
             {
-                try
-                {
-                    BystanderPickedNotification notification = new BystanderPickedNotification
-                    {
-                        SenderID = _currentPlayerID,
-                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates)
-                    };
+                CloseProxy();
+                return;
+            }
 
-                    _client.NotifyPickedBystanderAsync(notification);
-                }
-                catch (TimeoutException)
+            try
+            {
+                BystanderPickedNotification notification = new BystanderPickedNotification
                 {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                }
-                catch (Exception ex)
-                {
-                    CodenamesGameLogger.Log.Error("Unexpected exception while sending picked bystander notification: ", ex);
-                    CloseProxy();
-                }
+                    SenderID = _currentPlayerID,
+                    Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates)
+                };
+
+                await _client.NotifyPickedBystanderAsync(notification);
+            }
+            catch (TimeoutException)
+            {
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException)
+            {
+                CloseProxy();
+            }
+            catch (CommunicationException)
+            {
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while sending picked bystander notification: ", ex);
+                CloseProxy();
             }
         }
 
-        public void NotifyPickedAssassin(BoardCoordinatesDM coordinates)
+        public async Task NotifyPickedAssassin(BoardCoordinatesDM coordinates)
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client == null || _client.State != CommunicationState.Opened)
             {
-                try
+                CloseProxy();
+                return;
+            }
+
+            try
+            {
+                AssassinPickedNotification notification = new AssassinPickedNotification
                 {
-                    AssassinPickedNotification notification = new AssassinPickedNotification
-                    {
-                        SenderID = _currentPlayerID,
-                        Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates)
-                    };
-                    _client.NotifyPickedAssassinAsync(notification);
-                }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
-                {
-                    CloseProxy();
-                }
-                catch (Exception ex)
-                {
-                    CodenamesGameLogger.Log.Error("Unexpected exception while sending picked assassin notification: ", ex);
-                    CloseProxy();
-                }
+                    SenderID = _currentPlayerID,
+                    Coordinates = BoardCoordinatesDM.AssembleMatchSvBoardCoordinates(coordinates)
+                };
+                await _client.NotifyPickedAssassinAsync(notification);
+            }
+            catch (TimeoutException)
+            {
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException)
+            {
+                CloseProxy();
+            }
+            catch (CommunicationException)
+            {
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while sending picked assassin notification: ", ex);
+                CloseProxy();
             }
         }
 
         private void CloseProxy()
         {
-            Util.NetworkUtil.SafeClose(_client);
+            MatchCallbackHandler.NotifyServerConnectionLost();
+            NetworkUtil.SafeClose(_client);
             _client = null;
             _currentPlayerID = Guid.Empty;
         }

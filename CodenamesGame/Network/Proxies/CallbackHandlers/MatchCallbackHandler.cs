@@ -9,6 +9,7 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     public class MatchCallbackHandler : IMatchManagerCallback
     {
+        public static event Action OnConnectionLost;
         public static event Action OnCompanionDisconnect;
         public static event EventHandler<string> OnClueReceived;
         public static event Action OnTurnChange;
@@ -24,6 +25,11 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
         public MatchCallbackHandler()
         {
 
+        }
+
+        public static void NotifyServerConnectionLost()
+        {
+            OnConnectionLost?.Invoke();
         }
 
         public void NotifyCompanionDisconnect()

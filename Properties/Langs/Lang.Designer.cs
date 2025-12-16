@@ -1078,6 +1078,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You&apos;ve lost connection to the Codenames: Duet match service, you will return to the lobby.
+        /// </summary>
+        public static string matchConnectionLostMatchCancelled {
+            get {
+                return ResourceManager.GetString("matchConnectionLostMatchCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Defeat.
         /// </summary>
         public static string matchDefeat {

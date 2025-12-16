@@ -19,6 +19,7 @@ using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using CodenamesClient.Operation.Network.Duplex;
 using CodenamesClient.Operation.Network.Oneway;
+using System.Threading.Tasks;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -303,6 +304,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void SubscribeToCallbacks()
         {
+            MatchCallbackHandler.OnConnectionLost += HandleConnectionLost;
             MatchCallbackHandler.OnCompanionDisconnect += HandleCompanionDisconnect;
             MatchCallbackHandler.OnClueReceived += HandleClueReceived;
             MatchCallbackHandler.OnTurnChange += HandleTurnChange;
@@ -318,6 +320,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void UnsubscribeCallbacks()
         {
+            MatchCallbackHandler.OnConnectionLost -= HandleConnectionLost;
             MatchCallbackHandler.OnCompanionDisconnect -= HandleCompanionDisconnect;
             MatchCallbackHandler.OnClueReceived -= HandleClueReceived;
             MatchCallbackHandler.OnTurnChange -= HandleTurnChange;
@@ -378,6 +381,17 @@ namespace CodenamesClient.GameUI.ViewModels
                 IsBoardEnabled = false;
                 IsSkipButtonVisible = false;
             }
+        }
+
+        private void HandleConnectionLost()
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                StopTimer();
+                StopChronometer();
+                MessageBox.Show(Lang.matchConnectionLostMatchCancelled, Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                GoBackToMenu?.Invoke();
+            }));
         }
 
         private void HandleCompanionDisconnect()
@@ -514,7 +528,7 @@ namespace CodenamesClient.GameUI.ViewModels
             DuplexNetworkManager.Instance.DisconnectFromMatchService();
         }
 
-        public void SendMessage()
+        public async Task SendMessage()
         {
             if (string.IsNullOrWhiteSpace(ChatInput) || !IsChatEnabled)
             {
@@ -537,7 +551,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 return;
             }
 
-            DuplexNetworkManager.Instance.SendClue(trimmedMessage);
+            await DuplexNetworkManager.Instance.SendClue(trimmedMessage);
 
             AddMessageToChat(trimmedMessage, true);
             ChatInput = string.Empty;
@@ -563,7 +577,8 @@ namespace CodenamesClient.GameUI.ViewModels
             string word = parts[0];
             string number = parts[1];
 
-            if (!Regex.IsMatch(word, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$"))
+            int regexMiliseconds = 200;
+            if (!Regex.IsMatch(word, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$", RegexOptions.None, TimeSpan.FromMilliseconds(regexMiliseconds)))
             {
                 return false;
             }
@@ -621,24 +636,24 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        public void SkipTurn()
+        public async Task SkipTurn()
         {
             var currentRole = _amISpymaster ? MatchRoleType.SPYMASTER : MatchRoleType.GUESSER;
-
-            DuplexNetworkManager.Instance.NotifyTurnTimeout(currentRole);
             TimerTokens--;
             IsBoardEnabled = false;
             IsSkipButtonVisible = false;
             IsChatEnabled = false;
+
+            await DuplexNetworkManager.Instance.NotifyTurnTimeout(currentRole);
         }
 
-        public void HandleAgentSelection(BoardCoordinatesDM coordinates)
+        public async Task HandleAgentSelection(BoardCoordinatesDM coordinates)
         {
             AddTime(TurnLength);
-            DuplexNetworkManager.Instance.NotifyPickedAgent(coordinates, TurnTimer);
+            await DuplexNetworkManager.Instance.NotifyPickedAgent(coordinates, TurnTimer);
         }
 
-        public void HandleBystanderSelection(BoardCoordinatesDM coordinates)
+        public async Task HandleBystanderSelection(BoardCoordinatesDM coordinates)
         {
             StopTimer();
             TurnTimer = 0;
@@ -647,7 +662,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 if (TimerTokens >= 0)
                 {
                     TimerTokens--;
-                    DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
+                    await DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
                 }
             }
             else
@@ -655,7 +670,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 if (BystanderTokens > 0)
                 {
                     BystanderTokens--;
-                    DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
+                    await DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
                 }
                 else
                 {
@@ -663,7 +678,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     {
                         int auxTimerTokens = TimerTokens - MatchRulesDM.TIMER_TOKENS_TO_TAKE_CUSTOM;
                         TimerTokens = auxTimerTokens >= 0 ? auxTimerTokens : 0;
-                        DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
+                        await DuplexNetworkManager.Instance.NotifyPickedBystander(coordinates);
                     }
                 }
             }
@@ -672,10 +687,10 @@ namespace CodenamesClient.GameUI.ViewModels
             IsSkipButtonVisible = false;
         }
 
-        public void HandleAssassinSelection(BoardCoordinatesDM coordinates)
+        public async Task HandleAssassinSelection(BoardCoordinatesDM coordinates)
         {
             StopTimer();
-            DuplexNetworkManager.Instance.NotifyPickedAssassin(coordinates);
+            await DuplexNetworkManager.Instance.NotifyPickedAssassin(coordinates);
         }
 
 
@@ -737,7 +752,7 @@ namespace CodenamesClient.GameUI.ViewModels
             _timer.Tick += TimerTick;
         }
 
-        private void TimerTick(object sender, EventArgs e)
+        private async void TimerTick(object sender, EventArgs e)
         {
             if (TurnTimer > 0)
             {
@@ -749,13 +764,13 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 if (_amISpymaster)
                 {
-                    DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.SPYMASTER);
+                    await DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.SPYMASTER);
                 }
                 else
                 {
                     if (_isBoardEnabled)
                     {
-                        DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
+                        await DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
                         TimerTokens--;
                     }
                 }

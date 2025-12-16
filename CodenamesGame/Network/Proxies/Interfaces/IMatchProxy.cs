@@ -1,9 +1,6 @@
 ﻿using CodenamesGame.Domain.POCO.Match;
 using CodenamesGame.MatchService;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CodenamesGame.Network.Proxies.Interfaces
@@ -13,10 +10,10 @@ namespace CodenamesGame.Network.Proxies.Interfaces
         CommunicationRequest Initialize(Guid playerID);
         void Disconnect();
         CommunicationRequest JoinMatch(MatchDM match);
-        void SendClue(string clue);
-        void NotifyTurnTimeout(MatchRoleType currentRole);
-        void NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength);
-        void NotifyPickedBystander(BoardCoordinatesDM coordinates);
-        void NotifyPickedAssassin(BoardCoordinatesDM coordinates);
+        Task SendClue(string clue);
+        Task NotifyTurnTimeout(MatchRoleType currentRole);
+        Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength);
+        Task NotifyPickedBystander(BoardCoordinatesDM coordinates);
+        Task NotifyPickedAssassin(BoardCoordinatesDM coordinates);
     }
 }

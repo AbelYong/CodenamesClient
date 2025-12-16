@@ -762,4 +762,7 @@
   <data name="profilePasswordErrorTypedPasswordIncorrect" xml:space="preserve">
     <value>La contraseña no es correcta</value>
   </data>
+  <data name="matchConnectionLostMatchCancelled" xml:space="preserve">
+    <value>Has perdido la conexión al servidor de Codenames: Duet, regresaras a la sala de espera</value>
+  </data>
 </root>

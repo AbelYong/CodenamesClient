@@ -1,22 +1,16 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Operation;
-using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -42,43 +36,43 @@ namespace CodenamesClient.GameUI.BoardUI
             _viewModel.OnBystanderFlipRequested += HandleBystanderFlip;
             _viewModel.OnAssassinFlipRequested += HandleAssassinFlip;
 
-            this.DataContext = _viewModel;
+            DataContext = _viewModel;
             DrawWords();
             DrawKeycard();
             _viewModel.StartChronometer();
             _viewModel.StartTimer();
         }
 
-        private void HandleAgentFlip(BoardCoordinatesDM coordinates)
+        private async void HandleAgentFlip(BoardCoordinatesDM coordinates)
         {
-            FlashAgentLight();
-            FlipCardAt(coordinates, AGENT_CODE, false);
+            await FlashAgentLight();
+            await FlipCardAt(coordinates, AGENT_CODE, false);
         }
 
-        private void HandleBystanderFlip(BoardCoordinatesDM coordinates)
+        private async void HandleBystanderFlip(BoardCoordinatesDM coordinates)
         {
-            FlashBystanderLight();
+            await FlashBystanderLight();
 
             ToggleButton btn = GetButtonAt(coordinates.Row, coordinates.Column);
             bool iPickedIt = btn != null && (btn.IsChecked == true);
 
-            FlipCardAt(coordinates, BYSTANDER_CODE, !iPickedIt);
+            await FlipCardAt(coordinates, BYSTANDER_CODE, !iPickedIt);
         }
 
-        private void HandleAssassinFlip(BoardCoordinatesDM coordinates)
+        private async void HandleAssassinFlip(BoardCoordinatesDM coordinates)
         {
-            FlipCardAt(coordinates, ASSASSIN_CODE, false);
             if (_viewModel.AmISpymaster)
             {
-                TriggerAssassinSequence();
+                await FlipCardAt(coordinates, ASSASSIN_CODE, false);
+                await TriggerAssassinSequence();
             }
             else
             {
-                TriggerKilledSequence();
+                await TriggerKilledSequence();
             }
         }
 
-        private async void FlipCardAt(BoardCoordinatesDM coordinates, int code, bool keepInteractiveForSpymaster)
+        private async Task FlipCardAt(BoardCoordinatesDM coordinates, int code, bool keepInteractiveForSpymaster)
         {
             ToggleButton button = GetButtonAt(coordinates.Row, coordinates.Column);
             if (button == null)
@@ -150,11 +144,11 @@ namespace CodenamesClient.GameUI.BoardUI
                 .FirstOrDefault(e => Grid.GetRow(e) == row && Grid.GetColumn(e) == col);
         }
 
-        private async void FlashAgentLight()
+        private async Task FlashAgentLight()
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Close();
-            LightAgentOn.BeginAnimation(UIElement.OpacityProperty, null);
+            LightAgentOn.BeginAnimation(OpacityProperty, null);
             LightAgentOn.Opacity = 0;
 
             LightAgentOn.Opacity = 1;
@@ -166,19 +160,19 @@ namespace CodenamesClient.GameUI.BoardUI
 
             fadeOut.Completed += (s, e) =>
             {
-                LightAgentOn.BeginAnimation(UIElement.OpacityProperty, null);
+                LightAgentOn.BeginAnimation(OpacityProperty, null);
                 LightAgentOn.Opacity = 0;
             };
-            LightAgentOn.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+            LightAgentOn.BeginAnimation(OpacityProperty, fadeOut);
 
             _mediaPlayer.Stop();
         }
 
-        private async void FlashBystanderLight()
+        private async Task FlashBystanderLight()
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Close();
-            LightBystanderOn.BeginAnimation(UIElement.OpacityProperty, null);
+            LightBystanderOn.BeginAnimation(OpacityProperty, null);
             LightBystanderOn.Opacity = 0;
 
             LightBystanderOn.Opacity = 1;
@@ -190,39 +184,39 @@ namespace CodenamesClient.GameUI.BoardUI
 
             fadeOut.Completed += (s, e) =>
             {
-                LightBystanderOn.BeginAnimation(UIElement.OpacityProperty, null);
+                LightBystanderOn.BeginAnimation(OpacityProperty, null);
                 LightBystanderOn.Opacity = 0;
             };
 
-            LightBystanderOn.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+            LightBystanderOn.BeginAnimation(OpacityProperty, fadeOut);
 
             _mediaPlayer.Stop();
         }
 
-        private async void TriggerAssassinSequence()
+        private async Task TriggerAssassinSequence()
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Close();
-            LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, null);
+            LightAssassinOn.BeginAnimation(OpacityProperty, null);
 
             DoubleAnimation blink = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
             blink.AutoReverse = true;
             blink.RepeatBehavior = RepeatBehavior.Forever;
 
-            LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, blink);
+            LightAssassinOn.BeginAnimation(OpacityProperty, blink);
 
             AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/sos.mp3");
 
             await Task.Delay(4000);
 
             _mediaPlayer.Stop();
-            LightAssassinOn.BeginAnimation(UIElement.OpacityProperty, null);
+            LightAssassinOn.BeginAnimation(OpacityProperty, null);
             LightAssassinOn.Opacity = 0;
 
             _viewModel.ShowGameOverScreen();
         }
 
-        private async void TriggerKilledSequence()
+        private async Task TriggerKilledSequence()
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Close();
@@ -242,10 +236,7 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private void OnGoBackToMenu()
         {
-            if (NavigationService != null)
-            {
-                NavigationService.GoBack();
-            }
+            NavigationService.GoBack();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -282,7 +273,7 @@ namespace CodenamesClient.GameUI.BoardUI
                 {
                     int trueCode = _viewModel.Keycard[row, column];
 
-                    FlipCardAt(new BoardCoordinatesDM(row, column), trueCode, false);
+                    await FlipCardAt(new BoardCoordinatesDM(row, column), trueCode, false);
                     return;
                 }
 
@@ -317,13 +308,13 @@ namespace CodenamesClient.GameUI.BoardUI
                 switch (code)
                 {
                     case AGENT_CODE:
-                        _viewModel.HandleAgentSelection(coordinates);
+                        await _viewModel.HandleAgentSelection(coordinates);
                         break;
                     case BYSTANDER_CODE:
-                        _viewModel.HandleBystanderSelection(coordinates);
+                        await _viewModel.HandleBystanderSelection(coordinates);
                         break;
                     case ASSASSIN_CODE:
-                        _viewModel.HandleAssassinSelection(coordinates);
+                        await _viewModel.HandleAssassinSelection(coordinates);
                         break;
                 }
             }
@@ -449,7 +440,7 @@ namespace CodenamesClient.GameUI.BoardUI
                         BeginTime = TimeSpan.FromMilliseconds(delay)
                     };
                     Storyboard.SetTarget(opacityAnim, card);
-                    Storyboard.SetTargetProperty(opacityAnim, new PropertyPath(UIElement.OpacityProperty));
+                    Storyboard.SetTargetProperty(opacityAnim, new PropertyPath(OpacityProperty));
                     storyboard.Children.Add(opacityAnim);
 
                     var slideXAnim = new DoubleAnimation(startTranslateX, 0, TimeSpan.FromMilliseconds(animationDuration))
@@ -489,8 +480,9 @@ namespace CodenamesClient.GameUI.BoardUI
         private Task AnimateCardFlip(ToggleButton card, bool isFlippingAway)
         {
             double durationMiliseconds = 150;
-            var transformGroup = card.RenderTransform as TransformGroup;
-            if (transformGroup == null || transformGroup.Children.Count <= 2 || !(transformGroup.Children[2] is ScaleTransform scaleTransform))
+            if (!(card.RenderTransform is TransformGroup transformGroup) || 
+                transformGroup.Children.Count <= 2 || 
+                !(transformGroup.Children[2] is ScaleTransform scaleTransform))
             {
                 return Task.CompletedTask;
             }
@@ -541,21 +533,21 @@ namespace CodenamesClient.GameUI.BoardUI
             }
         }
 
-        private void Click_SkipTurn(object sender, RoutedEventArgs e)
+        private async void Click_SkipTurn(object sender, RoutedEventArgs e)
         {
-            _viewModel.SkipTurn();
+            await _viewModel.SkipTurn();
         }
 
-        private void Click_SendMessage(object sender, RoutedEventArgs e)
+        private async void Click_SendMessage(object sender, RoutedEventArgs e)
         {
-            _viewModel.SendMessage();
+            await _viewModel.SendMessage();
         }
 
-        private void KeyDown_ChatInput(object sender, KeyEventArgs e)
+        private async void KeyDown_ChatInput(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                _viewModel.SendMessage();
+                await _viewModel.SendMessage();
             }
         }
     }

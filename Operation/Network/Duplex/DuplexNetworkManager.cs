@@ -162,29 +162,29 @@ namespace CodenamesClient.Operation.Network.Duplex
             return _matchOperation.JoinMatch(match);
         }
 
-        public void SendClue(string clue)
+        public async Task SendClue(string clue)
         {
-            _matchOperation.SendClue(clue);
+            await _matchOperation.SendClue(clue);
         }
 
-        public void NotifyTurnTimeout(CodenamesGame.MatchService.MatchRoleType currentRole)
+        public async Task NotifyTurnTimeout(CodenamesGame.MatchService.MatchRoleType currentRole)
         {
-            _matchOperation.NotifyTurnTimeout(currentRole);
+            await _matchOperation.NotifyTurnTimeout(currentRole);
         }
 
-        public void NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
+        public async Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
         {
-            _matchOperation.NotifyPickedAgent(coordinates, newTurnLength);
+            await _matchOperation.NotifyPickedAgent(coordinates, newTurnLength);
         }
 
-        public void NotifyPickedBystander(BoardCoordinatesDM coordinates)
+        public async Task NotifyPickedBystander(BoardCoordinatesDM coordinates)
         {
-            _matchOperation.NotifyPickedBystander(coordinates);
+            await _matchOperation.NotifyPickedBystander(coordinates);
         }
 
-        public void NotifyPickedAssassin(BoardCoordinatesDM coordinates)
+        public async Task NotifyPickedAssassin(BoardCoordinatesDM coordinates)
         {
-            _matchOperation.NotifyPickedAssassin(coordinates);
+            await _matchOperation.NotifyPickedAssassin(coordinates);
         }
 
         //Scoreboard Service
