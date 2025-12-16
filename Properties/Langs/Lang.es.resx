@@ -523,7 +523,7 @@
     <value>Ocurrió un error desconocido.</value>
   </data>
   <data name="globalDisconnected" xml:space="preserve">
-    <value>Has sido desconectado del servidor.</value>
+    <value>Se ha perdido la conexión con el servidor.</value>
   </data>
   <data name="matchReport" xml:space="preserve">
     <value>Reportar</value>
@@ -580,7 +580,7 @@
     <value>Derrota</value>
   </data>
   <data name="matchDefeatTimeoutMessage" xml:space="preserve">
-    <value>Demasiados testigos involucrados, operación comprometida. Misión abortada</value>
+    <value>Se ha agotado el tiempo y los recursos operativos. Misión abortada.</value>
   </data>
   <data name="matchDefeatAssassinMessage" xml:space="preserve">
     <value>Fuiste eliminado por un asesino. Misión fallida</value>
@@ -761,6 +761,12 @@
   </data>
   <data name="profilePasswordErrorTypedPasswordIncorrect" xml:space="preserve">
     <value>La contraseña no es correcta</value>
+  </data>
+  <data name="connectionLostTitle" xml:space="preserve">
+    <value>Conexión Perdida</value>
+  </data>
+  <data name="matchDefeatWitnessesInvolved" xml:space="preserve">
+    <value>Demasiados testigos involucrados, operación comprometida. Misión abortada</value>
   </data>
   <data name="matchConnectionLostMatchCancelled" xml:space="preserve">
     <value>Has perdido la conexión al servidor de Codenames: Duet, regresaras a la sala de espera</value>

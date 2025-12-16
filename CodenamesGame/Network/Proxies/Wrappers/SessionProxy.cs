@@ -14,6 +14,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         private const string _ENDPOINT_NAME = "NetTcpBinding_ISessionManager";
         private SessionManagerClient _client;
         private PlayerDM _player;
+        public event EventHandler ConnectionLost;
 
         public static SessionProxy Instance
         {
@@ -37,6 +38,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             SessionCallbackHandler callbackHandler = new SessionCallbackHandler();
             InstanceContext context = new InstanceContext(callbackHandler);
             _client = new SessionManagerClient(context, _ENDPOINT_NAME);
+            _client.InnerChannel.Faulted += OnChannelFaulted;
 
             if (player != null && player.PlayerID.HasValue)
             {
@@ -116,6 +118,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                     CloseProxy();
                 }
             }
+        }
+        private void OnChannelFaulted(object sender, EventArgs e)
+        {
+            CloseProxy();
+            ConnectionLost?.Invoke(this, EventArgs.Empty);
         }
 
         private void CloseProxy()

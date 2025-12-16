@@ -70,6 +70,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Connection Lost.
+        /// </summary>
+        public static string connectionLostTitle {
+            get {
+                return ResourceManager.GetString("connectionLostTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sorry, this email address is already in use.
         /// </summary>
         public static string emailCannotUseAddressAlreadyInUse {
@@ -385,7 +394,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a You have been disconnected from the server..
+        ///   Busca una cadena traducida similar a The connection to the server has been lost..
         /// </summary>
         public static string globalDisconnected {
             get {
@@ -1114,11 +1123,20 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Too many witnesses involved, operation compromised. Mission aborted.
+        ///   Busca una cadena traducida similar a Time and operational resources have been exhausted. Mission aborted..
         /// </summary>
         public static string matchDefeatTimeoutMessage {
             get {
                 return ResourceManager.GetString("matchDefeatTimeoutMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Too many witnesses involved, operation compromised. Mission aborted.
+        /// </summary>
+        public static string matchDefeatWitnessesInvolved {
+            get {
+                return ResourceManager.GetString("matchDefeatWitnessesInvolved", resourceCulture);
             }
         }
         

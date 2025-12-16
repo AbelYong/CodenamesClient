@@ -16,6 +16,7 @@ namespace CodenamesClient.GameUI
             InitializeComponent();
             Closed += MainWindowClosed;
             SessionCallbackHandler.OnKicked += OnKickedFromServer;
+            DuplexNetworkManager.Instance.ServerConnectionLost += OnServerConnectionLost;
 
             var gameTracks = new Dictionary<string, string>
             {
@@ -26,6 +27,26 @@ namespace CodenamesClient.GameUI
             };
 
             AudioManager.Instance.LoadTracks(gameTracks);
+        }
+
+        private void OnServerConnectionLost(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (this.IsVisible)
+                {
+                    MessageBox.Show(
+                        Properties.Langs.Lang.globalDisconnected,
+                        Properties.Langs.Lang.connectionLostTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+
+                    MainFrame.Navigate(new LoginPage());
+
+                    MainFrame.NavigationService.RemoveBackEntry();
+                }
+            });
         }
 
         private void MainWindowClosed(object sender, EventArgs e)

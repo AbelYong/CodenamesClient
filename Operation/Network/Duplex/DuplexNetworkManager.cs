@@ -17,6 +17,8 @@ namespace CodenamesClient.Operation.Network.Duplex
         private readonly MatchOperation _matchOperation;
         private readonly ScoreboardOperation _scoreboardOperation;
 
+        public event EventHandler ServerConnectionLost;
+
         public static DuplexNetworkManager Instance
         {
             get => _instance.Value;
@@ -25,6 +27,7 @@ namespace CodenamesClient.Operation.Network.Duplex
         private DuplexNetworkManager()
         {
             _sessionOperation = new SessionOperation();
+            _sessionOperation.ConnectionLost += (s, e) => ServerConnectionLost?.Invoke(this, EventArgs.Empty);
             _socialOperation = new SocialOperation();
             _lobbyOperation = new LobbyOperation();
             _matchmakingOperation = new MatchmakingOperation();

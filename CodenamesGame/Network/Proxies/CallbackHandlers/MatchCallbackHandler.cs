@@ -18,7 +18,7 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
         public static event EventHandler<AgentPickedEventArgs> OnAgentPicked;
         public static event EventHandler<BystanderPickedEventArgs> OnBystanderPicked;
         public static event EventHandler<AssassinPickedEventArgs> OnAssassinPicked;
-        public static event EventHandler<string> OnMatchTimeout;
+        public static event Action<string, bool> OnMatchTimeout;
         public static event EventHandler<string> OnMatchWon;
         public static event Action OnScoreNotSaved;
 
@@ -88,9 +88,9 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
                 });
         }
 
-        public void NotifyMatchTimeout(string finalMatchLength)
+        public void NotifyMatchTimeout(string finalMatchLength, bool isTimeOut)
         {
-            OnMatchTimeout?.Invoke(null, finalMatchLength);
+            OnMatchTimeout?.Invoke(finalMatchLength, isTimeOut);
         }
 
         public void NotifyMatchWon(string finalMatchLength)

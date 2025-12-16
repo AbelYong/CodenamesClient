@@ -181,5 +181,18 @@ namespace CodenamesClient.GameUI
                 MessageBox.Show($"{Lang.errorPlayingAudio} {ex.Message}", Lang.errorAudioError, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        public void StopAllAudio()
+        {
+            _fadeTimer.Stop();
+
+            _currentTrackKey = null;
+            _targetTrackKey = null;
+
+            foreach (var player in _tracks.Values)
+            {
+                player.Stop();
+            }
+        }
     }
 }
