@@ -12,7 +12,7 @@
       Title="BoardPage" Background="#FF1D1D1D"
       Loaded="Page_Loaded"
       Unloaded="Page_Unloaded">
-    
+
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
@@ -163,7 +163,10 @@
                                           ItemTemplate="{StaticResource ChatMessageTemplate}"
                                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,10,10">
-                                    <TextBox Text="{Binding ChatInput, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsChatEnabled}" FontSize="16" FontFamily="Consolas" FontStyle="Italic" MinWidth="125" VerticalContentAlignment="Center" KeyDown="KeyDown_ChatInput">
+                                    <TextBox Text="{Binding ChatInput, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsChatEnabled}"
+                                             FontSize="16" FontFamily="Consolas" FontStyle="Italic"
+                                             Width="125" MaxLength="30" MaxLines="1" VerticalContentAlignment="Center" 
+                                             KeyDown="KeyDown_ChatInput">
                                     </TextBox>
                                     <Button MinWidth="40" MinHeight="30" Style="{StaticResource imageButtonFocus}" Margin="30,0,0,0" Click="Click_SendMessage" IsEnabled="{Binding IsChatEnabled}">
                                         <Button.Background>
@@ -172,7 +175,7 @@
                                     </Button>
                                 </StackPanel>
                             </StackPanel>
-                            
+
                         </DockPanel>
                     </Grid>
 
