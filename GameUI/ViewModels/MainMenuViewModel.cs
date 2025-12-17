@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -25,13 +26,13 @@ namespace CodenamesClient.GameUI.ViewModels
         private string _username;
         private bool _isPlayerGuest;
 
-        private readonly HashSet<Guid> _sentRequestIds = new HashSet<Guid>();
+        private HashSet<Guid> _sentRequestIds = new HashSet<Guid>();
 
         public ObservableCollection<FriendItem> Friends { get; set; }
         public ObservableCollection<FriendItem> Requests { get; set; }
         public ObservableCollection<SearchItem> SearchResults { get; set; }
         public ObservableCollection<ScoreboardDM> TopWinsEntries { get; set; }
-        public ObservableCollection<ScoreboardDM> TopSpeedEntries { get; set; }
+        public ObservableCollection<ScoreboardDM> TopBestTimeEntries { get; set; }
         public ObservableCollection<ScoreboardDM> TopAssassinsEntries { get; set; }
 
         public MainMenuViewModel(PlayerDM player, bool isGuest)
@@ -40,13 +41,13 @@ namespace CodenamesClient.GameUI.ViewModels
             Requests = new ObservableCollection<FriendItem>();
             SearchResults = new ObservableCollection<SearchItem>();
             TopWinsEntries = new ObservableCollection<ScoreboardDM>();
-            TopSpeedEntries = new ObservableCollection<ScoreboardDM>();
+            TopBestTimeEntries = new ObservableCollection<ScoreboardDM>();
             TopAssassinsEntries = new ObservableCollection<ScoreboardDM>();
 
             ScoreboardCallbackHandler.OnLeaderboardUpdateReceived += HandleLeaderboardUpdate;
 
             IsPlayerGuest = isGuest;
-            Player = player ?? AssembleGuest();
+            _player = player;
             Username = Player.Username;
 
             ConnectSocialService(Player);
@@ -306,11 +307,7 @@ namespace CodenamesClient.GameUI.ViewModels
                         });
                     }
 
-                    foreach (var sent in sentList)
-                    {
-                        if (sent.PlayerID.HasValue)
-                            _sentRequestIds.Add(sent.PlayerID.Value);
-                    }
+                    _sentRequestIds = sentList.Where(x => x.PlayerID.HasValue).Select(x => x.PlayerID.Value).ToHashSet();
                 });
             });
         }
@@ -346,16 +343,6 @@ namespace CodenamesClient.GameUI.ViewModels
             });
         }
 
-        private static PlayerDM AssembleGuest()
-        {
-            const int DEFAULT_AVATAR = 0;
-            PlayerDM guest = new PlayerDM();
-            guest.PlayerID = Guid.NewGuid();
-            guest.Username = Lang.globalGuest;
-            guest.AvatarID = DEFAULT_AVATAR;
-            return guest;
-        }
-
         public class SearchItem : INotifyPropertyChanged
         {
             private bool _isPending;
@@ -383,8 +370,15 @@ namespace CodenamesClient.GameUI.ViewModels
                 }
             }
 
-            public Visibility ButtonVisibility => IsPending ? Visibility.Collapsed : Visibility.Visible;
-            public Visibility TextVisibility => IsPending ? Visibility.Visible : Visibility.Collapsed;
+            public Visibility ButtonVisibility
+            {
+                get => IsPending ? Visibility.Collapsed : Visibility.Visible;
+            }
+
+            public Visibility TextVisibility
+            {
+                get => IsPending ? Visibility.Visible : Visibility.Collapsed;
+            }
 
             public event PropertyChangedEventHandler PropertyChanged;
             protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -418,7 +412,11 @@ namespace CodenamesClient.GameUI.ViewModels
             public bool IsOnline
             {
                 get => _isOnline;
-                set { _isOnline = value; OnPropertyChanged(); }
+                set
+                { 
+                    _isOnline = value; 
+                    OnPropertyChanged();
+                }
             }
 
             protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -432,22 +430,31 @@ namespace CodenamesClient.GameUI.ViewModels
             Application.Current.Dispatcher.Invoke(() =>
             {
                 TopWinsEntries.Clear();
-                TopSpeedEntries.Clear();
+                TopBestTimeEntries.Clear();
                 TopAssassinsEntries.Clear();
 
                 if (e.Leaderboard != null)
                 {
                     var wins = e.Leaderboard.OrderByDescending(x => x.GamesWon).Take(10);
-                    foreach (var item in wins) TopWinsEntries.Add(item);
+                    foreach (var item in wins)
+                    {
+                        TopWinsEntries.Add(item);
+                    }
 
-                    var speed = e.Leaderboard
+                    var bestTime = e.Leaderboard
                                 .Where(x => x.FastestMatch != "--:--" && !string.IsNullOrEmpty(x.FastestMatch))
                                 .OrderBy(x => x.FastestMatch)
                                 .Take(10);
-                    foreach (var item in speed) TopSpeedEntries.Add(item);
+                    foreach (var item in bestTime)
+                    {
+                        TopBestTimeEntries.Add(item);
+                    }
 
                     var assassins = e.Leaderboard.OrderByDescending(x => x.AssassinsRevealed).Take(10);
-                    foreach (var item in assassins) TopAssassinsEntries.Add(item);
+                    foreach (var item in assassins)
+                    {
+                        TopAssassinsEntries.Add(item);
+                    }
                 }
             });
         }
@@ -460,18 +467,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 Task.Run(() =>
                 {
-                    try
-                    {
-                        DuplexNetworkManager.Instance.ConnectToScoreboardService(playerId);
-                    }
-                    catch (System.ServiceModel.CommunicationException ex)
-                    {
-                        CodenamesGameLogger.Log.Error("Error connecting to Scoreboard Service: ", ex);
-                    }
-                    catch (Exception ex)
-                    {
-                        CodenamesGameLogger.Log.Error("Unexpected error in OpenScoreboard: ", ex);
-                    }
+                    DuplexNetworkManager.Instance.ConnectToScoreboardService(playerId);
                 });
             }
         }
@@ -496,11 +492,11 @@ namespace CodenamesClient.GameUI.ViewModels
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             TopWinsEntries.Clear();
-                            TopSpeedEntries.Clear();
+                            TopBestTimeEntries.Clear();
                             TopAssassinsEntries.Clear();
 
                             TopWinsEntries.Add(myScore);
-                            TopSpeedEntries.Add(myScore);
+                            TopBestTimeEntries.Add(myScore);
                             TopAssassinsEntries.Add(myScore);
                         });
                     }

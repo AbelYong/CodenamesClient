@@ -16,7 +16,7 @@ namespace CodenamesClient.GameUI.Pages
 {
     public partial class LoginPage : Page
     {
-        private LoginViewModel _viewModel;
+        private readonly LoginViewModel _viewModel;
         private int _remainingResetAttempts;
 
         public LoginPage()
@@ -142,36 +142,30 @@ namespace CodenamesClient.GameUI.Pages
                 btn.IsEnabled = false;
             }
 
-            try
+            var email = ResetEmail.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(email))
             {
-                var email = ResetEmail.Text.Trim();
-
-                if (string.IsNullOrWhiteSpace(email))
-                {
-                    MessageBox.Show(Lang.signInEmailRequired);
-                    return;
-                }
-
-                CodenamesGame.EmailService.CommunicationRequest request = LoginViewModel.SendPasswordResetEmail(email);
-
-                if (request.IsSuccess)
-                {
-                    int initialResetAttempts = 3;
-                    _remainingResetAttempts = initialResetAttempts;
-                    MessageBox.Show(Lang.resetCodeSend);
-                }
-                else
-                {
-                    MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
-                }
+                MessageBox.Show(Lang.signInEmailRequired);
+                return;
             }
-            catch (Exception ex)
+
+            CodenamesGame.EmailService.CommunicationRequest request = LoginViewModel.SendPasswordResetEmail(email);
+
+            if (request.IsSuccess)
             {
-                MessageBox.Show(Lang.resetCodeSendFailed + ": " + ex.Message);
+                int initialResetAttempts = 3;
+                _remainingResetAttempts = initialResetAttempts;
+                MessageBox.Show(Lang.resetCodeSend);
             }
-            finally
+            else
             {
-                if (btn != null) btn.IsEnabled = true;
+                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
+            }
+
+            if (btn != null)
+            {
+                btn.IsEnabled = true;
             }
         }
 
@@ -179,22 +173,22 @@ namespace CodenamesClient.GameUI.Pages
         {
             var email = ResetEmail.Text.Trim();
             var code = ResetCode.Text.Trim();
-            var p1 = NewPassword.Password;
-            var p2 = ConfirmPassword.Password;
+            var newPassword = NewPassword.Password;
+            var confirmPassword = ConfirmPassword.Password;
 
-            if (p1 != p2)
+            if (newPassword != confirmPassword)
             {
                 MessageBox.Show(Lang.resetPasswordsDoNotMatch);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(p1) || p1.Length < ProfileValidation.PASSWORD_MIN_LENGTH || p1.Length > ProfileValidation.PASSWORD_MAX_LENGTH)
+            if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < ProfileValidation.PASSWORD_MIN_LENGTH || newPassword.Length > ProfileValidation.PASSWORD_MAX_LENGTH)
             {
                 MessageBox.Show(Lang.resetPasswordLengthInvalid);
                 return;
             }
 
             var result = await Task.Run(() =>
-                LoginViewModel.CompletePasswordReset(email, code, p1)
+                LoginViewModel.CompletePasswordReset(email, code, newPassword)
             );
 
             if (result.IsSuccess)

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CodenamesClient.Properties.Langs;
-using CodenamesGame.Network;
 using CodenamesGame.Network.Proxies.CallbackHandlers;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -12,7 +11,6 @@ using System.Linq;
 using CodenamesGame.Network.EventArguments;
 using CodenamesGame.Domain.POCO.Match;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using CodenamesClient.Operation;
 using CodenamesClient.Util;
 using CodenamesClient.Operation.Network.Duplex;
@@ -426,7 +424,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.JOIN_PARTY, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.JOIN_PARTY, request.StatusCode));
             }
         }
 
@@ -444,7 +442,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.CREATE_PARTY, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.CREATE_PARTY, request.StatusCode));
             }
         }
 
@@ -455,7 +453,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 CodenamesGame.LobbyService.CommunicationRequest request = DuplexNetworkManager.Instance.InviteToParty(_me, friendID, _lobbyCode);
                 if (!request.IsSuccess)
                 {
-                    MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INVITE_TO_PARTY, request.StatusCode));
+                    MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INVITE_TO_PARTY, request.StatusCode));
                 }
             }
         }
@@ -490,7 +488,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(Util.StatusToMessageMapper.GetMatchmakingServiceMessage(request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetMatchmakingServiceMessage(request.StatusCode));
             }
         }
 
@@ -510,7 +508,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 if (!request.IsSuccess)
                 {
                     PlayBtnEnabled = true;
-                    MessageBox.Show(Util.StatusToMessageMapper.GetMatchmakingServiceMessage(request.StatusCode));
+                    MessageBox.Show(StatusToMessageMapper.GetMatchmakingServiceMessage(request.StatusCode));
                 }
             }
         }
@@ -625,7 +623,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 PlayBtnEnabled = true;
                 PlayBtnVisibility = Visibility.Visible;
                 ReadyOrCancelTgBtnVisibility = Visibility.Collapsed;
-                MessageBox.Show(Util.StatusToMessageMapper.GetMatchmakingServiceMessage(e.Reason));
+                MessageBox.Show(StatusToMessageMapper.GetMatchmakingServiceMessage(e.Reason));
             }
         }
 

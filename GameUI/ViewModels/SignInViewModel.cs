@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using CodenamesClient.Operation.Validation;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Validation;
 
@@ -103,7 +104,6 @@ namespace CodenamesClient.GameUI.ViewModels
                     OnPropertyChanged(nameof(PwHasLower));
                     OnPropertyChanged(nameof(PwHasDigit));
                     OnPropertyChanged(nameof(PwHasSpecial));
-                    OnPropertyChanged(nameof(PwNoConsecutiveRun));
                     OnPropertyChanged(nameof(IsPasswordValid));
                     ValidateProperty(nameof(ConfirmPassword));
                     OnPropertyChanged(nameof(CanSubmit));
@@ -135,51 +135,46 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public static string PwMinLengthText
         {
-            get => string.Format(Lang.signInPasswordMinLength, SignInValidation.PASSWORD_MIN_LENGTH);
+            get => string.Format(Lang.signInPasswordMinLength, PasswordValidation.PASSWORD_MIN_LENGTH);
         }
         public static string PwMaxLengthText
         {
-            get => string.Format(Lang.signInPasswordMaxLength, SignInValidation.PASSWORD_MAX_LENGTH);
+            get => string.Format(Lang.signInPasswordMaxLength, PasswordValidation.PASSWORD_MAX_LENGTH);
         }
 
         public bool PwHasMinLength
         {
-            get => SignInValidation.MeetsMinLength(Password);
+            get => PasswordValidation.MeetsMinLength(Password);
         }
 
         public bool PwWithinMaxLength
         {
-            get => SignInValidation.WithinMaxLength(Password);
+            get => PasswordValidation.WithinMaxLength(Password);
         }
 
         public bool PwHasUpper
         {
-            get => SignInValidation.HasUpper(Password);
+            get => PasswordValidation.HasUpper(Password);
         }
 
         public bool PwHasLower
         {
-            get => SignInValidation.HasLower(Password);
+            get => PasswordValidation.HasLower(Password);
         }
 
         public bool PwHasDigit
         {
-            get => SignInValidation.HasDigit(Password);
+            get => PasswordValidation.HasDigit(Password);
         }
 
         public bool PwHasSpecial
         {
-            get => SignInValidation.HasSpecial(Password);
-        }
-
-        public bool PwNoConsecutiveRun
-        {
-            get => SignInValidation.NoConsecutiveRun(Password);
+            get => PasswordValidation.HasSpecial(Password);
         }
 
         public bool IsPasswordValid
         {
-            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial && PwNoConsecutiveRun);
+            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial);
         }
 
         public bool CanSubmit
@@ -262,7 +257,9 @@ namespace CodenamesClient.GameUI.ViewModels
             if (list.Count == 0)
             {
                 if (_errors.Remove(propertyName))
+                {
                     ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+                }
                 return;
             }
 

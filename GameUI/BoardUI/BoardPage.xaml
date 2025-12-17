@@ -55,14 +55,14 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left">
                         <TextBlock local:TextAnimator.AnimatedText="{Binding PlayerSTurn}" Focusable="False"
-                       Style="{StaticResource title}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White" />
+                                   Style="{StaticResource title}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White" />
                         <TextBlock local:TextAnimator.AnimatedText="{Binding TurnInstructions}" IsEnabled="False"
-                       Style="{StaticResource subtitle}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White"/>
+                                   Style="{StaticResource subtitle}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
                         <Label Content="{x:Static language:Lang.matchYourkeycard}"
-                   Style="{StaticResource subtitle}" Foreground="White" />
-                        <Grid x:Name="gridKeycard" MinHeight="130" MinWidth="200" Margin="50,0,50,0">
+                               Style="{StaticResource subtitle}" Foreground="White" />
+                        <Grid x:Name="gridKeycard" MinHeight="130" MinWidth="200" Margin="50,0,50,0" Background="DarkGray">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -77,31 +77,31 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="0" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="0" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="0" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="0" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="1" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="1" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="1" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="1" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="1" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="2" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="2" Grid.Column="1" Fill="Beige" />
-                            <Rectangle Grid.Row="2" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="2" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="2" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="3" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="3" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="3" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="3" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="3" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="4" Grid.Column="0" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="4" Grid.Column="1" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="4" Grid.Column="2" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="4" Grid.Column="3" Fill="Beige" Stroke="White" StrokeThickness="1"/>
-                            <Rectangle Grid.Row="4" Grid.Column="4" Fill="Beige" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="0" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="1" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="2" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="3" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="0" Grid.Column="4" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="0" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="1" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="2" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="3" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="1" Grid.Column="4" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="0" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="1" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="2" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="3" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="2" Grid.Column="4" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="0" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="1" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="2" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="3" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="3" Grid.Column="4" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="0" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="1" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="2" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="3" Stroke="White" StrokeThickness="1"/>
+                            <Rectangle Grid.Row="4" Grid.Column="4" Stroke="White" StrokeThickness="1"/>
                         </Grid>
                     </StackPanel>
                     <StackPanel Grid.Column="2">

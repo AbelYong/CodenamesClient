@@ -771,4 +771,10 @@
   <data name="matchConnectionLostMatchCancelled" xml:space="preserve">
     <value>Has perdido la conexión al servidor de Codenames: Duet, regresaras a la sala de espera</value>
   </data>
+  <data name="kickMessageDuplicateLogin" xml:space="preserve">
+    <value>Has iniciado sesión en otro dispositivo, regresaras a la página de inicio de sesión</value>
+  </data>
+  <data name="lobbyOnlyPartyHostCanStart" xml:space="preserve">
+    <value>Solo el anfitrión del grupo puede comenzar una partida</value>
+  </data>
 </root>

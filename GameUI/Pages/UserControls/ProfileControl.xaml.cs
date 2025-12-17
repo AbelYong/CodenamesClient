@@ -15,7 +15,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
     public partial class ProfileControl : UserControl
     {
         private readonly ProfileViewModel _viewModel;
-        private PlayerDM _player;
+        private readonly PlayerDM _player;
         private string _auxAuthReason;
         private int _tempAvatarID;
         public event Action ClickCloseProfile;
@@ -33,6 +33,21 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             if (isReadOnly)
             {
                 SetReadOnlyMode();
+            }
+        }
+
+        private void FillProfileFields(PlayerDM player)
+        {
+            if (player != null)
+            {
+                tBxUsername.Text = player.Username;
+                tBxEmail.Text = player.User.Email;
+                tBxName.Text = player.Name;
+                tBxLastName.Text = player.LastName;
+                tBxFacebook.Text = player.FacebookUsername;
+                tBxInstagram.Text = player.InstagramUsername;
+                tBxDiscord.Text = player.DiscordUsername;
+                SetProfilePicture(player.AvatarID);
             }
         }
 
@@ -323,25 +338,42 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private void Click_btnProfilePicture(object sender, RoutedEventArgs e)
         {
+            ShowGridProfilePictures();
+        }
+
+        private void Click_btnSelectProfilePicture(object sender, RoutedEventArgs e)
+        {
+            int numRows = 5;
+            if (sender is Button clickedPicture)
+            {
+                int row = Grid.GetRow(clickedPicture);
+                int column = Grid.GetColumn(clickedPicture);
+
+                int imageIndex = (row * numRows) + (column);
+
+                SetProfilePicture(imageIndex);
+            }
+            HideGridProfilePictures();
+        }
+
+        private void SetProfilePicture(int avatarID)
+        {
+            _tempAvatarID = avatarID;
+            btnProfilePicture.Background = PictureHandler.GetImage(avatarID);
+        }
+
+        private void ShowGridProfilePictures()
+        {
+            _viewModel.IsTitleVisible = Visibility.Hidden;
             stackPanelProfileForm.Visibility = Visibility.Hidden;
             var slideInAnimation = (Storyboard)FindResource("SlideInAnimation");
             gridProfilePictures.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
         }
 
-        private void Click_btnSelectProfilePicture(object sender, RoutedEventArgs e)
+        private void HideGridProfilePictures()
         {
-            const int NUM_ROWS = 5;
-            if (sender is Button clickedButton)
-            {
-                int row = Grid.GetRow(clickedButton);
-                int column = Grid.GetColumn(clickedButton);
-
-                int imageIndex = (row * NUM_ROWS) + (column);
-
-                _tempAvatarID = imageIndex;
-                SetProfilePicture(_tempAvatarID);
-            }
+            _viewModel.IsTitleVisible = Visibility.Visible;
             var slideOutAnimation = (Storyboard)FindResource("SlideOutAnimation");
             slideOutAnimation.Completed += (s, ev) =>
             {
@@ -351,25 +383,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             slideOutAnimation.Begin();
         }
 
-        private void SetProfilePicture(int avatarID)
-        {
-            btnProfilePicture.Background = PictureHandler.GetImage(avatarID);
-        }
-
-        private void FillProfileFields(PlayerDM player)
-        {
-            if (player != null)
-            {
-                tBxUsername.Text = player.Username;
-                tBxEmail.Text = player.User.Email;
-                tBxName.Text = player.Name;
-                tBxLastName.Text = player.LastName;
-                tBxFacebook.Text = player.FacebookUsername;
-                tBxInstagram.Text = player.InstagramUsername;
-                tBxDiscord.Text = player.DiscordUsername;
-                SetProfilePicture(player.AvatarID);
-            }
-        }
+        
 
         private PlayerDM PrepareUpdatedPlayer()
         {

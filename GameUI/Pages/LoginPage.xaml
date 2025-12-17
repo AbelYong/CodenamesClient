@@ -55,26 +55,26 @@
                 </StackPanel>
 
                 <!-- User -->
-                <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
-                <TextBox Name="tBxUsername" Style="{StaticResource textBoxCustomFocus}" Margin="0,10,0,0" Text="" Width="320" />
-                <Label Content="{Binding UsernameErrorMessage}" Style="{StaticResource normal}" Margin="0,10,0,0" HorizontalContentAlignment="Center" Width="600"/>
+                <Label Content="{x:Static language:Lang.globalUsername}" Style="{StaticResource subtitle}" Margin="0,0,0,10"/>
+                <TextBox Name="tBxUsername" Style="{StaticResource textBoxCustomFocus}" Text="" Width="320" HorizontalContentAlignment="Center" MaxLength="20" />
+                <Label Content="{Binding UsernameErrorMessage}" Style="{StaticResource normal}" Height="40" HorizontalContentAlignment="Center" Width="600"/>
 
-                <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource subtitle}" Margin="0,10,0,0"/>
-                <PasswordBox x:Name="pBxPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,10,0,0" Width="320"/>
-                <Label x:Name="lblPasswordErrorMessage" Content="{Binding PasswordErrorMessage}" Style="{StaticResource normal}" HorizontalContentAlignment="Center" Width="600" />
+                <Label Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource subtitle}" Margin="0,0,0,10"/>
+                <PasswordBox x:Name="pBxPassword" Style="{StaticResource passwordBoxCustomFocus}" HorizontalContentAlignment="Center" MaxLength="16" Width="320"/>
+                <Label Content="{Binding PasswordErrorMessage}" Style="{StaticResource normal}" Height="40" HorizontalContentAlignment="Center" Width="600" />
 
                 <!-- Reset password link -->
-                <TextBlock Style="{StaticResource InlineLinkStyle}" Foreground="{Binding Foreground, ElementName=lblPasswordErrorMessage}"
-                           VerticalAlignment="Center" MouseLeftButtonUp="ForgotLink_Click" Text="{x:Static language:Lang.loginForgotPassword}" />
+                <TextBlock Style="{StaticResource InlineLinkStyle}" Foreground="White"
+                           VerticalAlignment="Center" MouseLeftButtonUp="ForgotLink_Click" Margin="0,0,0,10" Text="{x:Static language:Lang.loginForgotPassword}" />
 
                 <!-- Action buttons -->
                 <Button Click="Click_btnLogin"
                         IsEnabled="{Binding BtnLoginEnabled}"
                         Content="{x:Static language:Lang.loginLogIn}"
                         Style="{StaticResource buttonCustomFocus}"
-                        Margin="0,10,0,0" Width="316" FontSize="24" Height="60"/>
+                        Margin="0,0,0,10" Width="316" FontSize="24" Height="60"/>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
                     <Label  Content="{x:Static language:Lang.loginDontHaveAccount}" Style="{StaticResource normal}" Margin="0,0,0,0"/>
                     <Button Click="Click_btnSignIn"  Content="{x:Static language:Lang.loginSignIn}" 
                             Style="{StaticResource buttonCustomFocus}"
@@ -86,7 +86,7 @@
                         IsEnabled="{Binding BtnSignInGuestEnabled}"
                         Content="{x:Static language:Lang.loginPlayAsGuest}"
                         Style="{StaticResource buttonCustomFocus}"
-                        Margin="0,10,0,0" Height="60" Width="316" FontSize="24"/>
+                        Margin="0,0,0,0" Height="60" Width="316" FontSize="24"/>
             </StackPanel>
 
             <Border x:Name="Overlay" Visibility="Collapsed" Background="#80000000" />
@@ -119,7 +119,7 @@
 
                     <StackPanel Grid.Row="1">
                         <TextBlock Text="{x:Static language:Lang.resetEmail}" Style="{StaticResource normal}" />
-                        <TextBox x:Name="ResetEmail" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,12" MaxLength="30" Width="320"/>
+                        <TextBox x:Name="ResetEmail" Style="{StaticResource textBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,12" MaxLength="30" Width="320"/>
 
                         <Button x:Name="SendCodeBtn" Content="{x:Static language:Lang.resetSendCode}"
                             Style="{StaticResource buttonCustomFocus}"
@@ -127,12 +127,11 @@
                             Width="316" Height="40" Margin="0,0,0,12"/>
 
                         <TextBlock Text="{x:Static language:Lang.resetReceivedCode}" Style="{StaticResource normal}" />
-                        <TextBox x:Name="ResetCode" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320"/>
-
+                        <TextBox x:Name="ResetCode" Style="{StaticResource textBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,8" MaxLength="6" Width="320"/>
                         <TextBlock Text="{x:Static language:Lang.resetNewPassword}" Style="{StaticResource normal}" />
-                        <PasswordBox x:Name="NewPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,8" MaxLength="16" Width="320"/>
+                        <PasswordBox x:Name="NewPassword" Style="{StaticResource passwordBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,8" MaxLength="16" Width="320"/>
                         <TextBlock Text="{x:Static language:Lang.signInConfirmPassword}" Style="{StaticResource normal}" />
-                        <PasswordBox x:Name="ConfirmPassword" Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,0" MaxLength="16" Width="320"/>
+                        <PasswordBox x:Name="ConfirmPassword" Style="{StaticResource passwordBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,0" MaxLength="16" Width="320"/>
                     </StackPanel>
 
                     <Grid Grid.Row="2" Margin="0,14,0,0">

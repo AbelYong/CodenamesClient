@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CodenamesClient.Properties.Langs;
+using CodenamesGame.Util;
 
 namespace CodenamesClient.GameUI
 {
@@ -13,24 +13,37 @@ namespace CodenamesClient.GameUI
     {
         private static AudioManager _instance;
         public static AudioManager Instance => _instance ?? (_instance = new AudioManager());
-
-        private Dictionary<string, MediaPlayer> _tracks = new Dictionary<string, MediaPlayer>();
-
-        private DispatcherTimer _fadeTimer;
+        private readonly Dictionary<string, MediaPlayer> _tracks = new Dictionary<string, MediaPlayer>();
+        private readonly MediaPlayer _sfxPlayer = new MediaPlayer();
+        private readonly DispatcherTimer _fadeTimer;
         private string _currentTrackKey;
         private string _targetTrackKey;
-
-        public double MasterVolume { get; private set; } = 0.5;
-        public double MusicVolume { get; private set; } = 0.5;
-        public double SfxVolume { get; private set; } = 0.5;
         private const double FadeSpeed = 0.05;
 
-        private MediaPlayer _sfxPlayer = new MediaPlayer();
+        public double MasterVolume
+        {
+            get;
+            private set; 
+        } = 0.5;
+
+        public double MusicVolume
+        { 
+            get;
+            private set; 
+        } = 0.5;
+
+        public double SfxVolume
+        { 
+            get; 
+            private set; 
+        } = 0.5;
 
         private AudioManager()
         {
-            _fadeTimer = new DispatcherTimer();
-            _fadeTimer.Interval = TimeSpan.FromMilliseconds(50);
+            _fadeTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(50)
+            };
             _fadeTimer.Tick += FadeTimer_Tick;
 
             _sfxPlayer.MediaEnded += (s, e) => _sfxPlayer.Close();
@@ -42,7 +55,10 @@ namespace CodenamesClient.GameUI
         /// <param name="trackConfig">Dictionary with “KeyName” and “FilePath”</param>
         public void LoadTracks(Dictionary<string, string> trackConfig)
         {
-            foreach (var player in _tracks.Values) player.Close();
+            foreach (var player in _tracks.Values)
+            {
+                player.Close();
+            }
             _tracks.Clear();
 
             try
@@ -62,9 +78,10 @@ namespace CodenamesClient.GameUI
                     _tracks.Add(entry.Key, player);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is ArgumentNullException || ex is ArgumentException) 
             {
-                MessageBox.Show($"{Lang.errorPlayingAudio} {ex.Message}");
+                MessageBox.Show(Lang.errorPlayingAudio);
+                CodenamesGameLogger.Log.Debug("Exception while loading audio tracks: ", ex);
             }
         }
 
@@ -73,7 +90,10 @@ namespace CodenamesClient.GameUI
         /// </summary>
         public void StartPlayback(string startKey)
         {
-            if (!_tracks.ContainsKey(startKey)) return;
+            if (!_tracks.ContainsKey(startKey))
+            {
+                return;
+            }
 
             _currentTrackKey = startKey;
             _targetTrackKey = null;
@@ -95,8 +115,14 @@ namespace CodenamesClient.GameUI
         /// </summary>
         public void TransitionTo(string nextTrackKey)
         {
-            if (!_tracks.ContainsKey(nextTrackKey)) return;
-            if (_currentTrackKey == nextTrackKey) return;
+            if (!_tracks.ContainsKey(nextTrackKey))
+            {
+                return;
+            }
+            if (_currentTrackKey == nextTrackKey)
+            {
+                return;
+            }
 
             _targetTrackKey = nextTrackKey;
             _fadeTimer.Start();
@@ -172,13 +198,15 @@ namespace CodenamesClient.GameUI
                 _sfxPlayer.Volume = SfxVolume * MasterVolume;
                 _sfxPlayer.Play();
             }
-            catch (FileNotFoundException fileEx)
+            catch (FileNotFoundException ex)
             {
-                MessageBox.Show(fileEx.Message, Lang.errorAudioFileNotFound, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Lang.errorPlayingAudio, Lang.errorAudioFileNotFound, MessageBoxButton.OK, MessageBoxImage.Warning);
+                CodenamesGameLogger.Log.Debug("Audio file not found: ", ex);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is UriFormatException || ex is ArgumentNullException || ex is ArgumentException)
             {
-                MessageBox.Show($"{Lang.errorPlayingAudio} {ex.Message}", Lang.errorAudioError, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(Lang.errorPlayingAudio, Lang.errorAudioError, MessageBoxButton.OK, MessageBoxImage.Warning);
+                CodenamesGameLogger.Log.Debug("Exception while playing audio: ", ex);
             }
         }
 

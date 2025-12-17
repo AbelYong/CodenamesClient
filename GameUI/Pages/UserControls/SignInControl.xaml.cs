@@ -114,14 +114,12 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             if (btn != null)
             {
                 btn.IsEnabled = false;
+                if (SendEmailVerificationCode())
+                {
+                    RequestSignIn();
+                }
+                btn.IsEnabled = true;
             }
-
-            if (SendEmailVerificationCode())
-            {
-                RequestSignIn();
-            }
-
-            btn.IsEnabled = true;
         }
 
         private bool SendEmailVerificationCode()

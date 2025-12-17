@@ -100,9 +100,9 @@
                             <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
                                 <StackPanel Margin="5">
                                     <TextBlock Text="{x:Static language:Lang.signInAcceptedEmailDomains}" FontWeight="Bold" Foreground="White" Margin="0,0,0,5"/>
-                                    <TextBlock Text="{x:Static language:Lang.emailGmailDomain}"/>
-                                    <TextBlock Text="{x:Static language:Lang.emailOutlookDomain}"/>
-                                    <TextBlock Text="{x:Static language:Lang.emailEstudiantesUvMxDomain}"/>
+                                    <TextBlock Text="{x:Static language:Lang.emailGmailDomain}" Foreground="White"/>
+                                    <TextBlock Text="{x:Static language:Lang.emailOutlookDomain}" Foreground="White"/>
+                                    <TextBlock Text="{x:Static language:Lang.emailEstudiantesUvMxDomain}" Foreground="White"/>
                                 </StackPanel>
                             </ToolTip>
                         </Border.ToolTip>
@@ -137,7 +137,6 @@
                                     <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasLower}" Text="{x:Static language:Lang.signInPasswordAtLeastOneLowercaseLetter}"/>
                                     <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasDigit}" Text="{x:Static language:Lang.signInPasswordAtLeastOneDigit}"/>
                                     <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasSpecial}" Text="{x:Static language:Lang.signInPasswordAtLeastOneSpecialCharacter}"/>
-                                    <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwNoConsecutiveRun}" Text="{x:Static language:Lang.signInPasswordNotContainMoreThan3ConsecutiveDigits}"/>
                                 </StackPanel>
                             </ToolTip>
                         </Border.ToolTip>

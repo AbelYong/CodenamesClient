@@ -61,7 +61,7 @@ namespace CodenamesClient.GameUI
             }
             catch (Exception ex) when (ex is CommunicationException || ex is TimeoutException)
             {
-                //Do nothing
+                CodenamesGame.Util.CodenamesGameLogger.Log.Debug("Exception on main window closed: ", ex);
             }
             catch (Exception ex)
             {
@@ -81,6 +81,9 @@ namespace CodenamesClient.GameUI
                         break;
                     case KickReason.PERMANTENT_BAN:
                         message = Properties.Langs.Lang.kickMessagePerm;
+                        break;
+                    case KickReason.DUPLICATE_LOGIN:
+                        message = Properties.Langs.Lang.kickMessageDuplicateLogin;
                         break;
                     default:
                         message = Properties.Langs.Lang.globalDisconnected;

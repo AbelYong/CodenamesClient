@@ -18,12 +18,12 @@ namespace CodenamesClient.GameUI.BoardUI
 {
     public partial class BoardPage : Page
     {
-        private BoardViewModel _viewModel;
+        private readonly BoardViewModel _viewModel;
         private readonly Random _random = new Random();
         private const int AGENT_CODE = 0;
         private const int BYSTANDER_CODE = 1;
         private const int ASSASSIN_CODE = 2;
-        private MediaPlayer _mediaPlayer = new MediaPlayer();
+        private readonly MediaPlayer _mediaPlayer = new MediaPlayer();
 
         public BoardPage(MatchDM match, Guid myID)
         {
@@ -199,9 +199,14 @@ namespace CodenamesClient.GameUI.BoardUI
             _mediaPlayer.Close();
             LightAssassinOn.BeginAnimation(OpacityProperty, null);
 
-            DoubleAnimation blink = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
-            blink.AutoReverse = true;
-            blink.RepeatBehavior = RepeatBehavior.Forever;
+            DoubleAnimation blink = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                AutoReverse = true,
+                RepeatBehavior = RepeatBehavior.Forever,
+                Duration = TimeSpan.FromMilliseconds(150)
+            };
 
             LightAssassinOn.BeginAnimation(OpacityProperty, blink);
 
@@ -373,8 +378,8 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private void DrawKeycard()
         {
-            SolidColorBrush agentBrush = new SolidColorBrush(Colors.Green);
-            SolidColorBrush assasinBrush = new SolidColorBrush(Colors.Black);
+            SolidColorBrush agentBrush = new SolidColorBrush(Colors.DarkBlue);
+            SolidColorBrush assasinBrush = new SolidColorBrush(Colors.DarkRed);
             for (int i = 0; i < gridKeycard.RowDefinitions.Count; i++)
             {
                 for (int j = 0; j < gridKeycard.ColumnDefinitions.Count; j++)

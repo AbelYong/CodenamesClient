@@ -42,6 +42,7 @@ namespace CodenamesClient.Validation
             if (string.IsNullOrWhiteSpace(username))
             {
                 yield return Lang.signInUsernameRequired;
+                yield break;
             }
 
             if (username.Length > PlayerDM.USERNAME_MAX_LENGTH)

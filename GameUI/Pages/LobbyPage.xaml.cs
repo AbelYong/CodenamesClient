@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
+using CodenamesClient.Properties.Langs;
 using static CodenamesClient.GameUI.ViewModels.LobbyViewModel;
 
 namespace CodenamesClient.GameUI.Pages
@@ -165,6 +166,11 @@ namespace CodenamesClient.GameUI.Pages
 
         private async void Click_StartGame(object sender, RoutedEventArgs e)
         {
+            if (_viewModel.PartyHost != null && _viewModel.PartyHost.PlayerID != _me.PlayerID)
+            {
+                MessageBox.Show(Lang.lobbyOnlyPartyHostCanStart, Lang.globalInformationTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             if (_viewModel.IsPartyFull)
             {
                 await _viewModel.RequestArrangedMatch();

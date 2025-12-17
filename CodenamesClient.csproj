@@ -93,8 +93,8 @@
     <Compile Include="Operation\Network\Oneway\OnewayNetworkManager.cs" />
     <Compile Include="Operation\PictureHandler.cs" />
     <Compile Include="Operation\Validation\LoginValidation.cs" />
+    <Compile Include="Operation\Validation\PasswordValidation.cs" />
     <Compile Include="Operation\Validation\ProfileValidation.cs" />
-    <Compile Include="Operation\Validation\SignInValidation.cs" />
     <Compile Include="Properties\Langs\GameWords.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

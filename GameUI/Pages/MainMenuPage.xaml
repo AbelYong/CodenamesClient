@@ -367,7 +367,7 @@
                         </TabItem>
 
                         <TabItem Header="{x:Static language:Lang.scoresFastest}">
-                            <DataGrid ItemsSource="{Binding TopSpeedEntries}" AutoGenerateColumns="False" 
+                            <DataGrid ItemsSource="{Binding TopBestTimeEntries}" AutoGenerateColumns="False" 
                           Background="Transparent" RowBackground="#333333" AlternatingRowBackground="#3A3A3A"
                           HeadersVisibility="Column" IsReadOnly="True" BorderThickness="0" 
                           Foreground="White" GridLinesVisibility="Horizontal" 

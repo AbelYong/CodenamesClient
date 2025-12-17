@@ -610,6 +610,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You have logged-in in another device, you will return to the login page.
+        /// </summary>
+        public static string kickMessageDuplicateLogin {
+            get {
+                return ResourceManager.GetString("kickMessageDuplicateLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a You have been permanently banned due to repeated misconduct..
         /// </summary>
         public static string kickMessagePerm {
@@ -840,6 +849,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string lobbyMatchMissingData {
             get {
                 return ResourceManager.GetString("lobbyMatchMissingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Only the party host can start the match.
+        /// </summary>
+        public static string lobbyOnlyPartyHostCanStart {
+            get {
+                return ResourceManager.GetString("lobbyOnlyPartyHostCanStart", resourceCulture);
             }
         }
         

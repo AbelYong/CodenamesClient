@@ -1,11 +1,12 @@
-﻿using CodenamesClient.Properties.Langs;
-using CodenamesClient.Validation;
+﻿using CodenamesClient.Operation.Validation;
+using CodenamesClient.Properties.Langs;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -14,6 +15,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
         private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
+        private Visibility _isTitleVisible = Visibility.Visible;
         private string _emailVerification;
         private string _currentPassword;
         private string _newPassword;
@@ -29,6 +31,16 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
+        public Visibility IsTitleVisible
+        {
+            get => _isTitleVisible;
+            set
+            {
+                _isTitleVisible = value;
+                OnPropertyChanged(nameof(IsTitleVisible));
+            }
+        }
+
         public bool CanSubmit
         {
             get => (!HasErrors && IsPasswordValid && PasswordsMatch);
@@ -36,12 +48,12 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public static string PwMinLengthText
         {
-            get => string.Format(Lang.signInPasswordMinLength, SignInValidation.PASSWORD_MIN_LENGTH);
+            get => string.Format(Lang.signInPasswordMinLength, PasswordValidation.PASSWORD_MIN_LENGTH);
         }
 
         public static string PwMaxLengthText
         {
-            get => string.Format(Lang.signInPasswordMaxLength, SignInValidation.PASSWORD_MAX_LENGTH);
+            get => string.Format(Lang.signInPasswordMaxLength, PasswordValidation.PASSWORD_MAX_LENGTH);
         }
 
         public string CurrentPassword
@@ -69,7 +81,6 @@ namespace CodenamesClient.GameUI.ViewModels
                     OnPropertyChanged(nameof(PwHasLower));
                     OnPropertyChanged(nameof(PwHasDigit));
                     OnPropertyChanged(nameof(PwHasSpecial));
-                    OnPropertyChanged(nameof(PwNoConsecutiveRun));
                     OnPropertyChanged(nameof(IsPasswordValid));
                     ValidateProperty(nameof(ConfirmPassword));
                     OnPropertyChanged(nameof(CanSubmit));
@@ -96,42 +107,37 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public bool PwHasMinLength
         {
-            get => SignInValidation.MeetsMinLength(NewPassword);
+            get => PasswordValidation.MeetsMinLength(NewPassword);
         }
 
         public bool PwWithinMaxLength
         {
-            get => SignInValidation.WithinMaxLength(NewPassword);
+            get => PasswordValidation.WithinMaxLength(NewPassword);
         }
 
         public bool PwHasUpper
         {
-            get => SignInValidation.HasUpper(NewPassword);
+            get => PasswordValidation.HasUpper(NewPassword);
         }
 
         public bool PwHasLower
         {
-            get => SignInValidation.HasLower(NewPassword);
+            get => PasswordValidation.HasLower(NewPassword);
         }
 
         public bool PwHasDigit
         {
-            get => SignInValidation.HasDigit(NewPassword);
+            get => PasswordValidation.HasDigit(NewPassword);
         }
 
         public bool PwHasSpecial
         {
-            get => SignInValidation.HasSpecial(NewPassword);
-        }
-
-        public bool PwNoConsecutiveRun
-        {
-            get => SignInValidation.NoConsecutiveRun(NewPassword);
+            get => PasswordValidation.HasSpecial(NewPassword);
         }
 
         public bool IsPasswordValid
         {
-            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial && PwNoConsecutiveRun);
+            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial);
         }
 
         private bool PasswordsMatch
