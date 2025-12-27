@@ -13,7 +13,7 @@ namespace CodenamesClient.Operation.Validation
         }
         public static bool WithinMaxLength(string password)
         {
-            return string.IsNullOrEmpty(password) && password.Length <= PASSWORD_MAX_LENGTH;
+            return !string.IsNullOrEmpty(password) && password.Length <= PASSWORD_MAX_LENGTH;
         }
         public static bool HasUpper(string password)
         {

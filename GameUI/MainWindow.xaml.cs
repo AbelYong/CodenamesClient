@@ -33,7 +33,7 @@ namespace CodenamesClient.GameUI
         {
             Dispatcher.Invoke(() =>
             {
-                if (this.IsVisible)
+                if (IsVisible)
                 {
                     MessageBox.Show(
                         Properties.Langs.Lang.globalDisconnected,
@@ -42,22 +42,33 @@ namespace CodenamesClient.GameUI
                         MessageBoxImage.Error
                     );
 
-                    MainFrame.Navigate(new LoginPage());
-
-                    MainFrame.NavigationService.RemoveBackEntry();
+                    NavigateToLogin();
                 }
             });
+        }
+
+        private void NavigateToLogin()
+        {
+            DisconnectDuplexServices();
+
+            MainFrame.Navigate(new LoginPage());
+            MainFrame.NavigationService.RemoveBackEntry();
+        }
+
+        private void DisconnectDuplexServices()
+        {
+            DuplexNetworkManager.Instance.DisconnectFromSessionService();
+            DuplexNetworkManager.Instance.DisconnectFromFriendService();
+            DuplexNetworkManager.Instance.DisconnectFromLobbyService();
+            DuplexNetworkManager.Instance.DisconnectFromMatchmakingService();
+            DuplexNetworkManager.Instance.DisconnectFromMatchService();
         }
 
         private void MainWindowClosed(object sender, EventArgs e)
         {
             try
             {
-                DuplexNetworkManager.Instance.DisconnectFromSessionService();
-                DuplexNetworkManager.Instance.DisconnectFromFriendService();
-                DuplexNetworkManager.Instance.DisconnectFromLobbyService();
-                DuplexNetworkManager.Instance.DisconnectFromMatchmakingService();
-                DuplexNetworkManager.Instance.DisconnectFromMatchService();
+                DisconnectDuplexServices();
             }
             catch (Exception ex) when (ex is CommunicationException || ex is TimeoutException)
             {
@@ -92,7 +103,7 @@ namespace CodenamesClient.GameUI
 
                 MessageBox.Show(message, Properties.Langs.Lang.kickTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
 
-                MainFrame.Navigate(new LoginPage());
+                NavigateToLogin();
             });
         }
     }

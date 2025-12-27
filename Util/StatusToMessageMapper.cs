@@ -11,7 +11,7 @@ namespace CodenamesClient.Util
                 case CodenamesGame.AuthenticationService.StatusCode.WRONG_DATA:
                     return Lang.profileNewPasswordNotValid;
                 case CodenamesGame.AuthenticationService.StatusCode.NOT_FOUND:
-                    return Lang.emailPasswordUpdateFailedAddressNotFound;
+                    return GetNotFoundAuthMessage(operationType);
                 case CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED:
                     return GetUnauthorizedAuthMessage(operationType);
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_ERROR:
@@ -29,6 +29,18 @@ namespace CodenamesClient.Util
                 default:
                     return Lang.globalUnknownServerError;
             }
+        }
+
+        private static string GetNotFoundAuthMessage(AuthOperationType operationType)
+        {
+            switch (operationType)
+            {
+                case AuthOperationType.PASS_UPDATE:
+                    return Lang.emailPasswordUpdateFailedAddressNotFound;
+                case AuthOperationType.PASS_RESET:
+                    return Lang.emailPasswordResetCodeExpiredOrRemoved;
+            }
+            return Lang.globalUnknownServerError;
         }
 
         private static string GetUnauthorizedAuthMessage(AuthOperationType operationType)

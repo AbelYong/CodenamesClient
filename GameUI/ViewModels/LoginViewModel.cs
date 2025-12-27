@@ -132,7 +132,7 @@ namespace CodenamesClient.GameUI.ViewModels
             return OnewayNetworkManager.Instance.SendVerificationEmail(email, CodenamesGame.EmailService.EmailType.PASSWORD_RESET);
         }
 
-        public static CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string password)
+        public static CodenamesGame.AuthenticationService.PasswordResetRequest CompletePasswordReset(string email, string code, string password)
         {
             return OnewayNetworkManager.Instance.CompletePasswordReset(email, code, password);
         }

@@ -302,6 +302,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         private void Click_btnHideResetPassword(object sender, RoutedEventArgs e)
         {
             HideGridResetPassword();
+            ClearPasswordFields();
         }
 
         private void Click_btnConfirmResetPassword(object sender, RoutedEventArgs e)

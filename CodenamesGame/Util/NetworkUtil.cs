@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ServiceModel;
 
 namespace CodenamesGame.Util
 {
@@ -11,6 +6,11 @@ namespace CodenamesGame.Util
     {
         public static void SafeClose(ICommunicationObject client)
         {
+            if (client == null)
+            {
+                return;
+            }
+
             try
             {
                 if (client.State == CommunicationState.Faulted)

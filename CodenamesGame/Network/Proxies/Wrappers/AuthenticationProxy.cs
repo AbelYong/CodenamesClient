@@ -42,9 +42,9 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
-        public CommunicationRequest CompletePasswordReset(string email, string code, string newPassword)
+        public PasswordResetRequest CompletePasswordReset(string email, string code, string newPassword)
         {
-            CommunicationRequest request = new CommunicationRequest();
+            PasswordResetRequest request = new PasswordResetRequest();
             var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
             try
             {
@@ -52,20 +52,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             catch (TimeoutException)
             {
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.SERVER_TIMEOUT;
             }
             catch (EndpointNotFoundException)
             {
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
             }
             catch (CommunicationException)
             {
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
             }
             catch (Exception ex)
             {
                 CodenamesGameLogger.Log.Error("Unexpected exception on password reset completion: ", ex);
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.CLIENT_ERROR;
             }
             finally
             {
@@ -84,20 +84,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             catch (TimeoutException)
             {
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.SERVER_TIMEOUT;
             }
             catch (EndpointNotFoundException)
             {
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
             }
             catch (CommunicationException)
             {
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
             }
             catch (Exception ex)
             {
                 CodenamesGameLogger.Log.Error("Unexpected exception on password reset completion: ", ex);
-                NetworkUtil.SafeClose(client);
+                request.StatusCode = StatusCode.CLIENT_ERROR;
             }
             finally
             {

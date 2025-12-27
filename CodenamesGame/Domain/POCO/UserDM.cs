@@ -17,19 +17,16 @@ namespace CodenamesGame.Domain.POCO
 
         public static UserDM AssembleUser(UserService.User svUser)
         {
+            if (svUser == null)
+            {
+                return null;
+            }
+
             UserDM user = new UserDM();
             user.UserID = svUser.UserID;
             user.Email = svUser.Email;
             user.Password = "";
             return user;
-        }
-
-        public static AuthenticationService.User AssembleAuthSvUser(UserDM user)
-        {
-            AuthenticationService.User svUser = new AuthenticationService.User();
-            svUser.Email = user.Email;
-            svUser.Password = user.Password;
-            return svUser;
         }
 
         public static UserService.User AssembleUserSvUser(UserDM user)

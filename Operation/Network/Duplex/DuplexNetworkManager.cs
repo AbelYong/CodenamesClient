@@ -35,7 +35,6 @@ namespace CodenamesClient.Operation.Network.Duplex
             _scoreboardOperation = new ScoreboardOperation();
         }
 
-        // Session Service
         public CodenamesGame.SessionService.CommunicationRequest ConnectToSessionService(PlayerDM player)
         {
             return _sessionOperation.Initialize(player);
@@ -46,7 +45,6 @@ namespace CodenamesClient.Operation.Network.Duplex
             _sessionOperation.Disconnect();
         }
 
-        // Friend Service
         public void ConnectToFriendService(Guid mePlayerId)
         {
             _socialOperation.Initialize(mePlayerId);
@@ -97,7 +95,6 @@ namespace CodenamesClient.Operation.Network.Duplex
             return _socialOperation.RemoveFriend(friendPlayerId);
         }
 
-        // Lobby Service
         public CodenamesGame.LobbyService.CommunicationRequest ConnectLobbyService(Guid playerID)
         {
             return _lobbyOperation.Initialize(playerID);
@@ -123,7 +120,6 @@ namespace CodenamesClient.Operation.Network.Duplex
             return _lobbyOperation.JoinParty(joiningPlayer, lobbyCode);
         }
 
-        // Matchmaking Service
         public CodenamesGame.MatchmakingService.CommunicationRequest ConnectMatchmakingService(Guid playerID)
         {
             return _matchmakingOperation.Initialize(playerID);
@@ -149,7 +145,6 @@ namespace CodenamesClient.Operation.Network.Duplex
             _matchmakingOperation.CancelMatch();
         }
 
-        // Match Service
         public CodenamesGame.MatchService.CommunicationRequest ConnectMatchService(Guid playerID)
         {
             return _matchOperation.Initialize(playerID);
@@ -190,7 +185,6 @@ namespace CodenamesClient.Operation.Network.Duplex
             await _matchOperation.NotifyPickedAssassin(coordinates);
         }
 
-        //Scoreboard Service
         public void ConnectToScoreboardService(Guid playerID)
         {
             _scoreboardOperation.Initialize(playerID);

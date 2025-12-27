@@ -17,9 +17,9 @@ namespace CodenamesClient.GameUI.ViewModels
         private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
         private Visibility _isTitleVisible = Visibility.Visible;
         private string _emailVerification;
-        private string _currentPassword;
-        private string _newPassword;
-        private string _confirmPassword;
+        private string _currentPassword = string.Empty;
+        private string _newPassword = string.Empty;
+        private string _confirmPassword = string.Empty;
 
         public string EmailVerification
         {

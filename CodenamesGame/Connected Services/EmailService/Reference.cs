@@ -34,6 +34,7 @@ namespace CodenamesGame.EmailService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.CreateLobbyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.JoinPartyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.FriendshipRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.PasswordResetRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.EmailService.CommunicationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -264,6 +265,29 @@ namespace CodenamesGame.EmailService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PasswordResetRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class PasswordResetRequest : CodenamesGame.EmailService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingAttemptsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingAttempts {
+            get {
+                return this.RemainingAttemptsField;
+            }
+            set {
+                if ((this.RemainingAttemptsField.Equals(value) != true)) {
+                    this.RemainingAttemptsField = value;
+                    this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class CommunicationRequest : CodenamesGame.EmailService.Request {
@@ -457,6 +481,9 @@ namespace CodenamesGame.EmailService {
         private string InstagramUsernameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -529,6 +556,19 @@ namespace CodenamesGame.EmailService {
                 if ((object.ReferenceEquals(this.InstagramUsernameField, value) != true)) {
                     this.InstagramUsernameField = value;
                     this.RaisePropertyChanged("InstagramUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGuest {
+            get {
+                return this.IsGuestField;
+            }
+            set {
+                if ((this.IsGuestField.Equals(value) != true)) {
+                    this.IsGuestField = value;
+                    this.RaisePropertyChanged("IsGuest");
                 }
             }
         }

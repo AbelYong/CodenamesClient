@@ -28,7 +28,7 @@
   <xs:element name="CompletePasswordResetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q2:CommunicationRequest" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="CompletePasswordResetResult" nillable="true" type="q2:PasswordResetRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

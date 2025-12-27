@@ -7,6 +7,7 @@
       <xs:element minOccurs="0" name="DiscordUsername" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FacebookUsername" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InstagramUsername" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
       <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PlayerID" nillable="true" type="ser:guid" />

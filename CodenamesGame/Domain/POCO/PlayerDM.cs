@@ -112,6 +112,7 @@ namespace CodenamesGame.Domain.POCO
         public static UserService.Player AssembleUserSvPlayer(PlayerDM player)
         {
             UserService.Player svPlayer = new UserService.Player();
+            svPlayer.IsGuest = player.IsGuest;
             svPlayer.PlayerID = player.PlayerID;
             svPlayer.Username = player.Username;
             svPlayer.AvatarID  = player.AvatarID;
@@ -127,6 +128,7 @@ namespace CodenamesGame.Domain.POCO
         public static SessionService.Player AssembleSessionSvPlayer(PlayerDM player)
         {
             SessionService.Player svPlayer = new SessionService.Player();
+            svPlayer.IsGuest = player.IsGuest;
             svPlayer.PlayerID = player.PlayerID;
             svPlayer.Username = player.Username;
             svPlayer.AvatarID = player.AvatarID;
@@ -141,6 +143,7 @@ namespace CodenamesGame.Domain.POCO
         public static LobbyService.Player AssembleLobbySvPlayer(PlayerDM player)
         {
             LobbyService.Player svPlayer = new LobbyService.Player();
+            svPlayer.IsGuest = player.IsGuest;
             svPlayer.PlayerID = player.PlayerID;
             svPlayer.Username = player.Username;
             svPlayer.AvatarID = player.AvatarID;
@@ -150,6 +153,7 @@ namespace CodenamesGame.Domain.POCO
         public static MatchmakingService.Player AssembleMatchmakingSvPlayer(PlayerDM player)
         {
             MatchmakingService.Player svPlayer = new MatchmakingService.Player();
+            svPlayer.IsGuest = player.IsGuest;
             svPlayer.PlayerID = player.PlayerID;
             svPlayer.Username = player.Username;
             svPlayer.AvatarID = player.AvatarID;
@@ -159,7 +163,10 @@ namespace CodenamesGame.Domain.POCO
         public static MatchService.Player AssembleMatchSvPlayer(PlayerDM player)
         {
             MatchService.Player svPlayer = new MatchService.Player();
+            svPlayer.IsGuest = player.IsGuest;
             svPlayer.PlayerID = player.PlayerID;
+            svPlayer.Username = player.Username;
+            svPlayer.AvatarID = player.AvatarID;
             return svPlayer;
         }
     }

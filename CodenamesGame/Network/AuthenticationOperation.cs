@@ -20,10 +20,10 @@ namespace CodenamesGame.Network
             return _proxy.Authenticate(username, password);
         }
 
-        public CommunicationRequest CompletePasswordReset(string email, string code, string newPassword)
+        public PasswordResetRequest CompletePasswordReset(string email, string code, string newPassword)
         {
             return _proxy.CompletePasswordReset(email, code, newPassword);
-        }
+        } 
 
         public CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword)
         {

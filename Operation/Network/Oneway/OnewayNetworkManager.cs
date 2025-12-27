@@ -26,13 +26,12 @@ namespace CodenamesClient.Operation.Network.Oneway
             _moderationOperation = new ModerationOperation();
         }
 
-        // Authentication Service
         public CodenamesGame.AuthenticationService.AuthenticationRequest Authenticate(string username, string password)
         {
             return _authenticationOperation.Authenticate(username, password);
         }
 
-        public CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string newPassword)
+        public CodenamesGame.AuthenticationService.PasswordResetRequest CompletePasswordReset(string email, string code, string newPassword)
         {
             return _authenticationOperation.CompletePasswordReset(email, code, newPassword);
         }
@@ -42,7 +41,6 @@ namespace CodenamesClient.Operation.Network.Oneway
             return _authenticationOperation.UpdatePassword(username, currentPassword, newPassword);
         }
 
-        // User service
         public CodenamesGame.UserService.SignInRequest SignIn(UserDM user, PlayerDM player)
         {
             return _userOperation.SignIn(user, player);
@@ -58,7 +56,6 @@ namespace CodenamesClient.Operation.Network.Oneway
             return _userOperation.UpdateProfile(player);
         }
 
-        //Email Service
         public CodenamesGame.EmailService.CommunicationRequest SendVerificationEmail(string email, EmailType emailType)
         {
             return _emailOperation.SendVerificationEmail(email, emailType);

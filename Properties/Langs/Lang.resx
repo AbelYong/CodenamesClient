@@ -777,4 +777,10 @@
   <data name="lobbyOnlyPartyHostCanStart" xml:space="preserve">
     <value>Only the party host can start the match</value>
   </data>
+  <data name="emailPasswordResetFailedAdressNotFound" xml:space="preserve">
+    <value>We couldn't find this email address, please make sure the spelling is correct, try again later if the issue persists</value>
+  </data>
+  <data name="emailPasswordResetCodeExpiredOrRemoved" xml:space="preserve">
+    <value>We couldn't update your password because the verification code has expired or you have run out of attempts</value>
+  </data>
 </root>

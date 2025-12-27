@@ -23,6 +23,7 @@ namespace CodenamesGame.AuthenticationService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.CreateLobbyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.JoinPartyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.FriendshipRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.PasswordResetRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.AuthenticationService.AuthenticationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -237,6 +238,29 @@ namespace CodenamesGame.AuthenticationService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PasswordResetRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class PasswordResetRequest : CodenamesGame.AuthenticationService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingAttemptsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingAttempts {
+            get {
+                return this.RemainingAttemptsField;
+            }
+            set {
+                if ((this.RemainingAttemptsField.Equals(value) != true)) {
+                    this.RemainingAttemptsField = value;
+                    this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class AuthenticationRequest : CodenamesGame.AuthenticationService.Request {
@@ -446,6 +470,9 @@ namespace CodenamesGame.AuthenticationService {
         private string InstagramUsernameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -518,6 +545,19 @@ namespace CodenamesGame.AuthenticationService {
                 if ((object.ReferenceEquals(this.InstagramUsernameField, value) != true)) {
                     this.InstagramUsernameField = value;
                     this.RaisePropertyChanged("InstagramUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGuest {
+            get {
+                return this.IsGuestField;
+            }
+            set {
+                if ((this.IsGuestField.Equals(value) != true)) {
+                    this.IsGuestField = value;
+                    this.RaisePropertyChanged("IsGuest");
                 }
             }
         }
@@ -685,10 +725,10 @@ namespace CodenamesGame.AuthenticationService {
         System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.AuthenticationRequest> AuthenticateAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse")]
-        CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string newPassword);
+        CodenamesGame.AuthenticationService.PasswordResetRequest CompletePasswordReset(string email, string code, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/CompletePasswordReset", ReplyAction="http://tempuri.org/IAuthenticationManager/CompletePasswordResetResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.CommunicationRequest> CompletePasswordResetAsync(string email, string code, string newPassword);
+        System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.PasswordResetRequest> CompletePasswordResetAsync(string email, string code, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationManager/UpdatePassword", ReplyAction="http://tempuri.org/IAuthenticationManager/UpdatePasswordResponse")]
         CodenamesGame.AuthenticationService.CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword);
@@ -732,11 +772,11 @@ namespace CodenamesGame.AuthenticationService {
             return base.Channel.AuthenticateAsync(username, password);
         }
         
-        public CodenamesGame.AuthenticationService.CommunicationRequest CompletePasswordReset(string email, string code, string newPassword) {
+        public CodenamesGame.AuthenticationService.PasswordResetRequest CompletePasswordReset(string email, string code, string newPassword) {
             return base.Channel.CompletePasswordReset(email, code, newPassword);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.CommunicationRequest> CompletePasswordResetAsync(string email, string code, string newPassword) {
+        public System.Threading.Tasks.Task<CodenamesGame.AuthenticationService.PasswordResetRequest> CompletePasswordResetAsync(string email, string code, string newPassword) {
             return base.Channel.CompletePasswordResetAsync(email, code, newPassword);
         }
         

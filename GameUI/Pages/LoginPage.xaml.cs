@@ -17,7 +17,6 @@ namespace CodenamesClient.GameUI.Pages
     public partial class LoginPage : Page
     {
         private readonly LoginViewModel _viewModel;
-        private int _remainingResetAttempts;
 
         public LoginPage()
         {
@@ -94,14 +93,14 @@ namespace CodenamesClient.GameUI.Pages
         private void HideReset_Backdrop(object sender, MouseButtonEventArgs e)
         {
             HideResetOverlay();
-        } 
+        }
 
         private void PrefillResetFields()
         {
-            ResetEmail.Text = "";
-            ResetCode.Text = "";
-            NewPassword.Password = "";
-            ConfirmPassword.Password = "";
+            ResetEmail.Text = string.Empty;
+            ResetCode.Text = string.Empty;
+            NewPassword.Password = string.Empty;
+            ConfirmPassword.Password = string.Empty;
         }
 
         private void ShowResetOverlay()
@@ -125,8 +124,10 @@ namespace CodenamesClient.GameUI.Pages
                 ResetBackdrop.Visibility = Visibility.Collapsed;
                 ResetGrid.Visibility = Visibility.Collapsed;
 
-                var tt = ResetGrid.RenderTransform as TranslateTransform;
-                if (tt != null) tt.Y = 640;
+                if (ResetGrid.RenderTransform is TranslateTransform tt)
+                {
+                    tt.Y = 640;
+                }
             };
 
             sb.Completed += onDone;
@@ -136,11 +137,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void SendCode_Click(object sender, RoutedEventArgs e)
         {
-            var btn = sender as Button;
-            if (btn != null)
-            {
-                btn.IsEnabled = false;
-            }
+            ToggleSendButtonEnabled(sender);
 
             var email = ResetEmail.Text.Trim();
 
@@ -154,58 +151,69 @@ namespace CodenamesClient.GameUI.Pages
 
             if (request.IsSuccess)
             {
-                int initialResetAttempts = 3;
-                _remainingResetAttempts = initialResetAttempts;
                 MessageBox.Show(Lang.resetCodeSend);
             }
             else
             {
-                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
+                string message = request.StatusCode == CodenamesGame.EmailService.StatusCode.NOT_FOUND ? 
+                    Lang.emailPasswordResetFailedAdressNotFound : StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode);
+                MessageBox.Show(message);
             }
 
-            if (btn != null)
+            ToggleSendButtonEnabled(sender);
+        }
+
+        private void ToggleSendButtonEnabled(object sender)
+        {
+            if (sender is Button btn)
             {
-                btn.IsEnabled = true;
+                btn.IsEnabled = !btn.IsEnabled;
             }
         }
 
         private async void ConfirmReset_Click(object sender, RoutedEventArgs e)
         {
-            var email = ResetEmail.Text.Trim();
-            var code = ResetCode.Text.Trim();
-            var newPassword = NewPassword.Password;
-            var confirmPassword = ConfirmPassword.Password;
+            string email = ResetEmail.Text.Trim();
+            string code = ResetCode.Text.Trim();
+            string newPassword = NewPassword.Password.Trim();
+            string confirmPassword = ConfirmPassword.Password.Trim();
 
-            if (newPassword != confirmPassword)
+            bool passwordsMatch = ValidatePasswordsMatch(newPassword, confirmPassword);
+            if (!passwordsMatch)
             {
                 MessageBox.Show(Lang.resetPasswordsDoNotMatch);
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < ProfileValidation.PASSWORD_MIN_LENGTH || newPassword.Length > ProfileValidation.PASSWORD_MAX_LENGTH)
             {
                 MessageBox.Show(Lang.resetPasswordLengthInvalid);
                 return;
             }
 
-            var result = await Task.Run(() =>
+            var request = await Task.Run(() =>
                 LoginViewModel.CompletePasswordReset(email, code, newPassword)
             );
 
-            if (result.IsSuccess)
+            if (request.IsSuccess)
             {
                 MessageBox.Show(Lang.profilePasswordHasBeenUpdated);
                 HideResetOverlay();
             }
             else
             {
-                _remainingResetAttempts = _remainingResetAttempts == 0 ? 0 : _remainingResetAttempts - 1; //fixme
-                string message = StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.PASS_RESET, result.StatusCode);
-                if (result.StatusCode == CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED)
+                string message = StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.PASS_RESET, request.StatusCode);
+                if (request.StatusCode == CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED)
                 {
-                    message = string.Format(message, _remainingResetAttempts);
+                    message = request.RemainingAttempts > 0 ? string.Format(message, request.RemainingAttempts) : Lang.emailConfirmationCodeExpiredOrRemoved;
                 }
                 MessageBox.Show(message);
             }
+        }
+
+        private static bool ValidatePasswordsMatch(string newPassword, string confirmPassword)
+        {
+            return newPassword == confirmPassword;
         }
     }
 }

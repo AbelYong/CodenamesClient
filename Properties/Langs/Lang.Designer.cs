@@ -133,6 +133,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t update your password because the verification code has expired or you have run out of attempts.
+        /// </summary>
+        public static string emailPasswordResetCodeExpiredOrRemoved {
+            get {
+                return ResourceManager.GetString("emailPasswordResetCodeExpiredOrRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We couldn&apos;t find this email address, please make sure the spelling is correct, try again later if the issue persists.
+        /// </summary>
+        public static string emailPasswordResetFailedAdressNotFound {
+            get {
+                return ResourceManager.GetString("emailPasswordResetFailedAdressNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a We couldn&apos;t update your password because we couldn&apos;t find your email, please try again later.
         /// </summary>
         public static string emailPasswordUpdateFailedAddressNotFound {

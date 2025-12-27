@@ -777,4 +777,10 @@
   <data name="lobbyOnlyPartyHostCanStart" xml:space="preserve">
     <value>Solo el anfitrión del grupo puede comenzar una partida</value>
   </data>
+  <data name="emailPasswordResetFailedAdressNotFound" xml:space="preserve">
+    <value>No pudimos encontrar esta dirección de correo electrónico, asegúrese de que la ortografía sea correcta, inténtelo nuevamente más tarde si el problema persiste</value>
+  </data>
+  <data name="emailPasswordResetCodeExpiredOrRemoved" xml:space="preserve">
+    <value>No pudimos actualizar tu contraseña porque el código de verificación ha expirado o te has quedado sin intentos</value>
+  </data>
 </root>

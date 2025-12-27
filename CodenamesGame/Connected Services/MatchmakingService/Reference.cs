@@ -23,6 +23,7 @@ namespace CodenamesGame.MatchmakingService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.CreateLobbyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.JoinPartyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.FriendshipRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.PasswordResetRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.MatchmakingService.CommunicationRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -253,6 +254,29 @@ namespace CodenamesGame.MatchmakingService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PasswordResetRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class PasswordResetRequest : CodenamesGame.MatchmakingService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingAttemptsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingAttempts {
+            get {
+                return this.RemainingAttemptsField;
+            }
+            set {
+                if ((this.RemainingAttemptsField.Equals(value) != true)) {
+                    this.RemainingAttemptsField = value;
+                    this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     [System.SerializableAttribute()]
     public partial class CommunicationRequest : CodenamesGame.MatchmakingService.Request {
@@ -446,6 +470,9 @@ namespace CodenamesGame.MatchmakingService {
         private string InstagramUsernameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -518,6 +545,19 @@ namespace CodenamesGame.MatchmakingService {
                 if ((object.ReferenceEquals(this.InstagramUsernameField, value) != true)) {
                     this.InstagramUsernameField = value;
                     this.RaisePropertyChanged("InstagramUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGuest {
+            get {
+                return this.IsGuestField;
+            }
+            set {
+                if ((this.IsGuestField.Equals(value) != true)) {
+                    this.IsGuestField = value;
+                    this.RaisePropertyChanged("IsGuest");
                 }
             }
         }
