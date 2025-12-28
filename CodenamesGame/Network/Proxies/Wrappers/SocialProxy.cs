@@ -24,12 +24,10 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private SocialProxy()
         {
-
         }
 
         public void Initialize(Guid mePlayerId)
         {
-            FriendCallbackHandler callbackHandler;
             if (_client != null && _client.State == CommunicationState.Opened)
             {
                 return;
@@ -41,8 +39,8 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
 
             _currentPlayerId = mePlayerId;
-            callbackHandler = new FriendCallbackHandler();
-            var context = new InstanceContext(callbackHandler);
+            FriendCallbackHandler callbackHandler = new FriendCallbackHandler();
+            InstanceContext context = new InstanceContext(callbackHandler);
             _client = new FriendManagerClient(context, _ENDPOINT_NAME);
 
             try
@@ -50,11 +48,25 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 _client.Open();
                 _client.Connect(_currentPlayerId);
             }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
+            catch (TimeoutException ex)
             {
-                NetworkUtil.SafeClose(_client);
-                _client = null;
-                throw new CommunicationException($"Failed to connect to FriendService: {ex.Message}", ex);
+                CodenamesGameLogger.Log.Error("Timeout connecting to FriendService", ex);
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                CodenamesGameLogger.Log.Error("FriendService endpoint not found", ex);
+                CloseProxy();
+            }
+            catch (CommunicationException ex)
+            {
+                CodenamesGameLogger.Log.Error("Communication error connecting to FriendService", ex);
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected error connecting to FriendService", ex);
+                CloseProxy();
             }
         }
 
@@ -66,15 +78,15 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 {
                     _client.Disconnect(_currentPlayerId);
                 }
-                catch (Exception) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
+                catch (TimeoutException) { }
+                catch (CommunicationException) { }
+                catch (Exception ex)
                 {
-                    //fixme: do something???
+                    CodenamesGameLogger.Log.Error("Error disconnecting from FriendService", ex);
                 }
                 finally
                 {
-                    NetworkUtil.SafeClose(_client);
-                    _client = null;
-                    _currentPlayerId = Guid.Empty;
+                    CloseProxy();
                 }
             }
         }
@@ -82,154 +94,327 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         public List<PlayerDM> SearchPlayers(string query)
         {
             int limit = 20;
-            try
-            {
-                var list = GetClient().SearchPlayers(query ?? "", _currentPlayerId, limit);
-                return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
-            }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
+            TryReconnect();
+
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
                 try
                 {
-                    Initialize(_currentPlayerId);
-                    var list = GetClient().SearchPlayers(query ?? "", _currentPlayerId, limit);
+                    var list = _client.SearchPlayers(query ?? "", _currentPlayerId, limit);
                     return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
                 }
-                catch
+                catch (CommunicationException ex)
                 {
-                    OnOperationFailure(ex);
-                    return new List<PlayerDM>();
+                    CodenamesGameLogger.Log.Error("Communication error searching players", ex);
+                    CloseProxy();
+                }
+                catch (TimeoutException ex)
+                {
+                    CodenamesGameLogger.Log.Error("Timeout searching players", ex);
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error searching players", ex);
+                    CloseProxy();
                 }
             }
+
+            return new List<PlayerDM>();
         }
 
         public List<PlayerDM> GetFriends()
         {
-            try
+            TryReconnect();
+
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                var list = GetClient().GetFriends(_currentPlayerId);
-                return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                try
+                {
+                    var list = _client.GetFriends(_currentPlayerId);
+                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                }
+                catch (CommunicationException ex)
+                {
+                    CodenamesGameLogger.Log.Error("Communication error getting friends", ex);
+                    CloseProxy();
+                }
+                catch (TimeoutException ex)
+                {
+                    CodenamesGameLogger.Log.Error("Timeout getting friends", ex);
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error getting friends", ex);
+                    CloseProxy();
+                }
             }
-            catch (Exception ex)
-            {
-                OnOperationFailure(ex);
-                return new List<PlayerDM>();
-            }
+
+            return new List<PlayerDM>();
         }
 
         public List<PlayerDM> GetIncomingRequests()
         {
-            try
+            TryReconnect();
+
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                var list = GetClient().GetIncomingRequests(_currentPlayerId);
-                return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                try
+                {
+                    var list = _client.GetIncomingRequests(_currentPlayerId);
+                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                }
+                catch (CommunicationException ex)
+                {
+                    CodenamesGameLogger.Log.Error("Communication error getting incoming requests", ex);
+                    CloseProxy();
+                }
+                catch (TimeoutException ex)
+                {
+                    CodenamesGameLogger.Log.Error("Timeout getting incoming requests", ex);
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error getting incoming requests", ex);
+                    CloseProxy();
+                }
             }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
-            {
-                OnOperationFailure(ex);
-                return new List<PlayerDM>();
-            }
+
+            return new List<PlayerDM>();
         }
 
         public List<PlayerDM> GetSentRequests()
         {
-            try
-            {
-                var list = GetClient().GetSentRequests(_currentPlayerId);
+            TryReconnect();
 
-                return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
-            }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                OnOperationFailure(ex);
-                return new List<PlayerDM>();
+                try
+                {
+                    var list = _client.GetSentRequests(_currentPlayerId);
+                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                }
+                catch (CommunicationException ex)
+                {
+                    CodenamesGameLogger.Log.Error("Communication error getting sent requests", ex);
+                    CloseProxy();
+                }
+                catch (TimeoutException ex)
+                {
+                    CodenamesGameLogger.Log.Error("Timeout getting sent requests", ex);
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error getting sent requests", ex);
+                    CloseProxy();
+                }
             }
+
+            return new List<PlayerDM>();
         }
 
         public FriendshipRequest SendFriendRequest(Guid toPlayerId)
         {
-            try
+            FriendshipRequest request = new FriendshipRequest();
+            TryReconnect();
+
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                return GetClient().SendFriendRequest(_currentPlayerId, toPlayerId);
-            }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
-            {
-                OnOperationFailure(ex);
-                return new FriendshipRequest
+                try
                 {
-                    IsSuccess = false,
-                    StatusCode = StatusCode.SERVER_ERROR
-                };
+                    return _client.SendFriendRequest(_currentPlayerId, toPlayerId);
+                }
+                catch (TimeoutException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    CloseProxy();
+                }
+                catch (EndpointNotFoundException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    CloseProxy();
+                }
+                catch (CommunicationException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error sending friend request", ex);
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    CloseProxy();
+                }
             }
+            else
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            }
+
+            return request;
         }
 
         public FriendshipRequest AcceptFriendRequest(Guid requesterPlayerId)
         {
-            try
+            FriendshipRequest request = new FriendshipRequest();
+            TryReconnect();
+
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                return GetClient().AcceptFriendRequest(_currentPlayerId, requesterPlayerId);
-            }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
-            {
-                OnOperationFailure(ex);
-                return new FriendshipRequest
+                try
                 {
-                    IsSuccess = false,
-                    StatusCode = StatusCode.SERVER_ERROR
-                };
+                    return _client.AcceptFriendRequest(_currentPlayerId, requesterPlayerId);
+                }
+                catch (TimeoutException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    CloseProxy();
+                }
+                catch (EndpointNotFoundException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    CloseProxy();
+                }
+                catch (CommunicationException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error accepting friend request", ex);
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    CloseProxy();
+                }
             }
+            else
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            }
+
+            return request;
         }
 
         public FriendshipRequest RejectFriendRequest(Guid requesterPlayerId)
         {
-            try
+            FriendshipRequest request = new FriendshipRequest();
+            TryReconnect();
+
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                return GetClient().RejectFriendRequest(_currentPlayerId, requesterPlayerId);
-            }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
-            {
-                OnOperationFailure(ex);
-                return new FriendshipRequest
+                try
                 {
-                    IsSuccess = false,
-                    StatusCode = StatusCode.SERVER_ERROR
-                };
+                    return _client.RejectFriendRequest(_currentPlayerId, requesterPlayerId);
+                }
+                catch (TimeoutException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    CloseProxy();
+                }
+                catch (EndpointNotFoundException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    CloseProxy();
+                }
+                catch (CommunicationException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error rejecting friend request", ex);
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    CloseProxy();
+                }
             }
+            else
+            {
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            }
+
+            return request;
         }
 
         public FriendshipRequest RemoveFriend(Guid friendPlayerId)
         {
-            try
+            FriendshipRequest request = new FriendshipRequest();
+            TryReconnect();
+
+            if (_client != null && _client.State == CommunicationState.Opened)
             {
-                return GetClient().RemoveFriend(_currentPlayerId, friendPlayerId);
-            }
-            catch (Exception ex) //fixme: Catch Exception should be last resort!!!! See the rest of proxies
-            {
-                OnOperationFailure(ex);
-                return new FriendshipRequest
+                try
                 {
-                    IsSuccess = false,
-                    StatusCode = StatusCode.SERVER_ERROR
-                };
+                    return _client.RemoveFriend(_currentPlayerId, friendPlayerId);
+                }
+                catch (TimeoutException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    CloseProxy();
+                }
+                catch (EndpointNotFoundException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    CloseProxy();
+                }
+                catch (CommunicationException)
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    CloseProxy();
+                }
+                catch (Exception ex)
+                {
+                    CodenamesGameLogger.Log.Error("Unexpected error removing friend", ex);
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    CloseProxy();
+                }
             }
-        }
-
-        private FriendManagerClient GetClient()
-        {
-            if (_client == null ||
-                _client.State == CommunicationState.Closed ||
-                _client.State == CommunicationState.Faulted)
+            else
             {
-                Initialize(_currentPlayerId);
+                request.IsSuccess = false;
+                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
             }
 
-            return _client;
+            return request;
         }
 
-        private static void OnOperationFailure(Exception ex)
+        private void TryReconnect()
         {
-            //fixme: USE REQUEST!!!! Translate! Never send the exception directly to the user!!
-            FriendCallbackHandler.RaiseOperationFailure($"Error de conexión: {ex.Message}");
+            if (_client == null || _client.State != CommunicationState.Opened)
+            {
+                if (_currentPlayerId != Guid.Empty)
+                {
+                    Initialize(_currentPlayerId);
+                }
+            }
+        }
+
+        private void CloseProxy()
+        {
+            NetworkUtil.SafeClose(_client);
+            _client = null;
         }
     }
 }
