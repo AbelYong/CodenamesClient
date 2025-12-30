@@ -2,8 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9058/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:9058/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
-  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
   <xs:element name="Connect">
     <xs:complexType>
       <xs:sequence>
@@ -80,7 +79,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="matchID" type="q13:guid" />
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="reason" type="q14:StatusCode" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="reason" type="q14:StatusCode" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

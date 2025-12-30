@@ -78,8 +78,14 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 {
                     _client.Disconnect(_currentPlayerId);
                 }
-                catch (TimeoutException) { }
-                catch (CommunicationException) { }
+                catch (TimeoutException ex)
+                {
+                    CodenamesGameLogger.Log.Warn("Timeout disconnecting from FriendService players", ex);
+                }
+                catch (CommunicationException)
+                {
+                    CodenamesGameLogger.Log.Warn("Communication error disconnecting from FriendService players", ex);
+                }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Error disconnecting from FriendService", ex);
@@ -105,12 +111,12 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (CommunicationException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Communication error searching players", ex);
+                    CodenamesGameLogger.Log.Warn("Communication error searching players", ex);
                     CloseProxy();
                 }
                 catch (TimeoutException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Timeout searching players", ex);
+                    CodenamesGameLogger.Log.Warn("Timeout searching players", ex);
                     CloseProxy();
                 }
                 catch (Exception ex)
@@ -136,12 +142,12 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (CommunicationException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Communication error getting friends", ex);
+                    CodenamesGameLogger.Log.Warn("Communication error getting friends", ex);
                     CloseProxy();
                 }
                 catch (TimeoutException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Timeout getting friends", ex);
+                    CodenamesGameLogger.Log.Warn("Timeout getting friends", ex);
                     CloseProxy();
                 }
                 catch (Exception ex)
@@ -167,12 +173,12 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (CommunicationException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Communication error getting incoming requests", ex);
+                    CodenamesGameLogger.Log.Warn("Communication error getting incoming requests", ex);
                     CloseProxy();
                 }
                 catch (TimeoutException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Timeout getting incoming requests", ex);
+                    CodenamesGameLogger.Log.Warn("Timeout getting incoming requests", ex);
                     CloseProxy();
                 }
                 catch (Exception ex)
@@ -198,12 +204,12 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (CommunicationException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Communication error getting sent requests", ex);
+                    CodenamesGameLogger.Log.Warn("Communication error getting sent requests", ex);
                     CloseProxy();
                 }
                 catch (TimeoutException ex)
                 {
-                    CodenamesGameLogger.Log.Error("Timeout getting sent requests", ex);
+                    CodenamesGameLogger.Log.Warn("Timeout getting sent requests", ex);
                     CloseProxy();
                 }
                 catch (Exception ex)

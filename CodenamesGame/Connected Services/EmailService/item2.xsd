@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:9053/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9053/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9053/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
   <xs:simpleType name="EmailType">
     <xs:restriction base="xs:string">
       <xs:enumeration value="EMAIL_VERIFICATION" />
@@ -10,90 +8,35 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="EmailType" nillable="true" type="tns:EmailType" />
-  <xs:complexType name="CommunicationRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="CommunicationRequest" nillable="true" type="tns:CommunicationRequest" />
-  <xs:complexType name="Request">
+  <xs:complexType name="Party">
     <xs:sequence>
-      <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="StatusCode" type="q1:StatusCode" />
+      <xs:element minOccurs="0" name="LobbyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PartyGuest" nillable="true" type="tns:Player" />
+      <xs:element minOccurs="0" name="PartyHost" nillable="true" type="tns:Player" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Request" nillable="true" type="tns:Request" />
-  <xs:complexType name="AuthenticationRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="UserID" nillable="true" type="ser:guid" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+  <xs:element name="Party" nillable="true" type="tns:Party" />
+  <xs:complexType name="Player">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AvatarID" type="xs:int" />
+      <xs:element minOccurs="0" name="DiscordUsername" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FacebookUsername" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InstagramUsername" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlayerID" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
   </xs:complexType>
-  <xs:element name="AuthenticationRequest" nillable="true" type="tns:AuthenticationRequest" />
-  <xs:complexType name="SignInRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="IsEmailDuplicate" type="xs:boolean" />
-          <xs:element minOccurs="0" name="IsEmailValid" type="xs:boolean" />
-          <xs:element minOccurs="0" name="IsPasswordValid" type="xs:boolean" />
-          <xs:element minOccurs="0" name="IsUsernameDuplicate" type="xs:boolean" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+  <xs:element name="Player" nillable="true" type="tns:Player" />
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserID" type="ser:guid" />
+    </xs:sequence>
   </xs:complexType>
-  <xs:element name="SignInRequest" nillable="true" type="tns:SignInRequest" />
-  <xs:complexType name="ConfirmEmailRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="RemainingAttempts" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ConfirmEmailRequest" nillable="true" type="tns:ConfirmEmailRequest" />
-  <xs:complexType name="CreateLobbyRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="LobbyCode" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="CreateLobbyRequest" nillable="true" type="tns:CreateLobbyRequest" />
-  <xs:complexType name="JoinPartyRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="Party" nillable="true" type="q2:Party" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="JoinPartyRequest" nillable="true" type="tns:JoinPartyRequest" />
-  <xs:complexType name="FriendshipRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence />
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="FriendshipRequest" nillable="true" type="tns:FriendshipRequest" />
-  <xs:complexType name="PasswordResetRequest">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Request">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="RemainingAttempts" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="PasswordResetRequest" nillable="true" type="tns:PasswordResetRequest" />
+  <xs:element name="User" nillable="true" type="tns:User" />
 </xs:schema>

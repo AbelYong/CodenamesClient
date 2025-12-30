@@ -2,7 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9051/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:9051/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-  <xs:import schemaLocation="http://localhost:9051/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+  <xs:import schemaLocation="http://localhost:9051/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
   <xs:element name="Connect">
     <xs:complexType>
       <xs:sequence>
@@ -99,7 +99,7 @@
   <xs:element name="SearchPlayersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="SearchPlayersResult" nillable="true" type="q16:ArrayOfPlayer" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="SearchPlayersResult" nillable="true" type="q16:ArrayOfPlayer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -113,7 +113,7 @@
   <xs:element name="GetFriendsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="GetFriendsResult" nillable="true" type="q18:ArrayOfPlayer" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="GetFriendsResult" nillable="true" type="q18:ArrayOfPlayer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -127,7 +127,7 @@
   <xs:element name="GetIncomingRequestsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="GetIncomingRequestsResult" nillable="true" type="q20:ArrayOfPlayer" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="GetIncomingRequestsResult" nillable="true" type="q20:ArrayOfPlayer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,35 +141,35 @@
   <xs:element name="GetSentRequestsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="GetSentRequestsResult" nillable="true" type="q22:ArrayOfPlayer" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="GetSentRequestsResult" nillable="true" type="q22:ArrayOfPlayer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyNewFriendRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="fromPlayer" nillable="true" type="q23:Player" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="fromPlayer" nillable="true" type="q23:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyFriendRequestAccepted">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q24:Player" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="byPlayer" nillable="true" type="q24:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyFriendRequestRejected">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q25:Player" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="byPlayer" nillable="true" type="q25:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyFriendRemoved">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="byPlayer" nillable="true" type="q26:Player" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="byPlayer" nillable="true" type="q26:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

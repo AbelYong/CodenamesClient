@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9049/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9049/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
+  <xs:import schemaLocation="http://localhost:9049/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
   <xs:import schemaLocation="http://localhost:9049/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
   <xs:element name="GetPlayerByUserID">
     <xs:complexType>
@@ -13,14 +13,14 @@
   <xs:element name="GetPlayerByUserIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="GetPlayerByUserIDResult" nillable="true" type="q2:Player" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="GetPlayerByUserIDResult" nillable="true" type="q2:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SignIn">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="svPlayer" nillable="true" type="q3:Player" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="svPlayer" nillable="true" type="q3:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -34,7 +34,7 @@
   <xs:element name="UpdateProfile">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="updatedPlayer" nillable="true" type="q5:Player" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="updatedPlayer" nillable="true" type="q5:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

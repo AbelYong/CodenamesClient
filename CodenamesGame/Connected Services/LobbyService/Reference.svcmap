@@ -23,7 +23,6 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="LobbyService.wsdl" MetadataType="Wsdl" ID="7550c559-a9fb-47c6-8e13-482d532d6da2" SourceId="1" SourceUrl="http://localhost:9061/?wsdl" />
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="b871bdf8-f76a-4fd8-8f14-a48dd66f7e94" SourceId="1" SourceUrl="http://localhost:9061/?xsd=xsd4" />
     <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="3f4cf738-0a9f-4d46-9095-31b74a3be2c1" SourceId="1" SourceUrl="http://localhost:9061/?xsd=xsd3" />
     <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="af07fc3c-cae3-427e-869f-21d62024cba1" SourceId="1" SourceUrl="http://localhost:9061/?xsd=xsd2" />
     <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="77fdc7a9-5504-41ac-b40f-82695e5d3b7f" SourceId="1" SourceUrl="http://localhost:9061/?xsd=xsd1" />

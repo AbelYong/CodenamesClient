@@ -15,7 +15,7 @@ namespace CodenamesGame.SessionService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
     public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -204,7 +204,7 @@ namespace CodenamesGame.SessionService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
     public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -549,7 +549,7 @@ namespace CodenamesGame.SessionService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
     public enum StatusCode : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -715,7 +715,7 @@ namespace CodenamesGame.SessionService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="KickReason", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="KickReason", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     public enum KickReason : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]

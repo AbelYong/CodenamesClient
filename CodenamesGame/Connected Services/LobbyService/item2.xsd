@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:9061/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO" />
   <xs:import schemaLocation="http://localhost:9061/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9061/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+  <xs:import schemaLocation="http://localhost:9061/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
   <xs:complexType name="CommunicationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
@@ -14,10 +13,43 @@
   <xs:complexType name="Request">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO" minOccurs="0" name="StatusCode" type="q1:StatusCode" />
+      <xs:element minOccurs="0" name="StatusCode" type="tns:StatusCode" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Request" nillable="true" type="tns:Request" />
+  <xs:simpleType name="StatusCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK" />
+      <xs:enumeration value="CREATED" />
+      <xs:enumeration value="UPDATED" />
+      <xs:enumeration value="CONFLICT" />
+      <xs:enumeration value="CLIENT_CANCEL" />
+      <xs:enumeration value="CLIENT_DISCONNECT" />
+      <xs:enumeration value="CLIENT_UNREACHABLE" />
+      <xs:enumeration value="CLIENT_TIMEOUT" />
+      <xs:enumeration value="MISSING_DATA" />
+      <xs:enumeration value="WRONG_DATA" />
+      <xs:enumeration value="NOT_FOUND" />
+      <xs:enumeration value="UNAUTHORIZED" />
+      <xs:enumeration value="UNALLOWED" />
+      <xs:enumeration value="SERVER_ERROR" />
+      <xs:enumeration value="SERVER_UNAVAIBLE" />
+      <xs:enumeration value="SERVER_TIMEOUT" />
+      <xs:enumeration value="SERVER_UNREACHABLE" />
+      <xs:enumeration value="CLIENT_ERROR" />
+      <xs:enumeration value="ACCOUNT_BANNED" />
+      <xs:enumeration value="REPORT_CREATED" />
+      <xs:enumeration value="REPORT_DUPLICATED" />
+      <xs:enumeration value="USER_KICKED_AND_BANNED" />
+      <xs:enumeration value="FRIEND_REQUEST_SENT" />
+      <xs:enumeration value="FRIEND_ADDED" />
+      <xs:enumeration value="FRIEND_REMOVED" />
+      <xs:enumeration value="FRIEND_REQUEST_REJECTED" />
+      <xs:enumeration value="ALREADY_FRIENDS" />
+      <xs:enumeration value="FRIEND_REQUEST_ALREADY_SENT" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="StatusCode" nillable="true" type="tns:StatusCode" />
   <xs:complexType name="AuthenticationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
@@ -65,7 +97,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
-          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="Party" nillable="true" type="q2:Party" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="Party" nillable="true" type="q1:Party" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
