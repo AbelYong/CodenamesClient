@@ -6,6 +6,7 @@ using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -19,7 +20,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         private string _auxAuthReason;
         private int _tempAvatarID;
         public event Action ClickCloseProfile;
-        public event Action ClickSaveProfile;
+        public event Action CloseProfile;
 
         public ProfileControl(PlayerDM player, bool isReadOnly)
         {
@@ -106,13 +107,12 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             slideInAnimation.Begin();
         }
 
-        private void HideGridAuthenticate(bool isCancelAuth)
+        private void HideGridAuthenticate()
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutAuthenticateAnimation");
             slideOutAnimation.Completed += (s, ev) =>
             {
                 gridAuthenticate.Visibility = Visibility.Collapsed;
-                stackPanelProfileForm.Visibility = isCancelAuth ? Visibility.Visible : Visibility.Hidden;
             };
             slideOutAnimation.Begin();
         }
@@ -124,15 +124,14 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             {
                 if (Authenticate())
                 {
+                    HideGridAuthenticate();
                     switch (reason)
                     {
                         case AuthtenticationReason.EMAIL_UPDATE:
-                            HideGridAuthenticate(isCancelAuth: false);
                             VerifyEmail();
                             ClearPasswordFields();
                             break;
                         case AuthtenticationReason.PASSWORD_RESET:
-                            HideGridAuthenticate(isCancelAuth: false);
                             ShowGridResetPassword();
                             break;
                         default:
@@ -163,7 +162,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 
         private void Click_btnCancelAuthentication(object sender, RoutedEventArgs e)
         {
-            HideGridAuthenticate(isCancelAuth: true);
+            HideGridAuthenticate();
+            stackPanelProfileForm.Visibility = Visibility.Visible;
             ClearPasswordFields();
         }
 
@@ -197,7 +197,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 if (_player.User.Email.Equals(tBxEmail.Text))
                 {
                     SaveProfile();
-                    ClickSaveProfile?.Invoke();
                 }
                 else
                 {
@@ -213,26 +212,34 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             string message = request.StatusCode == CodenamesGame.UserService.StatusCode.NOT_FOUND ?
                 Lang.profileUpdateErrorProfileNotFound : StatusToMessageMapper.GetUserServiceMessage(request.StatusCode);
             MessageBox.Show(message);
+            if (request.IsSuccess)
+            {
+                CloseProfile?.Invoke();
+            }
         }
 
         private void VerifyEmail()
         {
-            bool wasCodeSent = SendVerificationCode(tBxEmail.Text);
-            if (wasCodeSent)
+            CodenamesGame.EmailService.CommunicationRequest request = SendVerificationCode(tBxEmail.Text);
+            if (request.IsSuccess)
             {
                 ShowgGridVerify();
             }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    stackPanelProfileForm.Visibility = Visibility.Visible;
+                });
+                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
+            }
         }
 
-        private static bool SendVerificationCode(string email)
+        private static CodenamesGame.EmailService.CommunicationRequest SendVerificationCode(string email)
         {
             CodenamesGame.EmailService.CommunicationRequest request =
                 OnewayNetworkManager.Instance.SendVerificationEmail(email, CodenamesGame.EmailService.EmailType.EMAIL_VERIFICATION);
-            if (!request.IsSuccess)
-            {
-                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
-            }
-            return request.IsSuccess;
+            return request;
         }
 
         private void Click_btnConfirmVerify(object sender, EventArgs e)
@@ -244,7 +251,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             if (request.IsSuccess)
             {
                 SaveProfile();
-                ClickSaveProfile?.Invoke();
+                CloseProfile?.Invoke();
             }
             else
             {
@@ -313,6 +320,10 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             {
                 MessageBox.Show(Lang.profilePasswordHasBeenUpdated);
                 HideGridResetPassword();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    stackPanelProfileForm.Visibility = Visibility.Visible;
+                });
             }
             else
             {
@@ -383,8 +394,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             };
             slideOutAnimation.Begin();
         }
-
-        
 
         private PlayerDM PrepareUpdatedPlayer()
         {

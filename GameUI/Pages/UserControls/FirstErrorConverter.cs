@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Windows.Controls;
+using System.Windows.Data;
+
+namespace CodenamesClient.GameUI.Pages.UserControls
+{
+    public class FirstErrorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // The value is the ReadOnlyObservableCollection<ValidationError>
+            if (value is ReadOnlyObservableCollection<ValidationError> errors && errors.Count > 0)
+            {
+                return errors[0].ErrorContent;
+            }
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return string.Empty;
+        }
+    }
+}

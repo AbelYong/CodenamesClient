@@ -14,6 +14,7 @@
     
     <!-- ===================== Resources (styles + animations) ===================== -->
     <Page.Resources>
+        <uc:FirstErrorConverter x:Key="FirstErrorConverter"/>
         <Style x:Key="InlineLinkStyle" TargetType="TextBlock" BasedOn="{StaticResource normal}">
             <Setter Property="TextDecorations" Value="Underline"/>
             <Setter Property="Cursor" Value="Hand"/>
@@ -40,6 +41,36 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
+        <Style x:Key="ChecklistItemStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Tomato"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,2,0,0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+                    <Setter Property="Foreground" Value="LimeGreen"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <ControlTemplate x:Key="BelowTextValidationTemplate">
+            <DockPanel LastChildFill="True">
+                <TextBlock Margin="0,4,0,0" Foreground="Tomato" FontSize="12" TextWrapping="Wrap" DockPanel.Dock="Bottom"
+                   Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors), Converter={StaticResource FirstErrorConverter}}"/>
+                <AdornedElementPlaceholder x:Name="adorner"/>
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="ValidatedPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource passwordBoxCustomFocus}">
+            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource BelowTextValidationTemplate}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Width" Value="360"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="BorderBrush" Value="Tomato"/>
+                    <Setter Property="ToolTip"
+                    Value="{Binding (Validation.Errors), RelativeSource={RelativeSource Self}, Converter={StaticResource FirstErrorConverter}}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Page.Resources>
 
     <!-- ===================== Content ===================== -->
@@ -119,7 +150,7 @@
 
                     <StackPanel Grid.Row="1">
                         <TextBlock Text="{x:Static language:Lang.resetEmail}" Style="{StaticResource normal}" />
-                        <TextBox x:Name="ResetEmail" Style="{StaticResource textBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,12" MaxLength="30" Width="320"/>
+                        <TextBox x:Name="ResetEmail" Style="{StaticResource textBoxCustomFocus}" FontSize="16" Height="35" HorizontalContentAlignment="Center" Margin="0,2,0,12" MaxLength="30" Width="320"/>
 
                         <Button x:Name="SendCodeBtn" Content="{x:Static language:Lang.resetSendCode}"
                             Style="{StaticResource buttonCustomFocus}"
@@ -129,9 +160,46 @@
                         <TextBlock Text="{x:Static language:Lang.resetReceivedCode}" Style="{StaticResource normal}" />
                         <TextBox x:Name="ResetCode" Style="{StaticResource textBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,8" MaxLength="6" Width="320"/>
                         <TextBlock Text="{x:Static language:Lang.resetNewPassword}" Style="{StaticResource normal}" />
-                        <PasswordBox x:Name="NewPassword" Style="{StaticResource passwordBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,8" MaxLength="16" Width="320"/>
-                        <TextBlock Text="{x:Static language:Lang.signInConfirmPassword}" Style="{StaticResource normal}" />
-                        <PasswordBox x:Name="ConfirmPassword" Style="{StaticResource passwordBoxCustomFocus}" HorizontalContentAlignment="Center" Margin="0,2,0,0" MaxLength="16" Width="320"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <PasswordBox Grid.Column="0" uc:PasswordBoxHelper.BindPassword="True"
+                                         uc:PasswordBoxHelper.BoundPassword="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                         LostFocus="PasswordInput_LostFocus" FontSize="16"
+                                         Style="{StaticResource ValidatedPasswordBox}" Margin="0,2,10,20" Height="30" Width="320" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
+                            <Border Grid.Column="1" Margin="0,0,100,20" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
+                                <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
+                                <Border.ToolTip>
+                                    <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
+                                        <StackPanel Margin="5">
+                                            <TextBlock Text="{x:Static language:Lang.signInPasswordRequirements}" FontWeight="Bold" Foreground="White" Margin="0,0,0,5"/>
+                                            <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasMinLength}" Text="{Binding PwMinLengthText}"/>
+                                            <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwWithinMaxLength}" Text="{Binding PwMaxLengthText}"/>
+                                            <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasUpper}" Text="{x:Static language:Lang.signInPasswordAtLeastOneUppercaseLetter}"/>
+                                            <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasLower}" Text="{x:Static language:Lang.signInPasswordAtLeastOneLowercaseLetter}"/>
+                                            <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasDigit}" Text="{x:Static language:Lang.signInPasswordAtLeastOneDigit}"/>
+                                            <TextBlock Style="{StaticResource ChecklistItemStyle}" Tag="{Binding PwHasSpecial}" Text="{x:Static language:Lang.signInPasswordAtLeastOneSpecialCharacter}"/>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </Border.ToolTip>
+                            </Border>
+                        </Grid>
+
+                        <TextBlock Text="{x:Static language:Lang.signInConfirmPassword}" Style="{StaticResource normal}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <PasswordBox Grid.Column="0" uc:PasswordBoxHelper.BindPassword="True"
+                                         uc:PasswordBoxHelper.BoundPassword="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"
+                                         Style="{StaticResource ValidatedPasswordBox}"
+                                         Margin="0,2,140,20" Width="320" Height="30" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
+                        </Grid>
                     </StackPanel>
 
                     <Grid Grid.Row="2" Margin="0,14,0,0">
@@ -142,7 +210,7 @@
                         <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}"
                             Style="{StaticResource buttonCustomFocus}"
                             Width="180" Height="40" Click="HideReset_Click"/>
-                        <Button Grid.Column="1" Content="{x:Static language:Lang.resetChangePassword}"
+                        <Button Grid.Column="1" Content="{x:Static language:Lang.resetChangePassword}" IsEnabled="{Binding CanSubmit}"
                             Style="{StaticResource buttonCustomFocus}"
                             Width="180" Height="40" Click="ConfirmReset_Click"/>
                     </Grid>

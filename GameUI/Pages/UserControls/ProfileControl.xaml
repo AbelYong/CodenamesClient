@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              Height="500" Width="600" Background="#FF1D1D1D">
     <UserControl.Resources>
-        
+        <local:FirstErrorConverter x:Key="FirstErrorConverter"/>
         <Storyboard x:Key="SlideInAnimation">
             <DoubleAnimation Storyboard.TargetName="gridProfilePictures"
                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
@@ -90,7 +90,6 @@
             <Setter Property="Foreground" Value="Tomato"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Margin" Value="0,2,0,0"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
                     <Setter Property="Foreground" Value="LimeGreen"/>
@@ -100,18 +99,19 @@
         <ControlTemplate x:Key="BelowTextValidationTemplate">
             <DockPanel LastChildFill="True">
                 <TextBlock Margin="0,4,0,0" Foreground="Tomato" FontSize="12" TextWrapping="Wrap" DockPanel.Dock="Bottom"
-                   Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"/>
+                           Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors), Converter={StaticResource FirstErrorConverter}}"/>
                 <AdornedElementPlaceholder x:Name="adorner"/>
             </DockPanel>
         </ControlTemplate>
-        <Style x:Key="ValidatedTextBox" TargetType="TextBox" BasedOn="{StaticResource textBoxCustomFocus}">
+        <Style x:Key="ValidatedPasswordBox" TargetType="PasswordBox" BasedOn="{StaticResource passwordBoxCustomFocus}">
             <Setter Property="Validation.ErrorTemplate" Value="{StaticResource BelowTextValidationTemplate}"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Width" Value="360"/>
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="True">
                     <Setter Property="BorderBrush" Value="Tomato"/>
-                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                    <Setter Property="ToolTip"
+                            Value="{Binding (Validation.Errors), RelativeSource={RelativeSource Self}, Converter={StaticResource FirstErrorConverter}}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -328,8 +328,8 @@
                        Style="{StaticResource subtitle}" Margin="0,0,0,10"/>
                     <TextBlock Text="{x:Static language:Lang.profileTypeCurrentPassword}" Margin="0,0,0,10"
                                Style="{StaticResource normal}"/>
-                    <TextBox Text="{Binding CurrentPassword}"
-                             Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320" Height="30" MaxLength="16" HorizontalContentAlignment="Center"/>
+                    <PasswordBox local:PasswordBoxHelper.BindPassword="True" local:PasswordBoxHelper.BoundPassword="{Binding CurrentPassword, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource passwordBoxCustomFocus}" Margin="0,2,0,8" Width="320" Height="30" MaxLength="16" HorizontalContentAlignment="Center"/>
                 </StackPanel>
 
                 <Grid Grid.Row="2" Margin="0,14,0,0">
@@ -371,7 +371,7 @@
                     <TextBlock x:Name="VerifyEmailLabel" Text="{Binding EmailVerification}" Style="{StaticResource normal}" FontWeight="Bold" Margin="0,0,0,8"/>
 
                     <TextBlock Text="{x:Static language:Lang.loginVerificationCode}" Style="{StaticResource normal}"/>
-                    <TextBox x:Name="tbxVerifyCode" Style="{StaticResource textBoxCustomFocus}" Margin="0,2,0,8" Width="320" MaxLength="6"/>
+                    <TextBox x:Name="tbxVerifyCode" Style="{StaticResource textBoxCustomFocus}" HorizontalContentAlignment="Center"  Margin="0,2,0,8" Width="320" MaxLength="6"/>
                 </StackPanel>
 
                 <Grid Grid.Row="2" Margin="0,14,0,0">
@@ -415,8 +415,13 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" FontSize="16" LostFocus="PasswordInput_LostFocus"
-                                 Style="{StaticResource ValidatedTextBox}" Margin="0,2,60,25" Height="30" Width="320" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
+
+                        <PasswordBox Grid.Column="0"
+                                     local:PasswordBoxHelper.BindPassword="True"
+                                     local:PasswordBoxHelper.BoundPassword="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                                     LostFocus="PasswordInput_LostFocus"
+                                     FontSize="16"
+                                     Style="{StaticResource ValidatedPasswordBox}" Margin="0,2,60,25" Height="30" Width="320" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
                         <Border Grid.Column="1" Margin="0,0,0,20" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
                             <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
                             <Border.ToolTip>
@@ -434,14 +439,18 @@
                             </Border.ToolTip>
                         </Border>
                     </Grid>
+
                     <TextBlock Text="{x:Static language:Lang.signInConfirmPassword}" Style="{StaticResource normal}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding ConfirmPassword, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"
-                                 Style="{StaticResource ValidatedTextBox}" Margin="0,2,90,20" Width="320" Height="30" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
+
+                        <PasswordBox Grid.Column="0" local:PasswordBoxHelper.BindPassword="True"
+                                     local:PasswordBoxHelper.BoundPassword="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"
+                                     Style="{StaticResource ValidatedPasswordBox}"
+                                     Margin="0,2,90,20" Width="320" Height="30" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
                     </Grid>
                 </StackPanel>
 

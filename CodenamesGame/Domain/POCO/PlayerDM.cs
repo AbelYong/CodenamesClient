@@ -54,11 +54,15 @@ namespace CodenamesGame.Domain.POCO
             }
             return new PlayerDM
             {
+                IsGuest = player.IsGuest,
                 PlayerID = player.PlayerID,
                 AvatarID = player.AvatarID,
                 Username = player.Username,
                 Name = player.Name,
-                LastName = player.LastName
+                LastName = player.LastName,
+                FacebookUsername = player.FacebookUsername,
+                InstagramUsername = player.InstagramUsername,
+                DiscordUsername = player.DiscordUsername,
             };
         }
 
@@ -70,6 +74,7 @@ namespace CodenamesGame.Domain.POCO
             }
             return new PlayerDM
             {
+                IsGuest = player.IsGuest,
                 PlayerID = player.PlayerID,
                 Username = player.Username,
                 AvatarID = player.AvatarID,
@@ -89,6 +94,7 @@ namespace CodenamesGame.Domain.POCO
             }
             return new PlayerDM
             {
+                IsGuest = player.IsGuest,
                 PlayerID = player.PlayerID,
                 Username = player.Username,
                 AvatarID = player.AvatarID,
@@ -103,6 +109,7 @@ namespace CodenamesGame.Domain.POCO
             }
             return new PlayerDM
             {
+                IsGuest = player.IsGuest,
                 PlayerID = player.PlayerID,
                 Username = player.Username,
                 AvatarID = player.AvatarID

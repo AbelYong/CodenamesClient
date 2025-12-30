@@ -25,15 +25,16 @@ namespace CodenamesGame.Domain.POCO
             UserDM user = new UserDM();
             user.UserID = svUser.UserID;
             user.Email = svUser.Email;
-            user.Password = "";
+            user.Password = string.Empty;
             return user;
         }
 
         public static UserService.User AssembleUserSvUser(UserDM user)
         {
             UserService.User svUser = new UserService.User();
-            svUser.UserID = (Guid) user.UserID;
+            svUser.UserID = user.UserID.HasValue ? (Guid)user.UserID : Guid.Empty;
             svUser.Email = user.Email;
+            svUser.Password = user.Password; 
             return svUser;
         }
     }

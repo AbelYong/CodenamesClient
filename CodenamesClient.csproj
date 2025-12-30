@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>fedora.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=3.2.0.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.3.2.0\lib\net462\log4net.dll</HintPath>
@@ -77,6 +80,8 @@
     <Compile Include="GameUI\Pages\MainMenuPage.xaml.cs">
       <DependentUpon>MainMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameUI\Pages\UserControls\FirstErrorConverter.cs" />
+    <Compile Include="GameUI\Pages\UserControls\PasswordBoxHelper.cs" />
     <Compile Include="GameUI\Pages\UserControls\ProfileControl.xaml.cs">
       <DependentUpon>ProfileControl.xaml</DependentUpon>
     </Compile>
@@ -204,6 +209,8 @@
     <Resource Include="Assets\GameUI\usFlag.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="fedora.ico" />
+    <Resource Include="Assets\GameUI\fedora.png" />
     <Resource Include="Assets\GameUI\agentCounterintelligence.png" />
     <Resource Include="Assets\GameUI\agentCustom.png" />
     <Resource Include="Assets\GameUI\spyMap.png" />

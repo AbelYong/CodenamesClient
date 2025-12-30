@@ -21,16 +21,6 @@ namespace CodenamesClient.GameUI.ViewModels
         private string _newPassword = string.Empty;
         private string _confirmPassword = string.Empty;
 
-        public string EmailVerification
-        {
-            get => _emailVerification;
-            set
-            {
-                _emailVerification = value;
-                OnPropertyChanged(nameof(EmailVerification));
-            }
-        }
-
         public Visibility IsTitleVisible
         {
             get => _isTitleVisible;
@@ -41,19 +31,14 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public bool CanSubmit
+        public string EmailVerification
         {
-            get => (!HasErrors && IsPasswordValid && PasswordsMatch);
-        }
-
-        public static string PwMinLengthText
-        {
-            get => string.Format(Lang.signInPasswordMinLength, PasswordValidation.PASSWORD_MIN_LENGTH);
-        }
-
-        public static string PwMaxLengthText
-        {
-            get => string.Format(Lang.signInPasswordMaxLength, PasswordValidation.PASSWORD_MAX_LENGTH);
+            get => _emailVerification;
+            set
+            {
+                _emailVerification = value;
+                OnPropertyChanged(nameof(EmailVerification));
+            }
         }
 
         public string CurrentPassword
@@ -105,6 +90,36 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
+        public bool CanSubmit
+        {
+            get => (!HasErrors && IsPasswordValid && PasswordsMatch);
+        }
+
+        public bool HasErrors
+        {
+            get => (_errors.Any(kv => kv.Value?.Count > 0));
+        }
+
+        public bool IsPasswordValid
+        {
+            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial);
+        }
+
+        private bool PasswordsMatch
+        {
+            get => (!string.IsNullOrEmpty(ConfirmPassword) && ConfirmPassword == NewPassword);
+        }
+
+        public static string PwMinLengthText
+        {
+            get => string.Format(Lang.signInPasswordMinLength, PasswordValidation.PASSWORD_MIN_LENGTH);
+        }
+
+        public static string PwMaxLengthText
+        {
+            get => string.Format(Lang.signInPasswordMaxLength, PasswordValidation.PASSWORD_MAX_LENGTH);
+        }
+
         public bool PwHasMinLength
         {
             get => PasswordValidation.MeetsMinLength(NewPassword);
@@ -133,16 +148,6 @@ namespace CodenamesClient.GameUI.ViewModels
         public bool PwHasSpecial
         {
             get => PasswordValidation.HasSpecial(NewPassword);
-        }
-
-        public bool IsPasswordValid
-        {
-            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial);
-        }
-
-        private bool PasswordsMatch
-        {
-            get => (!string.IsNullOrEmpty(ConfirmPassword) && ConfirmPassword == NewPassword);
         }
 
         public void TriggerPasswordValidation()
@@ -182,7 +187,9 @@ namespace CodenamesClient.GameUI.ViewModels
             if (list.Count == 0)
             {
                 if (_errors.Remove(propertyName))
+                {
                     ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+                }
                 return;
             }
 
@@ -201,14 +208,12 @@ namespace CodenamesClient.GameUI.ViewModels
             return true;
         }
 
-        public bool HasErrors
-        {
-            get => (_errors.Any(kv => kv.Value?.Count > 0));
-        }
-
         public IEnumerable GetErrors(string propertyName)
         {
-            if (string.IsNullOrEmpty(propertyName)) return _errors.SelectMany(kv => kv.Value);
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                return _errors.SelectMany(kv => kv.Value);
+            }
             return _errors.TryGetValue(propertyName, out var list) ? list : Enumerable.Empty<string>();
         }
 

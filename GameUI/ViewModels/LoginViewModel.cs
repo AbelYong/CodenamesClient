@@ -1,20 +1,26 @@
-﻿using CodenamesClient.Operation.Network.Oneway;
-using CodenamesClient.Operation.Network.Duplex;
+﻿using CodenamesClient.Operation.Network.Duplex;
+using CodenamesClient.Operation.Network.Oneway;
+using CodenamesClient.Operation.Validation;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Validation;
 using CodenamesGame.Domain.POCO;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         private static readonly Random _random = new Random();
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
         public event EventHandler<PlayerDM> NavigateToMainMenu;
         public event Action RaiseError;
         private bool _hasPlayerConnection;
@@ -23,6 +29,8 @@ namespace CodenamesClient.GameUI.ViewModels
         private string _requestErrorMessage;
         private string _usernameErrorMessage;
         private string _passwordErrorMessage;
+        private string _newPassword;
+        private string _confirmPassword;
 
         public LoginViewModel()
         {
@@ -78,6 +86,172 @@ namespace CodenamesClient.GameUI.ViewModels
                 _passwordErrorMessage = value;
                 OnPropertyChanged();
             }
+        }
+
+        public string NewPassword
+        {
+            get => _newPassword;
+            set
+            {
+                var trimmedPassword = value?.Trim() ?? string.Empty;
+
+                if (Set(ref _newPassword, trimmedPassword))
+                {
+                    OnPropertyChanged(nameof(PwHasMinLength));
+                    OnPropertyChanged(nameof(PwWithinMaxLength));
+                    OnPropertyChanged(nameof(PwHasUpper));
+                    OnPropertyChanged(nameof(PwHasLower));
+                    OnPropertyChanged(nameof(PwHasDigit));
+                    OnPropertyChanged(nameof(PwHasSpecial));
+                    OnPropertyChanged(nameof(IsPasswordValid));
+                    ValidateProperty(nameof(ConfirmPassword));
+                    OnPropertyChanged(nameof(CanSubmit));
+                }
+                else if (value != trimmedPassword)
+                {
+                    OnPropertyChanged(nameof(NewPassword));
+                }
+            }
+        }
+
+        public string ConfirmPassword
+        {
+            get => _confirmPassword;
+            set
+            {
+                if (Set(ref _confirmPassword, value))
+                {
+                    ValidateProperty(nameof(ConfirmPassword));
+                    OnPropertyChanged(nameof(CanSubmit));
+                }
+            }
+        }
+
+        public bool CanSubmit
+        {
+            get => (!HasErrors && IsPasswordValid && PasswordsMatch);
+        }
+
+        public bool HasErrors
+        {
+            get => (_errors.Any(kv => kv.Value?.Count > 0));
+        }
+
+        public bool IsPasswordValid
+        {
+            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial);
+        }
+
+        private bool PasswordsMatch
+        {
+            get => (!string.IsNullOrEmpty(ConfirmPassword) && ConfirmPassword == NewPassword);
+        }
+
+        public static string PwMinLengthText
+        {
+            get => string.Format(Lang.signInPasswordMinLength, PasswordValidation.PASSWORD_MIN_LENGTH);
+        }
+
+        public static string PwMaxLengthText
+        {
+            get => string.Format(Lang.signInPasswordMaxLength, PasswordValidation.PASSWORD_MAX_LENGTH);
+        }
+
+        public bool PwHasMinLength
+        {
+            get => PasswordValidation.MeetsMinLength(NewPassword);
+        }
+
+        public bool PwWithinMaxLength
+        {
+            get => PasswordValidation.WithinMaxLength(NewPassword);
+        }
+
+        public bool PwHasUpper
+        {
+            get => PasswordValidation.HasUpper(NewPassword);
+        }
+
+        public bool PwHasLower
+        {
+            get => PasswordValidation.HasLower(NewPassword);
+        }
+
+        public bool PwHasDigit
+        {
+            get => PasswordValidation.HasDigit(NewPassword);
+        }
+
+        public bool PwHasSpecial
+        {
+            get => PasswordValidation.HasSpecial(NewPassword);
+        }
+
+        public void TriggerPasswordValidation()
+        {
+            ValidateProperty(nameof(NewPassword));
+        }
+
+        private void ValidateProperty(string propertyName)
+        {
+            IEnumerable<string> errors = Enumerable.Empty<string>();
+
+            switch (propertyName)
+            {
+                case nameof(NewPassword):
+                    if (!IsPasswordValid)
+                    {
+                        errors = new[] { Lang.signInInvalidPassword };
+                    }
+                    break;
+
+                case nameof(ConfirmPassword):
+                    if (IsPasswordValid && !string.IsNullOrWhiteSpace(ConfirmPassword) && ConfirmPassword != NewPassword)
+                    {
+                        errors = new[] { Lang.signInPasswordsDoNotMatch };
+                    }
+                    break;
+            }
+
+            SetErrors(propertyName, errors);
+            OnPropertyChanged(nameof(CanSubmit));
+        }
+
+        private void SetErrors(string propertyName, IEnumerable<string> errors)
+        {
+            var list = errors?.Distinct().ToList() ?? new List<string>();
+
+            if (list.Count == 0)
+            {
+                if (_errors.Remove(propertyName))
+                {
+                    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+                }
+                return;
+            }
+
+            _errors[propertyName] = list;
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+
+        private bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value))
+            {
+                return false;
+            }
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                return _errors.SelectMany(kv => kv.Value);
+            }
+            return _errors.TryGetValue(propertyName, out var list) ? list : Enumerable.Empty<string>();
         }
 
         public async Task Login(string username, string password)

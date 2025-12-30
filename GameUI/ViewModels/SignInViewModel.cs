@@ -12,17 +12,15 @@ namespace CodenamesClient.GameUI.ViewModels
 {
     public class SignInViewModel : INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+        private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
         private string _email = string.Empty;
         private string _username = string.Empty;
         private string _password = string.Empty;
         private string _confirmPassword = string.Empty;
         private string _firstName = string.Empty;
         private string _lastName = string.Empty;
-
-        private readonly Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public string Email
         { 
@@ -115,11 +113,6 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public void TriggerPasswordValidation()
-        {
-            ValidateProperty(nameof(Password));
-        }
-
         public string ConfirmPassword
         {
             get => _confirmPassword;
@@ -131,6 +124,31 @@ namespace CodenamesClient.GameUI.ViewModels
                     OnPropertyChanged(nameof(CanSubmit));
                 }
             }
+        }
+
+        public bool CanSubmit
+        {
+            get => (!HasErrors && IsPasswordValid && PasswordsMatch);
+        }
+
+        public bool HasErrors
+        {
+            get => (_errors.Any(kv => kv.Value?.Count > 0));
+        }
+
+        public bool IsPasswordValid
+        {
+            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial);
+        }
+
+        private bool PasswordsMatch
+        {
+            get => (!string.IsNullOrEmpty(ConfirmPassword) && ConfirmPassword == Password);
+        }
+
+        public void TriggerPasswordValidation()
+        {
+            ValidateProperty(nameof(Password));
         }
 
         public static string PwMinLengthText
@@ -170,32 +188,6 @@ namespace CodenamesClient.GameUI.ViewModels
         public bool PwHasSpecial
         {
             get => PasswordValidation.HasSpecial(Password);
-        }
-
-        public bool IsPasswordValid
-        {
-            get => (PwHasMinLength && PwWithinMaxLength && PwHasUpper && PwHasLower && PwHasDigit && PwHasSpecial);
-        }
-
-        public bool CanSubmit
-        {
-            get => (!HasErrors && IsPasswordValid && PasswordsMatch);
-        }
-
-        private bool PasswordsMatch
-        {
-            get => (!string.IsNullOrEmpty(ConfirmPassword) && ConfirmPassword == Password);
-        }
-
-        public bool HasErrors
-        {
-            get => (_errors.Any(kv => kv.Value?.Count > 0));
-        }
-
-        public IEnumerable GetErrors(string propertyName)
-        {
-            if (string.IsNullOrEmpty(propertyName)) return _errors.SelectMany(kv => kv.Value);
-            return _errors.TryGetValue(propertyName, out var list) ? list : Enumerable.Empty<string>();
         }
 
         public void ValidateAll()
@@ -276,6 +268,15 @@ namespace CodenamesClient.GameUI.ViewModels
             field = value;
             OnPropertyChanged(propertyName);
             return true;
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                return _errors.SelectMany(kv => kv.Value);
+            }
+            return _errors.TryGetValue(propertyName, out var list) ? list : Enumerable.Empty<string>();
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

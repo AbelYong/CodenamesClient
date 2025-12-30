@@ -101,7 +101,10 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 VerifyBackdrop.Visibility = Visibility.Collapsed;
                 VerifyGrid.Visibility = Visibility.Collapsed;
 
-                if (VerifyGrid.RenderTransform is TranslateTransform tt) tt.Y = 800;
+                if (VerifyGrid.RenderTransform is TranslateTransform tt)
+                {
+                    tt.Y = 800;
+                }
             };
 
             sb.Completed += onDone;
@@ -158,12 +161,14 @@ namespace CodenamesClient.GameUI.Pages.UserControls
         {
             UserDM user = new UserDM
             {
+                UserID = Guid.Empty,
                 Email = _vm.Email,
                 Password = _vm.Password,
             };
 
             PlayerDM player = new PlayerDM
             {
+                PlayerID = Guid.Empty,
                 Username = _vm.Username,
                 Name = _vm.FirstName,
                 LastName = _vm.LastName,
@@ -171,8 +176,8 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             SignInRequest request = OnewayNetworkManager.Instance.SignIn(user, player);
             if (request.IsSuccess)
             {
-                MessageBox.Show(string.Format(Lang.signInSuccessfulWelcome, _vm.Username));
                 HideVerifyOverlay();
+                MessageBox.Show(string.Format(Lang.signInSuccessfulWelcome, _vm.Username));
             }
             else
             {
@@ -198,7 +203,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                     message = string.Format("{0} \n{1}", emailInvalidMessage, passwordInvalidMessage);
                     return message;
                 default:
-                    return Lang.globalUnknownServerError;
+                    return StatusToMessageMapper.GetUserServiceMessage(request.StatusCode);
             }
         }
 

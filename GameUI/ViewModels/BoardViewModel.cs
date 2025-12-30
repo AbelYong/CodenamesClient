@@ -693,6 +693,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public async Task HandleAssassinSelection(BoardCoordinatesDM coordinates)
         {
             StopTimer();
+            IsBoardEnabled = false;
             await DuplexNetworkManager.Instance.NotifyPickedAssassin(coordinates);
         }
 

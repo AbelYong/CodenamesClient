@@ -36,6 +36,7 @@ namespace CodenamesClient.GameUI
                 if (IsVisible)
                 {
                     MessageBox.Show(
+                        this,
                         Properties.Langs.Lang.globalDisconnected,
                         Properties.Langs.Lang.connectionLostTitle,
                         MessageBoxButton.OK,
@@ -101,7 +102,7 @@ namespace CodenamesClient.GameUI
                         break;
                 }
 
-                MessageBox.Show(message, Properties.Langs.Lang.kickTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
+                MessageBox.Show(this, message, Properties.Langs.Lang.kickTitle, MessageBoxButton.OK, MessageBoxImage.Stop);
 
                 NavigateToLogin();
             });

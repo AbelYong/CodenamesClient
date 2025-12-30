@@ -99,8 +99,8 @@ namespace CodenamesClient.GameUI.Pages
         {
             ResetEmail.Text = string.Empty;
             ResetCode.Text = string.Empty;
-            NewPassword.Password = string.Empty;
-            ConfirmPassword.Password = string.Empty;
+            _viewModel.NewPassword = string.Empty;
+            _viewModel.ConfirmPassword = string.Empty;
         }
 
         private void ShowResetOverlay()
@@ -175,21 +175,8 @@ namespace CodenamesClient.GameUI.Pages
         {
             string email = ResetEmail.Text.Trim();
             string code = ResetCode.Text.Trim();
-            string newPassword = NewPassword.Password.Trim();
-            string confirmPassword = ConfirmPassword.Password.Trim();
-
-            bool passwordsMatch = ValidatePasswordsMatch(newPassword, confirmPassword);
-            if (!passwordsMatch)
-            {
-                MessageBox.Show(Lang.resetPasswordsDoNotMatch);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < ProfileValidation.PASSWORD_MIN_LENGTH || newPassword.Length > ProfileValidation.PASSWORD_MAX_LENGTH)
-            {
-                MessageBox.Show(Lang.resetPasswordLengthInvalid);
-                return;
-            }
+            string newPassword = _viewModel.NewPassword.Trim();
+            string confirmPassword = _viewModel.ConfirmPassword.Trim();
 
             var request = await Task.Run(() =>
                 LoginViewModel.CompletePasswordReset(email, code, newPassword)
@@ -211,9 +198,9 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private static bool ValidatePasswordsMatch(string newPassword, string confirmPassword)
+        private void PasswordInput_LostFocus(object sender, RoutedEventArgs e)
         {
-            return newPassword == confirmPassword;
+            _viewModel.TriggerPasswordValidation();
         }
     }
 }

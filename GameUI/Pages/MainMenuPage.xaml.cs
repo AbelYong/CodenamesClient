@@ -48,7 +48,7 @@ namespace CodenamesClient.GameUI.Pages
                 _profileControl.Visibility = Visibility.Visible;
 
                 _profileControl.ClickCloseProfile += CloseProfile;
-                _profileControl.ClickSaveProfile += SaveProfile;
+                _profileControl.CloseProfile += SaveProfile;
 
                 gridMainMenu.Children.Add(_profileControl);
             }
@@ -69,7 +69,7 @@ namespace CodenamesClient.GameUI.Pages
             if (_profileControl != null)
             {
                 _profileControl.ClickCloseProfile -= CloseProfile;
-                _profileControl.ClickSaveProfile -= SaveProfile;
+                _profileControl.CloseProfile -= SaveProfile;
                 _profileControl.Visibility = Visibility.Collapsed;
                 gridMainMenu.Children.Remove(_profileControl);
                 _profileControl = null;
