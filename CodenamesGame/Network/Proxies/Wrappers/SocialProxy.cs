@@ -82,7 +82,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 {
                     CodenamesGameLogger.Log.Warn("Timeout disconnecting from FriendService players", ex);
                 }
-                catch (CommunicationException)
+                catch (CommunicationException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Communication error disconnecting from FriendService players", ex);
                 }
