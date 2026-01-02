@@ -113,6 +113,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_ShowSettings(object sender, RoutedEventArgs e)
         {
+            ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInAnimation");
             SettingsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
@@ -124,12 +125,14 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Completed += (s, ev) =>
             {
                 SettingsGrid.Visibility = Visibility.Collapsed;
+                ToggleMainInterfaceLock(false);
             };
             slideOutAnimation.Begin();
         }
 
         private void Click_ShowFriends(object sender, RoutedEventArgs e)
         {
+            ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInFriendsAnimation");
             FriendsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
@@ -148,6 +151,7 @@ namespace CodenamesClient.GameUI.Pages
                 SearchBox.Text = Lang.socialSearchForAFriend;
                 SearchBox.FontStyle = FontStyles.Italic;
                 _viewModel.SearchResults.Clear();
+                ToggleMainInterfaceLock(false);
             };
             slideOutAnimation.Begin();
         }
@@ -209,6 +213,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_ShowGameMode(object sender, RoutedEventArgs e)
         {
+            ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInGameModeAnimation");
             GameModeGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
@@ -220,6 +225,7 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Completed += (s, ev) =>
             {
                 GameModeGrid.Visibility = Visibility.Collapsed;
+                ToggleMainInterfaceLock(false);
             };
             slideOutAnimation.Begin();
         }
@@ -237,6 +243,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_ShowScoreboards(object sender, RoutedEventArgs e)
         {
+            ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInScoreboardsAnimation");
             ScoreboardsGrid.Visibility = Visibility.Visible;
             slideInAnimation.Begin();
@@ -252,6 +259,7 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Completed += (s, ev) =>
             {
                 ScoreboardsGrid.Visibility = Visibility.Collapsed;
+                ToggleMainInterfaceLock(false);
             };
             slideOutAnimation.Begin();
         }
@@ -369,6 +377,20 @@ namespace CodenamesClient.GameUI.Pages
             {
                 AudioManager.Instance.SetSfxVolume(volume0to1);
                 AudioManager.Instance.PlaySoundEffect("Assets/AudioGame/oof.mp3");
+            }
+        }
+
+        private void ToggleMainInterfaceLock(bool isLocked)
+        {
+            if (isLocked)
+            {
+                Overlay.Visibility = Visibility.Visible;
+                stackPanelMainMenu.IsEnabled = false;
+            }
+            else
+            {
+                Overlay.Visibility = Visibility.Collapsed;
+                stackPanelMainMenu.IsEnabled = true;
             }
         }
     }
