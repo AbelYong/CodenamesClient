@@ -8,12 +8,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class EmailProxy : IEmailProxy
     {
+        private readonly Func<IEmailManager> _clientFactory;
         private const string _ENDPOINT_NAME = "NetTcpBinding_IEmailManager";
+
+        public EmailProxy() : this(() => new EmailManagerClient(_ENDPOINT_NAME)) { }
+
+        public EmailProxy(Func<IEmailManager> clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
 
         public CommunicationRequest SendVerificationEmail(string email, EmailType emailType)
         {
             CommunicationRequest request = new CommunicationRequest();
-            var client = new EmailManagerClient(_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 return client.SendVerificationCode(email, emailType);
@@ -41,7 +49,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
             return request;
         }
@@ -49,7 +57,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         public ConfirmEmailRequest SendVerificationCode(string email, string code, EmailType emailType)
         {
             ConfirmEmailRequest request = new ConfirmEmailRequest();
-            var client = new EmailManagerClient(_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 return client.ValidateVerificationCode(email, code, emailType);
@@ -77,9 +85,17 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
             return request;
+        }
+
+        private void CloseProxy(IEmailManager client)
+        {
+            if (client is ICommunicationObject commObject)
+            {
+                NetworkUtil.SafeClose(commObject);
+            }
         }
     }
 }

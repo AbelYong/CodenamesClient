@@ -11,9 +11,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class MatchProxy : IMatchProxy
     {
+        public delegate IMatchManager MatchClientFactory(InstanceContext context, string endpointName);
+        private readonly MatchClientFactory _clientFactory;
         private const string _ENDPOINT_NAME = "NetTcpBinding_IMatchManager";
         private static readonly Lazy<MatchProxy> _instance = new Lazy<MatchProxy>(() => new MatchProxy());
-        private MatchManagerClient _client;
+        private IMatchManager _client;
         private Guid _currentPlayerID;
 
         public static MatchProxy Instance
@@ -21,15 +23,24 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             get => _instance.Value;
         }
 
-        private MatchProxy()
+        private MatchProxy() : this ((context, endpoint) =>
+        {
+            var factory = new DuplexChannelFactory<IMatchManager>(context, endpoint);
+            return factory.CreateChannel();
+        })
         {
 
+        }
+
+        public MatchProxy(MatchClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
         }
 
         public CommunicationRequest Initialize(Guid playerID)
         {
             CommunicationRequest request = new CommunicationRequest();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened)
             {
                 request.IsSuccess = true;  //Player already connected
                 request.StatusCode = StatusCode.UNAUTHORIZED;
@@ -38,9 +49,8 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
             MatchCallbackHandler callbackHandler = new MatchCallbackHandler();
             InstanceContext context = new InstanceContext(callbackHandler);
-            _client = new MatchManagerClient(context, _ENDPOINT_NAME);
+            _client = _clientFactory(context, _ENDPOINT_NAME);
             _currentPlayerID = playerID;
-
 
             return Connect(playerID);
         }
@@ -50,7 +60,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             CommunicationRequest request = new CommunicationRequest();
             try
             {
-                _client.Open();
+                ((ICommunicationObject)_client).Open();
                 return _client.Connect(playerID);
             }
             catch (TimeoutException)
@@ -79,7 +89,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public void Disconnect()
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened)
             {
                 try
                 {
@@ -110,7 +120,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         public CommunicationRequest JoinMatch(MatchDM match)
         {
             CommunicationRequest request = new CommunicationRequest();
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (VerifyClientClosedOrFaulted())
             {
                 request.IsSuccess = false;
                 request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
@@ -153,7 +163,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public async Task SendClue(string clue)
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (VerifyClientClosedOrFaulted())
             {
                 CloseProxy();
                 return;
@@ -184,7 +194,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public async Task NotifyTurnTimeout(MatchRoleType currentRole)
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (VerifyClientClosedOrFaulted())
             {
                 CloseProxy();
                 return;
@@ -215,7 +225,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public async Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength)
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (VerifyClientClosedOrFaulted())
             {
                 CloseProxy();
                 return;
@@ -252,7 +262,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public async Task NotifyPickedBystander(BoardCoordinatesDM coordinates)
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (VerifyClientClosedOrFaulted())
             {
                 CloseProxy();
                 return;
@@ -289,7 +299,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public async Task NotifyPickedAssassin(BoardCoordinatesDM coordinates)
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (VerifyClientClosedOrFaulted())
             {
                 CloseProxy();
                 return;
@@ -323,10 +333,18 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
         }
 
+        private bool VerifyClientClosedOrFaulted()
+        {
+            return _client == null || ((ICommunicationObject)_client).State != CommunicationState.Opened;
+        }
+
         private void CloseProxy()
         {
             MatchCallbackHandler.NotifyServerConnectionLost();
-            NetworkUtil.SafeClose(_client);
+            if (_client is ICommunicationObject commObject)
+            {
+                NetworkUtil.SafeClose(commObject);
+            }
             _client = null;
             _currentPlayerID = Guid.Empty;
         }

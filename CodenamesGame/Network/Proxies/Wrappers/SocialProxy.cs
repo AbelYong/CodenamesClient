@@ -12,9 +12,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class SocialProxy : ISocialProxy
     {
+        public delegate IFriendManager FriendClientFactory(InstanceContext context, string endpointName);
+        private readonly FriendClientFactory _clientFactory;
         private const string _ENDPOINT_NAME = "NetTcpBinding_IFriendManager";
         private static readonly Lazy<SocialProxy> _instance = new Lazy<SocialProxy>(() => new SocialProxy());
-        private FriendManagerClient _client;
+        private IFriendManager _client;
         private Guid _currentPlayerId;
 
         public static SocialProxy Instance
@@ -22,13 +24,23 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             get => _instance.Value;
         }
 
-        private SocialProxy()
+        private SocialProxy() : this ((context, endpoint) =>
         {
+            var factory = new DuplexChannelFactory<IFriendManager>(context, endpoint);
+            return factory.CreateChannel();
+        })
+        {
+
+        }
+
+        private SocialProxy(FriendClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
         }
 
         public void Initialize(Guid mePlayerId)
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 return;
             }
@@ -41,11 +53,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             _currentPlayerId = mePlayerId;
             FriendCallbackHandler callbackHandler = new FriendCallbackHandler();
             InstanceContext context = new InstanceContext(callbackHandler);
-            _client = new FriendManagerClient(context, _ENDPOINT_NAME);
+            _client = _clientFactory(context, _ENDPOINT_NAME);
 
             try
             {
-                _client.Open();
+                ((ICommunicationObject)_client).Open();
                 _client.Connect(_currentPlayerId);
             }
             catch (TimeoutException ex)
@@ -72,7 +84,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public void Disconnect()
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -102,7 +114,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             int limit = 20;
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -133,7 +145,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         {
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -164,7 +176,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         {
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -195,7 +207,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         {
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -227,7 +239,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             FriendshipRequest request = new FriendshipRequest();
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -273,7 +285,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             FriendshipRequest request = new FriendshipRequest();
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -319,7 +331,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             FriendshipRequest request = new FriendshipRequest();
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -365,7 +377,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             FriendshipRequest request = new FriendshipRequest();
             TryReconnect();
 
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -406,9 +418,14 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
+        private bool VerifyClientOpen()
+        {
+            return _client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened;
+        }
+
         private void TryReconnect()
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (_client == null || ((ICommunicationObject)_client).State != CommunicationState.Opened)
             {
                 if (_currentPlayerId != Guid.Empty)
                 {
@@ -419,7 +436,10 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private void CloseProxy()
         {
-            NetworkUtil.SafeClose(_client);
+            if (_client is ICommunicationObject commObject)
+            {
+                NetworkUtil.SafeClose(commObject);
+            }
             _client = null;
         }
     }

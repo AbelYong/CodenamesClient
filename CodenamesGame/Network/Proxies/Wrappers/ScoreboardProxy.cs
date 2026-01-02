@@ -10,9 +10,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class ScoreboardProxy : IScoreboardProxy
     {
+        public delegate IScoreboardManager ScoreboardClientFactory(InstanceContext context, string endpointName);
+        private readonly ScoreboardClientFactory _clientFactory;
         private static readonly Lazy<ScoreboardProxy> _instance = new Lazy<ScoreboardProxy>(() => new ScoreboardProxy());
         private const string _ENDPOINT_NAME = "NetTcpBinding_IScoreboardManager";
-        private ScoreboardManagerClient _client;
+        private IScoreboardManager _client;
         private Guid _currentPlayerID;
 
         public static ScoreboardProxy Instance
@@ -20,9 +22,18 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             get => _instance.Value;
         }
 
-        private ScoreboardProxy()
+        private ScoreboardProxy() : this((context, endpointName) =>
+        {
+            var factory = new DuplexChannelFactory<IScoreboardManager>(context, endpointName);
+            return factory.CreateChannel();
+        })
         {
 
+        }
+
+        public ScoreboardProxy(ScoreboardClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
         }
 
         public void Initialize(Guid playerID)
@@ -30,7 +41,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             _currentPlayerID = playerID;
             ScoreboardCallbackHandler callbackHandler = new ScoreboardCallbackHandler();
             InstanceContext context = new InstanceContext(callbackHandler);
-            _client = new ScoreboardManagerClient(context, _ENDPOINT_NAME);
+            _client = _clientFactory(context, _ENDPOINT_NAME);
             try
             {
                 _client.SubscribeToScoreboardUpdates(playerID);
@@ -48,7 +59,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public void Disconnect()
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -70,7 +81,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         public ScoreboardDM GetMyScore(Guid playerID)
         {
             TryReconnect();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -92,16 +103,21 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (Exception ex)
                 {
-                    CodenamesGameLogger.Log.Error("Unexpected exception getting personal score: ", ex);
                     CloseProxy();
+                    CodenamesGameLogger.Log.Error("Unexpected exception getting personal score: ", ex);
                 }
             }
             return null;
         }
 
+        private bool VerifyClientOpen()
+        {
+            return _client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened;
+        }
+
         private void TryReconnect()
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (_client == null || ((ICommunicationObject)_client).State != CommunicationState.Opened)
             {
                 Initialize(_currentPlayerID);
             }
@@ -109,7 +125,10 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private void CloseProxy()
         {
-            Util.NetworkUtil.SafeClose(_client);
+            if (_client is ICommunicationObject commObject)
+            {
+                Util.NetworkUtil.SafeClose(commObject);
+            }
             _client = null;
         }
     }

@@ -10,9 +10,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class LobbyProxy : ILobbyProxy
     {
+        public delegate ILobbyManager LobbyClientFactory(InstanceContext context, string endpointName);
+        private readonly LobbyClientFactory _clientFactory;
         private const string _ENDPOINT_NAME = "NetTcpBinding_ILobbyManager";
         private static readonly Lazy<LobbyProxy> _instance = new Lazy<LobbyProxy>(() => new LobbyProxy());
-        private LobbyManagerClient _client;
+        private ILobbyManager _client;
         private Guid _currentPlayerID;
 
         public static LobbyProxy Instance
@@ -20,15 +22,24 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             get => _instance.Value;
         }
 
-        private LobbyProxy()
+        private LobbyProxy() : this((context, endpoint) =>
+        {
+            var factory = new DuplexChannelFactory<ILobbyManager>(context, endpoint);
+            return factory.CreateChannel();
+        })
         {
 
+        }
+
+        public LobbyProxy(LobbyClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
         }
 
         public CommunicationRequest Initialize(Guid playerID)
         {
             CommunicationRequest request = new CommunicationRequest();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 request.IsSuccess = true; //Already connected
                 request.StatusCode = StatusCode.UNAUTHORIZED;
@@ -44,7 +55,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
             LobbyCallbackHandler callbackHandler = new LobbyCallbackHandler();
             InstanceContext context = new InstanceContext(callbackHandler);
-            _client = new LobbyManagerClient(context, _ENDPOINT_NAME);
+            _client = _clientFactory(context, _ENDPOINT_NAME);
             _currentPlayerID = playerID;
 
             return Connect();
@@ -55,7 +66,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             CommunicationRequest request;
             try
             {
-                _client.Open();
+                ((ICommunicationObject)_client).Open();
                 return _client.Connect(_currentPlayerID);
             }
             catch (TimeoutException)
@@ -84,7 +95,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public void Disconnect()
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 try
                 {
@@ -117,7 +128,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             CreateLobbyRequest request = new CreateLobbyRequest();
 
             TryReconnect();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 if (player != null && player.PlayerID.HasValue)
                 {
@@ -173,7 +184,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             CommunicationRequest request = new CommunicationRequest();
 
             TryReconnect();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 if (hostPlayer != null && hostPlayer.PlayerID.HasValue)
                 {
@@ -229,7 +240,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             JoinPartyRequest request = new JoinPartyRequest();
 
             TryReconnect();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (VerifyClientOpen())
             {
                 if (joiningPlayer != null && joiningPlayer.PlayerID.HasValue)
                 {
@@ -280,9 +291,14 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
+        private bool VerifyClientOpen()
+        {
+            return _client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened;
+        }
+
         private void TryReconnect()
         {
-            if (_client == null || _client.State != CommunicationState.Opened)
+            if (_client == null || ((ICommunicationObject)_client).State != CommunicationState.Opened)
             {
                 Initialize(_currentPlayerID);
             }
@@ -322,7 +338,10 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private void CloseProxy()
         {
-            NetworkUtil.SafeClose(_client);
+            if (_client is ICommunicationObject coomObject)
+            {
+                NetworkUtil.SafeClose(coomObject);
+            }
             _client = null;
             _currentPlayerID = Guid.Empty;
         }

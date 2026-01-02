@@ -10,9 +10,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class SessionProxy : ISessionProxy
     {
+        public delegate ISessionManager SessionClientFactory(InstanceContext context, string endpointName);
+        private readonly SessionClientFactory _clientFactory;
         private static readonly Lazy<SessionProxy> _instance = new Lazy<SessionProxy>(() => new SessionProxy());
         private const string _ENDPOINT_NAME = "NetTcpBinding_ISessionManager";
-        private SessionManagerClient _client;
+        private ISessionManager _client;
         private PlayerDM _player;
         public event EventHandler ConnectionLost;
 
@@ -21,24 +23,34 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             get => _instance.Value;
         }
 
-        private SessionProxy()
+        private SessionProxy() : this((context, endpoint) =>
+        {
+            var factory = new DuplexChannelFactory<ISessionManager>(context, endpoint);
+            return factory.CreateChannel();
+        })
         {
 
+        }
+
+        public SessionProxy(SessionClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
         }
 
         public CommunicationRequest Initialize(PlayerDM player)
         {
             CommunicationRequest request = new CommunicationRequest();
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened)
             {
                 request.IsSuccess = true;
                 request.StatusCode = StatusCode.UNAUTHORIZED; //Player is already connected to the service
+                return request;
             }
 
             SessionCallbackHandler callbackHandler = new SessionCallbackHandler();
             InstanceContext context = new InstanceContext(callbackHandler);
-            _client = new SessionManagerClient(context, _ENDPOINT_NAME);
-            _client.InnerChannel.Faulted += OnChannelFaulted;
+            _client = _clientFactory(context, _ENDPOINT_NAME);
+            ((ICommunicationObject)_client).Faulted += OnChannelFaulted;
 
             if (player != null && player.PlayerID.HasValue)
             {
@@ -60,7 +72,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             CommunicationRequest request = new CommunicationRequest();
             try
             {
-                _client.Open();
+                ((ICommunicationObject)_client).Open();
                 return _client.Connect(player);
             }
             catch (TimeoutException)
@@ -93,12 +105,13 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public void Disconnect()
         {
-            if (_client != null && _client.State == CommunicationState.Opened)
+            if (_client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened)
             {
                 Player svPlayer = PlayerDM.AssembleSessionSvPlayer(_player);
                 try
                 {
                     _client.DisconnectAsync(svPlayer);
+                    CloseProxy();
                 }
                 catch (TimeoutException)
                 {
@@ -127,7 +140,10 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private void CloseProxy()
         {
-            Util.NetworkUtil.SafeClose(_client);
+            if (_client is ICommunicationObject commObject)
+            {
+                NetworkUtil.SafeClose(commObject);
+            }
             _client = null;
         }
     }

@@ -8,12 +8,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class ModerationProxy : IModerationProxy
     {
+        private readonly Func<IModerationManager> _clientFactory;
         private const string _ENDPOINT_NAME = "NetTcpBinding_IModerationManager";
+
+        public ModerationProxy() : this(() => new ModerationManagerClient(_ENDPOINT_NAME)) { }
+
+        public ModerationProxy(Func<IModerationManager> clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
 
         public CommunicationRequest ReportPlayer(Guid reporterUserID, Guid reportedUserID, string reason)
         {
             CommunicationRequest request = new CommunicationRequest();
-            ModerationManagerClient client = new ModerationManagerClient(_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 request = client.ReportPlayer(reporterUserID, reportedUserID, reason);
@@ -41,9 +49,11 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                Util.NetworkUtil.SafeClose(client);
+                if (client is ICommunicationObject commObject)
+                {
+                    NetworkUtil.SafeClose(commObject);
+                }
             }
-
             return request;
         }
     }

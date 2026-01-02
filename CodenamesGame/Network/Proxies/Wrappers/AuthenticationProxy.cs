@@ -8,12 +8,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class AuthenticationProxy : IAuthenticationProxy
     {
-        private const string _AUTHENTICATION_ENDPOINT_NAME = "NetTcpBinding_IAuthenticationManager";
+        private readonly Func<IAuthenticationManager> _clientFactory;
+        private const string _ENDPOINT_NAME = "NetTcpBinding_IAuthenticationManager";
+
+        public AuthenticationProxy() : this(() => new AuthenticationManagerClient(_ENDPOINT_NAME)) { }
+
+        public AuthenticationProxy(Func<IAuthenticationManager> clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
 
         public AuthenticationRequest Authenticate(string username, string password)
         {
             AuthenticationRequest request = new AuthenticationRequest();
-            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 request = client.Authenticate(username, password);
@@ -37,7 +45,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
             return request;
         }
@@ -45,7 +53,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         public PasswordResetRequest CompletePasswordReset(string email, string code, string newPassword)
         {
             PasswordResetRequest request = new PasswordResetRequest();
-            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 return client.CompletePasswordReset(email, code, newPassword);
@@ -69,7 +77,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
             return request;
         }
@@ -77,7 +85,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         public CommunicationRequest UpdatePassword(string username, string currentPassword, string newPassword)
         {
             CommunicationRequest request = new CommunicationRequest();
-            var client = new AuthenticationManagerClient(_AUTHENTICATION_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 return client.UpdatePassword(username, currentPassword, newPassword);
@@ -101,9 +109,17 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
             return request;
+        }
+
+        private void CloseProxy(IAuthenticationManager client)
+        {
+            if (client is ICommunicationObject commObject)
+            {
+                NetworkUtil.SafeClose(commObject);
+            }
         }
     }
 }

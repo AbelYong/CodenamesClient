@@ -9,12 +9,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class UserProxy : IUserProxy
     {
-        private const string _USER_ENDPOINT_NAME = "NetTcpBinding_IUserManager";
+        private readonly Func<IUserManager> _clientFactory;
+        private const string _ENDPOINT_NAME = "NetTcpBinding_IUserManager";
+
+        public UserProxy() : this (() => new UserManagerClient(_ENDPOINT_NAME)) { }
+
+        public UserProxy(Func<IUserManager> clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
 
         public SignInRequest SignIn(UserDM user, PlayerDM player)
         {
             SignInRequest request = new SignInRequest();
-            var client = new UserManagerClient(_USER_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 player.User = user;
@@ -44,14 +52,14 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
             return request;
         }
 
         public PlayerDM GetPlayer(Guid userID)
         {
-            var client = new UserManagerClient(_USER_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 Player svPlayer = client.GetPlayerByUserID(userID);
@@ -76,14 +84,14 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
         }
 
         public CommunicationRequest UpdateProfile(PlayerDM player)
         {
             CommunicationRequest request = new CommunicationRequest();
-            var client = new UserManagerClient(_USER_ENDPOINT_NAME);
+            var client = _clientFactory();
             try
             {
                 Player svPlayer = PlayerDM.AssembleUserSvPlayer(player);
@@ -112,9 +120,17 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             finally
             {
-                NetworkUtil.SafeClose(client);
+                CloseProxy(client);
             }
             return request;
+        }
+
+        private void CloseProxy(IUserManager client)
+        {
+            if (client is ICommunicationObject commObject)
+            {
+                NetworkUtil.SafeClose(commObject);
+            }
         }
     }
 }
