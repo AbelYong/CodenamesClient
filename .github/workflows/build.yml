@@ -57,6 +57,6 @@ jobs:
           
           msbuild.exe CodenamesClient.sln /t:Rebuild /p:Configuration=Release /p:DebugType=full
 
-          dotnet-coverage collect "vstest.console.exe CodenamesClient\CodenamesClient.Tests\bin\Release\CodenamesClient.Tests.dll CodenamesClient\CodenamesGame\CodenamesGame.Tests\bin\Release\CodenamesGame.Tests.dll /Logger:trx /ResultsDirectory:TestResults" -f xml -o "coverage.xml"
+          dotnet-coverage collect "vstest.console.exe CodenamesClient.Tests\bin\Release\CodenamesClient.Tests.dll CodenamesGame\CodenamesGame.Tests\bin\Release\CodenamesGame.Tests.dll /Logger:trx /ResultsDirectory:TestResults" -f xml -o "coverage.xml"
           
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
