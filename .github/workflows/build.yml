@@ -14,12 +14,14 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up MSBuild
         uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce #v2.0
+      - name: Set up VSTest
+        uses: darenm/Setup-VSTest@3a16d909a1f3bbc65b52f8270d475d905e7d3e44 #v1.3
       - name: Set up NuGet
         uses: NuGet/setup-nuget@323ab0502cd38fdc493335025a96c8fdb0edc71f #v2.0.1
       - name: Restore NuGet packages
@@ -44,11 +46,17 @@ jobs:
         run: |
           New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
-      - name: Build and analyze
+      - name: Install Coverage Tool
+        run: dotnet tool install --global dotnet-coverage
+      - name: Build, Test and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"AbelYong_CodenamesClient" /o:"abelyong-lis2025" /d:sonar.token="$env:SONAR_TOKEN"
-          msbuild.exe CodenamesClient.sln /t:Rebuild /p:Configuration=Release
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"AbelYong_CodenamesClient" /o:"abelyong-lis2025" /d:sonar.token="$env:SONAR_TOKEN" /d:sonar.cs.vstest.reportsPaths="TestResults/*.trx" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml"
+          
+          msbuild.exe CodenamesClient.sln /t:Rebuild /p:Configuration=Release /p:DebugType=full
+
+          dotnet-coverage collect "vstest.console.exe CodenamesClient\CodenamesClient.Tests\bin\Release\CodenamesClient.Tests.dll CodenamesClient\CodenamesGame\CodenamesGame.Tests\bin\Release\CodenamesGame.Tests.dll /Logger:trx /ResultsDirectory:TestResults" -f xml -o "coverage.xml"
+          
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
