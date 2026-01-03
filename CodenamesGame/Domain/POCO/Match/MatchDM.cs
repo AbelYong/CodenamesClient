@@ -47,7 +47,7 @@ namespace CodenamesGame.Domain.POCO.Match
             MatchService.Match svMatch = new MatchService.Match();
             svMatch.Rules = new MatchService.MatchRules();
             svMatch.MatchID = match.MatchID;
-            svMatch.Rules.Gamemode = MatchRulesDM.AssembleMatchSvGamemode(match.Rules.gamemode);
+            svMatch.Rules.Gamemode = MatchRulesDM.AssembleMatchSvGamemode(match.Rules.Gamemode);
             svMatch.Rules.TimerTokens = match.Rules.TimerTokens;
             svMatch.Rules.BystanderTokens = match.Rules.BystanderTokens;
             svMatch.Requester = PlayerDM.AssembleMatchSvPlayer(match.Requester);

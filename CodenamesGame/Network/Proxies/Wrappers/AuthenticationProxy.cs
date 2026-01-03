@@ -114,7 +114,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
-        private void CloseProxy(IAuthenticationManager client)
+        private static void CloseProxy(IAuthenticationManager client)
         {
             if (client is ICommunicationObject commObject)
             {

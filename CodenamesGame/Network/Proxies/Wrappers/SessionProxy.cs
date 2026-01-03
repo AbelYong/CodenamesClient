@@ -132,6 +132,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
             }
         }
+
         private void OnChannelFaulted(object sender, EventArgs e)
         {
             CloseProxy();

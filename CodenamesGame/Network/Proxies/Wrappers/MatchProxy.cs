@@ -67,22 +67,26 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 request.IsSuccess = false;
                 request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                CloseProxy();
             }
             catch (EndpointNotFoundException)
             {
                 request.IsSuccess = false;
                 request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                CloseProxy();
             }
             catch (CommunicationException)
             {
                 request.IsSuccess = false;
                 request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                CloseProxy();
             }
             catch (Exception ex)
             {
                 CodenamesGameLogger.Log.Error("Unexpected exception while connecting to Match Service: ", ex);
                 request.IsSuccess = false;
                 request.StatusCode = StatusCode.CLIENT_ERROR;
+                CloseProxy();
             }
             return request;
         }

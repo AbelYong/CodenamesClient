@@ -660,7 +660,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             StopTimer();
             TurnTimer = 0;
-            if (_match.Rules.gamemode != GamemodeDM.CUSTOM)
+            if (_match.Rules.Gamemode != GamemodeDM.CUSTOM)
             {
                 if (TimerTokens >= 0)
                 {

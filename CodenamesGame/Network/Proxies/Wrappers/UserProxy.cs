@@ -125,7 +125,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
-        private void CloseProxy(IUserManager client)
+        private static void CloseProxy(IUserManager client)
         {
             if (client is ICommunicationObject commObject)
             {

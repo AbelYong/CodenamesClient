@@ -521,19 +521,19 @@ namespace CodenamesClient.GameUI.ViewModels
                 switch (_gamemode)
                 {
                     case GamemodeDM.NORMAL:
-                        matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
+                        matchConfig.Rules.Gamemode = GamemodeDM.NORMAL;
                         break;
                     case GamemodeDM.CUSTOM:
-                        matchConfig.Rules.gamemode = GamemodeDM.CUSTOM;
+                        matchConfig.Rules.Gamemode = GamemodeDM.CUSTOM;
                         matchConfig.Rules.TurnTimer = TurnTimer;
                         matchConfig.Rules.TimerTokens = TimerTokens;
                         matchConfig.Rules.BystanderTokens = BystanderTokens;
                         break;
                     case GamemodeDM.COUNTERINTELLIGENCE:
-                        matchConfig.Rules.gamemode = GamemodeDM.COUNTERINTELLIGENCE;
+                        matchConfig.Rules.Gamemode = GamemodeDM.COUNTERINTELLIGENCE;
                         break;
                     default:
-                        matchConfig.Rules.gamemode = GamemodeDM.NORMAL;
+                        matchConfig.Rules.Gamemode = GamemodeDM.NORMAL;
                         break;
                 }
                 matchConfig.Requester = _me;
@@ -591,7 +591,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void SetRulesToIncomingRules(MatchDM match)
         {
-            Gamemode = match.Rules.gamemode;
+            Gamemode = match.Rules.Gamemode;
             TurnTimer = match.Rules.TurnTimer;
             TimerTokens = match.Rules.TimerTokens;
             BystanderTokens = match.Rules.BystanderTokens;

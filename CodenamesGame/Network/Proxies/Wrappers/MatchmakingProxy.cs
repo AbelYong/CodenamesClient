@@ -43,7 +43,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
             if (VerifyClientOpen())
             {
-                request.IsSuccess = true; //Already connceted
+                request.IsSuccess = true; //Already connected
                 request.StatusCode = StatusCode.UNAUTHORIZED;
                 return request;
             }

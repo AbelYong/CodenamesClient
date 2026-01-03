@@ -90,7 +90,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
-        private void CloseProxy(IEmailManager client)
+        private static void CloseProxy(IEmailManager client)
         {
             if (client is ICommunicationObject commObject)
             {

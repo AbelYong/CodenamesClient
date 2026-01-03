@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace CodenamesGame.Domain.POCO
 {
     public class MatchRulesDM
@@ -13,7 +8,7 @@ namespace CodenamesGame.Domain.POCO
         public const int MAX_BYSTANDER_TOKENS = 13;
         public const int TIMER_TOKENS_TO_TAKE_CUSTOM = 2;
 
-        public GamemodeDM gamemode { get; set; }
+        public GamemodeDM Gamemode { get; set; }
         public int TurnTimer { get; set; }
         public int TimerTokens { get; set; }
         public int BystanderTokens { get; set; }
@@ -22,7 +17,7 @@ namespace CodenamesGame.Domain.POCO
         {
             return new MatchRulesDM
             {
-                gamemode = AssembleGamemode(incomingRules.Gamemode),
+                Gamemode = AssembleGamemode(incomingRules.Gamemode),
                 TurnTimer = incomingRules.TurnTimer,
                 TimerTokens = incomingRules.TimerTokens,
                 BystanderTokens = incomingRules.BystanderTokens,
@@ -34,7 +29,7 @@ namespace CodenamesGame.Domain.POCO
         public static MatchmakingService.MatchRules AssembleSvMachtmakingMatchRules(MatchRulesDM rules)
         {
             MatchmakingService.MatchRules matchRules = new MatchmakingService.MatchRules();
-            switch (rules.gamemode)
+            switch (rules.Gamemode)
             {
                 case GamemodeDM.NORMAL:
                     matchRules.Gamemode = AssembleMatchmakingSvGamemode(GamemodeDM.NORMAL);
