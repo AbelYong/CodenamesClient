@@ -134,7 +134,10 @@
     <Compile Include="ServiceTests\LobbyProxyTest.cs" />
     <Compile Include="ServiceTests\MatchmakingProxyTest.cs" />
     <Compile Include="ServiceTests\MatchProxyTest.cs" />
+    <Compile Include="ServiceTests\ModerationProxyTest.cs" />
+    <Compile Include="ServiceTests\ScoreboardProxyTest.cs" />
     <Compile Include="ServiceTests\SessionProxyTest.cs" />
+    <Compile Include="ServiceTests\SocialProxyTest.cs" />
     <Compile Include="ServiceTests\UserProxyTest.cs" />
   </ItemGroup>
   <ItemGroup>

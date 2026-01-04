@@ -33,7 +33,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         }
 
-        private SocialProxy(FriendClientFactory clientFactory)
+        public SocialProxy(FriendClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
         }
@@ -425,12 +425,10 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private void TryReconnect()
         {
-            if (_client == null || ((ICommunicationObject)_client).State != CommunicationState.Opened)
+            if ((_client == null || ((ICommunicationObject)_client).State != CommunicationState.Opened)
+                && _currentPlayerId != Guid.Empty)
             {
-                if (_currentPlayerId != Guid.Empty)
-                {
-                    Initialize(_currentPlayerId);
-                }
+                Initialize(_currentPlayerId);
             }
         }
 
