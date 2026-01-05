@@ -783,6 +783,15 @@
   <data name="emailPasswordResetCodeExpiredOrRemoved" xml:space="preserve">
     <value>No pudimos actualizar tu contraseña porque el código de verificación ha expirado o te has quedado sin intentos</value>
   </data>
+  <data name="banMessageTemporary" xml:space="preserve">
+    <value>Cuenta suspendida. Tiempo restante: {0}</value>
+  </data>
+  <data name="banMessagePermanent" xml:space="preserve">
+    <value>Tu cuenta ha sido suspendida permanentemente.</value>
+  </data>
+  <data name="globalTimeFormat" xml:space="preserve">
+    <value>{0} hora(s) y {1} minuto(s)</value>
+  </data>
   <data name="lobbyReady" xml:space="preserve">
     <value>Listo</value>
   </data>

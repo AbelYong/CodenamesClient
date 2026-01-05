@@ -166,6 +166,9 @@
     <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.PasswordResetRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\AuthenticationService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\EmailService\CodenamesGame.EmailService.CommunicationRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -204,6 +207,9 @@
     </None>
     <None Include="Connected Services\LobbyService\LobbyService.wsdl" />
     <None Include="Connected Services\MatchmakingService\item.disco" />
+    <None Include="Connected Services\ModerationService\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ScoreboardService\CodenamesGame.ScoreboardService.Scoreboard.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

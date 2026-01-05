@@ -61,6 +61,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Your account has been permanently suspended..
+        /// </summary>
+        public static string banMessagePermanent {
+            get {
+                return ResourceManager.GetString("banMessagePermanent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Account suspended. Time remaining: {0}.
+        /// </summary>
+        public static string banMessageTemporary {
+            get {
+                return ResourceManager.GetString("banMessageTemporary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Are you sure you want to report {0} for unsportsmanlike conduct?.
         /// </summary>
         public static string confirmReportMessage {
@@ -579,6 +597,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string globalSuccessTitle {
             get {
                 return ResourceManager.GetString("globalSuccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a {0} hour(s) and {1} minute(s).
+        /// </summary>
+        public static string globalTimeFormat {
+            get {
+                return ResourceManager.GetString("globalTimeFormat", resourceCulture);
             }
         }
         

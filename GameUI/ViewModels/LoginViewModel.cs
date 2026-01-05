@@ -256,27 +256,75 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public async Task Login(string username, string password)
         {
-            CodenamesGame.AuthenticationService.AuthenticationRequest request = 
-                OnewayNetworkManager.Instance.Authenticate(username, password);
-            if (ValidateLoginData(username, password))
+            if (!ValidateLoginData(username, password))
             {
-                if (request.IsSuccess)
-                {
-                    await BeginSession(request.UserID);
-                }
-                else
-                {
-                    if (request.StatusCode == CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED)
-                    {
-                        ShowFailedLoginMessage();
-                    }
-                    else
-                    {
-                        _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(Util.AuthOperationType.AUTHENTICATION, request.StatusCode);
-                        RaiseError?.Invoke();
-                    }
-                }
+                return;
             }
+            var request = OnewayNetworkManager.Instance.Authenticate(username, password);
+
+            if (request.IsSuccess)
+            {
+                await BeginSession(request.UserID);
+            }
+            else
+            {
+                HandleUnsuccessfulLogin(request);
+            }
+        }
+
+        private void HandleUnsuccessfulLogin(CodenamesGame.AuthenticationService.AuthenticationRequest request)
+        {
+            switch (request.StatusCode)
+            {
+                case CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED:
+                    ShowFailedLoginMessage();
+                    break;
+
+                case CodenamesGame.AuthenticationService.StatusCode.ACCOUNT_BANNED:
+                    HandleBannedAccount(request);
+                    break;
+
+                default:
+                    _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(
+                        Util.AuthOperationType.AUTHENTICATION,
+                        request.StatusCode);
+                    RaiseError?.Invoke();
+                    break;
+            }
+        }
+
+        private void HandleBannedAccount(CodenamesGame.AuthenticationService.AuthenticationRequest request)
+        {
+            if (IsTemporaryBan(request.BanExpiration))
+            {
+                string timeStr = GetRemainingBanTime(request.BanExpiration.Value);
+                _requestErrorMessage = string.Format(Lang.banMessageTemporary, timeStr);
+            }
+            else
+            {
+                _requestErrorMessage = Lang.banMessagePermanent;
+            }
+
+            RaiseError?.Invoke();
+        }
+
+        private bool IsTemporaryBan(DateTimeOffset? expiration)
+        {
+            return expiration.HasValue && expiration.Value.Year < 2900;
+        }
+
+        private string GetRemainingBanTime(DateTimeOffset expiration)
+        {
+            TimeSpan remaining = expiration - DateTimeOffset.Now;
+
+            if (remaining.TotalSeconds < 0)
+            {
+                remaining = TimeSpan.Zero;
+            }
+
+            return string.Format(Lang.globalTimeFormat,
+                                 (int)remaining.TotalHours,
+                                 remaining.Minutes);
         }
 
         private bool ValidateLoginData(string username, string password)

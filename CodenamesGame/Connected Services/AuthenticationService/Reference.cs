@@ -266,7 +266,23 @@ namespace CodenamesGame.AuthenticationService {
     public partial class AuthenticationRequest : CodenamesGame.AuthenticationService.Request {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTimeOffset> BanExpirationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.Guid> UserIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTimeOffset> BanExpiration {
+            get {
+                return this.BanExpirationField;
+            }
+            set {
+                if ((this.BanExpirationField.Equals(value) != true)) {
+                    this.BanExpirationField = value;
+                    this.RaisePropertyChanged("BanExpiration");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.Guid> UserID {
