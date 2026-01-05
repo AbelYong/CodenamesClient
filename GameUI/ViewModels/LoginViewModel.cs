@@ -308,12 +308,12 @@ namespace CodenamesClient.GameUI.ViewModels
             RaiseError?.Invoke();
         }
 
-        private bool IsTemporaryBan(DateTimeOffset? expiration)
+        private static bool IsTemporaryBan(DateTimeOffset? expiration)
         {
             return expiration.HasValue && expiration.Value.Year < 2900;
         }
 
-        private string GetRemainingBanTime(DateTimeOffset expiration)
+        private static string GetRemainingBanTime(DateTimeOffset expiration)
         {
             TimeSpan remaining = expiration - DateTimeOffset.Now;
 

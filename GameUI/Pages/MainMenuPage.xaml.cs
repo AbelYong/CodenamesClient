@@ -18,8 +18,6 @@ namespace CodenamesClient.GameUI.Pages
     {
         private MainMenuViewModel _viewModel;
         private ProfileControl _profileControl;
-        private static MainMenuViewModel.SearchItem ItemFromSearchButton(Button btn) => btn?.DataContext as MainMenuViewModel.SearchItem;
-        private static MainMenuViewModel.FriendItem ItemFromFriendButton(Button btn) => btn?.DataContext as MainMenuViewModel.FriendItem;
 
         public MainMenuPage(PlayerDM player, bool isGuest)
         {
@@ -140,6 +138,16 @@ namespace CodenamesClient.GameUI.Pages
                 ToggleMainInterfaceLock(false);
             };
             slideOutAnimation.Begin();
+        }
+
+        private static MainMenuViewModel.SearchItem ItemFromSearchButton(Button btn)
+        {
+            return btn?.DataContext as MainMenuViewModel.SearchItem;
+        }
+
+        private static MainMenuViewModel.FriendItem ItemFromFriendButton(Button btn)
+        {
+            return btn?.DataContext as MainMenuViewModel.FriendItem;
         }
 
         private void Click_ShowFriends(object sender, RoutedEventArgs e)
