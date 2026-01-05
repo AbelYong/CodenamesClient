@@ -197,7 +197,7 @@ namespace CodenamesClient.Util
                 case CodenamesGame.LobbyService.StatusCode.UNALLOWED:
                     return Lang.lobbyErrorLobbyFull;
                 case CodenamesGame.LobbyService.StatusCode.CLIENT_UNREACHABLE:
-                    return Lang.lobbyInfoFriendNotOnlineEmailSent;
+                    return Lang.lobbyInfoCouldNotSendEmail;
                 case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
                     return Lang.globalServerTimeout;
                 case CodenamesGame.LobbyService.StatusCode.SERVER_UNREACHABLE:

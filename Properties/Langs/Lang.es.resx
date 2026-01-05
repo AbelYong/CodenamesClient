@@ -783,4 +783,28 @@
   <data name="emailPasswordResetCodeExpiredOrRemoved" xml:space="preserve">
     <value>No pudimos actualizar tu contraseña porque el código de verificación ha expirado o te has quedado sin intentos</value>
   </data>
+  <data name="lobbyReady" xml:space="preserve">
+    <value>Listo</value>
+  </data>
+  <data name="lobbyCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="lobbyInvitationSentSuccesfully" xml:space="preserve">
+    <value>Hemos enviado una invitacion a tu amigo</value>
+  </data>
+  <data name="lobbyInfoCouldNotSendEmail" xml:space="preserve">
+    <value>Lo sentimos, no pudimos enviar una invitación al correo de tu amigo, por favor inténtalo más tarde</value>
+  </data>
+  <data name="lobbyGameInvitationSentEmailNotSent" xml:space="preserve">
+    <value>Le enviamos una invitación en el juego a tu amigo, pero no pudimos enviarle un correo</value>
+  </data>
+  <data name="lobbyRulesTurnTimerInfo" xml:space="preserve">
+    <value>Hasta 60 segundos, mínimo 15 segundos. (Solo modo personalizado)</value>
+  </data>
+  <data name="lobbyRulesTimerTokensInfo" xml:space="preserve">
+    <value>Hasta 12 fichas, minimo 4 fichas. Solo modo personalizado)</value>
+  </data>
+  <data name="lobbyRulesBystanderTokensInfo" xml:space="preserve">
+    <value>Hasta 13 fichas, mínimo 0 fichas. (Solo modo personalizado)</value>
+  </data>
 </root>

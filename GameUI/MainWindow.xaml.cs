@@ -56,7 +56,7 @@ namespace CodenamesClient.GameUI
             MainFrame.NavigationService.RemoveBackEntry();
         }
 
-        private void DisconnectDuplexServices()
+        private static void DisconnectDuplexServices()
         {
             DuplexNetworkManager.Instance.DisconnectFromSessionService();
             DuplexNetworkManager.Instance.DisconnectFromFriendService();

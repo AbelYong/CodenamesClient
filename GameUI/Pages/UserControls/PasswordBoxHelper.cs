@@ -5,12 +5,10 @@ namespace CodenamesClient.GameUI.Pages.UserControls
 {
     public static class PasswordBoxHelper
     {
-        // This is the Attached Property we will bind to
         public static readonly DependencyProperty BoundPasswordProperty =
             DependencyProperty.RegisterAttached("BoundPassword", typeof(string), typeof(PasswordBoxHelper),
                 new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnBoundPasswordChanged));
 
-        // Enables the behavior on the PasswordBox
         public static readonly DependencyProperty BindPasswordProperty =
             DependencyProperty.RegisterAttached("BindPassword", typeof(bool), typeof(PasswordBoxHelper),
                 new PropertyMetadata(false, OnBindPasswordChanged));
@@ -24,18 +22,13 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             d.SetValue(BoundPasswordProperty, value);
         }
 
-        // Handles changes from the ViewModel -> PasswordBox
         private static void OnBoundPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is PasswordBox passwordBox)
+            if (d is PasswordBox passwordBox && passwordBox.Password != (string)e.NewValue)
             {
-                // Avoid infinite loops by checking if the password actually changed
-                if (passwordBox.Password != (string)e.NewValue)
-                {
-                    passwordBox.PasswordChanged -= PasswordBox_PasswordChanged;
-                    passwordBox.Password = (string)e.NewValue ?? string.Empty;
-                    passwordBox.PasswordChanged += PasswordBox_PasswordChanged;
-                }
+                passwordBox.PasswordChanged -= PasswordBox_PasswordChanged;
+                passwordBox.Password = (string)e.NewValue ?? string.Empty;
+                passwordBox.PasswordChanged += PasswordBox_PasswordChanged;
             }
         }
 
@@ -64,7 +57,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             }
         }
 
-        // Handles changes from PasswordBox -> ViewModel
         private static void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender is PasswordBox passwordBox)

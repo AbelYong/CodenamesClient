@@ -783,4 +783,28 @@
   <data name="emailPasswordResetCodeExpiredOrRemoved" xml:space="preserve">
     <value>We couldn't update your password because the verification code has expired or you have run out of attempts</value>
   </data>
+  <data name="lobbyReady" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="lobbyCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="lobbyInvitationSentSuccesfully" xml:space="preserve">
+    <value>We've sent an invitation to your friend</value>
+  </data>
+  <data name="lobbyInfoCouldNotSendEmail" xml:space="preserve">
+    <value>Sorry, we couldn't sent an invitation to your friend's inbox, please try again later</value>
+  </data>
+  <data name="lobbyGameInvitationSentEmailNotSent" xml:space="preserve">
+    <value>We've sent an in-game invitation to your friend, but couldn't send them email</value>
+  </data>
+  <data name="lobbyRulesTurnTimerInfo" xml:space="preserve">
+    <value>Up to 60 seconds, minimum 15 seconds. (Custom mode only)</value>
+  </data>
+  <data name="lobbyRulesTimerTokensInfo" xml:space="preserve">
+    <value>Up to 12 tokens, minimum 4 tokens. (Custom mode only)</value>
+  </data>
+  <data name="lobbyRulesBystanderTokensInfo" xml:space="preserve">
+    <value>Up to 13 tokens, minimum 0 tokens. (Custom mode only)</value>
+  </data>
 </root>

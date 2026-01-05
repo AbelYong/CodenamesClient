@@ -3,9 +3,8 @@ using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Operation.Network.Oneway;
 using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
-using CodenamesGame.Network;
+using CodenamesGame.Network.EventArguments;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,13 +27,26 @@ namespace CodenamesClient.GameUI.Pages
 
             _viewModel = new MainMenuViewModel(player, isGuest);
             DataContext = _viewModel;
+            Loaded += OnMainMenuPageLoaded;
+            Unloaded += OnMainMenuPageUnloaded;
 
             AudioManager.Instance.StartPlayback("Main");
         }
 
-        public MainMenuViewModel GetViewModel()
+        private void OnMainMenuPageLoaded(object sender, RoutedEventArgs e)
         {
-            return _viewModel;
+            if (!_viewModel.IsPlayerGuest)
+            {
+                _viewModel.ConnectLobbyService();
+                _viewModel.OnInvitationReceived += HandleLobbyInvitationReceived;
+                _viewModel.SuscribeToLobbyInvitations();
+            }
+        }
+
+        private void OnMainMenuPageUnloaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.OnInvitationReceived -= HandleLobbyInvitationReceived;
+            _viewModel.UnsuscribeFromLobbyInvitations();
         }
 
         private void Click_btnPlayer(object sender, RoutedEventArgs e)
@@ -196,16 +208,16 @@ namespace CodenamesClient.GameUI.Pages
                 return;
             }
 
-            var q = SearchBox.Text?.Trim();
+            var query = SearchBox.Text?.Trim();
 
-            if (string.IsNullOrEmpty(q) || q == Lang.socialSearchForAFriend)
+            if (string.IsNullOrEmpty(query) || query == Lang.socialSearchForAFriend)
             {
                 FriendsAndRequestsView.Visibility = Visibility.Collapsed;
                 SearchView.Visibility = Visibility.Visible;
                 return;
             }
 
-            _viewModel.SearchPlayers(q);
+            _viewModel.SearchPlayers(query);
 
             FriendsAndRequestsView.Visibility = Visibility.Collapsed;
             SearchView.Visibility = Visibility.Visible;
@@ -230,15 +242,54 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void Click_NormalGameMode(object sender, RoutedEventArgs e) => GoToLobby(GamemodeDM.NORMAL);
-        private void Click_CustomGameMode(object sender, RoutedEventArgs e) => GoToLobby(GamemodeDM.CUSTOM);
-        private void Click_CounterintelligenceMode(object sender, RoutedEventArgs e) => GoToLobby(GamemodeDM.COUNTERINTELLIGENCE);
+        private void Click_NormalGameMode(object sender, RoutedEventArgs e)
+        {
+            GoToLobby(GamemodeDM.NORMAL);
+            _viewModel.UnsuscribeFromLobbyInvitations();
+        }
+
+        private void Click_CustomGameMode(object sender, RoutedEventArgs e)
+        {
+            GoToLobby(GamemodeDM.CUSTOM);
+            _viewModel.UnsuscribeFromLobbyInvitations();
+        }
+
+        private void Click_CounterintelligenceMode(object sender, RoutedEventArgs e)
+        {
+            GoToLobby(GamemodeDM.COUNTERINTELLIGENCE);
+            _viewModel.UnsuscribeFromLobbyInvitations();
+        }
+
+        private void HandleLobbyInvitationReceived(InvitationReceivedEventArgs e)
+        {
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            string message = string.Format(Lang.globalInvitationReceivedMessage, e.Player.Username);
+
+            MessageBoxResult result = MessageBox.Show(message, Lang.globalInvitationReceivedTitle, buttons);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                AcceptLobbyInvitation(e.LobbyCode);
+            }
+        }
 
         private void GoToLobby(GamemodeDM mode)
         {
             LobbyPage lobby = new LobbyPage(_viewModel.Player, mode);
             NavigationService.Navigate(lobby);
             GameModeGrid.Visibility = Visibility.Collapsed;
+            ToggleMainInterfaceLock(false);
+        }
+
+        private void AcceptLobbyInvitation(string lobbyCode)
+        {
+            _viewModel.UnsuscribeFromLobbyInvitations();
+
+            LobbyPage lobby = new LobbyPage(_viewModel.Player, GamemodeDM.NORMAL);
+            NavigationService.Navigate(lobby);
+            GameModeGrid.Visibility = Visibility.Collapsed;
+            ToggleMainInterfaceLock(false);
+            lobby.AutoJoinLobby(lobbyCode);
         }
 
         private void Click_ShowScoreboards(object sender, RoutedEventArgs e)

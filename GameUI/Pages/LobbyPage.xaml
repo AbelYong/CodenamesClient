@@ -40,7 +40,8 @@
                 <Image Width="30" Height="30" Source="{Binding ProfilePicturePath}" Margin="0,0,10,0">
                 </Image>
                 <TextBlock Text="{Binding Player.Username}" Width="150" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-                <Button Content="{x:Static language:Lang.lobbyInvite}" Width="90" Click="Click_InviteFriend" Style="{StaticResource buttonCustomFocus}"/>
+                <Button Click="Click_InviteFriend" IsEnabled="{Binding InvitationAlreadySent}" Content="{x:Static language:Lang.lobbyInvite}"
+                        Style="{StaticResource buttonCustomFocus}" Width="90" />
             </StackPanel>
         </DataTemplate>
 
@@ -100,6 +101,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -138,6 +140,30 @@
                                  TextChanged="TurnTimerRangeValidation"
                                  LostFocus="TurnTimerMinRangeValidation"
                                  DataObject.Pasting="TextBoxPasting"/>
+                        <Border Grid.Column="2" Grid.Row="0" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
+                            <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
+                            <Border.ToolTip>
+                                <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
+                                    <Label Content="{x:Static language:Lang.lobbyRulesTimerTokensInfo}" Style="{StaticResource normal}" FontSize="12" />
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
+                        <Border Grid.Column="2" Grid.Row="1" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
+                            <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
+                            <Border.ToolTip>
+                                <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
+                                    <Label Content="{x:Static language:Lang.lobbyRulesBystanderTokensInfo}" Style="{StaticResource normal}" FontSize="12" />
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
+                        <Border Grid.Column="2" Grid.Row="2" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
+                            <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
+                            <Border.ToolTip>
+                                <ToolTip Background="#222" BorderBrush="Gray" HasDropShadow="True">
+                                    <Label Content="{x:Static language:Lang.lobbyRulesTurnTimerInfo}" Style="{StaticResource normal}" FontSize="12" />
+                                </ToolTip>
+                            </Border.ToolTip>
+                        </Border>
                     </Grid>
                     <Button Click="Click_StartGame" Content="{x:Static language:Lang.globalPlay}" IsEnabled="{Binding PlayBtnEnabled}" Visibility="{Binding PlayBtnVisibility}"
                     Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48" Margin="0,0,0,25"/>

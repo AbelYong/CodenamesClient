@@ -163,7 +163,7 @@ namespace CodenamesClient.GameUI.Pages
             ToggleSendButtonEnabled(sender);
         }
 
-        private void ToggleSendButtonEnabled(object sender)
+        private static void ToggleSendButtonEnabled(object sender)
         {
             if (sender is Button btn)
             {
@@ -176,7 +176,6 @@ namespace CodenamesClient.GameUI.Pages
             string email = ResetEmail.Text.Trim();
             string code = ResetCode.Text.Trim();
             string newPassword = _viewModel.NewPassword.Trim();
-            string confirmPassword = _viewModel.ConfirmPassword.Trim();
 
             var request = await Task.Run(() =>
                 LoginViewModel.CompletePasswordReset(email, code, newPassword)

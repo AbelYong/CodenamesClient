@@ -16,8 +16,8 @@ namespace CodenamesClient.GameUI.Pages
 {
     public partial class LobbyPage : Page
     {
-        private LobbyViewModel _viewModel;
-        private PlayerDM _me;
+        private readonly LobbyViewModel _viewModel;
+        private readonly PlayerDM _me;
         private Guid _myID;
         private Storyboard _slideInOnlineFriends;
         private Storyboard _slideOutOnlineFriends;
@@ -65,6 +65,11 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
+        public void AutoJoinLobby(string lobbyCode)
+        {
+            _viewModel.JoinParty(lobbyCode);
+        }
+
         private void NumberValidation(object sender, TextCompositionEventArgs e)
         {
             e.Handled = _regex.IsMatch(e.Text);
@@ -103,7 +108,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void TimerTokensMinRangeValidation(object sender, RoutedEventArgs e)
         {
-            const int minTokens = 4;
+            int minTokens = 4;
             TextBox tbx = sender as TextBox;
             MinRangeValidation(tbx, minTokens);
         }
@@ -117,7 +122,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void BystanderTokensMinRangeValidation(object sender, RoutedEventArgs e)
         {
-            const int minTokens = 0;
+            int minTokens = 0;
             TextBox tbx = sender as TextBox;
             MinRangeValidation(tbx, minTokens);
         }
@@ -131,7 +136,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void TurnTimerMinRangeValidation(object sender, RoutedEventArgs e)
         {
-            const int minTurnTimer = 15;
+            int minTurnTimer = 15;
             TextBox tbx = sender as TextBox;
             MinRangeValidation(tbx, minTurnTimer);
         }
@@ -146,7 +151,7 @@ namespace CodenamesClient.GameUI.Pages
             if (int.TryParse(tbx.Text, out int value) && value > max)
             {
                 tbx.Text = max.ToString();
-                tbx.CaretIndex = tbx.Text.Length; // Move cursor to end
+                tbx.CaretIndex = tbx.Text.Length;
             }
         }
 
@@ -255,6 +260,12 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_InviteFriend(object sender, RoutedEventArgs e)
         {
+            if (_viewModel.IsPartyFull)
+            {
+                MessageBox.Show(Lang.lobbyErrorCannotInviteNewGuest);
+                return;
+            }
+
             if (sender is Button btn && btn.DataContext is FriendItem friendItem)
             {
                 PlayerDM friendToInvite = friendItem.Player;
@@ -262,7 +273,7 @@ namespace CodenamesClient.GameUI.Pages
                 if (friendToInvite.PlayerID.HasValue)
                 {
                     Guid friendID = (Guid)friendToInvite.PlayerID;
-                    _viewModel.InviteToParty(friendID);
+                    friendItem.InvitationAlreadySent = _viewModel.InviteToParty(friendID);
                 }
             }
         }

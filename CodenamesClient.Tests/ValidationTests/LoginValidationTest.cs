@@ -1,7 +1,6 @@
 ﻿using CodenamesClient.Validation;
 using NUnit.Framework;
 using CodenamesClient.Properties.Langs;
-using System;
 
 namespace CodenamesClient.Tests
 {

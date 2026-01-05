@@ -700,6 +700,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cancel.
+        /// </summary>
+        public static string lobbyCancel {
+            get {
+                return ResourceManager.GetString("lobbyCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Can&apos;t start a match because your companion has lost connection to the Codenames Matchmaking Service..
         /// </summary>
         public static string lobbyCantStartCompanionDisconnect {
@@ -808,11 +817,38 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a We&apos;ve sent an in-game invitation to your friend, but couldn&apos;t send them email.
+        /// </summary>
+        public static string lobbyGameInvitationSentEmailNotSent {
+            get {
+                return ResourceManager.GetString("lobbyGameInvitationSentEmailNotSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t sent an invitation to your friend&apos;s inbox, please try again later.
+        /// </summary>
+        public static string lobbyInfoCouldNotSendEmail {
+            get {
+                return ResourceManager.GetString("lobbyInfoCouldNotSendEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Your friend is offline, we sent an invitation to your friend&apos;s email.
         /// </summary>
         public static string lobbyInfoFriendNotOnlineEmailSent {
             get {
                 return ResourceManager.GetString("lobbyInfoFriendNotOnlineEmailSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We&apos;ve sent an invitation to your friend.
+        /// </summary>
+        public static string lobbyInvitationSentSuccesfully {
+            get {
+                return ResourceManager.GetString("lobbyInvitationSentSuccesfully", resourceCulture);
             }
         }
         
@@ -880,11 +916,47 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ready.
+        /// </summary>
+        public static string lobbyReady {
+            get {
+                return ResourceManager.GetString("lobbyReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Rules.
         /// </summary>
         public static string lobbyRules {
             get {
                 return ResourceManager.GetString("lobbyRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Up to 13 tokens, minimum 0 tokens. (Custom mode only).
+        /// </summary>
+        public static string lobbyRulesBystanderTokensInfo {
+            get {
+                return ResourceManager.GetString("lobbyRulesBystanderTokensInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Up to 12 tokens, minimum 4 tokens. (Custom mode only).
+        /// </summary>
+        public static string lobbyRulesTimerTokensInfo {
+            get {
+                return ResourceManager.GetString("lobbyRulesTimerTokensInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Up to 60 seconds, minimum 15 seconds. (Custom mode only).
+        /// </summary>
+        public static string lobbyRulesTurnTimerInfo {
+            get {
+                return ResourceManager.GetString("lobbyRulesTurnTimerInfo", resourceCulture);
             }
         }
         

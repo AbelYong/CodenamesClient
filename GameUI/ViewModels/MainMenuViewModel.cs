@@ -22,6 +22,7 @@ namespace CodenamesClient.GameUI.ViewModels
     public class MainMenuViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event Action<InvitationReceivedEventArgs> OnInvitationReceived;
         private PlayerDM _player;
         private string _username;
         private bool _isPlayerGuest;
@@ -50,9 +51,10 @@ namespace CodenamesClient.GameUI.ViewModels
             _player = player;
             Username = Player.Username;
 
-            ConnectSocialService(Player);
             if (!IsPlayerGuest)
             {
+                ConnectSocialService();
+                ConnectLobbyService();
                 LoadInitialFriendData();
             }
         }
@@ -60,19 +62,31 @@ namespace CodenamesClient.GameUI.ViewModels
         public PlayerDM Player
         {
             get => _player;
-            set { _player = value; OnPropertyChanged(); }
+            set 
+            { 
+                _player = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Username
         {
             get => _username;
-            set { _username = value; OnPropertyChanged(); }
+            set
+            { 
+                _username = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool IsPlayerGuest
         {
             get => _isPlayerGuest;
-            set { _isPlayerGuest = value; OnPropertyChanged(); }
+            set
+            { 
+                _isPlayerGuest = value;
+                OnPropertyChanged();
+            }
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -80,20 +94,35 @@ namespace CodenamesClient.GameUI.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private void ConnectSocialService(PlayerDM player)
+        private void ConnectSocialService()
         {
-            if (!IsPlayerGuest)
+            DuplexNetworkManager.Instance.ConnectToFriendService(Player.PlayerID.Value);
+            SubscribeToFriendEvents();
+        }
+
+        public void ConnectLobbyService()
+        {
+            var request = DuplexNetworkManager.Instance.ConnectLobbyService(Player.PlayerID.Value);
+            if (!request.IsSuccess)
             {
-                try
-                {
-                    DuplexNetworkManager.Instance.ConnectToFriendService(player.PlayerID.Value);
-                    SubscribeToFriendEvents();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INTIALIZE, request.StatusCode));
             }
+        }
+
+        public void SuscribeToLobbyInvitations()
+        {
+            LobbyCallbackHandler.OnInvitationReceived += HandleLobbyInvitationReceived;
+        }
+
+        public void UnsuscribeFromLobbyInvitations()
+        {
+            LobbyCallbackHandler.OnInvitationReceived -= HandleLobbyInvitationReceived;
+        }
+
+        private void HandleLobbyInvitationReceived(object sender, InvitationReceivedEventArgs e)
+        {
+            OnInvitationReceived?.Invoke(e);
+            
         }
 
         public void Disconnect()
@@ -106,6 +135,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     UnsubscribeFromFriendEvents();
                     DuplexNetworkManager.Instance.DisconnectFromFriendService();
                 }
+                DuplexNetworkManager.Instance.DisconnectFromLobbyService();
             }
         }
 

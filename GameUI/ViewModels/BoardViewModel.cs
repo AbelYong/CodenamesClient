@@ -1,25 +1,25 @@
-﻿using CodenamesGame.Domain.POCO;
+﻿using CodenamesClient.Operation.Network.Duplex;
+using CodenamesClient.Operation.Network.Oneway;
+using CodenamesClient.Properties.Langs;
+using CodenamesClient.Util;
+using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
+using CodenamesGame.MatchService;
 using CodenamesGame.Network.EventArguments;
 using CodenamesGame.Network.Proxies.CallbackHandlers;
-using CodenamesGame.MatchService;
-using CodenamesClient.Util;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using CodenamesClient.Properties.Langs;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-using CodenamesClient.Operation.Network.Duplex;
-using CodenamesClient.Operation.Network.Oneway;
-using System.Threading.Tasks;
 
 namespace CodenamesClient.GameUI.ViewModels
 {
@@ -285,8 +285,6 @@ namespace CodenamesClient.GameUI.ViewModels
         public BoardViewModel(MatchDM match, Guid myID)
         {
             _match = match;
-            DuplexNetworkManager.Instance.ConnectMatchService(myID);
-            DuplexNetworkManager.Instance.JoinMatch(match);
             ChatMessages = new ObservableCollection<ChatMessageDM>();
 
             SetPlayers(myID);
@@ -300,6 +298,16 @@ namespace CodenamesClient.GameUI.ViewModels
             SubscribeToCallbacks();
 
             SetInitialTurn();
+        }
+
+        public void Connect(MatchDM match, Guid myID)
+        {
+            var connectionRequest = DuplexNetworkManager.Instance.ConnectMatchService(myID);
+            var matchJoiningRequest = DuplexNetworkManager.Instance.JoinMatch(match);
+            if (!connectionRequest.IsSuccess || !matchJoiningRequest.IsSuccess)
+            {
+                HandleConnectionLost();
+            }
         }
 
         private void SubscribeToCallbacks()

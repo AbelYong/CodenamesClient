@@ -39,6 +39,7 @@ namespace CodenamesClient.GameUI.BoardUI
             DataContext = _viewModel;
             DrawWords();
             DrawKeycard();
+            _viewModel.Connect(match, myID);
             _viewModel.StartChronometer();
             _viewModel.StartTimer();
         }

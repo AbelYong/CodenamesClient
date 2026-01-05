@@ -2275,7 +2275,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Órgano.
+        ///   Busca una cadena traducida similar a Organ.
         /// </summary>
         public static string wordOrgan {
             get {

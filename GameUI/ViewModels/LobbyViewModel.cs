@@ -200,7 +200,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 if (value)
                 {
                     ConfirmReady();
-                    ReadyOrCancelTgBtnContent = "Cancel";
+                    ReadyOrCancelTgBtnContent = Lang.lobbyCancel;
                 }
                 else
                 {
@@ -212,7 +212,7 @@ namespace CodenamesClient.GameUI.ViewModels
                         ReadyOrCancelTgBtnVisibility = Visibility.Collapsed;
                     }
 
-                    ReadyOrCancelTgBtnContent = "Ready";
+                    ReadyOrCancelTgBtnContent = Lang.lobbyReady;
                 }
             }
         }
@@ -372,7 +372,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(Util.StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INTIALIZE, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INTIALIZE, request.StatusCode));
             }
         }
 
@@ -446,16 +446,29 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        public void InviteToParty(Guid friendID)
+        public bool InviteToParty(Guid friendID)
         {
-            if (_lobbyCode != string.Empty && PartyHost == _me)
+            if (_lobbyCode == string.Empty || PartyHost != _me)
             {
-                CodenamesGame.LobbyService.CommunicationRequest request = DuplexNetworkManager.Instance.InviteToParty(_me, friendID, _lobbyCode);
-                if (!request.IsSuccess)
+                return false;
+            }
+            CodenamesGame.LobbyService.CommunicationRequest request = DuplexNetworkManager.Instance.InviteToParty(_me, friendID, _lobbyCode);
+            if (request.IsSuccess)
+            {
+                if (request.StatusCode == CodenamesGame.LobbyService.StatusCode.OK)
                 {
-                    MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INVITE_TO_PARTY, request.StatusCode));
+                    MessageBox.Show(Lang.lobbyInvitationSentSuccesfully);
+                }
+                else
+                {
+                    MessageBox.Show(Lang.lobbyGameInvitationSentEmailNotSent);
                 }
             }
+            else
+            {
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(LobbyOperationType.INVITE_TO_PARTY, request.StatusCode));
+            }
+            return request.IsSuccess;
         }
 
         private void HandlePlayerJoined(object sender, PlayerEventArgs e)
@@ -473,9 +486,16 @@ namespace CodenamesClient.GameUI.ViewModels
             IsPartyFull = false;
             PartyHost = _me;
             PartyGuest = null;
-            CreateLobbyBtnVisbility = _lobbyCode != string.Empty ? Visibility.Collapsed : Visibility.Visible;
+            CreateLobbyBtnVisbility = !string.IsNullOrEmpty(_lobbyCode) ? Visibility.Collapsed : Visibility.Visible;
             GuestBtnVisibility = Visibility.Collapsed;
-            InviteBtnVisibility = Visibility.Visible;
+            InviteBtnVisibility = !string.IsNullOrEmpty(_lobbyCode) ? Visibility.Visible : Visibility.Collapsed;
+            JoinBtnVisibility = !string.IsNullOrEmpty(_lobbyCode) ? Visibility.Collapsed : Visibility.Visible;
+            
+            var friendItem = Friends.FirstOrDefault(f => f.Player.PlayerID == e);
+            if (friendItem != null)
+            {
+                friendItem.InvitationAlreadySent = false;
+            }
         }
 
         public void ConnectToMatchmakingService(PlayerDM player)
@@ -500,7 +520,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public async Task RequestArrangedMatch()
         {
-            MatchConfigurationDM configuration = PrepareArrangedMatchRequest();
+            MatchConfigurationDM configuration = PrepareArrangedMatchConfiguration();
             if (configuration != null)
             {
                 PlayBtnEnabled = false;
@@ -513,7 +533,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
-        private MatchConfigurationDM PrepareArrangedMatchRequest()
+        private MatchConfigurationDM PrepareArrangedMatchConfiguration()
         {
             if (_partyHost != null && _partyGuest != null)
             {
@@ -605,8 +625,7 @@ namespace CodenamesClient.GameUI.ViewModels
             PlayBtnVisibility = Visibility.Visible;
             PlayBtnEnabled = true;
             _canMatchBeCanceled = false;
-            //Turn it back from cancel to its "signal ready state"
-            IsReadyOrCancelTgBtnActive = false;
+            IsReadyOrCancelTgBtnActive = false; //Turn it back from cancel to its "signal ready state"
             _match = null; //Free the match field
 
             if (BeginMatch != null && matchToNavigate != null)
@@ -702,6 +721,7 @@ namespace CodenamesClient.GameUI.ViewModels
             public event PropertyChangedEventHandler PropertyChanged;
             private bool _isOnline;
             private string _profilePicturePath;
+            private bool _invitationAlreadySent;
             public PlayerDM Player { get; set; }
 
             public string ProfilePicturePath
@@ -738,6 +758,17 @@ namespace CodenamesClient.GameUI.ViewModels
                     OnPropertyChanged();
                 }
             }
+
+            public bool InvitationAlreadySent
+            {
+                get => !_invitationAlreadySent;
+                set
+                {
+                    _invitationAlreadySent = value;
+                    OnPropertyChanged();
+                }
+            }
+
             protected void OnPropertyChanged([CallerMemberName] string name = null)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
