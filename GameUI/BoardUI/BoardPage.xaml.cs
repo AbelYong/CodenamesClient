@@ -62,6 +62,7 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private async void HandleAssassinFlip(BoardCoordinatesDM coordinates)
         {
+            gridBoard.IsEnabled = false;
             if (_viewModel.AmISpymaster)
             {
                 await FlipCardAt(coordinates, ASSASSIN_CODE, false);
@@ -274,7 +275,10 @@ namespace CodenamesClient.GameUI.BoardUI
                 int row = Grid.GetRow(clickedButton);
                 int column = Grid.GetColumn(clickedButton);
                 int code = _viewModel.AgentsMatrix[row, column];
-
+                if (code == ASSASSIN_CODE)
+                {
+                    gridBoard.IsEnabled = false;
+                }
                 if (_viewModel.AmISpymaster && clickedButton.Content.ToString() != string.Empty)
                 {
                     int trueCode = _viewModel.Keycard[row, column];

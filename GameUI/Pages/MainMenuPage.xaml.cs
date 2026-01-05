@@ -35,6 +35,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void OnMainMenuPageLoaded(object sender, RoutedEventArgs e)
         {
+            ToggleMainInterfaceLock(false);
             if (!_viewModel.IsPlayerGuest)
             {
                 _viewModel.ConnectLobbyService();
