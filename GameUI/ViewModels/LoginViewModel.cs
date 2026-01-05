@@ -270,6 +270,28 @@ namespace CodenamesClient.GameUI.ViewModels
                     {
                         ShowFailedLoginMessage();
                     }
+                    else if (request.StatusCode == CodenamesGame.AuthenticationService.StatusCode.ACCOUNT_BANNED)
+                    {
+                        if (request.BanExpiration.HasValue && request.BanExpiration.Value.Year < 2900)
+                        {
+                            TimeSpan remaining = request.BanExpiration.Value - DateTimeOffset.Now;
+                            if (remaining.TotalSeconds < 0)
+                            {
+                                remaining = TimeSpan.Zero;
+                            }
+                            string timeStr = string.Format(Lang.globalTimeFormat,
+                                                           (int)remaining.TotalHours,
+                                                           remaining.Minutes);
+
+                            _requestErrorMessage = string.Format(Lang.banMessageTemporary, timeStr);
+                        }
+                        else
+                        {
+                            _requestErrorMessage = Lang.banMessagePermanent;
+                        }
+
+                        RaiseError?.Invoke();
+                    }
                     else
                     {
                         _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(Util.AuthOperationType.AUTHENTICATION, request.StatusCode);

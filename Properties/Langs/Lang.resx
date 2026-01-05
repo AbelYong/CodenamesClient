@@ -783,4 +783,13 @@
   <data name="emailPasswordResetCodeExpiredOrRemoved" xml:space="preserve">
     <value>We couldn't update your password because the verification code has expired or you have run out of attempts</value>
   </data>
+  <data name="banMessageTemporary" xml:space="preserve">
+    <value>Account suspended. Time remaining: {0}</value>
+  </data>
+  <data name="banMessagePermanent" xml:space="preserve">
+    <value>Your account has been permanently suspended.</value>
+  </data>
+  <data name="globalTimeFormat" xml:space="preserve">
+    <value>{0} hour(s) and {1} minute(s)</value>
+  </data>
 </root>
