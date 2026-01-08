@@ -41,7 +41,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             CommunicationRequest request = new CommunicationRequest();
             if (VerifyClientOpen())
             {
-                request.IsSuccess = true; //Already connected
+                request.IsSuccess = true;
                 request.StatusCode = StatusCode.UNAUTHORIZED;
                 return request;
             }
@@ -103,15 +103,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                     _currentPlayerID = Guid.Empty;
                     CloseProxy();
                 }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
+                catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
                 {
                     CloseProxy();
                 }

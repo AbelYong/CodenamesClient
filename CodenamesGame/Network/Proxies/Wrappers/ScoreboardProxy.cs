@@ -127,7 +127,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
         {
             if (_client is ICommunicationObject commObject)
             {
-                Util.NetworkUtil.SafeClose(commObject);
+                NetworkUtil.SafeClose(commObject);
             }
             _client = null;
         }

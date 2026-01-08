@@ -43,7 +43,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
             if (VerifyClientOpen())
             {
-                request.IsSuccess = true; //Already connected
+                request.IsSuccess = true;
                 request.StatusCode = StatusCode.UNAUTHORIZED;
                 return request;
             }
@@ -108,15 +108,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                     _client.DisconnectAsync(_currentPlayerID);
                     CloseProxy();
                 }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
+                catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
                 {
                     CloseProxy();
                 }
@@ -182,15 +174,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 {
                     _client.ConfirmMatchReceivedAsync(_currentPlayerID, matchID);
                 }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
+                catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
                 {
                     CloseProxy();
                 }
@@ -211,15 +195,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 {
                     _client.RequestMatchCancelAsync(_currentPlayerID);
                 }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
+                catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
                 {
                     CloseProxy();
                 }

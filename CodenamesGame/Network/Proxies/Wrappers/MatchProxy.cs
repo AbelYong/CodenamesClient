@@ -42,7 +42,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             CommunicationRequest request = new CommunicationRequest();
             if (_client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened)
             {
-                request.IsSuccess = true;  //Player already connected
+                request.IsSuccess = true;
                 request.StatusCode = StatusCode.UNAUTHORIZED;
                 return request;
             }
@@ -101,15 +101,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                     _currentPlayerID = Guid.Empty;
                     CloseProxy();
                 }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
+                catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
                 {
                     CloseProxy();
                 }
@@ -177,15 +169,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 await _client.SendClueAsync(_currentPlayerID, clue);
             }
-            catch (TimeoutException)
-            {
-                CloseProxy();
-            }
-            catch (EndpointNotFoundException)
-            {
-                CloseProxy();
-            }
-            catch (CommunicationException)
+            catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
             {
                 CloseProxy();
             }
@@ -208,15 +192,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 await _client.NotifyTurnTimeoutAsync(_currentPlayerID, currentRole);
             }
-            catch (TimeoutException)
-            {
-                CloseProxy();
-            }
-            catch (EndpointNotFoundException)
-            {
-                CloseProxy();
-            }
-            catch (CommunicationException)
+            catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
             {
                 CloseProxy();
             }
@@ -245,15 +221,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 };
                 await _client.NotifyPickedAgentAsync(notification);
             }
-            catch (TimeoutException)
-            {
-                CloseProxy();
-            }
-            catch (EndpointNotFoundException)
-            {
-                CloseProxy();
-            }
-            catch (CommunicationException)
+            catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
             {
                 CloseProxy();
             }
@@ -282,15 +250,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
                 await _client.NotifyPickedBystanderAsync(notification);
             }
-            catch (TimeoutException)
-            {
-                CloseProxy();
-            }
-            catch (EndpointNotFoundException)
-            {
-                CloseProxy();
-            }
-            catch (CommunicationException)
+            catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
             {
                 CloseProxy();
             }
@@ -318,15 +278,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 };
                 await _client.NotifyPickedAssassinAsync(notification);
             }
-            catch (TimeoutException)
-            {
-                CloseProxy();
-            }
-            catch (EndpointNotFoundException)
-            {
-                CloseProxy();
-            }
-            catch (CommunicationException)
+            catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
             {
                 CloseProxy();
             }

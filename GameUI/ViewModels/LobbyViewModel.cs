@@ -424,7 +424,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.JOIN_PARTY, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(LobbyOperationType.JOIN_PARTY, request.StatusCode));
             }
         }
 
@@ -442,7 +442,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.CREATE_PARTY, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(LobbyOperationType.CREATE_PARTY, request.StatusCode));
             }
         }
 

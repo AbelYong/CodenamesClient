@@ -43,7 +43,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             if (_client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened)
             {
                 request.IsSuccess = true;
-                request.StatusCode = StatusCode.UNAUTHORIZED; //Player is already connected to the service
+                request.StatusCode = StatusCode.UNAUTHORIZED;
                 return request;
             }
 
@@ -113,15 +113,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                     _client.DisconnectAsync(svPlayer);
                     CloseProxy();
                 }
-                catch (TimeoutException)
-                {
-                    CloseProxy();
-                }
-                catch (EndpointNotFoundException)
-                {
-                    CloseProxy();
-                }
-                catch (CommunicationException)
+                catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
                 {
                     CloseProxy();
                 }
