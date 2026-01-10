@@ -110,6 +110,11 @@ namespace CodenamesClient.Operation.Network.Duplex
             return _lobbyOperation.CreateLobby(player);
         }
 
+        public CodenamesGame.LobbyService.CommunicationRequest SendEmailInvitation(string toAddress)
+        {
+            return _lobbyOperation.SendEmailInvitation(toAddress);
+        }
+
         public CodenamesGame.LobbyService.CommunicationRequest InviteToParty(PlayerDM hostPlayer, Guid friendToInviteID, string lobbyCode)
         {
             return _lobbyOperation.InviteToParty(hostPlayer, friendToInviteID, lobbyCode);
@@ -183,6 +188,11 @@ namespace CodenamesClient.Operation.Network.Duplex
         public async Task NotifyPickedAssassin(BoardCoordinatesDM coordinates)
         {
             await _matchOperation.NotifyPickedAssassin(coordinates);
+        }
+
+        public async Task<bool> CheckCompanionStatus()
+        {
+            return await _matchOperation.CheckCompanionStatus();
         }
 
         public void ConnectToScoreboardService(Guid playerID)

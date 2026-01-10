@@ -230,16 +230,20 @@
                         <Label Content="{Binding TurnTimer, StringFormat='s{0}'}" Style="{StaticResource title}" Foreground="White" />
                         <Label Content="{x:Static language:Lang.matchTimerTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
                         <Label Content="{Binding TimerTokens, StringFormat='x{0}'}" Background="Gray" MinWidth="100" MinHeight="50"
-                   Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" />
+                               Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" />
                         <Label Content="{x:Static language:Lang.matchBystanderTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
-                        <Label Content="{Binding BystanderTokens, StringFormat='x{0}'}" Background="Khaki"  MinWidth="100" MinHeight="50" 
-                   Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                        <Label Content="{Binding BystanderTokens, StringFormat='x{0}'}" Background="Khaki"  MinWidth="100" MinHeight="50"
+                               Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
 
-                        <Button Content="{x:Static language:Lang.matchSkipTurn}" 
-                    Visibility="{Binding IsSkipButtonVisible, Converter={StaticResource BoolToVis}}"
-                    Click="Click_SkipTurn"
-                    Style="{StaticResource buttonCustomFocus}"
-                    Margin="0,20,0,0" Height="40" Background="Orange" Foreground="White"/>
+                        <Button Content="{x:Static language:Lang.matchSkipTurn}"
+                                Visibility="{Binding IsSkipButtonVisible, Converter={StaticResource BoolToVis}}"
+                                Click="Click_SkipTurn"
+                                Style="{StaticResource buttonCustomFocus}"
+                                Margin="0,20,0,0" Height="40" Background="Orange" Foreground="White"/>
+                        <Button Content="{x:Static language:Lang.matchCheckOnCompanion}"
+                                Click="ClickCheckOnCompanion"
+                                Style="{StaticResource buttonCustomFocus}"
+                                Margin="0,20,0,0" Height="40" Background="DarkOrange"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>

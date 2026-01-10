@@ -289,6 +289,31 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
         }
 
+        public async Task<bool> CheckCompanionStatus()
+        {
+            if (VerifyClientClosedOrFaulted())
+            {
+                CloseProxy();
+                return false;
+            }
+
+            try
+            {
+                return await _client.CheckCompanionStatusAsync(_currentPlayerID);
+            }
+            catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
+            {
+                CloseProxy();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while checking on match companion's status: ", ex);
+                CloseProxy();
+                return false;
+            }
+        }
+
         private bool VerifyClientClosedOrFaulted()
         {
             return _client == null || ((ICommunicationObject)_client).State != CommunicationState.Opened;

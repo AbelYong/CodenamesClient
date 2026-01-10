@@ -51,6 +51,7 @@ namespace CodenamesClient.GameUI
         private void NavigateToLogin()
         {
             DisconnectDuplexServices();
+            AudioManager.Instance.StopAllAudio();
 
             MainFrame.Navigate(new LoginPage());
             MainFrame.NavigationService.RemoveBackEntry();
@@ -70,6 +71,7 @@ namespace CodenamesClient.GameUI
             try
             {
                 DisconnectDuplexServices();
+                AudioManager.Instance.StopAllAudio();
             }
             catch (Exception ex) when (ex is CommunicationException || ex is TimeoutException)
             {

@@ -49,10 +49,6 @@ namespace CodenamesClient.GameUI
             _sfxPlayer.MediaEnded += (s, e) => _sfxPlayer.Close();
         }
 
-        /// <summary>
-        /// Configures all music layers in the game.
-        /// </summary>
-        /// <param name="trackConfig">Dictionary with “KeyName” and “FilePath”</param>
         public void LoadTracks(Dictionary<string, string> trackConfig)
         {
             foreach (var player in _tracks.Values)
@@ -85,9 +81,6 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        /// <summary>
-        /// Starts simultaneous playback of all tracks, but only the ‘startKey’ is heard.
-        /// </summary>
         public void StartPlayback(string startKey)
         {
             if (!_tracks.ContainsKey(startKey))
@@ -110,9 +103,6 @@ namespace CodenamesClient.GameUI
             }
         }
 
-        /// <summary>
-        /// Performs a smooth transition (crossfade) to a new track.
-        /// </summary>
         public void TransitionTo(string nextTrackKey)
         {
             if (!_tracks.ContainsKey(nextTrackKey))

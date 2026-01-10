@@ -171,6 +171,61 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return request;
         }
 
+        public CommunicationRequest SendEmailInvitation(string toAddress)
+        {
+            CommunicationRequest request = new CommunicationRequest();
+
+            TryReconnect();
+            if (VerifyClientOpen())
+            {
+                if (_currentPlayerID != Guid.Empty)
+                {
+                    return SendEmailInvite(toAddress);
+                }
+                else
+                {
+                    request.IsSuccess = false;
+                    request.StatusCode = StatusCode.MISSING_DATA;
+                }
+            }
+            else
+            {
+                request = GenerateServerUnavaibleRequest<CommunicationRequest>();
+            }
+            return request;
+        }
+
+        private CommunicationRequest SendEmailInvite(string toAddress)
+        {
+            CommunicationRequest request;
+            try
+            {
+                return _client.SendEmailInvitation(_currentPlayerID, toAddress);
+            }
+            catch (TimeoutException)
+            {
+                request = GenerateServerTimeoutRequest<CommunicationRequest>();
+                CloseProxy();
+            }
+            catch (EndpointNotFoundException)
+            {
+                request = GenerateServerUnreachableRequest<CommunicationRequest>();
+                CloseProxy();
+            }
+            catch (CommunicationException)
+            {
+                request = GenerateServerUnavaibleRequest<CommunicationRequest>();
+                CloseProxy();
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while sending email invitation: ", ex);
+                request = GenerateClientErrorRequest<CommunicationRequest>();
+                CloseProxy();
+            }
+            return request;
+        }
+
         public CommunicationRequest InviteToParty(PlayerDM hostPlayer, Guid friendToInviteID, string lobbyCode)
         {
             CommunicationRequest request = new CommunicationRequest();

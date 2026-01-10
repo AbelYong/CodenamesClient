@@ -31,24 +31,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             catch (TimeoutException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                request = GenerateServerTimeoutRequest<SignInRequest>();
             }
             catch (EndpointNotFoundException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                request = GenerateServerUnreachableRequest<SignInRequest>();
             }
             catch (CommunicationException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request = GenerateServerUnavaibleRequest<SignInRequest>();
             }
             catch (Exception ex)
             {
                 CodenamesGameLogger.Log.Error("Unexpected exception on sign in: ", ex);
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.CLIENT_ERROR;
+                request = GenerateClientErrorRequest<SignInRequest>();
             }
             finally
             {
@@ -99,24 +95,20 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
             catch (TimeoutException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                request = GenerateServerTimeoutRequest<CommunicationRequest>();
             }
             catch (EndpointNotFoundException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                request = GenerateServerUnreachableRequest<CommunicationRequest>();
             }
             catch (CommunicationException)
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request = GenerateServerUnavaibleRequest<CommunicationRequest>();
             }
             catch (Exception ex)
             {
                 CodenamesGameLogger.Log.Error("Unexpected exception on profile update: ", ex);
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.CLIENT_ERROR;
+                request = GenerateClientErrorRequest<CommunicationRequest>();
             }
             finally
             {
@@ -131,6 +123,38 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             {
                 NetworkUtil.SafeClose(commObject);
             }
+        }
+
+        private static T GenerateServerTimeoutRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_TIMEOUT;
+            return request;
+        }
+
+        private static T GenerateServerUnreachableRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+            return request;
+        }
+
+        private static T GenerateServerUnavaibleRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            return request;
+        }
+
+        private static T GenerateClientErrorRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.CLIENT_ERROR;
+            return request;
         }
     }
 }

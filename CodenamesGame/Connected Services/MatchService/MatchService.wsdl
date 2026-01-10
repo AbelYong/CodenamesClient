@@ -13,8 +13,9 @@
       <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
-      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+      <xsd:import schemaLocation="http://localhost:9068/?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IMatchManager_Connect_InputMessage">
@@ -62,6 +63,12 @@
   <wsdl:message name="IMatchManager_NotifyPickedAssassin_OutputMessage">
     <wsdl:part name="parameters" element="tns:NotifyPickedAssassinResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_CheckCompanionStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCompanionStatus" />
+  </wsdl:message>
+  <wsdl:message name="IMatchManager_CheckCompanionStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCompanionStatusResponse" />
+  </wsdl:message>
   <wsdl:message name="IMatchManager_NotifyClueReceived_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyClueReceived" />
   </wsdl:message>
@@ -95,6 +102,9 @@
   <wsdl:message name="IMatchManager_NotifyStatsCouldNotBeSaved_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyStatsCouldNotBeSaved" />
   </wsdl:message>
+  <wsdl:message name="IMatchManager_CheckPlayerStatus_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CheckPlayerStatus" />
+  </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="IMatchManager">
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Connect">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/Connect" message="tns:IMatchManager_Connect_InputMessage" />
@@ -126,6 +136,10 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyPickedAssassin">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAssassin" message="tns:IMatchManager_NotifyPickedAssassin_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyPickedAssassinResponse" message="tns:IMatchManager_NotifyPickedAssassin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CheckCompanionStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchManager/CheckCompanionStatus" message="tns:IMatchManager_CheckCompanionStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/CheckCompanionStatusResponse" message="tns:IMatchManager_CheckCompanionStatus_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyClueReceived">
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyClueReceived" message="tns:IMatchManager_NotifyClueReceived_OutputCallbackMessage" />
@@ -159,6 +173,9 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyStatsCouldNotBeSaved">
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/NotifyStatsCouldNotBeSaved" message="tns:IMatchManager_NotifyStatsCouldNotBeSaved_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CheckPlayerStatus">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchManager/CheckPlayerStatus" message="tns:IMatchManager_CheckPlayerStatus_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IMatchManager" type="tns:IMatchManager">
@@ -233,6 +250,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CheckCompanionStatus">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/CheckCompanionStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="NotifyClueReceived">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyClueReceived" style="document" />
       <wsdl:output>
@@ -295,6 +321,12 @@
     </wsdl:operation>
     <wsdl:operation name="NotifyStatsCouldNotBeSaved">
       <soap12:operation soapAction="http://tempuri.org/IMatchManager/NotifyStatsCouldNotBeSaved" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPlayerStatus">
+      <soap12:operation soapAction="http://tempuri.org/IMatchManager/CheckPlayerStatus" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

@@ -138,6 +138,8 @@ namespace CodenamesClient.Util
                     return GetLobbyInitializeMessage(code);
                 case LobbyOperationType.CREATE_PARTY:
                     return GetCreatePartyMessage(code);
+                case LobbyOperationType.SEND_EMAIL_INVITE:
+                    return GetSendEmailInviteMessage(code);
                 case LobbyOperationType.INVITE_TO_PARTY:
                     return GetInviteToPartyMessage(code);
                 case LobbyOperationType.JOIN_PARTY:
@@ -184,6 +186,28 @@ namespace CodenamesClient.Util
             return Lang.globalUnknownServerError;
         }
 
+        private static string GetSendEmailInviteMessage(CodenamesGame.LobbyService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.LobbyService.StatusCode.NOT_FOUND:
+                    return Lang.lobbyErrorPartyOrHostNotFound;
+                case CodenamesGame.LobbyService.StatusCode.UNALLOWED:
+                    return Lang.lobbyErrorCannotInviteNewGuest;
+                case CodenamesGame.LobbyService.StatusCode.CLIENT_UNREACHABLE:
+                    return Lang.lobbyInfoCouldNotSendEmail;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
+                case CodenamesGame.LobbyService.StatusCode.SERVER_UNAVAIBLE:
+                    return Lang.globalConnectionLost;
+                case CodenamesGame.LobbyService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
+            }
+            return Lang.globalUnknownServerError;
+        }
+
         private static string GetInviteToPartyMessage(CodenamesGame.LobbyService.StatusCode code)
         {
             switch (code)
@@ -195,7 +219,7 @@ namespace CodenamesClient.Util
                 case CodenamesGame.LobbyService.StatusCode.UNAUTHORIZED:
                     return Lang.lobbyErrorYouAreNotPartyHost;
                 case CodenamesGame.LobbyService.StatusCode.UNALLOWED:
-                    return Lang.lobbyErrorLobbyFull;
+                    return Lang.lobbyErrorCannotInviteNewGuest;
                 case CodenamesGame.LobbyService.StatusCode.CLIENT_UNREACHABLE:
                     return Lang.lobbyInfoCouldNotSendEmail;
                 case CodenamesGame.LobbyService.StatusCode.SERVER_TIMEOUT:

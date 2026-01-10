@@ -56,5 +56,10 @@ namespace CodenamesGame.Network
         {
             await _proxy.NotifyPickedAssassin(coordinates);
         }
+
+        public async Task<bool> CheckCompanionStatus()
+        {
+            return await _proxy.CheckCompanionStatus();
+        }
     }
 }

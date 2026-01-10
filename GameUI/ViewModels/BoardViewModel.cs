@@ -658,6 +658,18 @@ namespace CodenamesClient.GameUI.ViewModels
             await DuplexNetworkManager.Instance.NotifyTurnTimeout(currentRole);
         }
 
+        public async Task CheckOnCompanion()
+        {
+            if (await DuplexNetworkManager.Instance.CheckCompanionStatus())
+            {
+                MessageBox.Show(Lang.matchCompanionIsOnline);
+            }
+            else
+            {
+                MessageBox.Show(Lang.matchCompanionLostConnection);
+            }
+        }
+
         public async Task HandleAgentSelection(BoardCoordinatesDM coordinates)
         {
             AddTime(TurnLength);
@@ -835,11 +847,6 @@ namespace CodenamesClient.GameUI.ViewModels
             ElapsedTime = TimeSpan.Zero;
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
         public void ReportCompanion()
         {
             if (_companion == null)
@@ -926,6 +933,11 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 AudioManager.Instance.TransitionTo("Guesser");
             }
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

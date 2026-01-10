@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,7 +35,6 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             if (obj is TextBlock textBlock)
             {
-                // Cancel any text animation currently running
                 var oldCancelationToken = (CancellationTokenSource)obj.GetValue(CancellationTokenSourceProperty);
                 oldCancelationToken?.Cancel();
 
@@ -67,7 +62,6 @@ namespace CodenamesClient.GameUI.BoardUI
                 }
                 finally
                 {
-                    // Null animation so its not wrongly cancelled 
                     if (newCancelationToken == obj.GetValue(CancellationTokenSourceProperty))
                     {
                         obj.SetValue(CancellationTokenSourceProperty, null);

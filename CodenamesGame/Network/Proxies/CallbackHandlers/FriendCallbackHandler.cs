@@ -6,12 +6,6 @@ using System.ServiceModel;
 
 namespace CodenamesGame.Network.Proxies.CallbackHandlers
 {
-
-    /// <summary>
-    /// Implements the WCF callback interface (IFriendManagerCallback)
-    /// and exposes callbacks as static C# events to
-    /// decouple the network layer from the ViewModels.
-    /// </summary>
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class FriendCallbackHandler : IFriendManagerCallback
     {
@@ -54,16 +48,6 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
         }
 
         public void NotifyOperationFailure(string message)
-        {
-            OnOperationFailure?.Invoke(null,
-                new OperationMessageEventArgs { Message = message });
-        }
-
-        /// <summary>
-        /// Safely invokes the failure event from outside the class.
-        /// Used to report transport errors in the network layer.
-        /// </summary>
-        public static void RaiseOperationFailure(string message)
         {
             OnOperationFailure?.Invoke(null,
                 new OperationMessageEventArgs { Message = message });

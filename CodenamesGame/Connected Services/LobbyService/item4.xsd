@@ -2,7 +2,7 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9061/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost:9061/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-  <xs:import schemaLocation="http://localhost:9061/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+  <xs:import schemaLocation="http://localhost:9061/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
   <xs:element name="Connect">
     <xs:complexType>
       <xs:sequence>
@@ -54,10 +54,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendEmailInvitation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="partyHostID" type="q9:guid" />
+        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendEmailInvitationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="SendEmailInvitationResult" nillable="true" type="q10:CommunicationRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="JoinParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="joiningPlayer" nillable="true" type="q9:Player" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="joiningPlayer" nillable="true" type="q11:Player" />
         <xs:element minOccurs="0" name="lobbyCode" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -65,22 +80,27 @@
   <xs:element name="JoinPartyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="JoinPartyResult" nillable="true" type="q10:JoinPartyRequest" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="JoinPartyResult" nillable="true" type="q12:JoinPartyRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LeaveParty">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="playerID" type="q11:guid" />
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="playerID" type="q13:guid" />
         <xs:element minOccurs="0" name="lobbyCode" nillable="true" type="xs:string" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LeavePartyResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyMatchInvitationReceived">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="fromPlayer" nillable="true" type="q12:Player" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="fromPlayer" nillable="true" type="q14:Player" />
         <xs:element minOccurs="0" name="lobbyCode" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -88,14 +108,14 @@
   <xs:element name="NotifyMatchInvitationAccepted">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="byPlayer" nillable="true" type="q13:Player" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="byPlayer" nillable="true" type="q15:Player" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NotifyPartyAbandoned">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="leavingPlayerID" type="q14:guid" />
+        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="leavingPlayerID" type="q16:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

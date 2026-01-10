@@ -247,34 +247,29 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (TimeoutException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    request = GenerateServerTimeoutRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (EndpointNotFoundException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    request = GenerateServerUnreachableRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (CommunicationException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    request = GenerateServerUnavaibleRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error sending friend request", ex);
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    request = GenerateClientErrorRequest<FriendshipRequest>();
                     CloseProxy();
                 }
             }
             else
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request = GenerateServerUnavaibleRequest<FriendshipRequest>();
             }
 
             return request;
@@ -293,36 +288,30 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (TimeoutException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    request = GenerateServerTimeoutRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (EndpointNotFoundException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    request = GenerateServerUnreachableRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (CommunicationException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    request = GenerateServerUnavaibleRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error accepting friend request", ex);
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    request = GenerateClientErrorRequest<FriendshipRequest>();
                     CloseProxy();
                 }
             }
             else
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request = GenerateServerUnavaibleRequest<FriendshipRequest>();
             }
-
             return request;
         }
 
@@ -339,34 +328,29 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (TimeoutException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    request = GenerateServerTimeoutRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (EndpointNotFoundException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    request = GenerateServerUnreachableRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (CommunicationException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    request = GenerateServerUnavaibleRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error rejecting friend request", ex);
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    request = GenerateClientErrorRequest<FriendshipRequest>();
                     CloseProxy();
                 }
             }
             else
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request = GenerateServerUnavaibleRequest<FriendshipRequest>();
             }
 
             return request;
@@ -385,36 +369,30 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 }
                 catch (TimeoutException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_TIMEOUT;
+                    request = GenerateServerTimeoutRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (EndpointNotFoundException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+                    request = GenerateServerUnreachableRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (CommunicationException)
                 {
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                    request = GenerateServerUnavaibleRequest<FriendshipRequest>();
                     CloseProxy();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error removing friend", ex);
-                    request.IsSuccess = false;
-                    request.StatusCode = StatusCode.CLIENT_ERROR;
+                    request = GenerateClientErrorRequest<FriendshipRequest>();
                     CloseProxy();
                 }
             }
             else
             {
-                request.IsSuccess = false;
-                request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+                request = GenerateServerUnavaibleRequest<FriendshipRequest>();
             }
-
             return request;
         }
 
@@ -439,6 +417,38 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 NetworkUtil.SafeClose(commObject);
             }
             _client = null;
+        }
+
+        private static T GenerateServerTimeoutRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_TIMEOUT;
+            return request;
+        }
+
+        private static T GenerateServerUnreachableRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+            return request;
+        }
+
+        private static T GenerateServerUnavaibleRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            return request;
+        }
+
+        private static T GenerateClientErrorRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.CLIENT_ERROR;
+            return request;
         }
     }
 }

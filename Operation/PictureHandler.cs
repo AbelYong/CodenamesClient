@@ -16,7 +16,6 @@ namespace CodenamesClient.Operation
         private const int _DEFAULT_IMAGE = 0;
         private static readonly List<string> _agentPicturePaths = new List<string>
         {
-            //Agents
             "/Assets/BoardUI/Agents/agent01.png",
             "/Assets/BoardUI/Agents/agent02.png",
             "/Assets/BoardUI/Agents/agent03.png",
@@ -32,7 +31,6 @@ namespace CodenamesClient.Operation
             "/Assets/BoardUI/Agents/agent13.png",
             "/Assets/BoardUI/Agents/agent14.png",
             "/Assets/BoardUI/Agents/agent15.png",
-            //Neutrals
             "/Assets/BoardUI/Neutrals/neutral01.png",
             "/Assets/BoardUI/Neutrals/neutral02.png",
             "/Assets/BoardUI/Neutrals/neutral03.png",
@@ -40,7 +38,6 @@ namespace CodenamesClient.Operation
             "/Assets/BoardUI/Neutrals/neutral05.png",
             "/Assets/BoardUI/Neutrals/neutral06.png",
             "/Assets/BoardUI/Neutrals/neutral07.png",
-            //Assassins
             "/Assets/BoardUI/Assassins/assassin01.png",
             "/Assets/BoardUI/Assassins/assassin02.png",
             "/Assets/BoardUI/Assassins/assassin03.png"
@@ -55,7 +52,6 @@ namespace CodenamesClient.Operation
             return _agentPicturePaths[_DEFAULT_IMAGE];
         }
 
-        //If image index is zero (default) or out of bounds, returns default picture
         public static ImageBrush GetImage(int imageIndex)
         {
             string path = _agentPicturePaths[_DEFAULT_IMAGE];
@@ -79,17 +75,10 @@ namespace CodenamesClient.Operation
                 BitmapImage profilePicture = new BitmapImage(imageUri);
                 return new ImageBrush(profilePicture);
             }
-            catch (UriFormatException)
+            catch (Exception ex) when (ex is UriFormatException || ex is ArgumentException || ex is ArgumentNullException || ex is FileNotFoundException)
             {
                 MessageBox.Show(Lang.globalProfilePictureError);
-            }
-            catch (ArgumentNullException)
-            {
-                MessageBox.Show(Lang.globalProfilePictureError);
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show(Lang.globalProfilePictureError);
+                CodenamesGame.Util.CodenamesGameLogger.Log.Debug("Exception while trying to convert images to ImageBrush: ", ex);
             }
             return null;
         }

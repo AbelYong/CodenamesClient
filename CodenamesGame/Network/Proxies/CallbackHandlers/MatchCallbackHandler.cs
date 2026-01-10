@@ -21,6 +21,7 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
         public static event Action<string, bool> OnMatchTimeout;
         public static event EventHandler<string> OnMatchWon;
         public static event Action OnScoreNotSaved;
+        public static event Action OnStatusChecked;
 
         public MatchCallbackHandler()
         {
@@ -101,6 +102,11 @@ namespace CodenamesGame.Network.Proxies.CallbackHandlers
         public void NotifyStatsCouldNotBeSaved()
         {
             OnScoreNotSaved?.Invoke();
+        }
+
+        public void CheckPlayerStatus()
+        {
+            OnStatusChecked?.Invoke();
         }
     }
 }

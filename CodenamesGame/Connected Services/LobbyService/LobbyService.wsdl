@@ -13,7 +13,8 @@
       <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
-      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost:9061/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ILobbyManager_Connect_InputMessage">
@@ -37,6 +38,12 @@
   <wsdl:message name="ILobbyManager_InviteToParty_OutputMessage">
     <wsdl:part name="parameters" element="tns:InviteToPartyResponse" />
   </wsdl:message>
+  <wsdl:message name="ILobbyManager_SendEmailInvitation_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendEmailInvitation" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_SendEmailInvitation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendEmailInvitationResponse" />
+  </wsdl:message>
   <wsdl:message name="ILobbyManager_JoinParty_InputMessage">
     <wsdl:part name="parameters" element="tns:JoinParty" />
   </wsdl:message>
@@ -45,6 +52,9 @@
   </wsdl:message>
   <wsdl:message name="ILobbyManager_LeaveParty_InputMessage">
     <wsdl:part name="parameters" element="tns:LeaveParty" />
+  </wsdl:message>
+  <wsdl:message name="ILobbyManager_LeaveParty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LeavePartyResponse" />
   </wsdl:message>
   <wsdl:message name="ILobbyManager_NotifyMatchInvitationReceived_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyMatchInvitationReceived" />
@@ -71,12 +81,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/InviteToParty" message="tns:ILobbyManager_InviteToParty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/InviteToPartyResponse" message="tns:ILobbyManager_InviteToParty_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SendEmailInvitation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/SendEmailInvitation" message="tns:ILobbyManager_SendEmailInvitation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/SendEmailInvitationResponse" message="tns:ILobbyManager_SendEmailInvitation_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="JoinParty">
       <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/JoinParty" message="tns:ILobbyManager_JoinParty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/JoinPartyResponse" message="tns:ILobbyManager_JoinParty_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="LeaveParty">
       <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/LeaveParty" message="tns:ILobbyManager_LeaveParty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/LeavePartyResponse" message="tns:ILobbyManager_LeaveParty_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifyMatchInvitationReceived">
       <wsdl:output wsaw:Action="http://tempuri.org/ILobbyManager/NotifyMatchInvitationReceived" message="tns:ILobbyManager_NotifyMatchInvitationReceived_OutputCallbackMessage" />
@@ -124,6 +139,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SendEmailInvitation">
+      <soap12:operation soapAction="http://tempuri.org/ILobbyManager/SendEmailInvitation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="JoinParty">
       <soap12:operation soapAction="http://tempuri.org/ILobbyManager/JoinParty" style="document" />
       <wsdl:input>
@@ -138,6 +162,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NotifyMatchInvitationReceived">
       <soap12:operation soapAction="http://tempuri.org/ILobbyManager/NotifyMatchInvitationReceived" style="document" />

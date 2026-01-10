@@ -816,4 +816,25 @@
   <data name="lobbyRulesBystanderTokensInfo" xml:space="preserve">
     <value>Hasta 13 fichas, mínimo 0 fichas. (Solo modo personalizado)</value>
   </data>
+  <data name="lobbySendEmail" xml:space="preserve">
+    <value>Enviar correo</value>
+  </data>
+  <data name="lobbyErrorCantInviteLobbyFull" xml:space="preserve">
+    <value>No puedes invitar más jugadores porque tu sala esta llena</value>
+  </data>
+  <data name="lobbyErrorInvitationAlreadySentToAddress" xml:space="preserve">
+    <value>Ya enviaste una invitación a esta dirección</value>
+  </data>
+  <data name="lobbyErrorNotAnEmailAddress" xml:space="preserve">
+    <value>No podemos enviar un correo electrónico a esta dirección porque no es una dirección de correo electrónico válida, verifique la ortografía y vuelva a intentarlo.</value>
+  </data>
+  <data name="matchCheckOnCompanion" xml:space="preserve">
+    <value>Contactar compañero</value>
+  </data>
+  <data name="matchCompanionIsOnline" xml:space="preserve">
+    <value>Tu compañero esta conectado</value>
+  </data>
+  <data name="matchCompanionLostConnection" xml:space="preserve">
+    <value>Tu compañero perdió la conexión</value>
+  </data>
 </root>

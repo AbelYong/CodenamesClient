@@ -97,6 +97,7 @@
     <Compile Include="Operation\Network\Oneway\IOnewayNetworkManager.cs" />
     <Compile Include="Operation\Network\Oneway\OnewayNetworkManager.cs" />
     <Compile Include="Operation\PictureHandler.cs" />
+    <Compile Include="Operation\Validation\LobbyValidation.cs" />
     <Compile Include="Operation\Validation\LoginValidation.cs" />
     <Compile Include="Operation\Validation\PasswordValidation.cs" />
     <Compile Include="Operation\Validation\ProfileValidation.cs" />

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
   <xs:import schemaLocation="http://localhost:9058/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+  <xs:import schemaLocation="http://localhost:9058/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
   <xs:complexType name="CommunicationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
@@ -33,6 +34,7 @@
       <xs:enumeration value="UNAUTHORIZED" />
       <xs:enumeration value="UNALLOWED" />
       <xs:enumeration value="SERVER_ERROR" />
+      <xs:enumeration value="DATABASE_ERROR" />
       <xs:enumeration value="SERVER_UNAVAIBLE" />
       <xs:enumeration value="SERVER_TIMEOUT" />
       <xs:enumeration value="SERVER_UNREACHABLE" />
@@ -54,6 +56,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="BanExpiration" nillable="true" type="q1:DateTimeOffset" />
           <xs:element minOccurs="0" name="UserID" nillable="true" type="ser:guid" />
         </xs:sequence>
       </xs:extension>
@@ -97,7 +100,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="Party" nillable="true" type="q1:Party" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="Party" nillable="true" type="q2:Party" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

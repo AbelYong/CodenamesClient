@@ -21,6 +21,8 @@ namespace CodenamesClient.GameUI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event Action<MatchDM> BeginMatch;
+        public ObservableCollection<FriendItem> Friends { get; }
+        public Dictionary<string, bool> AlreadySentToAddresses = new Dictionary<string, bool>();
         private MatchDM _match;
         private readonly PlayerDM _me;
         private PlayerDM _partyHost;
@@ -31,6 +33,7 @@ namespace CodenamesClient.GameUI.ViewModels
         private string _readyOrCancelTgBtnContent;
         private string _lobbyCode = string.Empty;
         private string _visibleLobbyCodeTag = string.Empty;
+        private string _sendToEmailAddress = string.Empty;
         private int _timerTokens;
         private int _bystanderTokens;
         private int _turnTimer;
@@ -45,8 +48,6 @@ namespace CodenamesClient.GameUI.ViewModels
         private Visibility _guestBtnVisibility;
         private Visibility _inviteBtnVisibility;
         private Visibility _jointBtnVisibility;
-
-        public ObservableCollection<FriendItem> Friends { get; }
 
         public PlayerDM PartyHost
         {
@@ -287,6 +288,16 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
+        public string SendToEmailAddress
+        {
+            get => _sendToEmailAddress;
+            set
+            {
+                _sendToEmailAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
         public LobbyViewModel(PlayerDM player, GamemodeDM gamemode)
         {
             _me = player;
@@ -439,10 +450,25 @@ namespace CodenamesClient.GameUI.ViewModels
                 CreateLobbyBtnVisbility = Visibility.Collapsed;
                 InviteBtnVisibility = Visibility.Visible;
                 JoinBtnVisibility = Visibility.Collapsed;
+                AlreadySentToAddresses.Clear();
             }
             else
             {
                 MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(LobbyOperationType.CREATE_PARTY, request.StatusCode));
+            }
+        }
+
+        public void SendEmailInvitation()
+        {
+            CodenamesGame.LobbyService.CommunicationRequest request = DuplexNetworkManager.Instance.SendEmailInvitation(_sendToEmailAddress);
+            if (request.IsSuccess)
+            {
+                AlreadySentToAddresses.Add(_sendToEmailAddress, true);
+                MessageBox.Show(Lang.lobbyInvitationSentSuccesfully);
+            }
+            else
+            {
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(LobbyOperationType.SEND_EMAIL_INVITE, request.StatusCode));
             }
         }
 
@@ -625,8 +651,8 @@ namespace CodenamesClient.GameUI.ViewModels
             PlayBtnVisibility = Visibility.Visible;
             PlayBtnEnabled = true;
             _canMatchBeCanceled = false;
-            IsReadyOrCancelTgBtnActive = false; //Turn it back from cancel to its "signal ready state"
-            _match = null; //Free the match field
+            IsReadyOrCancelTgBtnActive = false; 
+            _match = null;
 
             if (BeginMatch != null && matchToNavigate != null)
             {

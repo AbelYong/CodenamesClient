@@ -37,6 +37,7 @@
       <xs:enumeration value="UNAUTHORIZED" />
       <xs:enumeration value="UNALLOWED" />
       <xs:enumeration value="SERVER_ERROR" />
+      <xs:enumeration value="DATABASE_ERROR" />
       <xs:enumeration value="SERVER_UNAVAIBLE" />
       <xs:enumeration value="SERVER_TIMEOUT" />
       <xs:enumeration value="SERVER_UNREACHABLE" />

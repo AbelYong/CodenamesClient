@@ -32,6 +32,11 @@ namespace CodenamesGame.Network
             return _proxy.CreateLobby(player);
         }
 
+        public CommunicationRequest SendEmailInvitation(string toAddress)
+        {
+            return _proxy.SendEmailInvitation(toAddress);
+        }
+
         public CommunicationRequest InviteToParty(PlayerDM hostPlayer, Guid friendToInviteID, string lobbyCode)
         {
             return _proxy.InviteToParty(hostPlayer, friendToInviteID, lobbyCode);

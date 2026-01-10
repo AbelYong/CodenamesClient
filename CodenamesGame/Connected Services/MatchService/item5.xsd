@@ -1,111 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:9068/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9068/?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:complexType name="Party">
+  <xs:complexType name="DateTimeOffset">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" name="LobbyCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PartyGuest" nillable="true" type="tns:Player" />
-      <xs:element minOccurs="0" name="PartyHost" nillable="true" type="tns:Player" />
+      <xs:element name="DateTime" type="xs:dateTime" />
+      <xs:element name="OffsetMinutes" type="xs:short" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Party" nillable="true" type="tns:Party" />
-  <xs:complexType name="Player">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AvatarID" type="xs:int" />
-      <xs:element minOccurs="0" name="DiscordUsername" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FacebookUsername" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="InstagramUsername" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IsGuest" type="xs:boolean" />
-      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PlayerID" nillable="true" type="ser:guid" />
-      <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
-      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Player" nillable="true" type="tns:Player" />
-  <xs:complexType name="User">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UserID" type="ser:guid" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="User" nillable="true" type="tns:User" />
-  <xs:complexType name="Match">
-    <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BoardPlayerOne" nillable="true" type="q1:ArrayOfArrayOfint" />
-      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="BoardPlayerTwo" nillable="true" type="q2:ArrayOfArrayOfint" />
-      <xs:element minOccurs="0" name="Companion" nillable="true" type="tns:Player" />
-      <xs:element minOccurs="0" name="MatchID" type="ser:guid" />
-      <xs:element minOccurs="0" name="Requester" nillable="true" type="tns:Player" />
-      <xs:element minOccurs="0" name="Rules" nillable="true" type="tns:MatchRules" />
-      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SelectedWords" nillable="true" type="q3:ArrayOfint" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Match" nillable="true" type="tns:Match" />
-  <xs:complexType name="MatchRules">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BystanderTokens" type="xs:int" />
-      <xs:element minOccurs="0" name="Gamemode" type="tns:Gamemode" />
-      <xs:element minOccurs="0" name="TimerTokens" type="xs:int" />
-      <xs:element minOccurs="0" name="TurnTimer" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="MatchRules" nillable="true" type="tns:MatchRules" />
-  <xs:simpleType name="Gamemode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NORMAL" />
-      <xs:enumeration value="CUSTOM" />
-      <xs:enumeration value="COUNTERINTELLIGENCE" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="Gamemode" nillable="true" type="tns:Gamemode" />
-  <xs:simpleType name="MatchRoleType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="SPYMASTER" />
-      <xs:enumeration value="GUESSER" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="MatchRoleType" nillable="true" type="tns:MatchRoleType" />
-  <xs:complexType name="AgentPickedNotification">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Coordinates" nillable="true" type="tns:BoardCoordinates" />
-      <xs:element minOccurs="0" name="NewTurnLength" type="xs:int" />
-      <xs:element minOccurs="0" name="SenderID" type="ser:guid" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="AgentPickedNotification" nillable="true" type="tns:AgentPickedNotification" />
-  <xs:complexType name="BoardCoordinates">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Column" type="xs:int" />
-      <xs:element minOccurs="0" name="Row" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="BoardCoordinates" nillable="true" type="tns:BoardCoordinates" />
-  <xs:complexType name="BystanderPickedNotification">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Coordinates" nillable="true" type="tns:BoardCoordinates" />
-      <xs:element minOccurs="0" name="RemainingTokens" type="xs:int" />
-      <xs:element minOccurs="0" name="SenderID" type="ser:guid" />
-      <xs:element minOccurs="0" name="TokenToUpdate" type="tns:TokenType" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="BystanderPickedNotification" nillable="true" type="tns:BystanderPickedNotification" />
-  <xs:simpleType name="TokenType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="TIMER" />
-      <xs:enumeration value="BYSTANDER" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="TokenType" nillable="true" type="tns:TokenType" />
-  <xs:complexType name="AssassinPickedNotification">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Coordinates" nillable="true" type="tns:BoardCoordinates" />
-      <xs:element minOccurs="0" name="FinalMatchLength" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SenderID" type="ser:guid" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="AssassinPickedNotification" nillable="true" type="tns:AssassinPickedNotification" />
+  <xs:element name="DateTimeOffset" nillable="true" type="tns:DateTimeOffset" />
 </xs:schema>

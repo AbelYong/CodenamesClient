@@ -781,6 +781,24 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a You cannot invite more players because your lobby is full.
+        /// </summary>
+        public static string lobbyErrorCantInviteLobbyFull {
+            get {
+                return ResourceManager.GetString("lobbyErrorCantInviteLobbyFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a You already sent an invitation to this address.
+        /// </summary>
+        public static string lobbyErrorInvitationAlreadySentToAddress {
+            get {
+                return ResourceManager.GetString("lobbyErrorInvitationAlreadySentToAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No lobby matching this code was found, please try again.
         /// </summary>
         public static string lobbyErrorLobbyCodeNotFound {
@@ -795,6 +813,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string lobbyErrorLobbyFull {
             get {
                 return ResourceManager.GetString("lobbyErrorLobbyFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a We cannot send an email to this address because is not a valid email address, please check the spelling and try again.
+        /// </summary>
+        public static string lobbyErrorNotAnEmailAddress {
+            get {
+                return ResourceManager.GetString("lobbyErrorNotAnEmailAddress", resourceCulture);
             }
         }
         
@@ -993,6 +1020,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string lobbySendCode {
             get {
                 return ResourceManager.GetString("lobbySendCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Send email.
+        /// </summary>
+        public static string lobbySendEmail {
+            get {
+                return ResourceManager.GetString("lobbySendEmail", resourceCulture);
             }
         }
         
@@ -1204,6 +1240,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Check on companion.
+        /// </summary>
+        public static string matchCheckOnCompanion {
+            get {
+                return ResourceManager.GetString("matchCheckOnCompanion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Chronometer.
         /// </summary>
         public static string matchChronometer {
@@ -1213,11 +1258,29 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Your companion is online.
+        /// </summary>
+        public static string matchCompanionIsOnline {
+            get {
+                return ResourceManager.GetString("matchCompanionIsOnline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a {0} is the spymaster.
         /// </summary>
         public static string matchCompanionIsSpymaster {
             get {
                 return ResourceManager.GetString("matchCompanionIsSpymaster", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Your companion lost connection.
+        /// </summary>
+        public static string matchCompanionLostConnection {
+            get {
+                return ResourceManager.GetString("matchCompanionLostConnection", resourceCulture);
             }
         }
         

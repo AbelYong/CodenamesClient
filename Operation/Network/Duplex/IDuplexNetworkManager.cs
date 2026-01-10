@@ -23,6 +23,7 @@ namespace CodenamesClient.Operation.Network.Duplex
         CodenamesGame.LobbyService.CommunicationRequest ConnectLobbyService(Guid playerID);
         void DisconnectFromLobbyService();
         CodenamesGame.LobbyService.CreateLobbyRequest CreateLobby(PlayerDM player);
+        CodenamesGame.LobbyService.CommunicationRequest SendEmailInvitation(string toAddress);
         CodenamesGame.LobbyService.CommunicationRequest InviteToParty(PlayerDM hostPlayer, Guid friendToInviteID, string lobbyCode);
         CodenamesGame.LobbyService.JoinPartyRequest JoinParty(PlayerDM joiningPlayer, string lobbyCode);
         CodenamesGame.MatchmakingService.CommunicationRequest ConnectMatchmakingService(Guid playerID);
@@ -38,6 +39,7 @@ namespace CodenamesClient.Operation.Network.Duplex
         Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength);
         Task NotifyPickedBystander(BoardCoordinatesDM coordinates);
         Task NotifyPickedAssassin(BoardCoordinatesDM coordinates);
+        Task<bool> CheckCompanionStatus();
         void ConnectToScoreboardService(Guid playerID);
         void DisconnectFromScoreboardService();
         ScoreboardDM GetMyScore(Guid playerID);

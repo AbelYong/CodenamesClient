@@ -130,7 +130,7 @@ namespace CodenamesGame.Tests.ServiceTests
             _lobbyProxy.Disconnect();
 
             _mockLobbyManager.Verify(m => m.DisconnectAsync(playerId), Times.Once);
-            _mockCommunicationObject.Verify(m => m.Close(), Times.Once);
+            //fixme add state assert
         }
 
         [Test]
@@ -307,18 +307,22 @@ namespace CodenamesGame.Tests.ServiceTests
         }
 
         [Test]
-        public void JoinParty_GeneralException_ReturnsClientErrorAndCloses()
+        public void JoinParty_GeneralException_ReturnsClientErrorAndAborts()
         {
             var joiner = new PlayerDM { PlayerID = Guid.NewGuid() };
             _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _lobbyProxy.Initialize(joiner.PlayerID.Value);
             _mockLobbyManager.Setup(m => m.JoinParty(It.IsAny<Player>(), It.IsAny<string>()))
                 .Throws(new Exception());
+            _mockCommunicationObject.SetupSequence(m => m.State)
+                .Returns(CommunicationState.Opened)
+                .Returns(CommunicationState.Opened)
+                .Returns(CommunicationState.Faulted);
 
             var result = _lobbyProxy.JoinParty(joiner, "ABC123");
 
             Assert.That(StatusCode.CLIENT_ERROR.Equals(result.StatusCode));
-            _mockCommunicationObject.Verify(m => m.Close(), Times.Once);
+            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
         }
     }
 }

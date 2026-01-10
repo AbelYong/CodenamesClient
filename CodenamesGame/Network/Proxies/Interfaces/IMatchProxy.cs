@@ -15,5 +15,6 @@ namespace CodenamesGame.Network.Proxies.Interfaces
         Task NotifyPickedAgent(BoardCoordinatesDM coordinates, int newTurnLength);
         Task NotifyPickedBystander(BoardCoordinatesDM coordinates);
         Task NotifyPickedAssassin(BoardCoordinatesDM coordinates);
+        Task<bool> CheckCompanionStatus();
     }
 }

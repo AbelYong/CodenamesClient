@@ -19,7 +19,7 @@ namespace CodenamesClient.Tests
         [Test]
         public void ValidateUsername_UsernameTooLong_ReturnsUsernameTooLong()
         {
-            string username = "paricularly long user"; //21 characters
+            string username = "paricularly long user";
             string result = LoginValidation.ValidateUsername(username);
             Assert.That(result, Is.EqualTo(Lang.loginUsernameTooLong));
         }
@@ -36,7 +36,7 @@ namespace CodenamesClient.Tests
         [Test]
         public void ValidatePassword_PasswordTooLong_ReturnsPasswordTooLong()
         {
-            string password = "long_____password"; //17 characters
+            string password = "long_____password";
             string result = LoginValidation.ValidatePassword(password);
             Assert.That(result, Is.EqualTo(Lang.loginPasswordTooLong));
         }
@@ -44,7 +44,7 @@ namespace CodenamesClient.Tests
         [Test]
         public void ValidatePassword_ValidUsername_ReturnsOK()
         {
-            string username = "valid username"; //14 characters
+            string username = "valid username";
             string result = LoginValidation.ValidateUsername(username);
             Assert.That(result, Is.EqualTo(string.Empty));
         }
@@ -52,7 +52,7 @@ namespace CodenamesClient.Tests
         [Test]
         public void ValidatePassword_ValidPassword_ReturnsOK()
         {
-            string password = "valid password"; //14 characters
+            string password = "valid password";
             string result = LoginValidation.ValidatePassword(password);
             Assert.That(result, Is.EqualTo(string.Empty));
         }

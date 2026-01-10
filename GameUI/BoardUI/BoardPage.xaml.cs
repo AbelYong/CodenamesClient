@@ -548,6 +548,11 @@ namespace CodenamesClient.GameUI.BoardUI
             await _viewModel.SkipTurn();
         }
 
+        private async void ClickCheckOnCompanion(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.CheckOnCompanion();
+        }
+
         private async void Click_SendMessage(object sender, RoutedEventArgs e)
         {
             await _viewModel.SendMessage();

@@ -3,6 +3,10 @@
   <wsp:Policy wsu:Id="NetTcpBinding_ISessionManager_policy">
     <wsp:ExactlyOne>
       <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="7200000" />
+          <wsrm:AcknowledgementInterval Milliseconds="200" />
+        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
         <wsaw:UsingAddressing />
       </wsp:All>
@@ -14,6 +18,7 @@
       <xsd:import schemaLocation="http://localhost:9055/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:9055/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
       <xsd:import schemaLocation="http://localhost:9055/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" />
+      <xsd:import schemaLocation="http://localhost:9055/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ISessionManager_Connect_InputMessage">

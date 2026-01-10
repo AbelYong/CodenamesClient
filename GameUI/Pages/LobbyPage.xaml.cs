@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using CodenamesClient.Properties.Langs;
 using static CodenamesClient.GameUI.ViewModels.LobbyViewModel;
+using CodenamesClient.Operation.Validation;
 
 namespace CodenamesClient.GameUI.Pages
 {
@@ -60,7 +61,6 @@ namespace CodenamesClient.GameUI.Pages
             if (DataContext is LobbyViewModel)
             {
                 _viewModel.UnsubscribeFromSessionEvents();
-
                 _viewModel.BeginMatch -= OnBeginMatch;
             }
         }
@@ -196,6 +196,7 @@ namespace CodenamesClient.GameUI.Pages
 
         private void Click_ReturnToLobby(object sender, RoutedEventArgs e)
         {
+            _viewModel.AlreadySentToAddresses.Clear();
             _viewModel.DisconnectFromMatchmakingService();
             _viewModel.DisconnectFromLobbyService();
             NavigationService.GoBack();
@@ -256,6 +257,26 @@ namespace CodenamesClient.GameUI.Pages
 
             _slideOutOnlineFriends.Completed += slideOutHandler;
             _slideOutOnlineFriends.Begin();
+        }
+
+        private void ClickSendEmailInvite(object sender, RoutedEventArgs e)
+        {
+            if (_viewModel.IsPartyFull)
+            {
+                MessageBox.Show(Lang.lobbyErrorCannotInviteNewGuest);
+                return;
+            }
+            if (!LobbyValidation.ValidateEmailAddress(_viewModel.SendToEmailAddress))
+            {
+                MessageBox.Show(Lang.lobbyErrorNotAnEmailAddress);
+                return;
+            }
+            if (_viewModel.AlreadySentToAddresses.ContainsKey(_viewModel.SendToEmailAddress))
+            {
+                MessageBox.Show(Lang.lobbyErrorInvitationAlreadySentToAddress);
+                return;
+            }
+            _viewModel.SendEmailInvitation();
         }
 
         private void Click_InviteFriend(object sender, RoutedEventArgs e)

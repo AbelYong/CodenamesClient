@@ -193,12 +193,13 @@
             <Border x:Name="Overlay" Visibility="Collapsed" Background="#80000000" />
 
             <Grid x:Name="OnlineFriendsGrid" Width="450" Height="550" Background="#272727" 
-              HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+              HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
                 <Grid.RenderTransform>
                     <TranslateTransform Y="640"/>
                 </Grid.RenderTransform>
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
@@ -207,15 +208,25 @@
                     <Label Grid.Row="0" Content="{x:Static language:Lang.globalFriends}" 
                        Style="{StaticResource subtitle}" Foreground="White" 
                        HorizontalAlignment="Center" Margin="0,20,0,20"/>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Text="{Binding SendToEmailAddress}"
+                                 Style="{StaticResource textBoxCustomFocus}" FontSize="18" HorizontalContentAlignment="Center" MaxLength="30" Margin="20,0,5,0"/>
+                        <Button Grid.Column="1" Content="{x:Static language:Lang.lobbySendEmail}" Click="ClickSendEmailInvite"
+                                Style="{StaticResource buttonCustomFocus}" Margin="0,0,20,0"/>
+                    </Grid>
 
-                    <ListView Grid.Row="1" x:Name="FriendsList" 
+                    <ListView Grid.Row="2" x:Name="FriendsList" 
                           ItemsSource="{Binding Friends}" 
                           Background="#2D2D2D" BorderThickness="0"
                           Foreground="White" SelectionMode="Single"
                           ItemTemplate="{StaticResource FriendItemTemplate}"
                           Margin="20,0,20,20"/>
 
-                    <Button Grid.Row="2" Content="{x:Static language:Lang.globalBack}" 
+                    <Button Grid.Row="3" Content="{x:Static language:Lang.globalBack}" 
                         Style="{StaticResource buttonCustomFocus}"
                         Width="180" Height="40" Margin="0,0,0,20" 
                         Click="Click_HideOnlineFriends"/>
