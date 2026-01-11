@@ -1,6 +1,7 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Operation;
 using CodenamesClient.Operation.Network.Oneway;
+using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
@@ -155,7 +156,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             }
             else
             {
-                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.AUTHENTICATION, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode, AuthOperationType.AUTHENTICATION));
                 return false;
             }
         }
@@ -210,7 +211,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             PlayerDM updatedPlayer = PrepareUpdatedPlayer();
             CodenamesGame.UserService.CommunicationRequest request = OnewayNetworkManager.Instance.UpdateProfile(updatedPlayer);
             string message = request.StatusCode == CodenamesGame.UserService.StatusCode.NOT_FOUND ?
-                Lang.profileUpdateErrorProfileNotFound : StatusToMessageMapper.GetUserServiceMessage(request.StatusCode);
+                Lang.profileUpdateErrorProfileNotFound : StatusToMessageMapper.GetUserServiceMessage(request.StatusCode, UserOperationType.PROFILE_UPDATE);
             MessageBox.Show(message);
             if (request.IsSuccess)
             {
@@ -231,7 +232,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 {
                     stackPanelProfileForm.Visibility = Visibility.Visible;
                 });
-                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode, EmailOperationType.REQUEST_VERIFICATION_CODE));
             }
         }
 
@@ -258,11 +259,11 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 string message;
                 if (request.StatusCode == CodenamesGame.EmailService.StatusCode.UNAUTHORIZED)
                 {
-                    message = string.Format(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode), request.RemainingAttempts);
+                    message = string.Format(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode, EmailOperationType.VALIDATE_VERIFICATION_CODE), request.RemainingAttempts);
                 }
                 else
                 {
-                    message = StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode);
+                    message = StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode, EmailOperationType.VALIDATE_VERIFICATION_CODE);
                 }
                 MessageBox.Show(message);
             }
@@ -327,7 +328,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             }
             else
             {
-                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.PASS_UPDATE, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode, AuthOperationType.PASS_UPDATE));
             }
             ClearPasswordFields();
         }

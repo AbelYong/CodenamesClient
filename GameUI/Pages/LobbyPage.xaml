@@ -12,7 +12,6 @@
       d:DesignHeight="640" d:DesignWidth="1024" Background="#FF1D1D1D"
       Title="LobbyPage"
       HorizontalAlignment="Center" VerticalAlignment="Center">
-
     <Page.Resources>
         <DataTemplate x:Key="FriendItemTemplate">
             <StackPanel Orientation="Horizontal" Width="350" Margin="5">
@@ -41,14 +40,14 @@
                 </Image>
                 <TextBlock Text="{Binding Player.Username}" Width="150" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
                 <Button Click="Click_InviteFriend" IsEnabled="{Binding InvitationAlreadySent}" Content="{x:Static language:Lang.lobbyInvite}"
-                        Style="{StaticResource buttonCustomFocus}" Width="90" />
+                    Style="{StaticResource buttonCustomFocus}" Width="90" />
             </StackPanel>
         </DataTemplate>
 
         <Storyboard x:Key="SlideInOnlineFriendsAnimation">
             <DoubleAnimation Storyboard.TargetName="OnlineFriendsGrid"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             From="640" To="0" Duration="0:0:0.2">
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         From="640" To="0" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -56,8 +55,8 @@
         </Storyboard>
         <Storyboard x:Key="SlideOutOnlineFriendsAnimation">
             <DoubleAnimation Storyboard.TargetName="OnlineFriendsGrid"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             From="0" To="640" Duration="0:0:0.2">
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         From="0" To="640" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -65,8 +64,8 @@
         </Storyboard>
         <Storyboard x:Key="SlideInLobbyCodeAnimation">
             <DoubleAnimation Storyboard.TargetName="gridTypeCode"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             From="640" To="0" Duration="0:0:0.2">
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         From="640" To="0" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -74,8 +73,8 @@
         </Storyboard>
         <Storyboard x:Key="SlideOutLobbyCodeAnimation">
             <DoubleAnimation Storyboard.TargetName="gridTypeCode"
-                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             From="0" To="640" Duration="0:0:0.2">
+                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                         From="0" To="640" Duration="0:0:0.2">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseIn"/>
                 </DoubleAnimation.EasingFunction>
@@ -86,17 +85,17 @@
         <Grid Width="1024" Height="640">
             <DockPanel LastChildFill="True">
                 <Button Click="Click_ReturnToLobby" DockPanel.Dock="Top" 
-                    Style="{StaticResource imageButtonFocus}" Height="50" Width="50" HorizontalAlignment="Right">
+                Style="{StaticResource imageButtonFocus}" Height="50" Width="50" HorizontalAlignment="Right">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/GameUI/returnArrow.png"/>
                     </Button.Background>
                 </Button>
                 <StackPanel DockPanel.Dock="Left" Margin="0,0,30,0">
                     <Label Content="{Binding GamemodeName}" Style="{StaticResource title}"
-                   FontSize="28" FontWeight="Normal"/>
+               FontSize="28" FontWeight="Normal"/>
                     <Label Content="{x:Static language:Lang.lobbyRules}" Width="375" Style="{StaticResource subtitle}" 
-                   HorizontalContentAlignment="Center" BorderThickness="2" 
-                   BorderBrush="White"/>
+               HorizontalContentAlignment="Center" BorderThickness="2" 
+               BorderBrush="White"/>
                     <Grid Margin="0,0,0,100">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -109,37 +108,37 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" Content="{x:Static language:Lang.matchTimerTokens}"
-                       Style="{StaticResource subtitle}"  HorizontalAlignment="Left" />
+                   Style="{StaticResource subtitle}"  HorizontalAlignment="Left" />
                         <Label Grid.Row="1" 
-                           Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}" 
-                       Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
+                       Grid.Column="0" Content="{x:Static language:Lang.matchBystanderTokens}" 
+                   Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
                         <Label Grid.Row="2" Grid.Column="0" Content="{x:Static language:Lang.matchTurnTimer}" 
-                       Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
+                   Style="{StaticResource subtitle}" HorizontalAlignment="Left" />
 
                         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding TimerTokens}"
-                         Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
-                         Focusable="{Binding IsCustomGame}"
-                                 PreviewTextInput="NumberValidation"
-                                 PreviewKeyDown="NumberValidationKeyDown"
-                                 TextChanged="TimerTokensRangeValidation" 
-                                 LostFocus="TimerTokensMinRangeValidation"
-                                 DataObject.Pasting="TextBoxPasting"/>
+                     Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
+                     Focusable="{Binding IsCustomGame}"
+                             PreviewTextInput="NumberValidation"
+                             PreviewKeyDown="NumberValidationKeyDown"
+                             TextChanged="TimerTokensRangeValidation" 
+                             LostFocus="TimerTokensMinRangeValidation"
+                             DataObject.Pasting="TextBoxPasting"/>
                         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding BystanderTokens}" 
-                         Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
-                         Focusable="{Binding IsCustomGame}"
-                                 PreviewTextInput="NumberValidation"
-                                 PreviewKeyDown="NumberValidationKeyDown"
-                                 TextChanged="BystanderTokensRangeValidation"
-                                 LostFocus="BystanderTokensMinRangeValidation"
-                                 DataObject.Pasting="TextBoxPasting"/>
+                     Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
+                     Focusable="{Binding IsCustomGame}"
+                             PreviewTextInput="NumberValidation"
+                             PreviewKeyDown="NumberValidationKeyDown"
+                             TextChanged="BystanderTokensRangeValidation"
+                             LostFocus="BystanderTokensMinRangeValidation"
+                             DataObject.Pasting="TextBoxPasting"/>
                         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding TurnTimer}" 
-                         Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
-                         Focusable="{Binding IsCustomGame}"
-                                 PreviewTextInput="NumberValidation"
-                                 PreviewKeyDown="NumberValidationKeyDown"
-                                 TextChanged="TurnTimerRangeValidation"
-                                 LostFocus="TurnTimerMinRangeValidation"
-                                 DataObject.Pasting="TextBoxPasting"/>
+                     Style="{StaticResource textBoxCustomFocus}" HorizontalAlignment="Center" BorderThickness="0"
+                     Focusable="{Binding IsCustomGame}"
+                             PreviewTextInput="NumberValidation"
+                             PreviewKeyDown="NumberValidationKeyDown"
+                             TextChanged="TurnTimerRangeValidation"
+                             LostFocus="TurnTimerMinRangeValidation"
+                             DataObject.Pasting="TextBoxPasting"/>
                         <Border Grid.Column="2" Grid.Row="0" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
                             <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
                             <Border.ToolTip>
@@ -166,26 +165,26 @@
                         </Border>
                     </Grid>
                     <Button Click="Click_StartGame" Content="{x:Static language:Lang.globalPlay}" IsEnabled="{Binding PlayBtnEnabled}" Visibility="{Binding PlayBtnVisibility}"
-                    Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48" Margin="0,0,0,25"/>
+                Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48" Margin="0,0,0,25"/>
                     <ToggleButton IsChecked="{Binding IsReadyOrCancelTgBtnActive}" Content="{Binding ReadyOrCancelTgBtnContent}" Style="{StaticResource toggleButtonCustomFocus}" Visibility="{Binding ReadyOrCancelTgBtnVisibility}"
-                        Height="75" FontSize="48" Margin="0,0,0,25"/>
+                    Height="75" FontSize="48" Margin="0,0,0,25"/>
                     <Button Click="Click_btnCreateLobby" Content="{x:Static language:Lang.lobbyStartLobby}" Visibility="{Binding CreateLobbyBtnVisbility}"
-                        Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="36"/>
+                    Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="36"/>
                     <Label Content="{Binding VisibleLobbyCodeTag}" Style="{StaticResource subtitle}" Width="350" Height="40" />
                 </StackPanel>
                 <StackPanel DockPanel.Dock="Right" Margin="30,0,0,0" Width="200">
                     <Label Content="{x:Static language:Lang.matchParty}"
-                   Style="{StaticResource title}" />
+               Style="{StaticResource title}" />
                     <Label Content="{Binding PartyHost.Username}" Height="40" HorizontalContentAlignment="Center"
-                       Style="{StaticResource subtitle}" Background="White" BorderBrush="White" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" Width="200"/>
+                   Style="{StaticResource subtitle}" Background="White" BorderBrush="White" Foreground="Black" BorderThickness="2" Margin="0,0,0,10" Width="200"/>
                     <Button x:Name="btnGuest" Content="{Binding PartyGuest.Username}" Visibility="{Binding GuestBtnVisibility}"
-                        Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
+                    Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
                     <Button x:Name="btnInvite" Content="{x:Static language:Lang.lobbyInvite}" Visibility="{Binding InviteBtnVisibility}"
-                    Style="{StaticResource buttonCustomFocus}" Height="40" Margin="0,0,0,10"
-                    Click="Click_ShowOnlineFriends"/>
+                Style="{StaticResource buttonCustomFocus}" Height="40" Margin="0,0,0,10"
+                Click="Click_ShowOnlineFriends"/>
                     <Button x:Name="btnJoinWithCode" Content="{x:Static language:Lang.lobbyJoin}" Visibility="{Binding JoinBtnVisibility}"
-                    Style="{StaticResource buttonCustomFocus}" Height="40" 
-                    Click="Click_btnJoinParty"/>
+                Style="{StaticResource buttonCustomFocus}" Height="40" 
+                Click="Click_btnJoinParty"/>
                 </StackPanel>
                 <Image Source="{Binding GamemodePicturePath}" Height="450"/>
             </DockPanel>
@@ -193,7 +192,7 @@
             <Border x:Name="Overlay" Visibility="Collapsed" Background="#80000000" />
 
             <Grid x:Name="OnlineFriendsGrid" Width="450" Height="550" Background="#272727" 
-              HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+          HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
                 <Grid.RenderTransform>
                     <TranslateTransform Y="640"/>
                 </Grid.RenderTransform>
@@ -206,35 +205,35 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Content="{x:Static language:Lang.globalFriends}" 
-                       Style="{StaticResource subtitle}" Foreground="White" 
-                       HorizontalAlignment="Center" Margin="0,20,0,20"/>
+                   Style="{StaticResource subtitle}" Foreground="White" 
+                   HorizontalAlignment="Center" Margin="0,20,0,20"/>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Text="{Binding SendToEmailAddress}"
-                                 Style="{StaticResource textBoxCustomFocus}" FontSize="18" HorizontalContentAlignment="Center" MaxLength="30" Margin="20,0,5,0"/>
+                             Style="{StaticResource textBoxCustomFocus}" FontSize="18" HorizontalContentAlignment="Center" MaxLength="30" Margin="20,0,5,0"/>
                         <Button Grid.Column="1" Content="{x:Static language:Lang.lobbySendEmail}" Click="ClickSendEmailInvite"
-                                Style="{StaticResource buttonCustomFocus}" Margin="0,0,20,0"/>
+                            Style="{StaticResource buttonCustomFocus}" Margin="0,0,20,0"/>
                     </Grid>
 
                     <ListView Grid.Row="2" x:Name="FriendsList" 
-                          ItemsSource="{Binding Friends}" 
-                          Background="#2D2D2D" BorderThickness="0"
-                          Foreground="White" SelectionMode="Single"
-                          ItemTemplate="{StaticResource FriendItemTemplate}"
-                          Margin="20,0,20,20"/>
+                      ItemsSource="{Binding Friends}" 
+                      Background="#2D2D2D" BorderThickness="0"
+                      Foreground="White" SelectionMode="Single"
+                      ItemTemplate="{StaticResource FriendItemTemplate}"
+                      Margin="20,0,20,20"/>
 
                     <Button Grid.Row="3" Content="{x:Static language:Lang.globalBack}" 
-                        Style="{StaticResource buttonCustomFocus}"
-                        Width="180" Height="40" Margin="0,0,0,20" 
-                        Click="Click_HideOnlineFriends"/>
+                    Style="{StaticResource buttonCustomFocus}"
+                    Width="180" Height="40" Margin="0,0,0,20" 
+                    Click="Click_HideOnlineFriends"/>
                 </Grid>
             </Grid>
 
             <Grid x:Name="gridTypeCode" Width="400" Height="200" Background="#272727"
-              HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+          HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
                 <Grid.RenderTransform>
                     <TranslateTransform Y="640"/>
                 </Grid.RenderTransform>
@@ -247,7 +246,7 @@
                 <Label Grid.Row="0" Content="{x:Static language:Lang.lobbyTypeLobbyCode}" Style="{StaticResource subtitle}" Margin="0,0,0,10" />
                 <TextBox Grid.Row="1" x:Name="tbkInputCode" Style="{StaticResource textBoxCustomFocus}" MaxLength="6" TextAlignment="Center" Width="300" Margin="0,0,0,20" />
                 <Button Grid.Row="2" Click="Click_btnSendCode" Content="{x:Static language:Lang.lobbySendCode}" Margin="0,0,0,10"
-                    Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
+                Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
                 <Button Grid.Row="3" Click="Click_btnCloseTypeCode" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
             </Grid>
         </Grid>

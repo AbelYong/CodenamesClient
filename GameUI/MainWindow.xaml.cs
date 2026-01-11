@@ -59,11 +59,11 @@ namespace CodenamesClient.GameUI
 
         private static void DisconnectDuplexServices()
         {
-            DuplexNetworkManager.Instance.DisconnectFromSessionService();
-            DuplexNetworkManager.Instance.DisconnectFromFriendService();
-            DuplexNetworkManager.Instance.DisconnectFromLobbyService();
-            DuplexNetworkManager.Instance.DisconnectFromMatchmakingService();
             DuplexNetworkManager.Instance.DisconnectFromMatchService();
+            DuplexNetworkManager.Instance.DisconnectFromMatchmakingService();
+            DuplexNetworkManager.Instance.DisconnectFromLobbyService();
+            DuplexNetworkManager.Instance.DisconnectFromFriendService();
+            DuplexNetworkManager.Instance.DisconnectFromSessionService();
         }
 
         private void MainWindowClosed(object sender, EventArgs e)

@@ -12,7 +12,6 @@
       Title="BoardPage" Background="#FF1D1D1D"
       Loaded="Page_Loaded"
       Unloaded="Page_Unloaded">
-
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
@@ -36,7 +35,7 @@
 
         <Storyboard x:Key="SlideInGameOver">
             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             From="640" To="0" Duration="0:0:0.4">
+                         From="640" To="0" Duration="0:0:0.4">
                 <DoubleAnimation.EasingFunction>
                     <CubicEase EasingMode="EaseOut"/>
                 </DoubleAnimation.EasingFunction>
@@ -55,13 +54,13 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left">
                         <TextBlock local:TextAnimator.AnimatedText="{Binding PlayerSTurn}" Focusable="False"
-                                   Style="{StaticResource title}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White" />
+                               Style="{StaticResource title}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White" />
                         <TextBlock local:TextAnimator.AnimatedText="{Binding TurnInstructions}" IsEnabled="False"
-                                   Style="{StaticResource subtitle}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White"/>
+                               Style="{StaticResource subtitle}" TextWrapping="Wrap" TextAlignment="Center" Foreground="White"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
                         <Label Content="{x:Static language:Lang.matchYourkeycard}"
-                               Style="{StaticResource subtitle}" Foreground="White" />
+                           Style="{StaticResource subtitle}" Foreground="White" />
                         <Grid x:Name="gridKeycard" MinHeight="130" MinWidth="200" Margin="50,0,50,0" Background="DarkGray">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -117,10 +116,10 @@
                             </Button>
                         </StackPanel>
                         <Label Content="{Binding MyUsername}" Height="40" MinWidth="255" Width="110" HorizontalContentAlignment="Center" 
-                   Style="{StaticResource subtitle}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,10,0,10"/>
+               Style="{StaticResource subtitle}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,10,0,10"/>
                         <Button Content="{Binding CompanionUsername}" MaxWidth="255" FontSize="24" Height="40" Style="{StaticResource buttonCustomFocus}"
-                    Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" 
-                    Click="Click_ReportPlayer" ToolTip="Reportar jugador"/>
+                Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" 
+                Click="Click_ReportPlayer" ToolTip="Reportar jugador"/>
                     </StackPanel>
                 </Grid>
 
@@ -160,13 +159,13 @@
                             <StackPanel Background="#333333" DockPanel.Dock="Bottom" Margin="10,10,10,10">
                                 <Label Content="Cross-Talker™" Style="{StaticResource normal}" FontSize="20" Foreground="Gray" />
                                 <ListView Height="250" Background="#225E08"  ItemsSource="{Binding ChatMessages}" Margin="10,10,10,10"
-                                          ItemTemplate="{StaticResource ChatMessageTemplate}"
-                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+                                      ItemTemplate="{StaticResource ChatMessageTemplate}"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,0,10,10">
                                     <TextBox Text="{Binding ChatInput, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsChatEnabled}"
-                                             FontSize="16" FontFamily="Consolas" FontStyle="Italic"
-                                             Width="125" MaxLength="30" MaxLines="1" VerticalContentAlignment="Center" 
-                                             KeyDown="KeyDown_ChatInput">
+                                         FontSize="16" FontFamily="Consolas" FontStyle="Italic"
+                                         Width="125" MaxLength="30" MaxLines="1" VerticalContentAlignment="Center" 
+                                         KeyDown="KeyDown_ChatInput">
                                     </TextBox>
                                     <Button MinWidth="40" MinHeight="30" Style="{StaticResource imageButtonFocus}" Margin="30,0,0,0" Click="Click_SendMessage" IsEnabled="{Binding IsChatEnabled}">
                                         <Button.Background>
@@ -230,25 +229,25 @@
                         <Label Content="{Binding TurnTimer, StringFormat='s{0}'}" Style="{StaticResource title}" Foreground="White" />
                         <Label Content="{x:Static language:Lang.matchTimerTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
                         <Label Content="{Binding TimerTokens, StringFormat='x{0}'}" Background="Gray" MinWidth="100" MinHeight="50"
-                               Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" />
+                           Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" />
                         <Label Content="{x:Static language:Lang.matchBystanderTokens}" Style="{StaticResource normal}" FontSize="18" Foreground="White"/>
                         <Label Content="{Binding BystanderTokens, StringFormat='x{0}'}" Background="Khaki"  MinWidth="100" MinHeight="50"
-                               Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                           Style="{StaticResource title}" Foreground="Black" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
 
                         <Button Content="{x:Static language:Lang.matchSkipTurn}"
-                                Visibility="{Binding IsSkipButtonVisible, Converter={StaticResource BoolToVis}}"
-                                Click="Click_SkipTurn"
-                                Style="{StaticResource buttonCustomFocus}"
-                                Margin="0,20,0,0" Height="40" Background="Orange" Foreground="White"/>
+                            Visibility="{Binding IsSkipButtonVisible, Converter={StaticResource BoolToVis}}"
+                            Click="Click_SkipTurn"
+                            Style="{StaticResource buttonCustomFocus}"
+                            Margin="0,20,0,0" Height="40" Background="Orange" Foreground="White"/>
                         <Button Content="{x:Static language:Lang.matchCheckOnCompanion}"
-                                Click="ClickCheckOnCompanion"
-                                Style="{StaticResource buttonCustomFocus}"
-                                Margin="0,20,0,0" Height="40" Background="DarkOrange"/>
+                            Click="ClickCheckOnCompanion"
+                            Style="{StaticResource buttonCustomFocus}"
+                            Margin="0,20,0,0" Height="40" Background="DarkOrange"/>
                     </StackPanel>
                 </StackPanel>
             </DockPanel>
             <Image x:Name="BrokenScreenImage" Source="/Assets/BoardUI/brokenScreen.png" Visibility="Collapsed"
-                       Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
+                   Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False"/>
             <Grid x:Name="GameOverContainer" Visibility="{Binding IsGameOverVisible, Converter={StaticResource BoolToVis}}">
                 <Border Background="{Binding OverlayColor}" />
                 <Grid x:Name="GameOverGrid" Width="500" Height="500" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -272,25 +271,25 @@
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
 
                             <Label Content="{Binding GameOverTitle}" 
-                                   Foreground="White" FontSize="40" FontFamily="Consolas" 
-                                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                               Foreground="White" FontSize="40" FontFamily="Consolas" 
+                               HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
                             <Image Source="{Binding GameOverImageSource}" 
-                                   Visibility="{Binding ShowAssassinImage, Converter={StaticResource BoolToVis}}"
-                                   Height="200" Width="150" Stretch="Uniform" Margin="0,0,0,20">
+                               Visibility="{Binding ShowAssassinImage, Converter={StaticResource BoolToVis}}"
+                               Height="200" Width="150" Stretch="Uniform" Margin="0,0,0,20">
                                 <Image.Effect>
                                     <DropShadowEffect Color="Red" BlurRadius="20" ShadowDepth="0"/>
                                 </Image.Effect>
                             </Image>
 
                             <TextBlock Text="{Binding GameOverMessage}" 
-                                       Foreground="LightGray" FontSize="18" TextWrapping="Wrap" 
-                                       TextAlignment="Center" Margin="0,0,0,30" MaxWidth="400"/>
+                                   Foreground="LightGray" FontSize="18" TextWrapping="Wrap" 
+                                   TextAlignment="Center" Margin="0,0,0,30" MaxWidth="400"/>
 
                             <Button Content="{x:Static language:Lang.mainMenuQuit}" 
-                                    Click="Click_QuitMatch"
-                                    Style="{StaticResource buttonCustomFocus}" 
-                                    Width="200" Height="50" FontSize="20"/>
+                                Click="Click_QuitMatch"
+                                Style="{StaticResource buttonCustomFocus}" 
+                                Width="200" Height="50" FontSize="20"/>
                         </StackPanel>
                     </Border>
                 </Grid>

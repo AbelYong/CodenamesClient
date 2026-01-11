@@ -1,19 +1,14 @@
-﻿using CodenamesClient.Properties.Langs;
+﻿using CodenamesClient.Operation.ServiceOperationTypes;
+using CodenamesClient.Properties.Langs;
 
 namespace CodenamesClient.Util
 {
     public static class StatusToMessageMapper
     {
-        public static string GetAuthServiceMessage(AuthOperationType operationType, CodenamesGame.AuthenticationService.StatusCode code)
+        public static string GetAuthServiceMessage(CodenamesGame.AuthenticationService.StatusCode code, AuthOperationType operationType)
         {
             switch (code)
             {
-                case CodenamesGame.AuthenticationService.StatusCode.WRONG_DATA:
-                    return Lang.profileNewPasswordNotValid;
-                case CodenamesGame.AuthenticationService.StatusCode.NOT_FOUND:
-                    return GetNotFoundAuthMessage(operationType);
-                case CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED:
-                    return GetUnauthorizedAuthMessage(operationType);
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
                 case CodenamesGame.AuthenticationService.StatusCode.SERVER_TIMEOUT:
@@ -24,8 +19,20 @@ namespace CodenamesClient.Util
                     return Lang.globalConnectionLost;
                 case CodenamesGame.AuthenticationService.StatusCode.CLIENT_ERROR:
                     return Lang.globalClientError;
+            }
+
+            switch (code)
+            {
+                case CodenamesGame.AuthenticationService.StatusCode.WRONG_DATA:
+                    return Lang.profileNewPasswordNotValid;
+                case CodenamesGame.AuthenticationService.StatusCode.NOT_FOUND:
+                    return GetNotFoundAuthMessage(operationType);
+                case CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED:
+                    return GetUnauthorizedAuthMessage(operationType);
                 case CodenamesGame.AuthenticationService.StatusCode.MISSING_DATA:
                     return Lang.signInErrorMissingData;
+                case CodenamesGame.AuthenticationService.StatusCode.DATABASE_ERROR:
+                    return GetDatabaseErrorAuthMessage(operationType);
                 default:
                     return Lang.globalUnknownServerError;
             }
@@ -57,20 +64,24 @@ namespace CodenamesClient.Util
             return Lang.globalUnknownServerError;
         }
 
-        public static string GetUserServiceMessage(CodenamesGame.UserService.StatusCode code)
+        private static string GetDatabaseErrorAuthMessage(AuthOperationType operationType)
+        {
+            switch (operationType)
+            {
+                case AuthOperationType.AUTHENTICATION:
+                    return Lang.globalAuthErrorDbFailed;
+                case AuthOperationType.PASS_RESET:
+                    return Lang.loginErrorPasswordResetDbFailed;
+                case AuthOperationType.PASS_UPDATE:
+                    return Lang.profileErrorPasswordUpdateDbFailed;
+            }
+            return Lang.globalUnknownServerError;
+        }
+
+        public static string GetUserServiceMessage(CodenamesGame.UserService.StatusCode code, UserOperationType operationType)
         {
             switch (code)
             {
-                case CodenamesGame.UserService.StatusCode.UPDATED:
-                    return Lang.profileUpdateSucessful;
-                case CodenamesGame.UserService.StatusCode.SERVER_ERROR:
-                    return Lang.globalServerError;
-                case CodenamesGame.UserService.StatusCode.WRONG_DATA:
-                    return Lang.profileCouldNotUpdateCheckData;
-                case CodenamesGame.UserService.StatusCode.NOT_FOUND:
-                    return Lang.globalErrorProfileNotFound;
-                case CodenamesGame.UserService.StatusCode.UNALLOWED:
-                    return Lang.profileErrorEmailOrUsernameInUse;
                 case CodenamesGame.UserService.StatusCode.SERVER_TIMEOUT:
                     return Lang.globalServerTimeout;
                 case CodenamesGame.UserService.StatusCode.SERVER_UNREACHABLE:
@@ -79,23 +90,53 @@ namespace CodenamesClient.Util
                     return Lang.globalConnectionLost;
                 case CodenamesGame.UserService.StatusCode.CLIENT_ERROR:
                     return Lang.globalClientError;
+            }
+
+            switch (operationType)
+            {
+                case UserOperationType.SIGN_IN:
+                    return GetSignInMessage(code);
+                case UserOperationType.PROFILE_UPDATE:
+                    return GetProfileUpdateMessage(code);
+            }
+            return Lang.globalUnknownServerError;
+        }
+
+        private static string GetSignInMessage(CodenamesGame.UserService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.UserService.StatusCode.MISSING_DATA:
+                    return Lang.signInErrorMissingData;
+                case CodenamesGame.UserService.StatusCode.DATABASE_ERROR:
+                    return Lang.signInErrorDbFailed;
+            }
+            return Lang.globalUnknownServerError;
+        }
+
+        private static string GetProfileUpdateMessage(CodenamesGame.UserService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.UserService.StatusCode.UPDATED:
+                    return Lang.profileUpdateSucessful;
+                case CodenamesGame.UserService.StatusCode.DATABASE_ERROR:
+                    return Lang.profileErrorDbFailedToSave;
+                case CodenamesGame.UserService.StatusCode.WRONG_DATA:
+                    return Lang.profileCouldNotUpdateCheckData;
+                case CodenamesGame.UserService.StatusCode.NOT_FOUND:
+                    return Lang.profileErrorCouldNotFindProfile;
+                case CodenamesGame.UserService.StatusCode.UNALLOWED:
+                    return Lang.profileErrorEmailOrUsernameInUse;
                 default:
                     return Lang.globalUnknownServerError;
             }
         }
 
-        public static string GetEmailServiceMessage(CodenamesGame.EmailService.StatusCode code)
+        public static string GetEmailServiceMessage(CodenamesGame.EmailService.StatusCode code, EmailOperationType operationType)
         {
             switch (code)
             {
-                case CodenamesGame.EmailService.StatusCode.SERVER_ERROR:
-                    return Lang.emailFailedToSendCodeToUser;
-                case CodenamesGame.EmailService.StatusCode.UNALLOWED:
-                    return Lang.emailCannotUseAddressAlreadyInUse;
-                case CodenamesGame.EmailService.StatusCode.NOT_FOUND:
-                    return Lang.emailConfirmationCodeExpiredOrRemoved;
-                case CodenamesGame.EmailService.StatusCode.UNAUTHORIZED:
-                    return Lang.emailVerificationFailedAttemptsRemainingX;
                 case CodenamesGame.EmailService.StatusCode.SERVER_TIMEOUT:
                     return Lang.globalServerTimeout;
                 case CodenamesGame.EmailService.StatusCode.SERVER_UNREACHABLE:
@@ -104,9 +145,43 @@ namespace CodenamesClient.Util
                     return Lang.globalConnectionLost;
                 case CodenamesGame.EmailService.StatusCode.CLIENT_ERROR:
                     return Lang.globalClientError;
+            }
+
+            switch (operationType)
+            {
+                case EmailOperationType.REQUEST_VERIFICATION_CODE:
+                    return GetEmailVerificationCodeMessage(code);
+                case EmailOperationType.VALIDATE_VERIFICATION_CODE:
+                    return GetValidateVerificationCodeMessage(code);
+            }
+            return Lang.globalUnknownServerError;
+        }
+
+        private static string GetEmailVerificationCodeMessage(CodenamesGame.EmailService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.EmailService.StatusCode.SERVER_ERROR:
+                    return Lang.emailFailedToSendCodeToUser;
+                case CodenamesGame.EmailService.StatusCode.UNALLOWED:
+                    return Lang.emailCannotUseAddressAlreadyInUse;
+                case CodenamesGame.EmailService.StatusCode.DATABASE_ERROR:
+                    return Lang.emailErrorDbFailedToVerifyEmail;
                 default:
                     return Lang.globalUnknownServerError;
             }
+        }
+
+        private static string GetValidateVerificationCodeMessage(CodenamesGame.EmailService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.EmailService.StatusCode.UNAUTHORIZED:
+                    return Lang.emailVerificationFailedAttemptsRemainingX;
+                case CodenamesGame.EmailService.StatusCode.NOT_FOUND:
+                    return Lang.emailConfirmationCodeExpiredOrRemoved;
+            }
+            return Lang.globalUnknownServerError;
         }
 
         public static string GetSessionServiceMessage(CodenamesGame.SessionService.StatusCode code)

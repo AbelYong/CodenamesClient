@@ -106,11 +106,20 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a We couldn&apos;t confirm your email because your verification code has expired, or you ran out of attempts.
+        ///   Busca una cadena traducida similar a We couldn&apos;t confirm your email because your verification code has expired, you already used the code, or you ran out of attempts.
         /// </summary>
         public static string emailConfirmationCodeExpiredOrRemoved {
             get {
                 return ResourceManager.GetString("emailConfirmationCodeExpiredOrRemoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we can&apos;t send you a verification code because we couldn&apos;t verify if this email is already in use, please try again later.
+        /// </summary>
+        public static string emailErrorDbFailedToVerifyEmail {
+            get {
+                return ResourceManager.GetString("emailErrorDbFailedToVerifyEmail", resourceCulture);
             }
         }
         
@@ -151,7 +160,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a We couldn&apos;t update your password because the verification code has expired or you have run out of attempts.
+        ///   Busca una cadena traducida similar a We couldn&apos;t update your password because the verification code has expired, you already used it or you have run out of attempts.
         /// </summary>
         public static string emailPasswordResetCodeExpiredOrRemoved {
             get {
@@ -160,7 +169,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a We couldn&apos;t find this email address, please make sure the spelling is correct, try again later if the issue persists.
+        ///   Busca una cadena traducida similar a We couldn&apos;t find this email address in our records, please make sure the spelling is correct, try again later if the issue persists.
         /// </summary>
         public static string emailPasswordResetFailedAdressNotFound {
             get {
@@ -385,6 +394,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t authenticate you because our user registry isn&apos;t available at the moment, please try again later.
+        /// </summary>
+        public static string globalAuthErrorDbFailed {
+            get {
+                return ResourceManager.GetString("globalAuthErrorDbFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Back.
         /// </summary>
         public static string globalBack {
@@ -439,7 +457,7 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t find your profile. Contact an administrator if the issue persists.
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t get your updated profile. Contact an administrator if the issue persists.
         /// </summary>
         public static string globalErrorProfileNotFound {
             get {
@@ -1078,6 +1096,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t reset your password because we had an issue saving your new password, please try again later.
+        /// </summary>
+        public static string loginErrorPasswordResetDbFailed {
+            get {
+                return ResourceManager.GetString("loginErrorPasswordResetDbFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Forgot your password.
         /// </summary>
         public static string loginForgotPassword {
@@ -1510,11 +1537,29 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t update your profile because we had an issue saving your new data, try again later.
+        /// </summary>
+        public static string profileErrorDbFailedToSave {
+            get {
+                return ResourceManager.GetString("profileErrorDbFailedToSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t update your profile because this email or username is already in use.
         /// </summary>
         public static string profileErrorEmailOrUsernameInUse {
             get {
                 return ResourceManager.GetString("profileErrorEmailOrUsernameInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t update your password because we had an issue saving your new password, please try again later.
+        /// </summary>
+        public static string profileErrorPasswordUpdateDbFailed {
+            get {
+                return ResourceManager.GetString("profileErrorPasswordUpdateDbFailed", resourceCulture);
             }
         }
         
@@ -1911,6 +1956,15 @@ namespace CodenamesClient.Properties.Langs {
         public static string signInErrorConfirmingRegistration {
             get {
                 return ResourceManager.GetString("signInErrorConfirmingRegistration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, we couldn&apos;t complete your registration because we had an issue saving your data, try again later..
+        /// </summary>
+        public static string signInErrorDbFailed {
+            get {
+                return ResourceManager.GetString("signInErrorDbFailed", resourceCulture);
             }
         }
         

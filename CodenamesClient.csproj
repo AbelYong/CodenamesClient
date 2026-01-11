@@ -97,6 +97,8 @@
     <Compile Include="Operation\Network\Oneway\IOnewayNetworkManager.cs" />
     <Compile Include="Operation\Network\Oneway\OnewayNetworkManager.cs" />
     <Compile Include="Operation\PictureHandler.cs" />
+    <Compile Include="Operation\ServiceOperationTypes\EmailOperationType.cs" />
+    <Compile Include="Operation\ServiceOperationTypes\UserOperationType.cs" />
     <Compile Include="Operation\Validation\LobbyValidation.cs" />
     <Compile Include="Operation\Validation\LoginValidation.cs" />
     <Compile Include="Operation\Validation\PasswordValidation.cs" />
@@ -108,8 +110,8 @@
     </Compile>
     <Compile Include="Util\AudioManager.cs" />
     <Compile Include="Operation\Network\Duplex\IDuplexNetworkManager.cs" />
-    <Compile Include="Util\AuthOperationType.cs" />
-    <Compile Include="Util\LobbyOperationType.cs" />
+    <Compile Include="Operation\ServiceOperationTypes\AuthOperationType.cs" />
+    <Compile Include="Operation\ServiceOperationTypes\LobbyOperationType.cs" />
     <Compile Include="Operation\Network\Duplex\DuplexNetworkManager.cs" />
     <Compile Include="Util\StatusToMessageMapper.cs" />
     <Page Include="GameUI\BoardUI\BoardPage.xaml">

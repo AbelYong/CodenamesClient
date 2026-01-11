@@ -3,6 +3,7 @@ using CodenamesClient.Operation.Network.Oneway;
 using CodenamesClient.Operation.Validation;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Validation;
+using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesGame.Domain.POCO;
 using System;
 using System.Collections;
@@ -285,9 +286,7 @@ namespace CodenamesClient.GameUI.ViewModels
                     break;
 
                 default:
-                    _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(
-                        Util.AuthOperationType.AUTHENTICATION,
-                        request.StatusCode);
+                    _requestErrorMessage = Util.StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode, AuthOperationType.AUTHENTICATION);
                     RaiseError?.Invoke();
                     break;
             }

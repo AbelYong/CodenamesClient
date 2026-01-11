@@ -1,6 +1,7 @@
 ﻿using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
+using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesGame.UserService;
 using CodenamesGame.Domain.POCO;
 using System;
@@ -76,7 +77,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 OnewayNetworkManager.Instance.SendVerificationEmail(email, CodenamesGame.EmailService.EmailType.EMAIL_VERIFICATION);
             if (!request.IsSuccess)
             {
-                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode, EmailOperationType.REQUEST_VERIFICATION_CODE));
             }
             return request.IsSuccess;
         }
@@ -146,11 +147,11 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 string message;
                 if (request.StatusCode == CodenamesGame.EmailService.StatusCode.UNAUTHORIZED)
                 {
-                    message = string.Format(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode), request.RemainingAttempts);
+                    message = string.Format(StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode, EmailOperationType.VALIDATE_VERIFICATION_CODE), request.RemainingAttempts);
                 }
                 else
                 {
-                    message = StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode);
+                    message = StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode, EmailOperationType.VALIDATE_VERIFICATION_CODE);
                 }
                 MessageBox.Show(message);
                 return false;
@@ -190,8 +191,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             string message;
             switch (request.StatusCode)
             {
-                case StatusCode.MISSING_DATA:
-                    return Lang.signInErrorMissingData;
                 case StatusCode.UNALLOWED:
                     string emailDuplicateMessage = request.IsEmailDuplicate ? Lang.emailCannotUseAddressAlreadyInUse : string.Empty;
                     string usernameInUseMessage = request.IsUsernameDuplicate ? Lang.profileErrorUsernameAlreadyInUse : string.Empty;
@@ -203,7 +202,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                     message = string.Format("{0} \n{1}", emailInvalidMessage, passwordInvalidMessage);
                     return message;
                 default:
-                    return StatusToMessageMapper.GetUserServiceMessage(request.StatusCode);
+                    return StatusToMessageMapper.GetUserServiceMessage(request.StatusCode, UserOperationType.SIGN_IN);
             }
         }
 

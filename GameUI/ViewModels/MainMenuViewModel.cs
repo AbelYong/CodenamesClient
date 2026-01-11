@@ -105,7 +105,7 @@ namespace CodenamesClient.GameUI.ViewModels
             var request = DuplexNetworkManager.Instance.ConnectLobbyService(Player.PlayerID.Value);
             if (!request.IsSuccess)
             {
-                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INTIALIZE, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Operation.ServiceOperationTypes.LobbyOperationType.INTIALIZE, request.StatusCode));
             }
         }
 
@@ -129,13 +129,13 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             if (_player != null)
             {
-                DuplexNetworkManager.Instance.DisconnectFromSessionService();
                 if (!IsPlayerGuest)
                 {
                     UnsubscribeFromFriendEvents();
                     DuplexNetworkManager.Instance.DisconnectFromFriendService();
+                    DuplexNetworkManager.Instance.DisconnectFromLobbyService();
                 }
-                DuplexNetworkManager.Instance.DisconnectFromLobbyService();
+                DuplexNetworkManager.Instance.DisconnectFromSessionService();
             }
         }
 

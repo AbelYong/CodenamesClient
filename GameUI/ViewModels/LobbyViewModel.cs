@@ -12,6 +12,7 @@ using CodenamesGame.Network.EventArguments;
 using CodenamesGame.Domain.POCO.Match;
 using System.Threading.Tasks;
 using CodenamesClient.Operation;
+using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesClient.Util;
 using CodenamesClient.Operation.Network.Duplex;
 
@@ -383,7 +384,7 @@ namespace CodenamesClient.GameUI.ViewModels
             }
             else
             {
-                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(Util.LobbyOperationType.INTIALIZE, request.StatusCode));
+                MessageBox.Show(StatusToMessageMapper.GetLobbyServiceMessage(LobbyOperationType.INTIALIZE, request.StatusCode));
             }
         }
 

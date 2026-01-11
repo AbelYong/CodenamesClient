@@ -44,6 +44,27 @@ namespace CodenamesClient.GameUI.BoardUI
             _viewModel.StartTimer();
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            AnimateBoardCards();
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _mediaPlayer.Stop();
+            _mediaPlayer.Close();
+
+            _viewModel.StopTimer();
+            _viewModel.StopChronometer();
+            _viewModel.Disconnect();
+
+            _viewModel.GoBackToMenu -= OnGoBackToMenu;
+
+            _viewModel.OnAgentFlipRequested -= HandleAgentFlip;
+            _viewModel.OnBystanderFlipRequested -= HandleBystanderFlip;
+            _viewModel.OnAssassinFlipRequested -= HandleAssassinFlip;
+        }
+
         private async void HandleAgentFlip(BoardCoordinatesDM coordinates)
         {
             await FlashAgentLight();
@@ -244,22 +265,6 @@ namespace CodenamesClient.GameUI.BoardUI
         private void OnGoBackToMenu()
         {
             NavigationService.GoBack();
-        }
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            _mediaPlayer.Stop();
-            _mediaPlayer.Close();
-
-            _viewModel.StopTimer();
-            _viewModel.StopChronometer();
-            _viewModel.Disconnect();
-
-            _viewModel.GoBackToMenu -= OnGoBackToMenu;
-
-            _viewModel.OnAgentFlipRequested -= HandleAgentFlip;
-            _viewModel.OnBystanderFlipRequested -= HandleBystanderFlip;
-            _viewModel.OnAssassinFlipRequested -= HandleAssassinFlip;
         }
 
         private void Click_QuitMatch(object sender, RoutedEventArgs e)
@@ -520,11 +525,6 @@ namespace CodenamesClient.GameUI.BoardUI
             scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
 
             return tcs.Task;
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            AnimateBoardCards();
         }
 
         private void Click_ReportPlayer(object sender, RoutedEventArgs e)

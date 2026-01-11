@@ -595,7 +595,7 @@
     <value>Wait to receive the clue from your partner</value>
   </data>
   <data name="emailConfirmationCodeExpiredOrRemoved" xml:space="preserve">
-    <value>We couldn't confirm your email because your verification code has expired, or you ran out of attempts</value>
+    <value>We couldn't confirm your email because your verification code has expired, you already used the code, or you ran out of attempts</value>
   </data>
   <data name="emailFailedToSendCodeToUser" xml:space="preserve">
     <value>We've received your request but couldn't send you a verification code, please try again later</value>
@@ -703,7 +703,7 @@
     <value>Pending</value>
   </data>
   <data name="globalErrorProfileNotFound" xml:space="preserve">
-    <value>Sorry, we couldn't find your profile. Contact an administrator if the issue persists</value>
+    <value>Sorry, we couldn't get your updated profile. Contact an administrator if the issue persists</value>
   </data>
   <data name="globalServerTimeout" xml:space="preserve">
     <value>Seems like the Codenames: Duet server took too long answer, please try again</value>
@@ -778,10 +778,10 @@
     <value>Only the party host can start the match</value>
   </data>
   <data name="emailPasswordResetFailedAdressNotFound" xml:space="preserve">
-    <value>We couldn't find this email address, please make sure the spelling is correct, try again later if the issue persists</value>
+    <value>We couldn't find this email address in our records, please make sure the spelling is correct, try again later if the issue persists</value>
   </data>
   <data name="emailPasswordResetCodeExpiredOrRemoved" xml:space="preserve">
-    <value>We couldn't update your password because the verification code has expired or you have run out of attempts</value>
+    <value>We couldn't update your password because the verification code has expired, you already used it or you have run out of attempts</value>
   </data>
   <data name="banMessageTemporary" xml:space="preserve">
     <value>Account suspended. Time remaining: {0}</value>
@@ -836,5 +836,23 @@
   </data>
   <data name="matchCompanionLostConnection" xml:space="preserve">
     <value>Your companion lost connection</value>
+  </data>
+  <data name="emailErrorDbFailedToVerifyEmail" xml:space="preserve">
+    <value>Sorry, we can't send you a verification code because we couldn't verify if this email is already in use, please try again later</value>
+  </data>
+  <data name="signInErrorDbFailed" xml:space="preserve">
+    <value>Sorry, we couldn't complete your registration because we had an issue saving your data, try again later.</value>
+  </data>
+  <data name="profileErrorDbFailedToSave" xml:space="preserve">
+    <value>Sorry, we couldn't update your profile because we had an issue saving your new data, try again later</value>
+  </data>
+  <data name="globalAuthErrorDbFailed" xml:space="preserve">
+    <value>Sorry, we couldn't authenticate you because our user registry isn't available at the moment, please try again later</value>
+  </data>
+  <data name="loginErrorPasswordResetDbFailed" xml:space="preserve">
+    <value>Sorry, we couldn't reset your password because we had an issue saving your new password, please try again later</value>
+  </data>
+  <data name="profileErrorPasswordUpdateDbFailed" xml:space="preserve">
+    <value>Sorry, we couldn't update your password because we had an issue saving your new password, please try again later</value>
   </data>
 </root>

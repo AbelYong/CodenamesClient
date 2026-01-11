@@ -1,5 +1,5 @@
 ﻿
-namespace CodenamesClient.Util
+namespace CodenamesClient.Operation.ServiceOperationTypes
 {
     public enum AuthOperationType
     {

@@ -2,7 +2,7 @@
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Properties.Langs;
 using CodenamesClient.Util;
-using CodenamesClient.Validation;
+using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesGame.Domain.POCO;
 using System;
 using System.Threading.Tasks;
@@ -156,7 +156,7 @@ namespace CodenamesClient.GameUI.Pages
             else
             {
                 string message = request.StatusCode == CodenamesGame.EmailService.StatusCode.NOT_FOUND ? 
-                    Lang.emailPasswordResetFailedAdressNotFound : StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode);
+                    Lang.emailPasswordResetFailedAdressNotFound : StatusToMessageMapper.GetEmailServiceMessage(request.StatusCode, EmailOperationType.REQUEST_VERIFICATION_CODE);
                 MessageBox.Show(message);
             }
 
@@ -171,15 +171,13 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private async void ConfirmReset_Click(object sender, RoutedEventArgs e)
+        private void ConfirmReset_Click(object sender, RoutedEventArgs e)
         {
             string email = ResetEmail.Text.Trim();
             string code = ResetCode.Text.Trim();
             string newPassword = _viewModel.NewPassword.Trim();
 
-            var request = await Task.Run(() =>
-                LoginViewModel.CompletePasswordReset(email, code, newPassword)
-            );
+            var request = LoginViewModel.CompletePasswordReset(email, code, newPassword);
 
             if (request.IsSuccess)
             {
@@ -188,7 +186,7 @@ namespace CodenamesClient.GameUI.Pages
             }
             else
             {
-                string message = StatusToMessageMapper.GetAuthServiceMessage(AuthOperationType.PASS_RESET, request.StatusCode);
+                string message = StatusToMessageMapper.GetAuthServiceMessage(request.StatusCode, AuthOperationType.PASS_RESET);
                 if (request.StatusCode == CodenamesGame.AuthenticationService.StatusCode.UNAUTHORIZED)
                 {
                     message = request.RemainingAttempts > 0 ? string.Format(message, request.RemainingAttempts) : Lang.emailConfirmationCodeExpiredOrRemoved;

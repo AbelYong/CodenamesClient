@@ -1,6 +1,7 @@
 ﻿using CodenamesClient.GameUI.Pages.UserControls;
 using CodenamesClient.GameUI.ViewModels;
 using CodenamesClient.Operation.Network.Oneway;
+using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network.EventArguments;
@@ -8,7 +9,6 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
@@ -101,7 +101,7 @@ namespace CodenamesClient.GameUI.Pages
                 }
                 else
                 {
-                    MessageBox.Show(Util.StatusToMessageMapper.GetUserServiceMessage(CodenamesGame.UserService.StatusCode.NOT_FOUND));
+                    MessageBox.Show(Lang.globalErrorProfileNotFound);
                 }
             }
         }
