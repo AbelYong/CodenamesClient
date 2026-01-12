@@ -385,9 +385,9 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private void CloseProxy()
         {
-            if (_client is ICommunicationObject coomObject)
+            if (_client is ICommunicationObject commObject)
             {
-                NetworkUtil.SafeClose(coomObject);
+                NetworkUtil.SafeClose(commObject);
             }
             _client = null;
             _currentPlayerID = Guid.Empty;

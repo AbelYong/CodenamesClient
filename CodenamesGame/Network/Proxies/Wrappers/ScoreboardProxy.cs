@@ -44,6 +44,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             _client = _clientFactory(context, _ENDPOINT_NAME);
             try
             {
+                ((ICommunicationObject)_client).Open();
                 _client.SubscribeToScoreboardUpdates(playerID);
             }
             catch (Exception ex) when (ex is CommunicationException || ex is TimeoutException)

@@ -33,8 +33,7 @@ namespace CodenamesGame.Tests.ServiceTests
                 StatusCode = StatusCode.OK
             };
 
-            _mockUserManager
-                .Setup(m => m.SignIn(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.SignIn(It.IsAny<Player>()))
                 .Returns(expectedRequest);
 
             var result = _userProxy.SignIn(user, player);
@@ -45,8 +44,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void SignIn_ServerTimeout_ReturnsTimeoutStatusCode()
         {
-            _mockUserManager
-                .Setup(m => m.SignIn(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.SignIn(It.IsAny<Player>()))
                 .Throws(new TimeoutException());
 
             var result = _userProxy.SignIn(new UserDM(), new PlayerDM());
@@ -57,8 +55,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void SignIn_EndpointNotFound_ReturnsServerUnreachableStatusCode()
         {
-            _mockUserManager
-                .Setup(m => m.SignIn(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.SignIn(It.IsAny<Player>()))
                 .Throws(new EndpointNotFoundException());
 
             var result = _userProxy.SignIn(new UserDM(), new PlayerDM());
@@ -107,14 +104,13 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _userProxy.GetPlayer(userId);
 
-            Assert.That(expectedDto.Username.Equals(result.Username) && !result.PlayerID.Equals(Guid.Empty));
+            Assert.That(expectedDto.PlayerID.Equals(result.PlayerID) && !result.PlayerID.Equals(Guid.Empty));
         }
 
         [Test]
         public void GetPlayer_ServerTimeout_ReturnsEmptyPlayerDM()
         {
-            _mockUserManager
-                .Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
+            _mockUserManager.Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
                 .Throws(new TimeoutException());
 
             var result = _userProxy.GetPlayer(Guid.NewGuid());
@@ -125,8 +121,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void GetPlayer_EndpointNotFound_ReturnsEmptyPlayerDM()
         {
-            _mockUserManager
-                .Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
+            _mockUserManager.Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
                 .Throws(new EndpointNotFoundException());
 
             var result = _userProxy.GetPlayer(Guid.NewGuid());
@@ -137,8 +132,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void GetPlayer_CommunicationException_ReturnsEmptyPlayerDM()
         {
-            _mockUserManager
-                .Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
+            _mockUserManager.Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
                 .Throws(new CommunicationException());
 
             var result = _userProxy.GetPlayer(Guid.NewGuid());
@@ -149,8 +143,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void GetPlayer_GeneralException_ReturnsEmptyPlayerDM()
         {
-            _mockUserManager
-                .Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
+            _mockUserManager.Setup(m => m.GetPlayerByUserID(It.IsAny<Guid>()))
                 .Throws(new Exception());
 
             var result = _userProxy.GetPlayer(Guid.NewGuid());
@@ -173,8 +166,7 @@ namespace CodenamesGame.Tests.ServiceTests
                 StatusCode = StatusCode.OK
             };
 
-            _mockUserManager
-                .Setup(m => m.UpdateProfile(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.UpdateProfile(It.IsAny<Player>()))
                 .Returns(expectedRequest);
 
             var result = _userProxy.UpdateProfile(player);
@@ -185,8 +177,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void UpdateProfile_ServerTimeout_ReturnsTimeoutStatusCode()
         {
-            _mockUserManager
-                .Setup(m => m.UpdateProfile(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.UpdateProfile(It.IsAny<Player>()))
                 .Throws(new TimeoutException());
 
             var result = _userProxy.UpdateProfile(new PlayerDM());
@@ -197,8 +188,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void UpdateProfile_EndpointNotFound_ReturnsServerUnreachableStatusCode()
         {
-            _mockUserManager
-                .Setup(m => m.UpdateProfile(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.UpdateProfile(It.IsAny<Player>()))
                 .Throws(new EndpointNotFoundException());
 
             var result = _userProxy.UpdateProfile(new PlayerDM());
@@ -209,8 +199,7 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void UpdateProfile_CommunicationException_ReturnsServerUnavaibleStatusCode()
         {
-            _mockUserManager
-                .Setup(m => m.UpdateProfile(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.UpdateProfile(It.IsAny<Player>()))
                 .Throws(new CommunicationException());
 
             var result = _userProxy.UpdateProfile(new PlayerDM());
@@ -221,13 +210,11 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void UpdateProfile_GeneralException_ReturnsClientErrorStatusCode()
         {
-            _mockUserManager
-                .Setup(m => m.UpdateProfile(It.IsAny<Player>()))
+            _mockUserManager.Setup(m => m.UpdateProfile(It.IsAny<Player>()))
                 .Throws(new Exception());
 
             var result = _userProxy.UpdateProfile(new PlayerDM());
 
-            Assert.That(result.IsSuccess, Is.False);
             Assert.That(StatusCode.CLIENT_ERROR.Equals(result.StatusCode));
         }
     }

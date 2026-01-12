@@ -22,6 +22,19 @@ namespace CodenamesGame.Tests.ServiceTests
             _mockMatchManager = new Mock<IMatchManager>();
             _mockCommunicationObject = _mockMatchManager.As<ICommunicationObject>();
             _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Created);
+            _mockCommunicationObject.Setup(m => m.Open()).Callback(() =>
+            {
+                _mockCommunicationObject.Setup(s => s.State).Returns(CommunicationState.Opened);
+            });
+            _mockCommunicationObject.Setup(m => m.Close()).Callback(() =>
+            {
+                _mockCommunicationObject.Setup(s => s.State).Returns(CommunicationState.Closed);
+            });
+            _mockCommunicationObject.Setup(m => m.Abort()).Callback(() =>
+            {
+                _mockCommunicationObject.Setup(s => s.State).Returns(CommunicationState.Closed);
+            });
+
             _matchProxy = new MatchProxy((context, endpoint) => _mockMatchManager.Object);
         }
 
@@ -31,17 +44,13 @@ namespace CodenamesGame.Tests.ServiceTests
             Guid playerId = Guid.NewGuid();
             var expectedRequest = new CommunicationRequest { IsSuccess = true };
 
-            _mockMatchManager
-                .Setup(m => m.Connect(playerId))
+            _mockMatchManager.Setup(m => m.Connect(playerId))
                 .Returns(expectedRequest);
-
-            _mockCommunicationObject.Setup(m => m.Open()).Callback(() =>
-                _mockCommunicationObject.Setup(s => s.State).Returns(CommunicationState.Opened));
 
             var result = _matchProxy.Initialize(playerId);
 
-            Assert.That(result.IsSuccess);
-            _mockCommunicationObject.Verify(m => m.Open(), Times.Once);
+            Assert.That(result.IsSuccess &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Opened));
             _mockMatchManager.Verify(m => m.Connect(playerId), Times.Once);
         }
 
@@ -49,8 +58,6 @@ namespace CodenamesGame.Tests.ServiceTests
         public void Initialize_AlreadyConnected_ReturnsUnauthorized()
         {
             Guid playerId = Guid.NewGuid();
-            _mockMatchManager.Setup(m => m.Connect(playerId)).Returns(new CommunicationRequest { IsSuccess = true });
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(playerId);
 
             var result = _matchProxy.Initialize(playerId);
@@ -60,32 +67,27 @@ namespace CodenamesGame.Tests.ServiceTests
         }
 
         [Test]
-        public void Initialize_TimeoutException_ReturnsServerTimeoutAndAbortsProxy()
+        public void Initialize_TimeoutException_ReturnsServerTimeoutAndClosesProxy()
         {
-            _mockCommunicationObject.Setup(m => m.State)
-                .Returns(CommunicationState.Faulted);
-            _mockMatchManager
-                .Setup(m => m.Connect(It.IsAny<Guid>()))
+            _mockMatchManager.Setup(m => m.Connect(It.IsAny<Guid>()))
                 .Throws(new TimeoutException());
 
             var result = _matchProxy.Initialize(Guid.NewGuid());
 
-            Assert.That(StatusCode.SERVER_TIMEOUT.Equals(result.StatusCode));
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(StatusCode.SERVER_TIMEOUT.Equals(result.StatusCode) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
         public void Disconnect_Connected_CallsDisconnectAsyncAndClosesProxy()
         {
             Guid playerId = Guid.NewGuid();
-            _mockMatchManager.Setup(m => m.Connect(playerId)).Returns(new CommunicationRequest { IsSuccess = true });
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(playerId);
 
             _matchProxy.Disconnect();
 
             _mockMatchManager.Verify(m => m.DisconnectAsync(playerId), Times.Once);
-            _mockCommunicationObject.Verify(m => m.Close(), Times.Once);
+            Assert.That(_mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
@@ -103,11 +105,8 @@ namespace CodenamesGame.Tests.ServiceTests
         {
             Guid playerId = Guid.NewGuid();
             var expectedRequest = new CommunicationRequest { IsSuccess = true };
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
-            _mockMatchManager.Setup(m => m.Connect(playerId)).Returns(new CommunicationRequest { IsSuccess = true });
             _matchProxy.Initialize(playerId);
-            _mockMatchManager
-                .Setup(m => m.JoinMatch(It.IsAny<MatchService.Match>(), playerId))
+            _mockMatchManager.Setup(m => m.JoinMatch(It.IsAny<MatchService.Match>(), playerId))
                 .Returns(expectedRequest);
 
             var result = _matchProxy.JoinMatch(GenerateDummyMatch());
@@ -130,28 +129,22 @@ namespace CodenamesGame.Tests.ServiceTests
         [Test]
         public void JoinMatch_CommunicationException_ReturnsServerUnavailableAndAbortsProxy()
         {
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(Guid.NewGuid());
-            _mockCommunicationObject.SetupSequence(m => m.State)
-                .Returns(CommunicationState.Opened).Returns(CommunicationState.Faulted);
-            _mockMatchManager
-                .Setup(m => m.JoinMatch(It.IsAny<MatchService.Match>(), It.IsAny<Guid>()))
+            _mockMatchManager.Setup(m => m.JoinMatch(It.IsAny<MatchService.Match>(), It.IsAny<Guid>()))
                 .Throws(new CommunicationException());
 
             var result = _matchProxy.JoinMatch(GenerateDummyMatch());
 
-            Assert.That(StatusCode.SERVER_UNAVAIBLE.Equals(result.StatusCode));
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(StatusCode.SERVER_UNAVAIBLE.Equals(result.StatusCode) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         public async Task SendClue_Connected_CallsService()
         {
             string clue = "TestClue";
             Guid playerId = Guid.NewGuid();
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(playerId);
-            _mockMatchManager
-                .Setup(m => m.SendClueAsync(playerId, clue))
+            _mockMatchManager.Setup(m => m.SendClueAsync(playerId, clue))
                 .Returns(Task.CompletedTask);
 
             await _matchProxy.SendClue(clue);
@@ -164,10 +157,8 @@ namespace CodenamesGame.Tests.ServiceTests
         {
             Guid playerId = Guid.NewGuid();
             MatchRoleType role = MatchRoleType.SPYMASTER;
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(playerId);
-            _mockMatchManager
-                .Setup(m => m.NotifyTurnTimeoutAsync(playerId, role))
+            _mockMatchManager.Setup(m => m.NotifyTurnTimeoutAsync(playerId, role))
                 .Returns(Task.CompletedTask);
 
             await _matchProxy.NotifyTurnTimeout(role);
@@ -180,10 +171,8 @@ namespace CodenamesGame.Tests.ServiceTests
         {
             var coords = new BoardCoordinatesDM(1, 1);
             int newLength = 30;
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(Guid.NewGuid());
-            _mockMatchManager
-                .Setup(m => m.NotifyPickedAgentAsync(It.IsAny<AgentPickedNotification>()))
+            _mockMatchManager.Setup(m => m.NotifyPickedAgentAsync(It.IsAny<AgentPickedNotification>()))
                 .Returns(Task.CompletedTask);
 
             await _matchProxy.NotifyPickedAgent(coords, newLength);
@@ -192,31 +181,25 @@ namespace CodenamesGame.Tests.ServiceTests
         }
 
         [Test]
-        public async Task NotifyPickedAgent_CommunicationException_AbortsProxy()
+        public async Task NotifyPickedAgent_CommunicationException_ClosesProxy()
         {
             var coords = new BoardCoordinatesDM(1, 1);
             int newTurnLength = 30;
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(Guid.NewGuid());
-            _mockCommunicationObject.SetupSequence(m => m.State)
-                .Returns(CommunicationState.Opened).Returns(CommunicationState.Faulted);
-            _mockMatchManager
-                .Setup(m => m.NotifyPickedAgentAsync(It.IsAny<AgentPickedNotification>()))
+            _mockMatchManager.Setup(m => m.NotifyPickedAgentAsync(It.IsAny<AgentPickedNotification>()))
                 .ThrowsAsync(new CommunicationException());
 
             await _matchProxy.NotifyPickedAgent(coords, newTurnLength);
 
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(_mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
         public async Task NotifyPickedBystander_Connected_CallsService()
         {
             var coords = new BoardCoordinatesDM(1, 1);
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(Guid.NewGuid());
-            _mockMatchManager
-                .Setup(m => m.NotifyPickedBystanderAsync(It.IsAny<BystanderPickedNotification>()))
+            _mockMatchManager.Setup(m => m.NotifyPickedBystanderAsync(It.IsAny<BystanderPickedNotification>()))
                 .Returns(Task.CompletedTask);
 
             await _matchProxy.NotifyPickedBystander(coords);
@@ -225,30 +208,24 @@ namespace CodenamesGame.Tests.ServiceTests
         }
 
         [Test]
-        public async Task NotifyPickedBystander_EndpointNotFound_AbortsProxy()
+        public async Task NotifyPickedBystander_EndpointNotFound_ClosesProxy()
         {
             var coords = new BoardCoordinatesDM(1, 1);
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(Guid.NewGuid());
-            _mockCommunicationObject.SetupSequence(m => m.State)
-                .Returns(CommunicationState.Opened).Returns(CommunicationState.Faulted);
-            _mockMatchManager
-                .Setup(m => m.NotifyPickedBystanderAsync(It.IsAny<BystanderPickedNotification>()))
+            _mockMatchManager.Setup(m => m.NotifyPickedBystanderAsync(It.IsAny<BystanderPickedNotification>()))
                 .ThrowsAsync(new EndpointNotFoundException());
 
             await _matchProxy.NotifyPickedBystander(coords);
 
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(_mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
         public async Task NotifyPickedAssassin_Connected_CallsService()
         {
             var coords = new BoardCoordinatesDM(1, 1);
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(Guid.NewGuid());
-            _mockMatchManager
-                .Setup(m => m.NotifyPickedAssassinAsync(It.IsAny<AssassinPickedNotification>()))
+            _mockMatchManager.Setup(m => m.NotifyPickedAssassinAsync(It.IsAny<AssassinPickedNotification>()))
                 .Returns(Task.CompletedTask);
 
             await _matchProxy.NotifyPickedAssassin(coords);
@@ -260,17 +237,13 @@ namespace CodenamesGame.Tests.ServiceTests
         public async Task NotifyPickedAssassin_TimeoutException_AbortsProxy()
         {
             var coords = new BoardCoordinatesDM(1, 1);
-            _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Opened);
             _matchProxy.Initialize(Guid.NewGuid());
-            _mockCommunicationObject.SetupSequence(m => m.State)
-                .Returns(CommunicationState.Opened).Returns(CommunicationState.Faulted);
-            _mockMatchManager
-                .Setup(m => m.NotifyPickedAssassinAsync(It.IsAny<AssassinPickedNotification>()))
+            _mockMatchManager.Setup(m => m.NotifyPickedAssassinAsync(It.IsAny<AssassinPickedNotification>()))
                 .ThrowsAsync(new TimeoutException());
 
             await _matchProxy.NotifyPickedAssassin(coords);
 
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(_mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         private MatchDM GenerateDummyMatch()
