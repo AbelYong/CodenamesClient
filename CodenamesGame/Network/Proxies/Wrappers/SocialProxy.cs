@@ -236,7 +236,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public FriendshipRequest SendFriendRequest(Guid toPlayerId)
         {
-            FriendshipRequest request = new FriendshipRequest();
+            FriendshipRequest request;
             TryReconnect();
 
             if (VerifyClientOpen())
@@ -277,7 +277,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public FriendshipRequest AcceptFriendRequest(Guid requesterPlayerId)
         {
-            FriendshipRequest request = new FriendshipRequest();
+            FriendshipRequest request;
             TryReconnect();
 
             if (VerifyClientOpen())
@@ -317,7 +317,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public FriendshipRequest RejectFriendRequest(Guid requesterPlayerId)
         {
-            FriendshipRequest request = new FriendshipRequest();
+            FriendshipRequest request;
             TryReconnect();
 
             if (VerifyClientOpen())
@@ -358,7 +358,7 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         public FriendshipRequest RemoveFriend(Guid friendPlayerId)
         {
-            FriendshipRequest request = new FriendshipRequest();
+            FriendshipRequest request;
             TryReconnect();
 
             if (VerifyClientOpen())

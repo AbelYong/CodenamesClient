@@ -83,7 +83,7 @@ namespace CodenamesClient.GameUI.BoardUI
 
         private async void ClickCheckOnCompanion(object sender, RoutedEventArgs e)
         {
-            await _viewModel.CheckOnCompanion();
+            await BoardViewModel.CheckOnCompanion();
         }
 
         private async void ClickSendMessage(object sender, RoutedEventArgs e)

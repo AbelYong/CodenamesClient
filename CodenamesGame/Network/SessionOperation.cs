@@ -18,7 +18,7 @@ namespace CodenamesGame.Network
             _proxy = proxy;
             if (_proxy is SessionProxy concreteProxy)
             {
-                concreteProxy.ConnectionLost += (s, e) => ConnectionLost?.Invoke(this, EventArgs.Empty);
+                concreteProxy.ConnectionLost += (s, e) => ConnectionLost?.Invoke(null, EventArgs.Empty);
             }
         }
 

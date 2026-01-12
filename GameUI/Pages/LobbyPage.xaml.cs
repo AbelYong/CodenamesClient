@@ -1,5 +1,8 @@
 ﻿using CodenamesClient.GameUI.BoardUI;
 using CodenamesClient.GameUI.ViewModels;
+using CodenamesClient.Operation.Network.Duplex;
+using CodenamesClient.Operation.Validation;
+using CodenamesClient.Properties.Langs;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
 using System;
@@ -9,9 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
-using CodenamesClient.Properties.Langs;
 using static CodenamesClient.GameUI.ViewModels.LobbyViewModel;
-using CodenamesClient.Operation.Validation;
 
 namespace CodenamesClient.GameUI.Pages
 {
@@ -50,7 +51,7 @@ namespace CodenamesClient.GameUI.Pages
                 _viewModel.BeginMatch += OnBeginMatch;
                 AudioManager.Instance.TransitionTo("Main");
 
-                if (_viewModel.PingSessionService())
+                if (DuplexNetworkManager.Instance.PingSessionService())
                 {
                     _viewModel.ConnectToLobbyService(_me);
                     _viewModel.ConnectToMatchmakingService(_me);

@@ -23,7 +23,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public event Action<MatchDM> BeginMatch;
         public ObservableCollection<FriendItem> Friends { get; }
-        public Dictionary<string, bool> AlreadySentToAddresses = new Dictionary<string, bool>();
+        private Dictionary<string, bool> _alreadySentToAddresses = new Dictionary<string, bool>();
         private MatchDM _match;
         private readonly PlayerDM _me;
         private PlayerDM _partyHost;
@@ -289,6 +289,11 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
+        public Dictionary<string, bool> AlreadySentToAddresses
+        {
+            get => _alreadySentToAddresses;
+        }
+
         public string SendToEmailAddress
         {
             get => _sendToEmailAddress;
@@ -451,7 +456,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 CreateLobbyBtnVisbility = Visibility.Collapsed;
                 InviteBtnVisibility = Visibility.Visible;
                 JoinBtnVisibility = Visibility.Collapsed;
-                AlreadySentToAddresses.Clear();
+                _alreadySentToAddresses.Clear();
             }
             else
             {
@@ -464,7 +469,7 @@ namespace CodenamesClient.GameUI.ViewModels
             CodenamesGame.LobbyService.CommunicationRequest request = DuplexNetworkManager.Instance.SendEmailInvitation(_sendToEmailAddress);
             if (request.IsSuccess)
             {
-                AlreadySentToAddresses.Add(_sendToEmailAddress, true);
+                _alreadySentToAddresses.Add(_sendToEmailAddress, true);
                 MessageBox.Show(Lang.lobbyInvitationSentSuccesfully);
             }
             else
@@ -695,11 +700,6 @@ namespace CodenamesClient.GameUI.ViewModels
                         });
                 }
             }
-        }
-
-        public bool PingSessionService()
-        {
-            return DuplexNetworkManager.Instance.PingSessionService();
         }
 
         public void SubscribeToSessionEvents()

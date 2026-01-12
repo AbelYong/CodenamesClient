@@ -744,7 +744,7 @@ namespace CodenamesClient.GameUI.ViewModels
             await DuplexNetworkManager.Instance.NotifyTurnTimeout(currentRole);
         }
 
-        public async Task CheckOnCompanion()
+        public static async Task CheckOnCompanion()
         {
             if (await DuplexNetworkManager.Instance.CheckCompanionStatus())
             {
