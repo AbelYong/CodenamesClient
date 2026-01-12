@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="SAGhIHTnd9/fXT05oqabUVomT2JIxkENRFcUwU4S9RY=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="sfCD9jwGlN304jKIJkaVxqR9HqOaix59LxFj7nKwURY=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="NetTcpBinding_IAuthenticationManager">
       <properties>
@@ -121,10 +121,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetTcpBinding_IAuthenticationManager" contract="AuthenticationService.IAuthenticationManager" bindingType="netTcpBinding" address="net.tcp://localhost:9048/Services" bindingConfiguration="NetTcpBinding_IAuthenticationManager">
+    <endpoint name="NetTcpBinding_IAuthenticationManager" contract="AuthenticationService.IAuthenticationManager" bindingType="netTcpBinding" address="net.tcp://172.20.210.31:9048/Services" bindingConfiguration="NetTcpBinding_IAuthenticationManager">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://localhost:9048/Services</serializedValue>
+          <serializedValue>net.tcp://172.20.210.31:9048/Services</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

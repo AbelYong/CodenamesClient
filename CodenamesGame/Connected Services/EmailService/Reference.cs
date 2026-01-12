@@ -759,6 +759,12 @@ namespace CodenamesGame.EmailService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmailManager/ValidateVerificationCode", ReplyAction="http://tempuri.org/IEmailManager/ValidateVerificationCodeResponse")]
         System.Threading.Tasks.Task<CodenamesGame.EmailService.ConfirmEmailRequest> ValidateVerificationCodeAsync(string email, string code, CodenamesGame.EmailService.EmailType emailType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmailManager/DeleteVerificationCode", ReplyAction="http://tempuri.org/IEmailManager/DeleteVerificationCodeResponse")]
+        void DeleteVerificationCode(string email, CodenamesGame.EmailService.EmailType emailType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IEmailManager/DeleteVerificationCode", ReplyAction="http://tempuri.org/IEmailManager/DeleteVerificationCodeResponse")]
+        System.Threading.Tasks.Task DeleteVerificationCodeAsync(string email, CodenamesGame.EmailService.EmailType emailType);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -802,6 +808,14 @@ namespace CodenamesGame.EmailService {
         
         public System.Threading.Tasks.Task<CodenamesGame.EmailService.ConfirmEmailRequest> ValidateVerificationCodeAsync(string email, string code, CodenamesGame.EmailService.EmailType emailType) {
             return base.Channel.ValidateVerificationCodeAsync(email, code, emailType);
+        }
+        
+        public void DeleteVerificationCode(string email, CodenamesGame.EmailService.EmailType emailType) {
+            base.Channel.DeleteVerificationCode(email, emailType);
+        }
+        
+        public System.Threading.Tasks.Task DeleteVerificationCodeAsync(string email, CodenamesGame.EmailService.EmailType emailType) {
+            return base.Channel.DeleteVerificationCodeAsync(email, emailType);
         }
     }
 }

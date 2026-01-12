@@ -157,6 +157,7 @@
     <Compile Include="Util\NetworkUtil.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\AuthenticationService\AuthenticationService1.wsdl" />
     <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.AuthenticationRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -166,7 +167,19 @@
     <None Include="Connected Services\AuthenticationService\CodenamesGame.AuthenticationService.PasswordResetRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\AuthenticationService\item4.xsd">
+    <None Include="Connected Services\AuthenticationService\item5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthenticationService\item51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthenticationService\item52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthenticationService\item53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuthenticationService\item54.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\EmailService\CodenamesGame.EmailService.CommunicationRequest.datasource">
@@ -260,9 +273,22 @@
     <None Include="Connected Services\SessionService\item4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\UserService\item4.xsd">
+    <None Include="Connected Services\UserService\item5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\UserService\item51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\item52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\item53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\item54.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService1.wsdl" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -270,13 +296,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Connected Services\AuthenticationService\AuthenticationService.wsdl" />
-    <None Include="Connected Services\AuthenticationService\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AuthenticationService\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\FriendService\CodenamesGame.FriendService.Player.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -369,19 +388,6 @@
     <None Include="Connected Services\UserService\CodenamesGame.UserService.SignInRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\UserService\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserService\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserService\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserService\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserService\UserService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AuthenticationService\" />
@@ -396,28 +402,16 @@
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthenticationService\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\AuthenticationService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\AuthenticationService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\AuthenticationService\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AuthenticationService\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\AuthenticationService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\UserService\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\UserService\configuration91.svcinfo" />
@@ -544,6 +538,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\EmailService\item1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\item1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\AuthenticationService\item1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

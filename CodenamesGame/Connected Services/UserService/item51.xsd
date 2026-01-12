@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:9047/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
-  <xs:complexType name="AuthenticationRequest">
+  <xs:import schemaLocation="http://172.20.210.31:9049/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import schemaLocation="http://172.20.210.31:9049/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://172.20.210.31:9049/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" />
+  <xs:complexType name="SignInRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="BanExpiration" nillable="true" type="q1:DateTimeOffset" />
-          <xs:element minOccurs="0" name="UserID" nillable="true" type="ser:guid" />
+          <xs:element minOccurs="0" name="IsEmailDuplicate" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsEmailValid" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsPasswordValid" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsUsernameDuplicate" type="xs:boolean" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="AuthenticationRequest" nillable="true" type="tns:AuthenticationRequest" />
+  <xs:element name="SignInRequest" nillable="true" type="tns:SignInRequest" />
   <xs:complexType name="Request">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsSuccess" type="xs:boolean" />
@@ -63,19 +65,17 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="CommunicationRequest" nillable="true" type="tns:CommunicationRequest" />
-  <xs:complexType name="SignInRequest">
+  <xs:complexType name="AuthenticationRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
         <xs:sequence>
-          <xs:element minOccurs="0" name="IsEmailDuplicate" type="xs:boolean" />
-          <xs:element minOccurs="0" name="IsEmailValid" type="xs:boolean" />
-          <xs:element minOccurs="0" name="IsPasswordValid" type="xs:boolean" />
-          <xs:element minOccurs="0" name="IsUsernameDuplicate" type="xs:boolean" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="BanExpiration" nillable="true" type="q1:DateTimeOffset" />
+          <xs:element minOccurs="0" name="UserID" nillable="true" type="ser:guid" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="SignInRequest" nillable="true" type="tns:SignInRequest" />
+  <xs:element name="AuthenticationRequest" nillable="true" type="tns:AuthenticationRequest" />
   <xs:complexType name="ConfirmEmailRequest">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Request">
