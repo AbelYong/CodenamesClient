@@ -171,17 +171,21 @@ namespace CodenamesGame.Tests.ServiceTests
         public void SearchPlayers_SuccessfulSearch_ReturnsList()
         {
             _socialProxy.Initialize(Guid.NewGuid());
-            var expectedList = new Player[] { new Player { Username = "TestUser" } };
+            var serviceResponse = new FriendListRequest
+            {
+                IsSuccess = true,
+                FriendsList = new Player[] { new Player { Username = "TestUser" } }
+            };
             _mockFriendManager.Setup(m => m.SearchPlayers(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(expectedList);
+                .Returns(serviceResponse);
 
             var result = _socialProxy.SearchPlayers("query");
 
-            Assert.That(result.Count, Is.EqualTo(1));
+            Assert.That(result.FriendsList.Length, Is.EqualTo(1));
         }
 
         [Test]
-        public void SearchPlayers_CommunicationException_ReturnsEmptyListAndAborts()
+        public void SearchPlayers_CommunicationException_ReturnsUnavailableAndClosesProxy()
         {
             _socialProxy.Initialize(Guid.NewGuid());
             _mockFriendManager.Setup(m => m.SearchPlayers(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<int>()))
@@ -190,12 +194,12 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _socialProxy.SearchPlayers("query");
 
-            Assert.That(result, Is.Empty);
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(result.StatusCode.Equals(StatusCode.SERVER_UNAVAIBLE) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
-        public void SearchPlayers_TimeoutException_ReturnsEmptyListAndAborts()
+        public void SearchPlayers_TimeoutException_ReturnsTimeoutAndClosesProxy()
         {
             _socialProxy.Initialize(Guid.NewGuid());
             _mockFriendManager.Setup(m => m.SearchPlayers(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<int>()))
@@ -204,12 +208,12 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _socialProxy.SearchPlayers("query");
 
-            Assert.That(result, Is.Empty);
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(result.StatusCode.Equals(StatusCode.SERVER_TIMEOUT) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
-        public void SearchPlayers_GeneralException_ReturnsEmptyListAndAborts()
+        public void SearchPlayers_GeneralException_ReturnsClientErrorAndClosesProxy()
         {
             _socialProxy.Initialize(Guid.NewGuid());
             _mockFriendManager.Setup(m => m.SearchPlayers(It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<int>()))
@@ -218,24 +222,29 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _socialProxy.SearchPlayers("query");
 
-            Assert.That(result, Is.Empty);
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(result.StatusCode.Equals(StatusCode.CLIENT_ERROR) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
         public void GetFriends_ValidData_ReturnsList()
         {
             _socialProxy.Initialize(Guid.NewGuid());
+            var serviceResponse = new FriendListRequest
+            {
+                IsSuccess = true,
+                FriendsList = new Player[] { new Player() }
+            };
             _mockFriendManager.Setup(m => m.GetFriends(It.IsAny<Guid>()))
-                .Returns(new Player[] { new Player() });
+                .Returns(serviceResponse);
 
             var result = _socialProxy.GetFriends();
 
-            Assert.That(result.Count.Equals(1));
+            Assert.That(result.FriendsList.Length, Is.EqualTo(1));
         }
 
         [Test]
-        public void GetFriends_CommunicationException_ReturnsEmptyListAndAborts()
+        public void GetFriends_CommunicationException_ReturnsUnavailableAndClosesProxy()
         {
             _socialProxy.Initialize(Guid.NewGuid());
             _mockFriendManager.Setup(m => m.GetFriends(It.IsAny<Guid>()))
@@ -244,24 +253,29 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _socialProxy.GetFriends();
 
-            Assert.That(result, Is.Empty);
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(result.StatusCode.Equals(StatusCode.SERVER_UNAVAIBLE) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
         public void GetIncomingRequests_ReceptionSuccess_ReturnsList()
         {
             _socialProxy.Initialize(Guid.NewGuid());
+            var serviceResponse = new FriendListRequest
+            {
+                IsSuccess = true,
+                FriendsList = new Player[] { new Player() }
+            };
             _mockFriendManager.Setup(m => m.GetIncomingRequests(It.IsAny<Guid>()))
-                .Returns(new Player[] { new Player() });
+                .Returns(serviceResponse);
 
             var result = _socialProxy.GetIncomingRequests();
 
-            Assert.That(result.Count.Equals(1));
+            Assert.That(result.FriendsList.Length, Is.EqualTo(1));
         }
 
         [Test]
-        public void GetIncomingRequests_Exception_ReturnsEmptyListAndAborts()
+        public void GetIncomingRequests_Exception_ReturnsClientErrorAndClosesProxy()
         {
             _socialProxy.Initialize(Guid.NewGuid());
             _mockFriendManager.Setup(m => m.GetIncomingRequests(It.IsAny<Guid>()))
@@ -270,24 +284,29 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _socialProxy.GetIncomingRequests();
 
-            Assert.That(result, Is.Empty);
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(result.StatusCode.Equals(StatusCode.CLIENT_ERROR) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
         public void GetSentRequests_ReceptionSuccess_ReturnsList()
         {
             _socialProxy.Initialize(Guid.NewGuid());
+            var serviceResponse = new FriendListRequest
+            {
+                IsSuccess = true,
+                FriendsList = new Player[] { new Player() }
+            };
             _mockFriendManager.Setup(m => m.GetSentRequests(It.IsAny<Guid>()))
-                .Returns(new Player[] { new Player() });
+                .Returns(serviceResponse);
 
             var result = _socialProxy.GetSentRequests();
 
-            Assert.That(result.Count.Equals(1));
+            Assert.That(result.FriendsList.Length, Is.EqualTo(1));
         }
 
         [Test]
-        public void GetSentRequests_TimeoutException_ReturnsEmptyListAndAborts()
+        public void GetSentRequests_TimeoutException_ReturnsTimeoutAndClosesProxy()
         {
             _socialProxy.Initialize(Guid.NewGuid());
             _mockFriendManager.Setup(m => m.GetSentRequests(It.IsAny<Guid>()))
@@ -296,8 +315,8 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _socialProxy.GetSentRequests();
 
-            Assert.That(result, Is.Empty);
-            _mockCommunicationObject.Verify(m => m.Abort(), Times.Once);
+            Assert.That(result.StatusCode.Equals(StatusCode.SERVER_TIMEOUT) &&
+                _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]

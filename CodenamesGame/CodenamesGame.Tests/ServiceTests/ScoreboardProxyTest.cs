@@ -155,13 +155,19 @@ namespace CodenamesGame.Tests.ServiceTests
             {
                 GamesWon = 10
             };
+            var serviceResponse = new ScoreboardRequest
+            {
+                IsSuccess = true,
+                ScoreboardList = new Scoreboard[] { expectedScore }
+            };
+
             _scoreboardProxy.Initialize(playerId);
             _mockScoreboardManager.Setup(m => m.GetMyScore(playerId))
-                .Returns(expectedScore);
+                .Returns(serviceResponse);
 
             var result = _scoreboardProxy.GetMyScore(playerId);
 
-            Assert.That(result.GamesWon.Equals(expectedScore.GamesWon));
+            Assert.That(result.ScoreboardList[0].GamesWon.Equals(expectedScore.GamesWon));
         }
 
         [Test]
@@ -169,7 +175,7 @@ namespace CodenamesGame.Tests.ServiceTests
         {
             _scoreboardProxy.Initialize(Guid.NewGuid());
             _mockScoreboardManager.Setup(m => m.GetMyScore(It.IsAny<Guid>()))
-                .Returns((Scoreboard)null);
+                .Returns((ScoreboardRequest)null);
 
             var result = _scoreboardProxy.GetMyScore(Guid.NewGuid());
 
@@ -181,19 +187,25 @@ namespace CodenamesGame.Tests.ServiceTests
         {
             Guid playerId = Guid.NewGuid();
             var expectedScore = new Scoreboard { GamesWon = 5 };
+            var serviceResponse = new ScoreboardRequest
+            {
+                IsSuccess = true,
+                ScoreboardList = new Scoreboard[] { expectedScore }
+            };
+
             _scoreboardProxy.Initialize(playerId);
             _mockCommunicationObject.Setup(m => m.State).Returns(CommunicationState.Closed);
             _mockScoreboardManager.Setup(m => m.GetMyScore(playerId))
-                .Returns(expectedScore);
+                .Returns(serviceResponse);
 
             var result = _scoreboardProxy.GetMyScore(playerId);
 
-            Assert.That(result.GamesWon.Equals(expectedScore.GamesWon) &&
+            Assert.That(result.ScoreboardList[0].GamesWon.Equals(expectedScore.GamesWon) &&
                 _mockCommunicationObject.Object.State.Equals(CommunicationState.Opened));
         }
 
         [Test]
-        public void GetMyScore_CommunicationException_ReturnsNullAndClosesProxy()
+        public void GetMyScore_CommunicationException_ReturnsUnavailableAndClosesProxy()
         {
             _scoreboardProxy.Initialize(Guid.NewGuid());
             _mockScoreboardManager.Setup(m => m.GetMyScore(It.IsAny<Guid>()))
@@ -201,12 +213,12 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _scoreboardProxy.GetMyScore(Guid.NewGuid());
 
-            Assert.That(result == null &&
+            Assert.That(result.StatusCode.Equals(StatusCode.SERVER_UNAVAIBLE) &&
                 _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
-        public void GetMyScore_TimeoutException_ReturnsNullAndClosesProxy()
+        public void GetMyScore_TimeoutException_ReturnsTimeoutAndClosesProxy()
         {
             _scoreboardProxy.Initialize(Guid.NewGuid());
             _mockScoreboardManager.Setup(m => m.GetMyScore(It.IsAny<Guid>()))
@@ -214,12 +226,12 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _scoreboardProxy.GetMyScore(Guid.NewGuid());
 
-            Assert.That(result == null &&
+            Assert.That(result.StatusCode.Equals(StatusCode.SERVER_TIMEOUT) &&
                 _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
 
         [Test]
-        public void GetMyScore_GeneralException_ReturnsNullAndClosesProxy()
+        public void GetMyScore_GeneralException_ReturnsClientErrorAndClosesProxy()
         {
             _scoreboardProxy.Initialize(Guid.NewGuid());
             _mockScoreboardManager.Setup(m => m.GetMyScore(It.IsAny<Guid>()))
@@ -227,7 +239,7 @@ namespace CodenamesGame.Tests.ServiceTests
 
             var result = _scoreboardProxy.GetMyScore(Guid.NewGuid());
 
-            Assert.That(result == null &&
+            Assert.That(result.StatusCode.Equals(StatusCode.CLIENT_ERROR) &&
                 _mockCommunicationObject.Object.State.Equals(CommunicationState.Closed));
         }
     }
