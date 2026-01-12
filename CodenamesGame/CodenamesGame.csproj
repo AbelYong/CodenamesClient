@@ -175,10 +175,20 @@
     <None Include="Connected Services\EmailService\CodenamesGame.EmailService.ConfirmEmailRequest.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\EmailService\item3.xsd">
+    <None Include="Connected Services\EmailService\EmailService1.wsdl" />
+    <None Include="Connected Services\EmailService\item4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\EmailService\item31.xsd">
+    <None Include="Connected Services\EmailService\item41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\item42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\item43.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\EmailService\item44.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendService\CodenamesGame.FriendService.FriendListRequest1.datasource">
@@ -265,16 +275,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\AuthenticationService\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\EmailService\EmailService.wsdl" />
-    <None Include="Connected Services\EmailService\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\EmailService\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\EmailService\item2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\FriendService\CodenamesGame.FriendService.Player.datasource">
@@ -444,9 +444,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\EmailService\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\EmailService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -544,6 +541,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\EmailService\item1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
