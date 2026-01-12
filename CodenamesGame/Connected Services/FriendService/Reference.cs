@@ -24,6 +24,7 @@ namespace CodenamesGame.FriendService {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.CreateLobbyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.JoinPartyRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.PasswordResetRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.FriendListRequest))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.FriendService.FriendshipRequest))]
     public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -286,6 +287,29 @@ namespace CodenamesGame.FriendService {
                 if ((this.RemainingAttemptsField.Equals(value) != true)) {
                     this.RemainingAttemptsField = value;
                     this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FriendListRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class FriendListRequest : CodenamesGame.FriendService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.FriendService.Player[] FriendsListField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.FriendService.Player[] FriendsList {
+            get {
+                return this.FriendsListField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FriendsListField, value) != true)) {
+                    this.FriendsListField = value;
+                    this.RaisePropertyChanged("FriendsList");
                 }
             }
         }
@@ -774,28 +798,28 @@ namespace CodenamesGame.FriendService {
         System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendshipRequest> RemoveFriendAsync(System.Guid mePlayerId, System.Guid friendPlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SearchPlayers", ReplyAction="http://tempuri.org/IFriendManager/SearchPlayersResponse")]
-        CodenamesGame.FriendService.Player[] SearchPlayers(string query, System.Guid mePlayerId, int limit);
+        CodenamesGame.FriendService.FriendListRequest SearchPlayers(string query, System.Guid mePlayerId, int limit);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/SearchPlayers", ReplyAction="http://tempuri.org/IFriendManager/SearchPlayersResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> SearchPlayersAsync(string query, System.Guid mePlayerId, int limit);
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> SearchPlayersAsync(string query, System.Guid mePlayerId, int limit);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetFriends", ReplyAction="http://tempuri.org/IFriendManager/GetFriendsResponse")]
-        CodenamesGame.FriendService.Player[] GetFriends(System.Guid mePlayerId);
+        CodenamesGame.FriendService.FriendListRequest GetFriends(System.Guid mePlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetFriends", ReplyAction="http://tempuri.org/IFriendManager/GetFriendsResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetFriendsAsync(System.Guid mePlayerId);
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> GetFriendsAsync(System.Guid mePlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetIncomingRequests", ReplyAction="http://tempuri.org/IFriendManager/GetIncomingRequestsResponse")]
-        CodenamesGame.FriendService.Player[] GetIncomingRequests(System.Guid mePlayerId);
+        CodenamesGame.FriendService.FriendListRequest GetIncomingRequests(System.Guid mePlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetIncomingRequests", ReplyAction="http://tempuri.org/IFriendManager/GetIncomingRequestsResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetIncomingRequestsAsync(System.Guid mePlayerId);
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> GetIncomingRequestsAsync(System.Guid mePlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetSentRequests", ReplyAction="http://tempuri.org/IFriendManager/GetSentRequestsResponse")]
-        CodenamesGame.FriendService.Player[] GetSentRequests(System.Guid mePlayerId);
+        CodenamesGame.FriendService.FriendListRequest GetSentRequests(System.Guid mePlayerId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendManager/GetSentRequests", ReplyAction="http://tempuri.org/IFriendManager/GetSentRequestsResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetSentRequestsAsync(System.Guid mePlayerId);
+        System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> GetSentRequestsAsync(System.Guid mePlayerId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -896,35 +920,35 @@ namespace CodenamesGame.FriendService {
             return base.Channel.RemoveFriendAsync(mePlayerId, friendPlayerId);
         }
         
-        public CodenamesGame.FriendService.Player[] SearchPlayers(string query, System.Guid mePlayerId, int limit) {
+        public CodenamesGame.FriendService.FriendListRequest SearchPlayers(string query, System.Guid mePlayerId, int limit) {
             return base.Channel.SearchPlayers(query, mePlayerId, limit);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> SearchPlayersAsync(string query, System.Guid mePlayerId, int limit) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> SearchPlayersAsync(string query, System.Guid mePlayerId, int limit) {
             return base.Channel.SearchPlayersAsync(query, mePlayerId, limit);
         }
         
-        public CodenamesGame.FriendService.Player[] GetFriends(System.Guid mePlayerId) {
+        public CodenamesGame.FriendService.FriendListRequest GetFriends(System.Guid mePlayerId) {
             return base.Channel.GetFriends(mePlayerId);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetFriendsAsync(System.Guid mePlayerId) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> GetFriendsAsync(System.Guid mePlayerId) {
             return base.Channel.GetFriendsAsync(mePlayerId);
         }
         
-        public CodenamesGame.FriendService.Player[] GetIncomingRequests(System.Guid mePlayerId) {
+        public CodenamesGame.FriendService.FriendListRequest GetIncomingRequests(System.Guid mePlayerId) {
             return base.Channel.GetIncomingRequests(mePlayerId);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetIncomingRequestsAsync(System.Guid mePlayerId) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> GetIncomingRequestsAsync(System.Guid mePlayerId) {
             return base.Channel.GetIncomingRequestsAsync(mePlayerId);
         }
         
-        public CodenamesGame.FriendService.Player[] GetSentRequests(System.Guid mePlayerId) {
+        public CodenamesGame.FriendService.FriendListRequest GetSentRequests(System.Guid mePlayerId) {
             return base.Channel.GetSentRequests(mePlayerId);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.FriendService.Player[]> GetSentRequestsAsync(System.Guid mePlayerId) {
+        public System.Threading.Tasks.Task<CodenamesGame.FriendService.FriendListRequest> GetSentRequestsAsync(System.Guid mePlayerId) {
             return base.Channel.GetSentRequestsAsync(mePlayerId);
         }
     }

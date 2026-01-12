@@ -109,129 +109,129 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
         }
 
-        public List<PlayerDM> SearchPlayers(string query)
+        public FriendListRequest SearchPlayers(string query)
         {
             int limit = 20;
             TryReconnect();
-
             if (VerifyClientOpen())
             {
                 try
                 {
-                    var list = _client.SearchPlayers(query ?? "", _currentPlayerId, limit);
-                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                    return _client.SearchPlayers(query ?? "", _currentPlayerId, limit);
                 }
                 catch (CommunicationException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Communication error searching players", ex);
                     CloseProxy();
+                    return GenerateServerUnavaibleRequest<FriendListRequest>();
                 }
                 catch (TimeoutException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Timeout searching players", ex);
                     CloseProxy();
+                    return GenerateServerTimeoutRequest<FriendListRequest>();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error searching players", ex);
                     CloseProxy();
+                    return GenerateClientErrorRequest<FriendListRequest>();
                 }
             }
-
-            return new List<PlayerDM>();
+            return GenerateServerUnavaibleRequest<FriendListRequest>();
         }
 
-        public List<PlayerDM> GetFriends()
+        public FriendListRequest GetFriends()
         {
             TryReconnect();
-
             if (VerifyClientOpen())
             {
                 try
                 {
-                    var list = _client.GetFriends(_currentPlayerId);
-                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                    return _client.GetFriends(_currentPlayerId);
                 }
                 catch (CommunicationException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Communication error getting friends", ex);
                     CloseProxy();
+                    return GenerateServerUnavaibleRequest<FriendListRequest>();
                 }
                 catch (TimeoutException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Timeout getting friends", ex);
                     CloseProxy();
+                    return GenerateServerTimeoutRequest<FriendListRequest>();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error getting friends", ex);
                     CloseProxy();
+                    return GenerateClientErrorRequest<FriendListRequest>();
                 }
             }
-
-            return new List<PlayerDM>();
+            return GenerateServerUnavaibleRequest<FriendListRequest>();
         }
 
-        public List<PlayerDM> GetIncomingRequests()
+        public FriendListRequest GetIncomingRequests()
         {
             TryReconnect();
-
             if (VerifyClientOpen())
             {
                 try
                 {
-                    var list = _client.GetIncomingRequests(_currentPlayerId);
-                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                    return _client.GetIncomingRequests(_currentPlayerId);
                 }
                 catch (CommunicationException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Communication error getting incoming requests", ex);
                     CloseProxy();
+                    return GenerateServerUnavaibleRequest<FriendListRequest>();
                 }
                 catch (TimeoutException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Timeout getting incoming requests", ex);
                     CloseProxy();
+                    return GenerateServerTimeoutRequest<FriendListRequest>();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error getting incoming requests", ex);
                     CloseProxy();
+                    return GenerateClientErrorRequest<FriendListRequest>();
                 }
             }
-
-            return new List<PlayerDM>();
+            return GenerateServerUnavaibleRequest<FriendListRequest>();
         }
 
-        public List<PlayerDM> GetSentRequests()
+        public FriendListRequest GetSentRequests()
         {
             TryReconnect();
-
             if (VerifyClientOpen())
             {
                 try
                 {
-                    var list = _client.GetSentRequests(_currentPlayerId);
-                    return list?.Select(PlayerDM.AssemblePlayer).ToList() ?? new List<PlayerDM>();
+                    return _client.GetSentRequests(_currentPlayerId);
                 }
                 catch (CommunicationException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Communication error getting sent requests", ex);
                     CloseProxy();
+                    return GenerateServerUnavaibleRequest<FriendListRequest>();
                 }
                 catch (TimeoutException ex)
                 {
                     CodenamesGameLogger.Log.Warn("Timeout getting sent requests", ex);
                     CloseProxy();
+                    return GenerateServerTimeoutRequest<FriendListRequest>();
                 }
                 catch (Exception ex)
                 {
                     CodenamesGameLogger.Log.Error("Unexpected error getting sent requests", ex);
                     CloseProxy();
+                    return GenerateClientErrorRequest<FriendListRequest>();
                 }
             }
-
-            return new List<PlayerDM>();
+            return GenerateServerUnavaibleRequest<FriendListRequest>();
         }
 
         public FriendshipRequest SendFriendRequest(Guid toPlayerId)

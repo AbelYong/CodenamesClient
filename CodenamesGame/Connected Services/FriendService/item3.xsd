@@ -99,7 +99,7 @@
   <xs:element name="SearchPlayersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="SearchPlayersResult" nillable="true" type="q16:ArrayOfPlayer" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="SearchPlayersResult" nillable="true" type="q16:FriendListRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -113,7 +113,7 @@
   <xs:element name="GetFriendsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="GetFriendsResult" nillable="true" type="q18:ArrayOfPlayer" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="GetFriendsResult" nillable="true" type="q18:FriendListRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -127,7 +127,7 @@
   <xs:element name="GetIncomingRequestsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="GetIncomingRequestsResult" nillable="true" type="q20:ArrayOfPlayer" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="GetIncomingRequestsResult" nillable="true" type="q20:FriendListRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,7 +141,7 @@
   <xs:element name="GetSentRequestsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract" minOccurs="0" name="GetSentRequestsResult" nillable="true" type="q22:ArrayOfPlayer" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Services.DTO.Request" minOccurs="0" name="GetSentRequestsResult" nillable="true" type="q22:FriendListRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

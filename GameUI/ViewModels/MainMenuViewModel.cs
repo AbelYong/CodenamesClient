@@ -307,37 +307,57 @@ namespace CodenamesClient.GameUI.ViewModels
 
             Task.Run(() =>
             {
-                var friendsList = DuplexNetworkManager.Instance.GetFriends();
-                var requestsList = DuplexNetworkManager.Instance.GetIncomingRequests();
-                var sentList = DuplexNetworkManager.Instance.GetSentRequests();
+                var friendsResponse = DuplexNetworkManager.Instance.GetFriends();
+                var requestsResponse = DuplexNetworkManager.Instance.GetIncomingRequests();
+                var sentResponse = DuplexNetworkManager.Instance.GetSentRequests();
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
+                    if (!friendsResponse.IsSuccess)
+                    {
+                        string msg = StatusToMessageMapper.GetFriendServiceMessage(friendsResponse.StatusCode);
+                        MessageBox.Show(msg, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
                     Friends.Clear();
                     Requests.Clear();
                     _sentRequestIds.Clear();
-
-                    foreach (var friend in friendsList)
+                    if (friendsResponse.FriendsList != null)
                     {
-                        Friends.Add(new FriendItem
+                        foreach (var friendDto in friendsResponse.FriendsList)
                         {
-                            Player = friend,
-                            ProfilePicturePath = PictureHandler.GetImagePath(friend.AvatarID),
-                            IsOnline = false
-                        });
-                    }
+                            var playerDM = PlayerDM.AssemblePlayer(friendDto);
 
-                    foreach (var req in requestsList)
+                            Friends.Add(new FriendItem
+                            {
+                                Player = playerDM,
+                                ProfilePicturePath = PictureHandler.GetImagePath(playerDM.AvatarID),
+                                IsOnline = false
+                            });
+                        }
+                    }
+                    if (requestsResponse.FriendsList != null)
                     {
-                        Requests.Add(new FriendItem
+                        foreach (var reqDto in requestsResponse.FriendsList)
                         {
-                            Player = req,
-                            ProfilePicturePath = PictureHandler.GetImagePath(req.AvatarID),
-                            IsOnline = false
-                        });
-                    }
+                            var playerDM = PlayerDM.AssemblePlayer(reqDto);
 
-                    _sentRequestIds = sentList.Where(x => x.PlayerID.HasValue).Select(x => x.PlayerID.Value).ToHashSet();
+                            Requests.Add(new FriendItem
+                            {
+                                Player = playerDM,
+                                ProfilePicturePath = PictureHandler.GetImagePath(playerDM.AvatarID),
+                                IsOnline = false
+                            });
+                        }
+                    }
+                    if (sentResponse.FriendsList != null)
+                    {
+                        _sentRequestIds = sentResponse.FriendsList
+                            .Where(x => x.PlayerID.HasValue)
+                            .Select(x => x.PlayerID.Value)
+                            .ToHashSet();
+                    }
                 });
             });
         }
@@ -351,22 +371,36 @@ namespace CodenamesClient.GameUI.ViewModels
 
             Task.Run(() =>
             {
-                var searchList = DuplexNetworkManager.Instance.SearchPlayers(query);
+                var response = DuplexNetworkManager.Instance.SearchPlayers(query);
+
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    SearchResults.Clear();
-                    foreach (var player in searchList)
+                    if (!response.IsSuccess)
                     {
-                        if (player.PlayerID != Player.PlayerID)
-                        {
-                            bool isAlreadySent = player.PlayerID.HasValue && _sentRequestIds.Contains(player.PlayerID.Value);
+                        string msg = StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode);
+                        MessageBox.Show(msg, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
-                            SearchResults.Add(new SearchItem
+                    SearchResults.Clear();
+
+                    if (response.FriendsList != null)
+                    {
+                        foreach (var playerDto in response.FriendsList)
+                        {
+                            if (playerDto.PlayerID != Player.PlayerID)
                             {
-                                Player = player,
-                                IsPending = isAlreadySent,
-                                ProfilePicturePath = PictureHandler.GetImagePath(player.AvatarID)
-                            });
+                                var playerDM = PlayerDM.AssemblePlayer(playerDto);
+
+                                bool isAlreadySent = playerDM.PlayerID.HasValue && _sentRequestIds.Contains(playerDM.PlayerID.Value);
+
+                                SearchResults.Add(new SearchItem
+                                {
+                                    Player = playerDM,
+                                    IsPending = isAlreadySent,
+                                    ProfilePicturePath = PictureHandler.GetImagePath(playerDM.AvatarID)
+                                });
+                            }
                         }
                     }
                 });
@@ -516,20 +550,39 @@ namespace CodenamesClient.GameUI.ViewModels
             {
                 Task.Run(() =>
                 {
-                    var myScore = DuplexNetworkManager.Instance.GetMyScore(Player.PlayerID.Value);
-                    if (myScore != null)
-                    {
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            TopWinsEntries.Clear();
-                            TopBestTimeEntries.Clear();
-                            TopAssassinsEntries.Clear();
+                    var response = DuplexNetworkManager.Instance.GetMyScore(Player.PlayerID.Value);
 
-                            TopWinsEntries.Add(myScore);
-                            TopBestTimeEntries.Add(myScore);
-                            TopAssassinsEntries.Add(myScore);
-                        });
-                    }
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        if (!response.IsSuccess)
+                        {
+                            string msg = StatusToMessageMapper.GetScoreboardServiceMessage(response.StatusCode);
+                            MessageBox.Show(msg, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            var scoreData = response.ScoreboardList?.FirstOrDefault();
+
+                            if (scoreData != null)
+                            {
+                                ScoreboardDM myScore = new ScoreboardDM
+                                {
+                                    Username = scoreData.Username,
+                                    GamesWon = scoreData.GamesWon,
+                                    FastestMatch = scoreData.FastestMatch,
+                                    AssassinsRevealed = scoreData.AssassinsRevealed
+                                };
+
+                                TopWinsEntries.Clear();
+                                TopBestTimeEntries.Clear();
+                                TopAssassinsEntries.Clear();
+
+                                TopWinsEntries.Add(myScore);
+                                TopBestTimeEntries.Add(myScore);
+                                TopAssassinsEntries.Add(myScore);
+                            }
+                        }
+                    });
                 });
             }
         }

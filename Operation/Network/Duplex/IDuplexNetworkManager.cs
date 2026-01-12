@@ -1,4 +1,6 @@
-﻿using CodenamesGame.Domain.POCO;
+﻿using CodenamesGame.FriendService;
+using CodenamesGame.ScoreboardService;
+using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,10 @@ namespace CodenamesClient.Operation.Network.Duplex
         bool PingSessionService();
         void ConnectToFriendService(Guid mePlayerId);
         void DisconnectFromFriendService();
-        List<PlayerDM> SearchPlayers(string query);
-        List<PlayerDM> GetFriends();
-        List<PlayerDM> GetIncomingRequests();
-        List<PlayerDM> GetSentRequests();
+        FriendListRequest SearchPlayers(string query);
+        FriendListRequest GetFriends();
+        FriendListRequest GetIncomingRequests();
+        FriendListRequest GetSentRequests();
         CodenamesGame.FriendService.FriendshipRequest SendFriendRequest(Guid toPlayerId);
         CodenamesGame.FriendService.FriendshipRequest AcceptFriendRequest(Guid requesterPlayerId);
         CodenamesGame.FriendService.FriendshipRequest RejectFriendRequest(Guid requesterPlayerId);
@@ -43,6 +45,6 @@ namespace CodenamesClient.Operation.Network.Duplex
         Task<bool> CheckCompanionStatus();
         void ConnectToScoreboardService(Guid playerID);
         void DisconnectFromScoreboardService();
-        ScoreboardDM GetMyScore(Guid playerID);
+        ScoreboardRequest GetMyScore(Guid playerID);
     }
 }

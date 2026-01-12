@@ -424,6 +424,8 @@ namespace CodenamesClient.Util
                     return Lang.friendErrorOperationFailed;
                 case CodenamesGame.FriendService.StatusCode.UNALLOWED:
                     return Lang.friendErrorSelfRequest;
+                case CodenamesGame.FriendService.StatusCode.DATABASE_ERROR:
+                    return Lang.globalServerError;
                 case CodenamesGame.FriendService.StatusCode.SERVER_ERROR:
                     return Lang.globalServerError;
                 case CodenamesGame.FriendService.StatusCode.SERVER_TIMEOUT:
@@ -433,6 +435,25 @@ namespace CodenamesClient.Util
                 case CodenamesGame.FriendService.StatusCode.SERVER_UNAVAIBLE:
                     return Lang.globalConnectionLost;
                 case CodenamesGame.FriendService.StatusCode.CLIENT_ERROR:
+                    return Lang.globalClientError;
+                default:
+                    return Lang.globalUnknownServerError;
+            }
+        }
+
+        public static string GetScoreboardServiceMessage(CodenamesGame.ScoreboardService.StatusCode code)
+        {
+            switch (code)
+            {
+                case CodenamesGame.ScoreboardService.StatusCode.DATABASE_ERROR:
+                    return Lang.globalServerError;
+                case CodenamesGame.ScoreboardService.StatusCode.SERVER_TIMEOUT:
+                    return Lang.globalServerTimeout;
+                case CodenamesGame.ScoreboardService.StatusCode.SERVER_UNREACHABLE:
+                    return Lang.globalServerNotFound;
+                case CodenamesGame.ScoreboardService.StatusCode.SERVER_UNAVAIBLE:
+                    return Lang.globalConnectionLost;
+                case CodenamesGame.ScoreboardService.StatusCode.CLIENT_ERROR:
                     return Lang.globalClientError;
                 default:
                     return Lang.globalUnknownServerError;

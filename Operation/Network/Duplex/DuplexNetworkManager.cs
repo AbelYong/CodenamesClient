@@ -1,6 +1,9 @@
 ﻿using CodenamesGame.Domain.POCO;
 using CodenamesGame.Domain.POCO.Match;
+using CodenamesGame.FriendService;
 using CodenamesGame.Network;
+using CodenamesGame.Network.Proxies.Wrappers;
+using CodenamesGame.ScoreboardService;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -60,24 +63,24 @@ namespace CodenamesClient.Operation.Network.Duplex
             _socialOperation.Disconnect();
         }
 
-        public List<PlayerDM> SearchPlayers(string query)
+        public FriendListRequest SearchPlayers(string query)
         {
-            return _socialOperation.SearchPlayers(query);
+            return SocialProxy.Instance.SearchPlayers(query);
         }
 
-        public List<PlayerDM> GetFriends()
+        public FriendListRequest GetFriends()
         {
-            return _socialOperation.GetFriends();
+            return SocialProxy.Instance.GetFriends();
         }
 
-        public List<PlayerDM> GetIncomingRequests()
+        public FriendListRequest GetIncomingRequests()
         {
-            return _socialOperation.GetIncomingRequests();
+            return SocialProxy.Instance.GetIncomingRequests();
         }
 
-        public List<PlayerDM> GetSentRequests()
+        public FriendListRequest GetSentRequests()
         {
-            return _socialOperation.GetSentRequests();
+            return SocialProxy.Instance.GetSentRequests();
         }
 
         public CodenamesGame.FriendService.FriendshipRequest SendFriendRequest(Guid toPlayerId)
@@ -210,9 +213,9 @@ namespace CodenamesClient.Operation.Network.Duplex
             _scoreboardOperation.Disconnect();
         }
 
-        public ScoreboardDM GetMyScore(Guid playerID)
+        public ScoreboardRequest GetMyScore(Guid playerID)
         {
-            return _scoreboardOperation.GetMyScore(playerID);
+            return ScoreboardProxy.Instance.GetMyScore(playerID);
         }
     }
 }

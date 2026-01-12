@@ -79,36 +79,33 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
         }
 
-        public ScoreboardDM GetMyScore(Guid playerID)
+        public ScoreboardRequest GetMyScore(Guid playerID)
         {
             TryReconnect();
             if (VerifyClientOpen())
             {
                 try
                 {
-                    var dto = _client.GetMyScore(playerID);
-                    if (dto != null)
-                    {
-                        return new ScoreboardDM
-                        {
-                            Username = dto.Username,
-                            GamesWon = dto.GamesWon,
-                            FastestMatch = dto.FastestMatch,
-                            AssassinsRevealed = dto.AssassinsRevealed
-                        };
-                    }
+                    return _client.GetMyScore(playerID);
                 }
-                catch (Exception ex) when (ex is CommunicationException || ex is TimeoutException) 
+                catch (TimeoutException)
                 {
                     CloseProxy();
+                    return GenerateServerTimeoutRequest<ScoreboardRequest>();
+                }
+                catch (CommunicationException)
+                {
+                    CloseProxy();
+                    return GenerateServerUnavaibleRequest<ScoreboardRequest>();
                 }
                 catch (Exception ex)
                 {
                     CloseProxy();
                     CodenamesGameLogger.Log.Error("Unexpected exception getting personal score: ", ex);
+                    return GenerateClientErrorRequest<ScoreboardRequest>();
                 }
             }
-            return null;
+            return GenerateServerUnavaibleRequest<ScoreboardRequest>();
         }
 
         private bool VerifyClientOpen()
@@ -131,6 +128,37 @@ namespace CodenamesGame.Network.Proxies.Wrappers
                 NetworkUtil.SafeClose(commObject);
             }
             _client = null;
+        }
+        private static T GenerateServerTimeoutRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_TIMEOUT;
+            return request;
+        }
+
+        private static T GenerateServerUnreachableRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_UNREACHABLE;
+            return request;
+        }
+
+        private static T GenerateServerUnavaibleRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.SERVER_UNAVAIBLE;
+            return request;
+        }
+
+        private static T GenerateClientErrorRequest<T>() where T : Request, new()
+        {
+            var request = new T();
+            request.IsSuccess = false;
+            request.StatusCode = StatusCode.CLIENT_ERROR;
+            return request;
         }
     }
 }

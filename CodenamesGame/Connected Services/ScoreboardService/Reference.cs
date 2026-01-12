@@ -15,6 +15,407 @@ namespace CodenamesGame.ScoreboardService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Request", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.CommunicationRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.AuthenticationRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.SignInRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.ConfirmEmailRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.CreateLobbyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.JoinPartyRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.FriendshipRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.PasswordResetRequest))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CodenamesGame.ScoreboardService.ScoreboardRequest))]
+    public partial class Request : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsSuccessField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.ScoreboardService.StatusCode StatusCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsSuccess {
+            get {
+                return this.IsSuccessField;
+            }
+            set {
+                if ((this.IsSuccessField.Equals(value) != true)) {
+                    this.IsSuccessField = value;
+                    this.RaisePropertyChanged("IsSuccess");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.ScoreboardService.StatusCode StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CommunicationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CommunicationRequest : CodenamesGame.ScoreboardService.Request {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AuthenticationRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class AuthenticationRequest : CodenamesGame.ScoreboardService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTimeOffset> BanExpirationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> UserIDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTimeOffset> BanExpiration {
+            get {
+                return this.BanExpirationField;
+            }
+            set {
+                if ((this.BanExpirationField.Equals(value) != true)) {
+                    this.BanExpirationField = value;
+                    this.RaisePropertyChanged("BanExpiration");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SignInRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class SignInRequest : CodenamesGame.ScoreboardService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmailDuplicateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmailValidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsPasswordValidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsUsernameDuplicateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmailDuplicate {
+            get {
+                return this.IsEmailDuplicateField;
+            }
+            set {
+                if ((this.IsEmailDuplicateField.Equals(value) != true)) {
+                    this.IsEmailDuplicateField = value;
+                    this.RaisePropertyChanged("IsEmailDuplicate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmailValid {
+            get {
+                return this.IsEmailValidField;
+            }
+            set {
+                if ((this.IsEmailValidField.Equals(value) != true)) {
+                    this.IsEmailValidField = value;
+                    this.RaisePropertyChanged("IsEmailValid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsPasswordValid {
+            get {
+                return this.IsPasswordValidField;
+            }
+            set {
+                if ((this.IsPasswordValidField.Equals(value) != true)) {
+                    this.IsPasswordValidField = value;
+                    this.RaisePropertyChanged("IsPasswordValid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsUsernameDuplicate {
+            get {
+                return this.IsUsernameDuplicateField;
+            }
+            set {
+                if ((this.IsUsernameDuplicateField.Equals(value) != true)) {
+                    this.IsUsernameDuplicateField = value;
+                    this.RaisePropertyChanged("IsUsernameDuplicate");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ConfirmEmailRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class ConfirmEmailRequest : CodenamesGame.ScoreboardService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingAttemptsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingAttempts {
+            get {
+                return this.RemainingAttemptsField;
+            }
+            set {
+                if ((this.RemainingAttemptsField.Equals(value) != true)) {
+                    this.RemainingAttemptsField = value;
+                    this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CreateLobbyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class CreateLobbyRequest : CodenamesGame.ScoreboardService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LobbyCodeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LobbyCode {
+            get {
+                return this.LobbyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JoinPartyRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class JoinPartyRequest : CodenamesGame.ScoreboardService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.ScoreboardService.Party PartyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.ScoreboardService.Party Party {
+            get {
+                return this.PartyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyField, value) != true)) {
+                    this.PartyField = value;
+                    this.RaisePropertyChanged("Party");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FriendshipRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class FriendshipRequest : CodenamesGame.ScoreboardService.Request {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PasswordResetRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class PasswordResetRequest : CodenamesGame.ScoreboardService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int RemainingAttemptsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int RemainingAttempts {
+            get {
+                return this.RemainingAttemptsField;
+            }
+            set {
+                if ((this.RemainingAttemptsField.Equals(value) != true)) {
+                    this.RemainingAttemptsField = value;
+                    this.RaisePropertyChanged("RemainingAttempts");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ScoreboardRequest", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    [System.SerializableAttribute()]
+    public partial class ScoreboardRequest : CodenamesGame.ScoreboardService.Request {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.ScoreboardService.Scoreboard[] ScoreboardListField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.ScoreboardService.Scoreboard[] ScoreboardList {
+            get {
+                return this.ScoreboardListField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ScoreboardListField, value) != true)) {
+                    this.ScoreboardListField = value;
+                    this.RaisePropertyChanged("ScoreboardList");
+                }
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StatusCode", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.Request")]
+    public enum StatusCode : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OK = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CREATED = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UPDATED = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CONFLICT = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_CANCEL = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_DISCONNECT = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_UNREACHABLE = 6,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_TIMEOUT = 7,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        MISSING_DATA = 8,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        WRONG_DATA = 9,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NOT_FOUND = 10,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNAUTHORIZED = 11,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNALLOWED = 12,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_ERROR = 13,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DATABASE_ERROR = 14,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNAVAIBLE = 15,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_TIMEOUT = 16,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SERVER_UNREACHABLE = 17,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_ERROR = 18,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ACCOUNT_BANNED = 19,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_CREATED = 20,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        REPORT_DUPLICATED = 21,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        USER_KICKED_AND_BANNED = 22,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_SENT = 23,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_ADDED = 24,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REMOVED = 25,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_REJECTED = 26,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        ALREADY_FRIENDS = 27,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FRIEND_REQUEST_ALREADY_SENT = 28,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Scoreboard", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
     [System.SerializableAttribute()]
     public partial class Scoreboard : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -106,6 +507,349 @@ namespace CodenamesGame.ScoreboardService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Party", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class Party : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LobbyCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.ScoreboardService.Player PartyGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.ScoreboardService.Player PartyHostField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LobbyCode {
+            get {
+                return this.LobbyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LobbyCodeField, value) != true)) {
+                    this.LobbyCodeField = value;
+                    this.RaisePropertyChanged("LobbyCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.ScoreboardService.Player PartyGuest {
+            get {
+                return this.PartyGuestField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyGuestField, value) != true)) {
+                    this.PartyGuestField = value;
+                    this.RaisePropertyChanged("PartyGuest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.ScoreboardService.Player PartyHost {
+            get {
+                return this.PartyHostField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartyHostField, value) != true)) {
+                    this.PartyHostField = value;
+                    this.RaisePropertyChanged("PartyHost");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Player", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class Player : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int AvatarIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DiscordUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FacebookUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InstagramUsernameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGuestField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.Guid> PlayerIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CodenamesGame.ScoreboardService.User UserField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsernameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int AvatarID {
+            get {
+                return this.AvatarIDField;
+            }
+            set {
+                if ((this.AvatarIDField.Equals(value) != true)) {
+                    this.AvatarIDField = value;
+                    this.RaisePropertyChanged("AvatarID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DiscordUsername {
+            get {
+                return this.DiscordUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DiscordUsernameField, value) != true)) {
+                    this.DiscordUsernameField = value;
+                    this.RaisePropertyChanged("DiscordUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FacebookUsername {
+            get {
+                return this.FacebookUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FacebookUsernameField, value) != true)) {
+                    this.FacebookUsernameField = value;
+                    this.RaisePropertyChanged("FacebookUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InstagramUsername {
+            get {
+                return this.InstagramUsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InstagramUsernameField, value) != true)) {
+                    this.InstagramUsernameField = value;
+                    this.RaisePropertyChanged("InstagramUsername");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGuest {
+            get {
+                return this.IsGuestField;
+            }
+            set {
+                if ((this.IsGuestField.Equals(value) != true)) {
+                    this.IsGuestField = value;
+                    this.RaisePropertyChanged("IsGuest");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.Guid> PlayerID {
+            get {
+                return this.PlayerIDField;
+            }
+            set {
+                if ((this.PlayerIDField.Equals(value) != true)) {
+                    this.PlayerIDField = value;
+                    this.RaisePropertyChanged("PlayerID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public CodenamesGame.ScoreboardService.User User {
+            get {
+                return this.UserField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Username {
+            get {
+                return this.UsernameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsernameField, value) != true)) {
+                    this.UsernameField = value;
+                    this.RaisePropertyChanged("Username");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Services.DTO.DataContract")]
+    [System.SerializableAttribute()]
+    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Guid UserIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Guid UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ScoreboardService.IScoreboardManager", CallbackContract=typeof(CodenamesGame.ScoreboardService.IScoreboardManagerCallback))]
     public interface IScoreboardManager {
@@ -123,10 +867,16 @@ namespace CodenamesGame.ScoreboardService {
         System.Threading.Tasks.Task UnsubscribeFromScoreboardUpdatesAsync(System.Guid playerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScoreboardManager/GetMyScore", ReplyAction="http://tempuri.org/IScoreboardManager/GetMyScoreResponse")]
-        CodenamesGame.ScoreboardService.Scoreboard GetMyScore(System.Guid playerID);
+        CodenamesGame.ScoreboardService.ScoreboardRequest GetMyScore(System.Guid playerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScoreboardManager/GetMyScore", ReplyAction="http://tempuri.org/IScoreboardManager/GetMyScoreResponse")]
-        System.Threading.Tasks.Task<CodenamesGame.ScoreboardService.Scoreboard> GetMyScoreAsync(System.Guid playerID);
+        System.Threading.Tasks.Task<CodenamesGame.ScoreboardService.ScoreboardRequest> GetMyScoreAsync(System.Guid playerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScoreboardManager/GetTopPlayers", ReplyAction="http://tempuri.org/IScoreboardManager/GetTopPlayersResponse")]
+        CodenamesGame.ScoreboardService.ScoreboardRequest GetTopPlayers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IScoreboardManager/GetTopPlayers", ReplyAction="http://tempuri.org/IScoreboardManager/GetTopPlayersResponse")]
+        System.Threading.Tasks.Task<CodenamesGame.ScoreboardService.ScoreboardRequest> GetTopPlayersAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -180,12 +930,20 @@ namespace CodenamesGame.ScoreboardService {
             return base.Channel.UnsubscribeFromScoreboardUpdatesAsync(playerID);
         }
         
-        public CodenamesGame.ScoreboardService.Scoreboard GetMyScore(System.Guid playerID) {
+        public CodenamesGame.ScoreboardService.ScoreboardRequest GetMyScore(System.Guid playerID) {
             return base.Channel.GetMyScore(playerID);
         }
         
-        public System.Threading.Tasks.Task<CodenamesGame.ScoreboardService.Scoreboard> GetMyScoreAsync(System.Guid playerID) {
+        public System.Threading.Tasks.Task<CodenamesGame.ScoreboardService.ScoreboardRequest> GetMyScoreAsync(System.Guid playerID) {
             return base.Channel.GetMyScoreAsync(playerID);
+        }
+        
+        public CodenamesGame.ScoreboardService.ScoreboardRequest GetTopPlayers() {
+            return base.Channel.GetTopPlayers();
+        }
+        
+        public System.Threading.Tasks.Task<CodenamesGame.ScoreboardService.ScoreboardRequest> GetTopPlayersAsync() {
+            return base.Channel.GetTopPlayersAsync();
         }
     }
 }

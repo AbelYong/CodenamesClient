@@ -28,22 +28,22 @@ namespace CodenamesGame.Network
             _proxy.Disconnect();
         }
 
-        public List<PlayerDM> SearchPlayers(string query)
+        public FriendListRequest SearchPlayers(string query)
         {
             return _proxy.SearchPlayers(query);
         }
 
-        public List<PlayerDM> GetFriends()
+        public FriendListRequest GetFriends()
         {
             return _proxy.GetFriends();
         }
 
-        public List<PlayerDM> GetIncomingRequests()
+        public FriendListRequest GetIncomingRequests()
         {
             return _proxy.GetIncomingRequests();
         }
 
-        public List<PlayerDM> GetSentRequests()
+        public FriendListRequest GetSentRequests()
         {
             return _proxy.GetSentRequests();
         }

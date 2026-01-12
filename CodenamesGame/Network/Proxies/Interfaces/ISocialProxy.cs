@@ -9,10 +9,10 @@ namespace CodenamesGame.Network.Proxies.Interfaces
     {
         void Initialize(Guid mePlayerId);
         void Disconnect();
-        List<PlayerDM> SearchPlayers(string query);
-        List<PlayerDM> GetFriends();
-        List<PlayerDM> GetIncomingRequests();
-        List<PlayerDM> GetSentRequests();
+        FriendListRequest SearchPlayers(string query);
+        FriendListRequest GetFriends();
+        FriendListRequest GetIncomingRequests();
+        FriendListRequest GetSentRequests();
         FriendshipRequest SendFriendRequest(Guid toPlayerId);
         FriendshipRequest AcceptFriendRequest(Guid requesterPlayerId);
         FriendshipRequest RejectFriendRequest(Guid requesterPlayerId);

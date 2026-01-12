@@ -1,6 +1,7 @@
 ﻿using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network.Proxies.Interfaces;
 using CodenamesGame.Network.Proxies.Wrappers;
+using CodenamesGame.ScoreboardService;
 using System;
 
 namespace CodenamesGame.Network
@@ -26,7 +27,7 @@ namespace CodenamesGame.Network
             _proxy.Disconnect();
         }
 
-        public ScoreboardDM GetMyScore(Guid playerID)
+        public ScoreboardRequest GetMyScore(Guid playerID)
         {
             return _proxy.GetMyScore(playerID);
         }

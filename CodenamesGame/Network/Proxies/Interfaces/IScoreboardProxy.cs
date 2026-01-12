@@ -1,5 +1,6 @@
 ﻿using System;
 using CodenamesGame.Domain.POCO;
+using CodenamesGame.ScoreboardService;
 
 namespace CodenamesGame.Network.Proxies.Interfaces
 {
@@ -7,6 +8,6 @@ namespace CodenamesGame.Network.Proxies.Interfaces
     {
         void Initialize(Guid playerID);
         void Disconnect();
-        ScoreboardDM GetMyScore(Guid playerID);
+        ScoreboardRequest GetMyScore(Guid playerID);
     }
 }

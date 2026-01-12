@@ -680,25 +680,34 @@ namespace CodenamesClient.GameUI.ViewModels
 
         private void LoadFriends()
         {
-            var allFriends = DuplexNetworkManager.Instance.GetFriends();
+            var response = DuplexNetworkManager.Instance.GetFriends();
 
             var onlineFriendsList = SessionCallbackHandler.GetOnlineFriendsList();
             var onlineIds = new HashSet<Guid>(onlineFriendsList.Select(p => p.PlayerID.Value));
 
             Friends.Clear();
-            foreach (var friend in allFriends)
+            if (response.IsSuccess && response.FriendsList != null)
             {
-                if (friend.PlayerID.HasValue)
+                foreach (var friendDto in response.FriendsList)
                 {
-                    bool isOnline = onlineIds.Contains(friend.PlayerID.Value);
-                    Friends.Add(
-                        new FriendItem
+                    if (friendDto.PlayerID.HasValue)
+                    {
+                        var friendDM = PlayerDM.AssemblePlayer(friendDto);
+
+                        bool isOnline = onlineIds.Contains(friendDM.PlayerID.Value);
+
+                        Friends.Add(new FriendItem
                         {
-                            Player = friend,
-                            ProfilePicturePath = PictureHandler.GetImagePath(friend.AvatarID),
+                            Player = friendDM,
+                            ProfilePicturePath = PictureHandler.GetImagePath(friendDM.AvatarID),
                             IsOnline = isOnline
                         });
+                    }
                 }
+            }
+            else if (!response.IsSuccess)
+            {
+                MessageBox.Show(StatusToMessageMapper.GetFriendServiceMessage(response.StatusCode));
             }
         }
 
