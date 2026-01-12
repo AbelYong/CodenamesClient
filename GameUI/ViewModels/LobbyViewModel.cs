@@ -321,7 +321,10 @@ namespace CodenamesClient.GameUI.ViewModels
             
 
             Friends = new ObservableCollection<FriendItem>();
-            LoadFriends();
+            if(!_me.IsGuest)
+            {
+                LoadFriends();
+            }
 
             switch (gamemode)
             {
