@@ -95,10 +95,10 @@
 
                 <!-- Reset password link -->
                 <TextBlock Style="{StaticResource InlineLinkStyle}" Foreground="White"
-                       VerticalAlignment="Center" MouseLeftButtonUp="ForgotLink_Click" Margin="0,0,0,10" Text="{x:Static language:Lang.loginForgotPassword}" />
+                       VerticalAlignment="Center" MouseLeftButtonUp="ClickForgotLink" Margin="0,0,0,10" Text="{x:Static language:Lang.loginForgotPassword}" />
 
                 <!-- Action buttons -->
-                <Button Click="Click_btnLogin"
+                <Button Click="ClickLogin"
                     IsEnabled="{Binding BtnLoginEnabled}"
                     Content="{x:Static language:Lang.loginLogIn}"
                     Style="{StaticResource buttonCustomFocus}"
@@ -106,13 +106,13 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
                     <Label  Content="{x:Static language:Lang.loginDontHaveAccount}" Style="{StaticResource normal}" Margin="0,0,0,0"/>
-                    <Button Click="Click_btnSignIn"  Content="{x:Static language:Lang.loginSignIn}" 
+                    <Button Click="ClickSignIn"  Content="{x:Static language:Lang.loginSignIn}" 
                         Style="{StaticResource buttonCustomFocus}"
                         Margin="0,0,0,0" FontFamily="Consolas" FontSize="16"
                         BorderBrush="#00000000" FontWeight="Normal" FontStyle="Italic" Width="107"/>
                 </StackPanel>
 
-                <Button Click="Click_btnPlayAsGuest"
+                <Button Click="ClickPlayAsGuest"
                     IsEnabled="{Binding BtnSignInGuestEnabled}"
                     Content="{x:Static language:Lang.loginPlayAsGuest}"
                     Style="{StaticResource buttonCustomFocus}"
@@ -121,11 +121,11 @@
 
             <Border x:Name="Overlay" Visibility="Collapsed" Background="#80000000" />
             <uc:SignInControl x:Name="SignInControl" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"
-                          ClickClose="Click_SignInClose"/>
+                          ClickClose="ClickSignInClose"/>
 
             <!-- ===== Backdrop ===== -->
             <Rectangle x:Name="ResetBackdrop" Fill="#80000000" Visibility="Collapsed" Panel.ZIndex="9"
-                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseLeftButtonUp="HideReset_Click"/>
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseLeftButtonUp="ClickHideReset"/>
 
             <!-- ===== Sliding overlay for password reset ===== -->
             <Grid x:Name="ResetGrid" Width="640" Height="470" Background="#272727" Visibility="Visible"
@@ -153,7 +153,7 @@
 
                         <Button x:Name="SendCodeBtn" Content="{x:Static language:Lang.resetSendCode}"
                         Style="{StaticResource buttonCustomFocus}"
-                        Click="SendCode_Click"
+                        Click="ClickSendCode"
                         Width="316" Height="40" Margin="0,0,0,12"/>
 
                         <TextBlock Text="{x:Static language:Lang.resetReceivedCode}" Style="{StaticResource normal}" />
@@ -167,7 +167,7 @@
 
                             <PasswordBox Grid.Column="0" uc:PasswordBoxHelper.BindPassword="True"
                                      uc:PasswordBoxHelper.BoundPassword="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                                     LostFocus="PasswordInput_LostFocus" FontSize="16"
+                                     LostFocus="PasswordInputLostFocus" FontSize="16"
                                      Style="{StaticResource ValidatedPasswordBox}" Margin="0,2,10,20" Height="30" Width="320" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
                             <Border Grid.Column="1" Margin="0,0,100,20" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
                                 <TextBlock Text="?" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18"/>
@@ -208,10 +208,10 @@
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Content="{x:Static language:Lang.globalBack}"
                         Style="{StaticResource buttonCustomFocus}"
-                        Width="180" Height="40" Click="HideReset_Click"/>
+                        Width="180" Height="40" Click="ClickHideReset"/>
                         <Button Grid.Column="1" Content="{x:Static language:Lang.resetChangePassword}" IsEnabled="{Binding CanSubmit}"
                         Style="{StaticResource buttonCustomFocus}"
-                        Width="180" Height="40" Click="ConfirmReset_Click"/>
+                        Width="180" Height="40" Click="ClickConfirmReset"/>
                     </Grid>
                 </Grid>
             </Grid>

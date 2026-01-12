@@ -119,7 +119,7 @@
     <Grid>
         <StackPanel x:Name="stackPanelProfileForm">
             <Label Content="{x:Static language:Lang.profileProfile}" Style="{StaticResource title}" Visibility="{Binding IsTitleVisible}" Margin="0,30,0,0" />
-            <Button x:Name="btnProfilePicture" Click="Click_btnProfilePicture" Content="" Style="{StaticResource imageButtonFocus}" Width="200" Height="155">
+            <Button x:Name="btnProfilePicture" Click="ClickProfilePicture" Content="" Style="{StaticResource imageButtonFocus}" Width="200" Height="155">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent01.png"/>
                 </Button.Background>
@@ -138,11 +138,11 @@
                     <Label Content="{x:Static language:Lang.profileLastName}" Style="{StaticResource normal}" />
                     <TextBox Name="tBxLastName" Text=""
                          Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
-                    <Button Click="Click_btnBack" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
+                    <Button Click="ClickBack" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
                 <StackPanel Margin="50,0,0,0" Width="250">
                     <Label x:Name="lblPassword" Content="{x:Static language:Lang.loginPassword}" Style="{StaticResource normal}" />
-                    <Button Name="tBxChangePassword" Click="Click_btnResetPassword" Content="{x:Static language:Lang.resetChangePassword}"
+                    <Button Name="tBxChangePassword" Click="ClickResetPassword" Content="{x:Static language:Lang.resetChangePassword}"
                         Style="{StaticResource buttonCustomFocus}" FontSize="16"/>
                     <Label Content="Facebook" Style="{StaticResource normal}" />
                     <TextBox Name="tBxFacebook" Text="" 
@@ -154,7 +154,7 @@
                     <TextBox Name="tBxDiscord"  Text=""
                          Style="{StaticResource textBoxCustomFocus}" FontSize="16" MaxLength="30"/>
 
-                    <Button x:Name="btnSave" Click="Click_btnSave" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
+                    <Button x:Name="btnSave" Click="ClickSave" Content="{x:Static language:Lang.globalSave}" Style="{StaticResource buttonCustomFocus}" Width="100" Margin="0,30,0,0" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -176,127 +176,127 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="0" Grid.Column="0" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent01.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="0" Grid.Column="1" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="0" Grid.Column="1" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent02.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="0" Grid.Column="2" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="0" Grid.Column="2" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent03.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="0" Grid.Column="3" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="0" Grid.Column="3" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent04.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="0" Grid.Column="4" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="0" Grid.Column="4" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent05.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="1" Grid.Column="0" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="1" Grid.Column="0" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent06.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="1" Grid.Column="1" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="1" Grid.Column="1" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent07.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="1" Grid.Column="2" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="1" Grid.Column="2" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent08.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="1" Grid.Column="3" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="1" Grid.Column="3" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent09.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="1" Grid.Column="4" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="1" Grid.Column="4" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent10.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="2" Grid.Column="0" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="2" Grid.Column="0" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent11.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="2" Grid.Column="1" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="2" Grid.Column="1" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent12.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="2" Grid.Column="2" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="2" Grid.Column="2" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent13.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="2" Grid.Column="3" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="2" Grid.Column="3" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent14.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="2" Grid.Column="4" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="2" Grid.Column="4" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Agents/agent15.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="3" Grid.Column="0" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="3" Grid.Column="0" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Neutrals/neutral01.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="3" Grid.Column="1" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="3" Grid.Column="1" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Neutrals/neutral02.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="3" Grid.Column="2" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="3" Grid.Column="2" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Neutrals/neutral03.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="3" Grid.Column="3" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="3" Grid.Column="3" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Neutrals/neutral04.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="3" Grid.Column="4" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="3" Grid.Column="4" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Neutrals/neutral05.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="4" Grid.Column="0" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="4" Grid.Column="0" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Neutrals/neutral06.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="4" Grid.Column="1" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="4" Grid.Column="1" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Neutrals/neutral07.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="4" Grid.Column="2" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="4" Grid.Column="2" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Assassins/assassin01.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="4" Grid.Column="3" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="4" Grid.Column="3" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Assassins/assassin02.png"/>
                 </Button.Background>
             </Button>
-            <Button Grid.Row="4" Grid.Column="4" Click="Click_btnSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
+            <Button Grid.Row="4" Grid.Column="4" Click="ClickSelectProfilePicture"  Content="" Style="{StaticResource imageButtonFocus}" Margin="5,5,5,5">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/BoardUI/Assassins/assassin03.png"/>
                 </Button.Background>
@@ -338,9 +338,9 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
-                Click="Click_btnCancelAuthentication"/>
+                Click="ClickCancelAuthentication"/>
                     <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
-                Click="Click_btnAuthenticate"/>
+                Click="ClickAuthenticate"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -380,9 +380,9 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
-                    Click="Click_btnHideVerify"/>
+                    Click="ClickHideVerify"/>
                     <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
-                    Click="Click_btnConfirmVerify"/>
+                    Click="ClickConfirmVerify"/>
                 </Grid>
             </Grid>
         </Grid>
@@ -419,7 +419,7 @@
                         <PasswordBox Grid.Column="0"
                                  local:PasswordBoxHelper.BindPassword="True"
                                  local:PasswordBoxHelper.BoundPassword="{Binding NewPassword, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                                 LostFocus="PasswordInput_LostFocus"
+                                 LostFocus="PasswordInputLostFocus"
                                  FontSize="16"
                                  Style="{StaticResource ValidatedPasswordBox}" Margin="0,2,60,25" Height="30" Width="320" MaxLength="16" HorizontalAlignment="Right" HorizontalContentAlignment="Center" />
                         <Border Grid.Column="1" Margin="0,0,0,20" Background="#444" CornerRadius="15" Width="30" Height="30" Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0" ToolTipService.ShowDuration="10000">
@@ -460,9 +460,9 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
-                        Click="Click_btnHideResetPassword"/>
+                        Click="ClickHideResetPassword"/>
                     <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" IsEnabled="{Binding CanSubmit}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
-                        Click="Click_btnConfirmResetPassword"/>
+                        Click="ClickConfirmResetPassword"/>
                 </Grid>
             </Grid>
         </Grid>

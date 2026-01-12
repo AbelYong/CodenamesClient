@@ -44,12 +44,12 @@ namespace CodenamesClient.GameUI.BoardUI
             _viewModel.StartTimer();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void PageLoaded(object sender, RoutedEventArgs e)
         {
             AnimateBoardCards();
         }
 
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        private void PageUnloaded(object sender, RoutedEventArgs e)
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Close();
@@ -65,33 +65,98 @@ namespace CodenamesClient.GameUI.BoardUI
             _viewModel.OnAssassinFlipRequested -= HandleAssassinFlip;
         }
 
-        private async void HandleAgentFlip(BoardCoordinatesDM coordinates)
+        private void ClickQuitMatch(object sender, RoutedEventArgs e)
         {
-            await FlashAgentLight();
-            await FlipCardAt(coordinates, AGENT_CODE, false);
+            _viewModel.GoBackToMenu -= OnGoBackToMenu;
+            NavigationService.GoBack();
         }
 
-        private async void HandleBystanderFlip(BoardCoordinatesDM coordinates)
+        private void OnGoBackToMenu()
         {
-            await FlashBystanderLight();
-
-            ToggleButton btn = GetButtonAt(coordinates.Row, coordinates.Column);
-            bool iPickedIt = btn != null && (btn.IsChecked == true);
-
-            await FlipCardAt(coordinates, BYSTANDER_CODE, !iPickedIt);
+            NavigationService.GoBack();
         }
 
-        private async void HandleAssassinFlip(BoardCoordinatesDM coordinates)
+        private async void ClickSkipTurn(object sender, RoutedEventArgs e)
         {
-            gridBoard.IsEnabled = false;
-            if (_viewModel.AmISpymaster)
+            await _viewModel.SkipTurn();
+        }
+
+        private async void ClickCheckOnCompanion(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.CheckOnCompanion();
+        }
+
+        private async void ClickSendMessage(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.SendMessage();
+        }
+
+        private async void KeyDownChatInput(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
             {
-                await FlipCardAt(coordinates, ASSASSIN_CODE, false);
-                await TriggerAssassinSequence();
+                await _viewModel.SendMessage();
             }
-            else
+        }
+
+        private void ClickReportPlayer(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn)
             {
-                await TriggerKilledSequence();
+                btn.IsEnabled = false;
+                try
+                {
+                    _viewModel.ReportCompanion();
+                }
+                finally
+                {
+                    btn.IsEnabled = true;
+                }
+            }
+        }
+
+        private async void ClickKeyword(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleButton clickedButton)
+            {
+                int row = Grid.GetRow(clickedButton);
+                int column = Grid.GetColumn(clickedButton);
+                int code = _viewModel.AgentsMatrix[row, column];
+                if (code == ASSASSIN_CODE)
+                {
+                    gridBoard.IsEnabled = false;
+                }
+                if (_viewModel.AmISpymaster && clickedButton.Content.ToString() != string.Empty)
+                {
+                    int trueCode = _viewModel.Keycard[row, column];
+
+                    await FlipCardAt(new BoardCoordinatesDM(row, column), trueCode, false);
+                    return;
+                }
+
+                clickedButton.IsChecked = true;
+                clickedButton.IsEnabled = false;
+
+                await AnimateCardFlip(clickedButton, isFlippingAway: true);
+
+                clickedButton.Background = GetNewCardBackground(code);
+                clickedButton.Content = string.Empty;
+
+                await AnimateCardFlip(clickedButton, isFlippingAway: false);
+
+                BoardCoordinatesDM coordinates = new BoardCoordinatesDM(row, column);
+                switch (code)
+                {
+                    case AGENT_CODE:
+                        await _viewModel.HandleAgentSelection(coordinates);
+                        break;
+                    case BYSTANDER_CODE:
+                        await _viewModel.HandleBystanderSelection(coordinates);
+                        break;
+                    case ASSASSIN_CODE:
+                        await _viewModel.HandleAssassinSelection(coordinates);
+                        break;
+                }
             }
         }
 
@@ -106,26 +171,9 @@ namespace CodenamesClient.GameUI.BoardUI
             button.IsChecked = true;
             button.IsEnabled = false;
 
-            ImageBrush newBackground;
-            switch (code)
-            {
-                case AGENT_CODE:
-                    newBackground = GetAgentCardImage();
-                    break;
-                case BYSTANDER_CODE:
-                    newBackground = GetBystanderCardImage();
-                    break;
-                case ASSASSIN_CODE:
-                    newBackground = GetAssassinCardImage();
-                    break;
-                default:
-                    newBackground = new ImageBrush();
-                    break;
-            }
-
             await AnimateCardFlip(button, isFlippingAway: true);
 
-            button.Background = newBackground;
+            button.Background = GetNewCardBackground(code);
 
             if (keepInteractiveForSpymaster && code == BYSTANDER_CODE)
             {
@@ -165,6 +213,91 @@ namespace CodenamesClient.GameUI.BoardUI
         {
             return gridBoard.Children.OfType<ToggleButton>()
                 .FirstOrDefault(e => Grid.GetRow(e) == row && Grid.GetColumn(e) == col);
+        }
+
+        private ImageBrush GetNewCardBackground(int code)
+        {
+            ImageBrush newBackground;
+            switch (code)
+            {
+                case AGENT_CODE:
+                    newBackground = GetAgentCardImage();
+                    break;
+                case BYSTANDER_CODE:
+                    newBackground = GetBystanderCardImage();
+                    break;
+                case ASSASSIN_CODE:
+                    newBackground = GetAssassinCardImage();
+                    break;
+                default:
+                    newBackground = new ImageBrush();
+                    break;
+            }
+            return newBackground;
+        }
+
+        private ImageBrush GetAgentCardImage()
+        {
+            if (_viewModel.AgentNumbers.Count == 0)
+            {
+                return new ImageBrush();
+            }
+
+            int remainingAgents = _viewModel.AgentNumbers.Count;
+            int random = _random.Next(remainingAgents);
+
+            int agentToReveal = _viewModel.AgentNumbers[random];
+            ImageBrush card = PictureHandler.GetImage(agentToReveal);
+            _viewModel.AgentNumbers.Remove(agentToReveal);
+            return card;
+        }
+
+        private ImageBrush GetBystanderCardImage()
+        {
+            int random = _random.Next(PictureHandler.NUMBER_OF_BYSTANDER_PICTURES);
+
+            int imageIndex = random + PictureHandler.NUMBER_OF_AGENT_PICTURES;
+            ImageBrush card = PictureHandler.GetImage(imageIndex);
+            return card;
+        }
+
+        private ImageBrush GetAssassinCardImage()
+        {
+            int random = _random.Next(BoardViewModel.MAX_GLOBAL_ASSASSINS);
+
+            int assasssinToReveal = BoardViewModel.MAX_GLOBAL_AGENTS + BoardViewModel.MAX_GLOBAL_BYSTANDERS + random;
+            ImageBrush card = PictureHandler.GetImage(assasssinToReveal);
+            return card;
+        }
+
+        private async void HandleAgentFlip(BoardCoordinatesDM coordinates)
+        {
+            await FlashAgentLight();
+            await FlipCardAt(coordinates, AGENT_CODE, false);
+        }
+
+        private async void HandleBystanderFlip(BoardCoordinatesDM coordinates)
+        {
+            await FlashBystanderLight();
+
+            ToggleButton btn = GetButtonAt(coordinates.Row, coordinates.Column);
+            bool iPickedIt = btn != null && (btn.IsChecked == true);
+
+            await FlipCardAt(coordinates, BYSTANDER_CODE, !iPickedIt);
+        }
+
+        private async void HandleAssassinFlip(BoardCoordinatesDM coordinates)
+        {
+            gridBoard.IsEnabled = false;
+            if (_viewModel.AmISpymaster)
+            {
+                await FlipCardAt(coordinates, ASSASSIN_CODE, false);
+                await TriggerAssassinSequence();
+            }
+            else
+            {
+                await TriggerKilledSequence();
+            }
         }
 
         private async Task FlashAgentLight()
@@ -260,113 +393,6 @@ namespace CodenamesClient.GameUI.BoardUI
             await Task.Delay(1200);
 
             _viewModel.ShowGameOverScreen();
-        }
-
-        private void OnGoBackToMenu()
-        {
-            NavigationService.GoBack();
-        }
-
-        private void Click_QuitMatch(object sender, RoutedEventArgs e)
-        {
-            _viewModel.GoBackToMenu -= OnGoBackToMenu;
-            NavigationService.GoBack();
-        }
-
-        private async void Click_Keyword(object sender, RoutedEventArgs e)
-        {
-            if (sender is ToggleButton clickedButton)
-            {
-                int row = Grid.GetRow(clickedButton);
-                int column = Grid.GetColumn(clickedButton);
-                int code = _viewModel.AgentsMatrix[row, column];
-                if (code == ASSASSIN_CODE)
-                {
-                    gridBoard.IsEnabled = false;
-                }
-                if (_viewModel.AmISpymaster && clickedButton.Content.ToString() != string.Empty)
-                {
-                    int trueCode = _viewModel.Keycard[row, column];
-
-                    await FlipCardAt(new BoardCoordinatesDM(row, column), trueCode, false);
-                    return;
-                }
-
-                clickedButton.IsChecked = true;
-                clickedButton.IsEnabled = false;
-
-                ImageBrush newBackground;
-                switch (code)
-                {
-                    case AGENT_CODE:
-                        newBackground = GetAgentCardImage();
-                        break;
-                    case BYSTANDER_CODE:
-                        newBackground = GetBystanderCardImage();
-                        break;
-                    case ASSASSIN_CODE:
-                        newBackground = GetAssassinCardImage();
-                        break;
-                    default:
-                        newBackground = new ImageBrush();
-                        break;
-                }
-
-                await AnimateCardFlip(clickedButton, isFlippingAway: true);
-
-                clickedButton.Background = newBackground;
-                clickedButton.Content = string.Empty;
-
-                await AnimateCardFlip(clickedButton, isFlippingAway: false);
-
-                BoardCoordinatesDM coordinates = new BoardCoordinatesDM(row, column);
-                switch (code)
-                {
-                    case AGENT_CODE:
-                        await _viewModel.HandleAgentSelection(coordinates);
-                        break;
-                    case BYSTANDER_CODE:
-                        await _viewModel.HandleBystanderSelection(coordinates);
-                        break;
-                    case ASSASSIN_CODE:
-                        await _viewModel.HandleAssassinSelection(coordinates);
-                        break;
-                }
-            }
-        }
-
-        private ImageBrush GetAgentCardImage()
-        {
-            if (_viewModel.AgentNumbers.Count == 0)
-            {
-                return new ImageBrush();
-            }
-
-            int remainingAgents = _viewModel.AgentNumbers.Count;
-            int random = _random.Next(remainingAgents);
-
-            int agentToReveal = _viewModel.AgentNumbers[random];
-            ImageBrush card = PictureHandler.GetImage(agentToReveal);
-            _viewModel.AgentNumbers.Remove(agentToReveal);
-            return card;
-        }
-
-        private ImageBrush GetBystanderCardImage()
-        {
-            int random = _random.Next(PictureHandler.NUMBER_OF_BYSTANDER_PICTURES);
-
-            int imageIndex = random + PictureHandler.NUMBER_OF_AGENT_PICTURES;
-            ImageBrush card = PictureHandler.GetImage(imageIndex);
-            return card;
-        }
-
-        private ImageBrush GetAssassinCardImage()
-        {
-            int random = _random.Next(BoardViewModel.MAX_GLOBAL_ASSASSINS);
-
-            int assasssinToReveal = BoardViewModel.MAX_GLOBAL_AGENTS + BoardViewModel.MAX_GLOBAL_BYSTANDERS + random;
-            ImageBrush card = PictureHandler.GetImage(assasssinToReveal);
-            return card;
         }
 
         private void DrawWords()
@@ -525,45 +551,6 @@ namespace CodenamesClient.GameUI.BoardUI
             scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
 
             return tcs.Task;
-        }
-
-        private void Click_ReportPlayer(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn)
-            {
-                btn.IsEnabled = false;
-                try
-                {
-                    _viewModel.ReportCompanion();
-                }
-                finally
-                {
-                    btn.IsEnabled = true;
-                }
-            }
-        }
-
-        private async void Click_SkipTurn(object sender, RoutedEventArgs e)
-        {
-            await _viewModel.SkipTurn();
-        }
-
-        private async void ClickCheckOnCompanion(object sender, RoutedEventArgs e)
-        {
-            await _viewModel.CheckOnCompanion();
-        }
-
-        private async void Click_SendMessage(object sender, RoutedEventArgs e)
-        {
-            await _viewModel.SendMessage();
-        }
-
-        private async void KeyDown_ChatInput(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                await _viewModel.SendMessage();
-            }
         }
     }
 }

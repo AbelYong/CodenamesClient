@@ -1267,6 +1267,15 @@ namespace CodenamesClient.Properties.Langs {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, guest accounts cannot be reported.
+        /// </summary>
+        public static string matchCannotReportAGuest {
+            get {
+                return ResourceManager.GetString("matchCannotReportAGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Check on companion.
         /// </summary>
         public static string matchCheckOnCompanion {
@@ -1362,6 +1371,24 @@ namespace CodenamesClient.Properties.Langs {
         public static string matchDefeatWitnessesInvolved {
             get {
                 return ResourceManager.GetString("matchDefeatWitnessesInvolved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a The game has ended, but we couldn&apos;t save your score for this match.
+        /// </summary>
+        public static string matchErrorGameEndedStatsNotSaved {
+            get {
+                return ResourceManager.GetString("matchErrorGameEndedStatsNotSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sorry, guest accounts cannot make reports.
+        /// </summary>
+        public static string matchGuestsCannotReport {
+            get {
+                return ResourceManager.GetString("matchGuestsCannotReport", resourceCulture);
             }
         }
         

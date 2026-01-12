@@ -212,6 +212,7 @@
     <Resource Include="Assets\GameUI\usFlag.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\GameUI\gameOverIcon.png" />
     <Resource Include="fedora.ico" />
     <Resource Include="Assets\GameUI\fedora.png" />
     <Resource Include="Assets\GameUI\agentCounterintelligence.png" />

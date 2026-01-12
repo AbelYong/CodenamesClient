@@ -10,8 +10,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="640" d:DesignWidth="1024"
       Title="BoardPage" Background="#FF1D1D1D"
-      Loaded="Page_Loaded"
-      Unloaded="Page_Unloaded">
+      Loaded="PageLoaded"
+      Unloaded="PageUnloaded">
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
@@ -109,7 +109,7 @@
                                 <TextBlock Text="{x:Static language:Lang.matchChronometer}" Style="{StaticResource subtitle}" Foreground="White" Margin="0,0,25,0" />
                                 <TextBlock Text="{Binding ElapsedTime, StringFormat='mm\\:ss'}" Style="{StaticResource subtitle}" Foreground="White" HorizontalAlignment="Center" />
                             </StackPanel>
-                            <Button Click="Click_QuitMatch" Style="{StaticResource imageButtonFocus}" MinHeight="60" MinWidth="125">
+                            <Button Click="ClickQuitMatch" Style="{StaticResource imageButtonFocus}" MinHeight="60" MinWidth="125">
                                 <Button.Background>
                                     <ImageBrush ImageSource="/Assets/BoardUI/exit.png"/>
                                 </Button.Background>
@@ -119,7 +119,7 @@
                Style="{StaticResource subtitle}" Background="Beige" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" Margin="0,10,0,10"/>
                         <Button Content="{Binding CompanionUsername}" MaxWidth="255" FontSize="24" Height="40" Style="{StaticResource buttonCustomFocus}"
                 Background="Khaki" BorderBrush="DarkGray" Foreground="Black" BorderThickness="2" 
-                Click="Click_ReportPlayer" ToolTip="Reportar jugador"/>
+                Click="ClickReportPlayer" ToolTip="Reportar jugador"/>
                     </StackPanel>
                 </Grid>
 
@@ -165,9 +165,9 @@
                                     <TextBox Text="{Binding ChatInput, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsChatEnabled}"
                                          FontSize="16" FontFamily="Consolas" FontStyle="Italic"
                                          Width="125" MaxLength="30" MaxLines="1" VerticalContentAlignment="Center" 
-                                         KeyDown="KeyDown_ChatInput">
+                                         KeyDown="KeyDownChatInput">
                                     </TextBox>
-                                    <Button MinWidth="40" MinHeight="30" Style="{StaticResource imageButtonFocus}" Margin="30,0,0,0" Click="Click_SendMessage" IsEnabled="{Binding IsChatEnabled}">
+                                    <Button MinWidth="40" MinHeight="30" Style="{StaticResource imageButtonFocus}" Margin="30,0,0,0" Click="ClickSendMessage" IsEnabled="{Binding IsChatEnabled}">
                                         <Button.Background>
                                             <ImageBrush ImageSource="/Assets/BoardUI/sendIcon.png"/>
                                         </Button.Background>
@@ -193,35 +193,35 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <ToggleButton Grid.Row="0" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="0" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="0" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="0" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="0" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="0" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="1" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="2" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="3" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="0" Grid.Column="4" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
 
-                        <ToggleButton Grid.Row="1" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="1" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="1" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="1" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="1" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="0" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="1" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="2" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="3" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="1" Grid.Column="4" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
 
-                        <ToggleButton Grid.Row="2" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="2" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="2" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="2" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="2" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="0" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="1" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="2" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="3" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="2" Grid.Column="4" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
 
-                        <ToggleButton Grid.Row="3" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="3" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="3" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="3" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="3" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="0" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="1" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="2" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="3" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="3" Grid.Column="4" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
 
-                        <ToggleButton Grid.Row="4" Grid.Column="0" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="4" Grid.Column="1" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="4" Grid.Column="2" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="4" Grid.Column="3" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
-                        <ToggleButton Grid.Row="4" Grid.Column="4" Click="Click_Keyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="0" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="1" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="2" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="3" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
+                        <ToggleButton Grid.Row="4" Grid.Column="4" Click="ClickKeyword" Style="{StaticResource dynamicImageToggleButton}" FontFamily="Consolas" Background="Beige" Margin="3"/>
                     </Grid>
 
                     <StackPanel VerticalAlignment="Center">
@@ -236,7 +236,7 @@
 
                         <Button Content="{x:Static language:Lang.matchSkipTurn}"
                             Visibility="{Binding IsSkipButtonVisible, Converter={StaticResource BoolToVis}}"
-                            Click="Click_SkipTurn"
+                            Click="ClickSkipTurn"
                             Style="{StaticResource buttonCustomFocus}"
                             Margin="0,20,0,0" Height="40" Background="Orange" Foreground="White"/>
                         <Button Content="{x:Static language:Lang.matchCheckOnCompanion}"
@@ -287,7 +287,7 @@
                                    TextAlignment="Center" Margin="0,0,0,30" MaxWidth="400"/>
 
                             <Button Content="{x:Static language:Lang.mainMenuQuit}" 
-                                Click="Click_QuitMatch"
+                                Click="ClickQuitMatch"
                                 Style="{StaticResource buttonCustomFocus}" 
                                 Width="200" Height="50" FontSize="20"/>
                         </StackPanel>

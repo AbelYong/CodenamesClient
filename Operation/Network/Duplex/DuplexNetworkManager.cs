@@ -27,7 +27,7 @@ namespace CodenamesClient.Operation.Network.Duplex
         private DuplexNetworkManager()
         {
             _sessionOperation = new SessionOperation();
-            _sessionOperation.ConnectionLost += (s, e) => ServerConnectionLost?.Invoke(this, EventArgs.Empty);
+            SessionOperation.ConnectionLost += (s, e) => ServerConnectionLost?.Invoke(this, EventArgs.Empty);
             _socialOperation = new SocialOperation();
             _lobbyOperation = new LobbyOperation();
             _matchmakingOperation = new MatchmakingOperation();
@@ -38,6 +38,11 @@ namespace CodenamesClient.Operation.Network.Duplex
         public CodenamesGame.SessionService.CommunicationRequest ConnectToSessionService(PlayerDM player)
         {
             return _sessionOperation.Initialize(player);
+        }
+
+        public bool PingSessionService()
+        {
+            return _sessionOperation.Ping();
         }
 
         public void DisconnectFromSessionService()

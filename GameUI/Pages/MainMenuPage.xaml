@@ -101,8 +101,8 @@
                         <!-- User -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="80,0,0,0">
                             <Label Content="{x:Static language:Lang.mainMenuLoggedIn}" Style="{StaticResource subtitle}" VerticalAlignment="Center"/>
-                            <Button Name="btnPlayer" Click="Click_btnPlayer" Content="{Binding Username}" Style="{StaticResource buttonCustomFocus}" Width="250" Height="60" FontSize="24" Margin="0,0,10,0"/>
-                            <Button Name="btnLogout" Click="Click_btnLogout" Style="{StaticResource imageButtonFocus}" Width="50" Height="60">
+                            <Button Name="btnPlayer" Click="ClickPlayer" Content="{Binding Username}" Style="{StaticResource buttonCustomFocus}" Width="250" Height="60" FontSize="24" Margin="0,0,10,0"/>
+                            <Button Name="btnLogout" Click="ClickLogout" Style="{StaticResource imageButtonFocus}" Width="50" Height="60">
                                 <Button.Background>
                                     <ImageBrush ImageSource="/Assets/GameUI/logout.png"/>
                                 </Button.Background>
@@ -114,15 +114,15 @@
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Margin="0,0,20,0">
                         <Button Content="{x:Static language:Lang.globalPlay}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,20,0,0" Click="Click_ShowGameMode"/>
+                                Width="316" Height="60" FontSize="24" Margin="0,20,0,0" Click="ClickShowGameMode"/>
                         <Button Content="{x:Static language:Lang.globalFriends}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="Click_ShowFriends"/>
+                                Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="ClickShowFriends"/>
                         <Button Content="{x:Static language:Lang.globalScoreboards}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="Click_ShowScoreboards"/>
+                                Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="ClickShowScoreboards"/>
                         <Button Content="{x:Static language:Lang.globalSettings}" Style="{StaticResource buttonCustomFocus}" Width="316" Height="60"
-                    FontSize="24" Margin="0,10,0,0" Click="Click_ShowSettings"/>
+                                FontSize="24" Margin="0,10,0,0" Click="ClickShowSettings"/>
                         <Button Content="{x:Static language:Lang.mainMenuQuit}" Style="{StaticResource buttonCustomFocus}"
-                    Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="Click_btnQuit"/>
+                                Width="316" Height="60" FontSize="24" Margin="0,10,0,0" Click="ClickQuit"/>
                     </StackPanel>
                     <Image Height="362" Source="/Assets/GameUI/spyMap.png" Width="628" Stretch="Fill"/>
                 </StackPanel>
@@ -133,7 +133,7 @@
 
             <!-- GamemodeGrid -->
             <Grid x:Name="GameModeGrid" Width="550" Height="400" Background="#272727" HorizontalAlignment="Center"
-      VerticalAlignment="Center" Visibility="Collapsed">
+                  VerticalAlignment="Center" Visibility="Collapsed">
                 <Grid.RenderTransform>
                     <TranslateTransform Y="640"/>
                 </Grid.RenderTransform>
@@ -149,21 +149,21 @@
 
                     <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
                         <Button Content="{x:Static language:Lang.gamemodeNormalGame}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60" 
-                    FontSize="24" Margin="10" Click="Click_NormalGameMode"/>
+                    FontSize="24" Margin="10" Click="ClickNormalGameMode"/>
                         <Button Content="{x:Static language:Lang.gamemodeCustomGame}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60"
-                    FontSize="24" Margin="10" Click="Click_CustomGameMode"/>
+                    FontSize="24" Margin="10" Click="ClickCustomGameMode"/>
                         <Button Content="{x:Static language:Lang.gamemodeCounterintelligenceMode}" Style="{StaticResource buttonCustomFocus}" Width="350" Height="60" 
-                    FontSize="24" Margin="10" Click="Click_CounterintelligenceMode"/>
+                    FontSize="24" Margin="10" Click="ClickCounterintelligenceMode"/>
                     </StackPanel>
 
                     <Button Grid.Row="2" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" 
-                Width="180" Height="40" Click="Click_HideGameMode" Margin="0,0,0,20"/>
+                Width="180" Height="40" Click="ClickHideGameMode" Margin="0,0,0,20"/>
                 </Grid>
             </Grid>
 
             <!-- Settings Grid -->
             <Grid x:Name="SettingsGrid" Width="550" Height="400" Background="#272727"
-      HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+                  HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
                 <Grid.RenderTransform>
                     <TranslateTransform Y="640"/>
                 </Grid.RenderTransform>
@@ -180,17 +180,17 @@
                     <StackPanel Grid.Row="1" Margin="20,0,20,20">
                         <Label Content="{x:Static language:Lang.soundMasterVolume}" Style="{StaticResource subtitle}" Foreground="White"
                    HorizontalAlignment="Left" Margin="0,10,0,0"/>
-                        <Slider x:Name="sliderMaster" Minimum="0" Maximum="100" Value="50" ValueChanged="Slider_ValueChanged"/>
+                        <Slider x:Name="sliderMaster" Minimum="0" Maximum="100" Value="50" ValueChanged="SliderValueChanged"/>
                         <Label Content="{x:Static language:Lang.soundGameEffects}" Style="{StaticResource subtitle}" Foreground="White"
                    HorizontalAlignment="Left" Margin="0,20,0,0"/>
-                        <Slider x:Name="sliderSFX" Minimum="0" Maximum="100" Value="50" ValueChanged="Slider_ValueChanged"/>
+                        <Slider x:Name="sliderSFX" Minimum="0" Maximum="100" Value="50" ValueChanged="SliderValueChanged"/>
                         <Label Content="{x:Static language:Lang.soundMusicVolume}" Style="{StaticResource subtitle}" Foreground="White"
                    HorizontalAlignment="Left" Margin="0,20,0,0"/>
-                        <Slider x:Name="sliderMusic" Minimum="0" Maximum="100" Value="50" ValueChanged="Slider_ValueChanged"/>
+                        <Slider x:Name="sliderMusic" Minimum="0" Maximum="100" Value="50" ValueChanged="SliderValueChanged"/>
                     </StackPanel>
                     <Grid Grid.Row="2" Margin="0,10,0,20">
                         <Button Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
-                            Width="180" Height="40" Click="Click_HideSettings" HorizontalAlignment="Center"/>
+                            Width="180" Height="40" Click="ClickHideSettings" HorizontalAlignment="Center"/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -201,10 +201,10 @@
 
                 <Grid.Resources>
                     <DataTemplate x:Key="FriendItemTemplate">
-                        <StackPanel Orientation="Horizontal" Width="600" Background="Transparent" MouseLeftButtonUp="Click_OpenFriendProfile" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal" Width="600" Background="Transparent" MouseLeftButtonUp="ClickOpenFriendProfile" Cursor="Hand">
                             <Image Source="{Binding ProfilePicturePath}" Width="30" Height="30" Margin="0,0,10,0"/>
                             <TextBlock Text="{Binding Player.Username}" Width="450" VerticalAlignment="Center" Foreground="White"/>
-                            <Button Content="{x:Static language:Lang.socialDeleteFriend}" Width="110" Click="Click_RemoveFriend"
+                            <Button Content="{x:Static language:Lang.socialDeleteFriend}" Width="110" Click="ClickRemoveFriend"
                                 Style="{StaticResource buttonCustomFocus}" FontSize="12"/>
                         </StackPanel>
                     </DataTemplate>
@@ -212,15 +212,15 @@
                         <StackPanel Orientation="Horizontal" Width="600">
                             <Image Source="{Binding ProfilePicturePath}" Width="30" Height="30" Margin="0,0,10,0"/>
                             <TextBlock Text="{Binding Player.Username}" Width="350" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-                            <Button Content="{x:Static language:Lang.socialAccept}" Width="90" Click="Click_AcceptRequest" Style="{StaticResource buttonCustomFocus}" Margin="0,0,10,0" FontSize="12"/>
-                            <Button Content="{x:Static language:Lang.socialReject}" Width="90" Click="Click_RejectRequest" Style="{StaticResource buttonCustomFocus}" FontSize="12"/>
+                            <Button Content="{x:Static language:Lang.socialAccept}" Width="90" Click="ClickAcceptRequest" Style="{StaticResource buttonCustomFocus}" Margin="0,0,10,0" FontSize="12"/>
+                            <Button Content="{x:Static language:Lang.socialReject}" Width="90" Click="ClickRejectRequest" Style="{StaticResource buttonCustomFocus}" FontSize="12"/>
                         </StackPanel>
                     </DataTemplate>
                     <DataTemplate x:Key="SearchItemTemplate">
                         <StackPanel Orientation="Horizontal" Width="600">
                             <Image Source="{Binding ProfilePicturePath}" Width="30" Height="30" Margin="0,0,10,0"/>
                             <TextBlock Text="{Binding Player.Username}" Width="450" VerticalAlignment="Center" Foreground="White"/>
-                            <Button Content="{x:Static language:Lang.socialAddFriend}" Width="110" Click="Click_SendRequest"
+                            <Button Content="{x:Static language:Lang.socialAddFriend}" Width="110" Click="ClickSendRequest"
                                 Visibility="{Binding ButtonVisibility}" Style="{StaticResource buttonCustomFocus}" FontSize="12"/>
                             <TextBlock Text="{x:Static language:Lang.friendPending}" Foreground="Gray" FontStyle="Italic"
                                    VerticalAlignment="Center" HorizontalAlignment="Center" Width="110"
@@ -249,10 +249,10 @@
                             <TextBox x:Name="SearchBox" Grid.Column="0" 
                      Text="{x:Static language:Lang.socialSearchForAFriend}" Style="{StaticResource textBoxCustomFocus}" 
                              HorizontalAlignment="Left" BorderThickness="0" VerticalContentAlignment="Center" Margin="15,0,0,0"
-                             GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" KeyDown="SearchBox_KeyDown"/>
+                             GotFocus="SearchBoxGotFocus" LostFocus="SearchBoxLostFocus" KeyDown="SearchBoxKeyDown"/>
                             <Button Grid.Column="1" Content="❌" Background="Transparent" BorderThickness="0"
                             Foreground="White" Width="30" Height="30" VerticalContentAlignment="Center"
-                            HorizontalContentAlignment="Center" Margin="0,0,5,0" Click="Click_ClearSearchBox"/>
+                            HorizontalContentAlignment="Center" Margin="0,0,5,0" Click="ClickClearSearchBox"/>
                         </Grid>
                     </Border>
                     <Grid Grid.Row="2" Margin="20,15,20,20">
@@ -276,7 +276,7 @@
                         </StackPanel>
                     </Grid>
                     <Button Grid.Row="3" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}"
-                    Width="180" Height="40" HorizontalAlignment="Left" Margin="20,0,0,20" Click="Click_HideFriends"/>
+                    Width="180" Height="40" HorizontalAlignment="Left" Margin="20,0,0,20" Click="ClickHideFriends"/>
                 </Grid>
             </Grid>
 
@@ -400,13 +400,13 @@
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                         <Button Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" 
-                Width="180" Height="40" Margin="10" Click="Click_HideScoreboards"/>
+                Width="180" Height="40" Margin="10" Click="ClickHideScoreboards"/>
 
                         <Button Content="{x:Static language:Lang.scoresMyScore}" Style="{StaticResource buttonCustomFocus}" 
-                Width="180" Height="40" Margin="10" Click="Click_MyScore"/>
+                Width="180" Height="40" Margin="10" Click="ClickMyScore"/>
 
                         <Button Content="{x:Static language:Lang.scoresRefresh}" Style="{StaticResource buttonCustomFocus}" 
-                Width="180" Height="40" Margin="10" Click="Click_RefreshScoreboard"/>
+                Width="180" Height="40" Margin="10" Click="ClickRefreshScoreboard"/>
                     </StackPanel>
                 </Grid>
             </Grid>

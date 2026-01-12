@@ -763,6 +763,12 @@ namespace CodenamesGame.SessionService {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/Disconnect")]
         System.Threading.Tasks.Task DisconnectAsync(CodenamesGame.SessionService.Player player);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionManager/Ping", ReplyAction="http://tempuri.org/ISessionManager/PingResponse")]
+        bool Ping();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISessionManager/Ping", ReplyAction="http://tempuri.org/ISessionManager/PingResponse")]
+        System.Threading.Tasks.Task<bool> PingAsync();
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ISessionManager/NotifyNewFriendship")]
         void NotifyNewFriendship(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB);
         
@@ -834,6 +840,14 @@ namespace CodenamesGame.SessionService {
         
         public System.Threading.Tasks.Task DisconnectAsync(CodenamesGame.SessionService.Player player) {
             return base.Channel.DisconnectAsync(player);
+        }
+        
+        public bool Ping() {
+            return base.Channel.Ping();
+        }
+        
+        public System.Threading.Tasks.Task<bool> PingAsync() {
+            return base.Channel.PingAsync();
         }
         
         public void NotifyNewFriendship(CodenamesGame.SessionService.Player friendA, CodenamesGame.SessionService.Player friendB) {

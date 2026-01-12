@@ -63,6 +63,7 @@ namespace CodenamesClient.GameUI
             DuplexNetworkManager.Instance.DisconnectFromMatchmakingService();
             DuplexNetworkManager.Instance.DisconnectFromLobbyService();
             DuplexNetworkManager.Instance.DisconnectFromFriendService();
+            DuplexNetworkManager.Instance.DisconnectFromScoreboardService();
             DuplexNetworkManager.Instance.DisconnectFromSessionService();
         }
 

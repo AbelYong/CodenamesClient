@@ -1,5 +1,6 @@
 ﻿using CodenamesClient.GameUI.Pages.UserControls;
 using CodenamesClient.GameUI.ViewModels;
+using CodenamesClient.Operation.Network.Duplex;
 using CodenamesClient.Operation.Network.Oneway;
 using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesClient.Properties.Langs;
@@ -48,7 +49,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.UnsuscribeFromLobbyInvitations();
         }
 
-        private void Click_btnPlayer(object sender, RoutedEventArgs e)
+        private void ClickPlayer(object sender, RoutedEventArgs e)
         {
             if (!_viewModel.IsPlayerGuest)
             {
@@ -106,7 +107,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void Click_btnLogout(object sender, RoutedEventArgs e)
+        private void ClickLogout(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player != null)
             {
@@ -116,13 +117,13 @@ namespace CodenamesClient.GameUI.Pages
             NavigationService.Navigate(login);
         }
 
-        private void Click_btnQuit(object sender, RoutedEventArgs e)
+        private void ClickQuit(object sender, RoutedEventArgs e)
         {
             _viewModel.Disconnect();
             Application.Current.Shutdown();
         }
 
-        private void Click_ShowSettings(object sender, RoutedEventArgs e)
+        private void ClickShowSettings(object sender, RoutedEventArgs e)
         {
             ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInAnimation");
@@ -130,7 +131,7 @@ namespace CodenamesClient.GameUI.Pages
             slideInAnimation.Begin();
         }
 
-        private void Click_HideSettings(object sender, RoutedEventArgs e)
+        private void ClickHideSettings(object sender, RoutedEventArgs e)
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutAnimation");
             slideOutAnimation.Completed += (s, ev) =>
@@ -151,7 +152,7 @@ namespace CodenamesClient.GameUI.Pages
             return btn?.DataContext as MainMenuViewModel.FriendItem;
         }
 
-        private void Click_ShowFriends(object sender, RoutedEventArgs e)
+        private void ClickShowFriends(object sender, RoutedEventArgs e)
         {
             ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInFriendsAnimation");
@@ -161,7 +162,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.LoadInitialFriendData();
         }
 
-        private void Click_HideFriends(object sender, RoutedEventArgs e)
+        private void ClickHideFriends(object sender, RoutedEventArgs e)
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutFriendsAnimation");
             slideOutAnimation.Completed += (s, ev) =>
@@ -177,7 +178,7 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void Click_ClearSearchBox(object sender, RoutedEventArgs e)
+        private void ClickClearSearchBox(object sender, RoutedEventArgs e)
         {
             SearchBox.Text = string.Empty;
             SearchBox.Focus();
@@ -187,7 +188,7 @@ namespace CodenamesClient.GameUI.Pages
             SearchView.Visibility = Visibility.Collapsed;
         }
 
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        private void SearchBoxGotFocus(object sender, RoutedEventArgs e)
         {
             if (SearchBox.Text == Lang.socialSearchForAFriend)
             {
@@ -196,7 +197,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        private void SearchBoxLostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(SearchBox.Text))
             {
@@ -205,7 +206,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        private void SearchBoxKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter)
             {
@@ -232,7 +233,7 @@ namespace CodenamesClient.GameUI.Pages
             SearchView.Visibility = Visibility.Visible;
         }
 
-        private void Click_ShowGameMode(object sender, RoutedEventArgs e)
+        private void ClickShowGameMode(object sender, RoutedEventArgs e)
         {
             ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInGameModeAnimation");
@@ -240,7 +241,7 @@ namespace CodenamesClient.GameUI.Pages
             slideInAnimation.Begin();
         }
 
-        private void Click_HideGameMode(object sender, RoutedEventArgs e)
+        private void ClickHideGameMode(object sender, RoutedEventArgs e)
         {
             var slideOutAnimation = (Storyboard)FindResource("SlideOutGameModeAnimation");
             slideOutAnimation.Completed += (s, ev) =>
@@ -251,19 +252,19 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void Click_NormalGameMode(object sender, RoutedEventArgs e)
+        private void ClickNormalGameMode(object sender, RoutedEventArgs e)
         {
             GoToLobby(GamemodeDM.NORMAL);
             _viewModel.UnsuscribeFromLobbyInvitations();
         }
 
-        private void Click_CustomGameMode(object sender, RoutedEventArgs e)
+        private void ClickCustomGameMode(object sender, RoutedEventArgs e)
         {
             GoToLobby(GamemodeDM.CUSTOM);
             _viewModel.UnsuscribeFromLobbyInvitations();
         }
 
-        private void Click_CounterintelligenceMode(object sender, RoutedEventArgs e)
+        private void ClickCounterintelligenceMode(object sender, RoutedEventArgs e)
         {
             GoToLobby(GamemodeDM.COUNTERINTELLIGENCE);
             _viewModel.UnsuscribeFromLobbyInvitations();
@@ -284,10 +285,13 @@ namespace CodenamesClient.GameUI.Pages
 
         private void GoToLobby(GamemodeDM mode)
         {
-            LobbyPage lobby = new LobbyPage(_viewModel.Player, mode);
-            NavigationService.Navigate(lobby);
-            GameModeGrid.Visibility = Visibility.Collapsed;
-            ToggleMainInterfaceLock(false);
+            if (DuplexNetworkManager.Instance.PingSessionService())
+            {
+                LobbyPage lobby = new LobbyPage(_viewModel.Player, mode);
+                NavigationService.Navigate(lobby);
+                GameModeGrid.Visibility = Visibility.Collapsed;
+                ToggleMainInterfaceLock(false);
+            }
         }
 
         private void AcceptLobbyInvitation(string lobbyCode)
@@ -301,7 +305,7 @@ namespace CodenamesClient.GameUI.Pages
             lobby.AutoJoinLobby(lobbyCode);
         }
 
-        private void Click_ShowScoreboards(object sender, RoutedEventArgs e)
+        private void ClickShowScoreboards(object sender, RoutedEventArgs e)
         {
             ToggleMainInterfaceLock(true);
             var slideInAnimation = (Storyboard)FindResource("SlideInScoreboardsAnimation");
@@ -311,7 +315,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.OpenScoreboard();
         }
 
-        private void Click_HideScoreboards(object sender, RoutedEventArgs e)
+        private void ClickHideScoreboards(object sender, RoutedEventArgs e)
         {
             _viewModel.CloseScoreboard();
 
@@ -324,18 +328,18 @@ namespace CodenamesClient.GameUI.Pages
             slideOutAnimation.Begin();
         }
 
-        private void Click_MyScore(object sender, RoutedEventArgs e)
+        private void ClickMyScore(object sender, RoutedEventArgs e)
         {
             _viewModel.ShowMyPersonalScore();
         }
 
-        private void Click_RefreshScoreboard(object sender, RoutedEventArgs e)
+        private void ClickRefreshScoreboard(object sender, RoutedEventArgs e)
         {
             _viewModel.CloseScoreboard();
             _viewModel.OpenScoreboard();
         }
 
-        private void Click_SendRequest(object sender, RoutedEventArgs e)
+        private void ClickSendRequest(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null)
             {
@@ -351,7 +355,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.SendFriendRequest(item);
         }
 
-        private void Click_AcceptRequest(object sender, RoutedEventArgs e)
+        private void ClickAcceptRequest(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null)
             {
@@ -367,7 +371,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.AcceptFriendRequest(requesterItem);
         }
 
-        private void Click_RejectRequest(object sender, RoutedEventArgs e)
+        private void ClickRejectRequest(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null)
             {
@@ -383,7 +387,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.RejectFriendRequest(requesterItem);
         }
 
-        private void Click_RemoveFriend(object sender, RoutedEventArgs e)
+        private void ClickRemoveFriend(object sender, RoutedEventArgs e)
         {
             if (_viewModel.Player?.PlayerID == null)
             {
@@ -399,7 +403,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.RemoveFriend(friendItem.Player);
         }
 
-        private void Click_OpenFriendProfile(object sender, MouseButtonEventArgs e)
+        private void ClickOpenFriendProfile(object sender, MouseButtonEventArgs e)
         {
             if (sender is StackPanel panel && panel.DataContext is MainMenuViewModel.FriendItem friendItem)
             {
@@ -415,7 +419,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (sliderMaster == null || sliderMusic == null || sliderSFX == null)
             {

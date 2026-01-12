@@ -46,18 +46,18 @@ namespace CodenamesClient.GameUI.Pages
             MessageBox.Show(message);
         }
 
-        private async void Click_btnLogin(object sender, RoutedEventArgs e)
+        private async void ClickLogin(object sender, RoutedEventArgs e)
         {
             await _viewModel.Login(tBxUsername.Text, pBxPassword.Password);
         }
 
-        private void Click_btnSignIn(object sender, RoutedEventArgs e)
+        private void ClickSignIn(object sender, RoutedEventArgs e)
         {
             Overlay.Visibility = Visibility.Visible;
             SignInControl.Show();
         }
 
-        private void Click_SignInClose(object sender, RoutedEventArgs e)
+        private void ClickSignInClose(object sender, RoutedEventArgs e)
         {
             SignInControl.Hide(() =>
             {
@@ -65,7 +65,7 @@ namespace CodenamesClient.GameUI.Pages
             });
         }
 
-        private async void Click_btnPlayAsGuest(object sender, RoutedEventArgs e)
+        private async void ClickPlayAsGuest(object sender, RoutedEventArgs e)
         {
             await _viewModel.BeginSession(null);
         }
@@ -80,13 +80,13 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void ForgotLink_Click(object sender, MouseButtonEventArgs e)
+        private void ClickForgotLink(object sender, MouseButtonEventArgs e)
         {
             PrefillResetFields();
             ShowResetOverlay();
         }
 
-        private void HideReset_Click(object sender, RoutedEventArgs e)
+        private void ClickHideReset(object sender, RoutedEventArgs e)
         {
             HideResetOverlay();
         }
@@ -135,7 +135,7 @@ namespace CodenamesClient.GameUI.Pages
             sb.Begin(ResetGrid, true);
         }
 
-        private void SendCode_Click(object sender, RoutedEventArgs e)
+        private void ClickSendCode(object sender, RoutedEventArgs e)
         {
             ToggleSendButtonEnabled(sender);
 
@@ -171,7 +171,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void ConfirmReset_Click(object sender, RoutedEventArgs e)
+        private void ClickConfirmReset(object sender, RoutedEventArgs e)
         {
             string email = ResetEmail.Text.Trim();
             string code = ResetCode.Text.Trim();
@@ -195,7 +195,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void PasswordInput_LostFocus(object sender, RoutedEventArgs e)
+        private void PasswordInputLostFocus(object sender, RoutedEventArgs e)
         {
             _viewModel.TriggerPasswordValidation();
         }

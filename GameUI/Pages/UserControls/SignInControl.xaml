@@ -138,7 +138,7 @@
 
                     <PasswordBox Grid.Column="0" x:Name="PasswordInput" Style="{StaticResource ValidatedPasswordBox}"
                              local:PasswordBoxHelper.BindPassword="True" local:PasswordBoxHelper.BoundPassword="{Binding Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                             FontSize="16" MaxLength="16" LostFocus="PasswordInput_LostFocus" HorizontalContentAlignment="Center"/>
+                             FontSize="16" MaxLength="16" LostFocus="PasswordInputLostFocus" HorizontalContentAlignment="Center"/>
 
                     <Border Grid.Column="1" Margin="10,0,-40,0" Background="#444" CornerRadius="15" Width="30" Height="30" 
                         Cursor="Hand" BorderBrush="Gray" BorderThickness="1" ToolTipService.InitialShowDelay="0"
@@ -172,12 +172,14 @@
                 <TextBox Text="{Binding LastName, UpdateSourceTrigger=LostFocus, ValidatesOnNotifyDataErrors=True, NotifyOnValidationError=True}"
                      Style="{StaticResource ValidatedTextBox}" MaxLength="30" HorizontalContentAlignment="Center"/>
 
-                <Button Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource buttonCustomFocus}" Margin="0,24,0,0" Height="45" Width="240" IsEnabled="{Binding CanSubmit}" Click="Click_SignIn"/>
-                <Button Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Margin="0,12,0,0" Height="45" Width="240" Click="Click_btnClose"/>
+                <Button Content="{x:Static language:Lang.loginSignIn}" Style="{StaticResource buttonCustomFocus}" Margin="0,24,0,0" Height="45" Width="240" IsEnabled="{Binding CanSubmit}"
+                        Click="ClickSignIn"/>
+                <Button Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Margin="0,12,0,0" Height="45" Width="240"
+                        Click="ClickBack"/>
             </StackPanel>
         </Grid>
 
-        <Rectangle x:Name="VerifyBackdrop" Fill="#80000000" Visibility="Collapsed" Panel.ZIndex="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseLeftButtonUp="HideVerify_Click"/>
+        <Rectangle x:Name="VerifyBackdrop" Fill="#80000000" Visibility="Collapsed" Panel.ZIndex="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseLeftButtonUp="ClickHideVerify"/>
         <Grid x:Name="VerifyGrid" Width="640" Height="300" Background="#272727" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="10">
             <Grid.RenderTransform>
                 <TranslateTransform Y="800"/>
@@ -200,8 +202,10 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40" Click="HideVerify_Click"/>
-                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40" Click="ConfirmVerify_Click"/>
+                    <Button Grid.Column="0" Content="{x:Static language:Lang.globalCancel}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                            Click="ClickHideVerify"/>
+                    <Button Grid.Column="1" Content="{x:Static language:Lang.globalConfirm}" Style="{StaticResource buttonCustomFocus}" Width="180" Height="40"
+                            Click="ClickConfirmVerify"/>
                 </Grid>
             </Grid>
         </Grid>

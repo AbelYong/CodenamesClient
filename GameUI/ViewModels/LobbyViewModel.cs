@@ -697,6 +697,11 @@ namespace CodenamesClient.GameUI.ViewModels
             }
         }
 
+        public bool PingSessionService()
+        {
+            return DuplexNetworkManager.Instance.PingSessionService();
+        }
+
         public void SubscribeToSessionEvents()
         {
             SessionCallbackHandler.OnFriendOnline += HandleFriendOnline;

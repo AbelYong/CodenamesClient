@@ -7,5 +7,7 @@ namespace CodenamesGame.Network.Proxies.Interfaces
     {
         CommunicationRequest Initialize(PlayerDM player);
         void Disconnect();
+
+        bool Ping();
     }
 }

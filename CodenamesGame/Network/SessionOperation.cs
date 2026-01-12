@@ -9,7 +9,7 @@ namespace CodenamesGame.Network
     public class SessionOperation
     {
         private readonly ISessionProxy _proxy;
-        public event EventHandler ConnectionLost;
+        public static event EventHandler ConnectionLost;
 
         public SessionOperation() : this (SessionProxy.Instance) { }
 
@@ -30,6 +30,11 @@ namespace CodenamesGame.Network
         public void Disconnect()
         {
             _proxy.Disconnect();
+        }
+
+        public bool Ping()
+        {
+            return _proxy.Ping();
         }
     }
 }

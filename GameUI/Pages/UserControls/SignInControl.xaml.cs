@@ -52,7 +52,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             sb.Begin(MainRegisterGrid, true);
         }
 
-        private void Click_SignIn(object sender, RoutedEventArgs e)
+        private void ClickSignIn(object sender, RoutedEventArgs e)
         {
             _vm.ValidateAll();
             if (!_vm.CanSubmit)
@@ -60,6 +60,11 @@ namespace CodenamesClient.GameUI.Pages.UserControls
                 return;
             }
             RequestEmailVerification();
+        }
+
+        private void ClickBack(object sender, RoutedEventArgs e)
+        {
+            ClickClose?.Invoke(this, e);
         }
 
         private void RequestEmailVerification()
@@ -112,7 +117,7 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             sb.Begin(VerifyGrid, true);
         }
 
-        private void ConfirmVerify_Click(object sender, RoutedEventArgs e)
+        private void ClickConfirmVerify(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             if (btn != null)
@@ -206,17 +211,12 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             }
         }
 
-        private void HideVerify_Click(object sender, RoutedEventArgs e)
+        private void ClickHideVerify(object sender, RoutedEventArgs e)
         {
             HideVerifyOverlay();
         }
 
-        private void Click_btnClose(object sender, RoutedEventArgs e)
-        {
-            ClickClose?.Invoke(this, e);
-        }
-
-        private void PasswordInput_LostFocus(object sender, RoutedEventArgs e)
+        private void PasswordInputLostFocus(object sender, RoutedEventArgs e)
         {
             _vm.TriggerPasswordValidation();
         }

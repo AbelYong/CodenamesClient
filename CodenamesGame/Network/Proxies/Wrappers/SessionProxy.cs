@@ -125,6 +125,29 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             }
         }
 
+        public bool Ping()
+        {
+            try
+            {
+                if (_client != null)
+                {
+                    return _client.Ping();
+                }
+                return false;
+            }
+            catch (Exception ex) when (ex is TimeoutException || ex is EndpointNotFoundException || ex is CommunicationException)
+            {
+                OnChannelFaulted(this, EventArgs.Empty);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                CodenamesGameLogger.Log.Error("Unexpected exception while pinging Session Service: ", ex);
+                OnChannelFaulted(this, EventArgs.Empty);
+                return false;
+            }
+        }
+
         private void OnChannelFaulted(object sender, EventArgs e)
         {
             CloseProxy();

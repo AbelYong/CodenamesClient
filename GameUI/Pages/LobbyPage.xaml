@@ -39,7 +39,7 @@
                 <Image Width="30" Height="30" Source="{Binding ProfilePicturePath}" Margin="0,0,10,0">
                 </Image>
                 <TextBlock Text="{Binding Player.Username}" Width="150" VerticalAlignment="Center" Foreground="White" FontSize="16"/>
-                <Button Click="Click_InviteFriend" IsEnabled="{Binding InvitationAlreadySent}" Content="{x:Static language:Lang.lobbyInvite}"
+                <Button Click="ClickInviteFriend" IsEnabled="{Binding InvitationAlreadySent}" Content="{x:Static language:Lang.lobbyInvite}"
                     Style="{StaticResource buttonCustomFocus}" Width="90" />
             </StackPanel>
         </DataTemplate>
@@ -164,11 +164,11 @@
                             </Border.ToolTip>
                         </Border>
                     </Grid>
-                    <Button Click="Click_StartGame" Content="{x:Static language:Lang.globalPlay}" IsEnabled="{Binding PlayBtnEnabled}" Visibility="{Binding PlayBtnVisibility}"
+                    <Button Click="ClickStartGame" Content="{x:Static language:Lang.globalPlay}" IsEnabled="{Binding PlayBtnEnabled}" Visibility="{Binding PlayBtnVisibility}"
                 Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="48" Margin="0,0,0,25"/>
                     <ToggleButton IsChecked="{Binding IsReadyOrCancelTgBtnActive}" Content="{Binding ReadyOrCancelTgBtnContent}" Style="{StaticResource toggleButtonCustomFocus}" Visibility="{Binding ReadyOrCancelTgBtnVisibility}"
                     Height="75" FontSize="48" Margin="0,0,0,25"/>
-                    <Button Click="Click_btnCreateLobby" Content="{x:Static language:Lang.lobbyStartLobby}" Visibility="{Binding CreateLobbyBtnVisbility}"
+                    <Button Click="ClickCreateLobby" Content="{x:Static language:Lang.lobbyStartLobby}" Visibility="{Binding CreateLobbyBtnVisbility}"
                     Style="{StaticResource buttonCustomFocus}" Height="75" FontSize="36"/>
                     <Label Content="{Binding VisibleLobbyCodeTag}" Style="{StaticResource subtitle}" Width="350" Height="40" />
                 </StackPanel>
@@ -181,10 +181,10 @@
                     Style="{StaticResource buttonCustomFocus}" FontSize="24" Margin="0,0,0,10" Height="40" />
                     <Button x:Name="btnInvite" Content="{x:Static language:Lang.lobbyInvite}" Visibility="{Binding InviteBtnVisibility}"
                 Style="{StaticResource buttonCustomFocus}" Height="40" Margin="0,0,0,10"
-                Click="Click_ShowOnlineFriends"/>
+                Click="ClickShowOnlineFriends"/>
                     <Button x:Name="btnJoinWithCode" Content="{x:Static language:Lang.lobbyJoin}" Visibility="{Binding JoinBtnVisibility}"
                 Style="{StaticResource buttonCustomFocus}" Height="40" 
-                Click="Click_btnJoinParty"/>
+                Click="ClickJoinParty"/>
                 </StackPanel>
                 <Image Source="{Binding GamemodePicturePath}" Height="450"/>
             </DockPanel>
@@ -228,7 +228,7 @@
                     <Button Grid.Row="3" Content="{x:Static language:Lang.globalBack}" 
                     Style="{StaticResource buttonCustomFocus}"
                     Width="180" Height="40" Margin="0,0,0,20" 
-                    Click="Click_HideOnlineFriends"/>
+                    Click="ClickHideOnlineFriends"/>
                 </Grid>
             </Grid>
 
@@ -245,9 +245,9 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="{x:Static language:Lang.lobbyTypeLobbyCode}" Style="{StaticResource subtitle}" Margin="0,0,0,10" />
                 <TextBox Grid.Row="1" x:Name="tbkInputCode" Style="{StaticResource textBoxCustomFocus}" MaxLength="6" TextAlignment="Center" Width="300" Margin="0,0,0,20" />
-                <Button Grid.Row="2" Click="Click_btnSendCode" Content="{x:Static language:Lang.lobbySendCode}" Margin="0,0,0,10"
+                <Button Grid.Row="2" Click="ClickSendCode" Content="{x:Static language:Lang.lobbySendCode}" Margin="0,0,0,10"
                 Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
-                <Button Grid.Row="3" Click="Click_btnCloseTypeCode" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
+                <Button Grid.Row="3" Click="ClickCloseTypeCode" Content="{x:Static language:Lang.globalBack}" Style="{StaticResource buttonCustomFocus}" Width="300" Height="40" FontSize="20" />
             </Grid>
         </Grid>
     </Viewbox>

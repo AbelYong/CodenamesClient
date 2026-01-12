@@ -47,12 +47,14 @@ namespace CodenamesClient.GameUI.Pages
                 _slideOutTypeCode = (Storyboard)FindResource("SlideOutLobbyCodeAnimation");
 
                 _viewModel.SubscribeToSessionEvents();
-
-                _viewModel.ConnectToLobbyService(_me);
-                _viewModel.ConnectToMatchmakingService(_me);
-
                 _viewModel.BeginMatch += OnBeginMatch;
                 AudioManager.Instance.TransitionTo("Main");
+
+                if (_viewModel.PingSessionService())
+                {
+                    _viewModel.ConnectToLobbyService(_me);
+                    _viewModel.ConnectToMatchmakingService(_me);
+                }
             }
         }
 
@@ -169,7 +171,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private async void Click_StartGame(object sender, RoutedEventArgs e)
+        private async void ClickStartGame(object sender, RoutedEventArgs e)
         {
             if (_viewModel.PartyHost != null && _viewModel.PartyHost.PlayerID != _me.PlayerID)
             {
@@ -182,7 +184,7 @@ namespace CodenamesClient.GameUI.Pages
             }
         }
 
-        private void Click_btnCreateLobby(object sender, RoutedEventArgs e)
+        private void ClickCreateLobby(object sender, RoutedEventArgs e)
         {
             _viewModel.CreateLobby();
         }
@@ -202,20 +204,20 @@ namespace CodenamesClient.GameUI.Pages
             NavigationService.GoBack();
         }
 
-        private void Click_btnJoinParty(object sender, RoutedEventArgs e)
+        private void ClickJoinParty(object sender, RoutedEventArgs e)
         {
             Overlay.Visibility = Visibility.Visible;
             gridTypeCode.Visibility = Visibility.Visible;
             _slideInTypeCode.Begin();
         }
 
-        private void Click_btnSendCode(object sender, RoutedEventArgs e)
+        private void ClickSendCode(object sender, RoutedEventArgs e)
         {
             CloseTypeCodeGrid();
             _viewModel.JoinParty(tbkInputCode.Text);
         }
 
-        private void Click_btnCloseTypeCode(object sender, RoutedEventArgs e)
+        private void ClickCloseTypeCode(object sender, RoutedEventArgs e)
         {
             CloseTypeCodeGrid();
         }
@@ -236,14 +238,14 @@ namespace CodenamesClient.GameUI.Pages
             _slideOutTypeCode.Begin();
         }
 
-        private void Click_ShowOnlineFriends(object sender, RoutedEventArgs e)
+        private void ClickShowOnlineFriends(object sender, RoutedEventArgs e)
         {
             Overlay.Visibility = Visibility.Visible;
             OnlineFriendsGrid.Visibility = Visibility.Visible;
             _slideInOnlineFriends.Begin();
         }
 
-        private void Click_HideOnlineFriends(object sender, RoutedEventArgs e)
+        private void ClickHideOnlineFriends(object sender, RoutedEventArgs e)
         {
             EventHandler slideOutHandler = null;
 
@@ -279,7 +281,7 @@ namespace CodenamesClient.GameUI.Pages
             _viewModel.SendEmailInvitation();
         }
 
-        private void Click_InviteFriend(object sender, RoutedEventArgs e)
+        private void ClickInviteFriend(object sender, RoutedEventArgs e)
         {
             if (_viewModel.IsPartyFull)
             {

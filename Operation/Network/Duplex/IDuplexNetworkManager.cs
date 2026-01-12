@@ -10,6 +10,7 @@ namespace CodenamesClient.Operation.Network.Duplex
     {
         CodenamesGame.SessionService.CommunicationRequest ConnectToSessionService(PlayerDM player);
         void DisconnectFromSessionService();
+        bool PingSessionService();
         void ConnectToFriendService(Guid mePlayerId);
         void DisconnectFromFriendService();
         List<PlayerDM> SearchPlayers(string query);

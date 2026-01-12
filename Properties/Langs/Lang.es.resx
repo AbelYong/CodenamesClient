@@ -855,4 +855,13 @@
   <data name="profileErrorPasswordUpdateDbFailed" xml:space="preserve">
     <value>Lo sentimos, no pudimos actualizar tu contraseña por que tuvimos un problema guardando tu nuevo contraseña, por favor inténtalo más tarde</value>
   </data>
+  <data name="matchGuestsCannotReport" xml:space="preserve">
+    <value>Lo sentimos, las cuentas de invitado no pueden hacer reportes</value>
+  </data>
+  <data name="matchCannotReportAGuest" xml:space="preserve">
+    <value>Lo sentimos las cuentas de invitado no pueden ser reportadas</value>
+  </data>
+  <data name="matchErrorGameEndedStatsNotSaved" xml:space="preserve">
+    <value>El juego ha terminado pero no pudimos guardar tu puntuación para esta partida</value>
+  </data>
 </root>

@@ -300,6 +300,92 @@ namespace CodenamesClient.GameUI.ViewModels
             SetInitialTurn();
         }
 
+        private void InitializeMatchData(MatchDM match)
+        {
+            _turnLength = match.Rules.TurnTimer;
+            _timerTokens = match.Rules.TimerTokens;
+            _bystanderTokens = match.Rules.BystanderTokens;
+        }
+
+        private void InitializeTimer()
+        {
+            _turnTimer = _turnLength;
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += TimerTick;
+        }
+
+        private async void TimerTick(object sender, EventArgs e)
+        {
+            if (TurnTimer > 0)
+            {
+                TurnTimer--;
+            }
+            else
+            {
+                _timer.Stop();
+
+                if (_amISpymaster)
+                {
+                    await DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.SPYMASTER);
+                }
+                else
+                {
+                    if (_isBoardEnabled)
+                    {
+                        await DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
+                        TimerTokens--;
+                    }
+                }
+            }
+        }
+
+        private void ResetTimer()
+        {
+            TurnTimer = _turnLength;
+            StartTimer();
+        }
+
+        public void StartTimer()
+        {
+            _timer.Start();
+        }
+
+        public void AddTime(int seconds)
+        {
+            int turnLength = TurnTimer + seconds;
+            TurnTimer = turnLength < MatchRulesDM.MAX_TURN_TIMER ? turnLength : MatchRulesDM.MAX_TURN_TIMER;
+        }
+
+        public void StopTimer()
+        {
+            _timer.Stop();
+        }
+
+        private void InitializeChronometer()
+        {
+            ElapsedTime = TimeSpan.Zero;
+            _chronometer = new DispatcherTimer();
+            _chronometer.Interval = TimeSpan.FromSeconds(1);
+            _chronometer.Tick += ChronometerTick;
+        }
+
+        private void ChronometerTick(object sender, EventArgs e)
+        {
+            ElapsedTime = ElapsedTime.Add(TimeSpan.FromSeconds(1));
+        }
+
+        public void StartChronometer()
+        {
+            _chronometer.Start();
+        }
+
+        public void StopChronometer()
+        {
+            _chronometer.Stop();
+            ElapsedTime = TimeSpan.Zero;
+        }
+
         public void Connect(MatchDM match, Guid myID)
         {
             var connectionRequest = DuplexNetworkManager.Instance.ConnectMatchService(myID);
@@ -514,7 +600,7 @@ namespace CodenamesClient.GameUI.ViewModels
                 GameOverTitle = Lang.matchDefeat;
                 GameOverMessage = _amISpymaster ? string.Format(Lang.matchDefeatAssassinCompanion, CompanionUsername) : Lang.matchDefeatAssassinMessage;
                 OverlayColor = "#CC000000";
-                GameOverImageSource = "/Assets/BoardUI/Assassins/assassin01.png";
+                GameOverImageSource = "/Assets/GameUI/gameOverIcon.png";
                 ShowAssassinImage = true;
 
                 OnAssassinFlipRequested?.Invoke(e.Coordinates);
@@ -525,7 +611,7 @@ namespace CodenamesClient.GameUI.ViewModels
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageBox.Show("La partida ha terminado pero hubo un error al guardar las estadísticas.",
+                MessageBox.Show(Lang.matchErrorGameEndedStatsNotSaved,
                     Lang.globalWarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             });
         }
@@ -761,96 +847,21 @@ namespace CodenamesClient.GameUI.ViewModels
             return allWords;
         }
 
-        private void InitializeMatchData(MatchDM match)
-        {
-            _turnLength = match.Rules.TurnTimer;
-            _timerTokens = match.Rules.TimerTokens;
-            _bystanderTokens = match.Rules.BystanderTokens;
-        }
-
-        private void InitializeTimer()
-        {
-            _turnTimer = _turnLength;
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += TimerTick;
-        }
-
-        private async void TimerTick(object sender, EventArgs e)
-        {
-            if (TurnTimer > 0)
-            {
-                TurnTimer--;
-            }
-            else
-            {
-                _timer.Stop();
-
-                if (_amISpymaster)
-                {
-                    await DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.SPYMASTER);
-                }
-                else
-                {
-                    if (_isBoardEnabled)
-                    {
-                        await DuplexNetworkManager.Instance.NotifyTurnTimeout(MatchRoleType.GUESSER);
-                        TimerTokens--;
-                    }
-                }
-            }
-        }
-
-        private void ResetTimer()
-        {
-            TurnTimer = _turnLength;
-            StartTimer();
-        }
-
-        public void StartTimer()
-        {
-            _timer.Start();
-        }
-
-        public void AddTime(int seconds)
-        {
-            int turnLength = TurnTimer + seconds;
-            TurnTimer = turnLength < MatchRulesDM.MAX_TURN_TIMER ? turnLength : MatchRulesDM.MAX_TURN_TIMER;
-        }
-
-        public void StopTimer()
-        {
-            _timer.Stop();
-        }
-
-        private void InitializeChronometer()
-        {
-            ElapsedTime = TimeSpan.Zero;
-            _chronometer = new DispatcherTimer();
-            _chronometer.Interval = TimeSpan.FromSeconds(1);
-            _chronometer.Tick += ChronometerTick;
-        }
-
-        private void ChronometerTick(object sender, EventArgs e)
-        {
-            ElapsedTime = ElapsedTime.Add(TimeSpan.FromSeconds(1));
-        }
-
-        public void StartChronometer()
-        {
-            _chronometer.Start();
-        }
-
-        public void StopChronometer()
-        {
-            _chronometer.Stop();
-            ElapsedTime = TimeSpan.Zero;
-        }
-
         public void ReportCompanion()
         {
             if (_companion == null)
             {
+                return;
+            }
+
+            if (_me.IsGuest)
+            {
+                MessageBox.Show(Lang.matchGuestsCannotReport);
+                return;
+            }
+            if (_companion.IsGuest)
+            {
+                MessageBox.Show(Lang.matchCannotReportAGuest);
                 return;
             }
 

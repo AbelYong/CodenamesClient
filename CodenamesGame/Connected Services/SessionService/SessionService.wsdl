@@ -30,6 +30,12 @@
   <wsdl:message name="ISessionManager_Disconnect_InputMessage">
     <wsdl:part name="parameters" element="tns:Disconnect" />
   </wsdl:message>
+  <wsdl:message name="ISessionManager_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="ISessionManager_Ping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
   <wsdl:message name="ISessionManager_NotifyNewFriendship_InputMessage">
     <wsdl:part name="parameters" element="tns:NotifyNewFriendship" />
   </wsdl:message>
@@ -55,6 +61,10 @@
     </wsdl:operation>
     <wsdl:operation name="Disconnect">
       <wsdl:input wsaw:Action="http://tempuri.org/ISessionManager/Disconnect" message="tns:ISessionManager_Disconnect_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISessionManager/Ping" message="tns:ISessionManager_Ping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISessionManager/PingResponse" message="tns:ISessionManager_Ping_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="NotifyNewFriendship">
       <wsdl:input wsaw:Action="http://tempuri.org/ISessionManager/NotifyNewFriendship" message="tns:ISessionManager_NotifyNewFriendship_InputMessage" />
@@ -92,6 +102,15 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="http://tempuri.org/ISessionManager/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="NotifyNewFriendship">
       <soap12:operation soapAction="http://tempuri.org/ISessionManager/NotifyNewFriendship" style="document" />
