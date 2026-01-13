@@ -266,7 +266,6 @@ namespace CodenamesClient.GameUI.Pages.UserControls
             if (request.IsSuccess)
             {
                 SaveProfile();
-                CloseProfile?.Invoke();
             }
             else
             {

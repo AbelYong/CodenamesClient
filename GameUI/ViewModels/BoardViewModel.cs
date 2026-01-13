@@ -645,8 +645,6 @@ namespace CodenamesClient.GameUI.ViewModels
                 return;
             }
 
-            await DuplexNetworkManager.Instance.SendClue(trimmedMessage);
-
             AddMessageToChat(trimmedMessage, true);
             ChatInput = string.Empty;
 
@@ -658,6 +656,8 @@ namespace CodenamesClient.GameUI.ViewModels
 
                 StopTimer();
             }
+
+            await DuplexNetworkManager.Instance.SendClue(trimmedMessage);
         }
 
         private static bool IsValidClueFormat(string message)
@@ -746,14 +746,7 @@ namespace CodenamesClient.GameUI.ViewModels
 
         public static async Task CheckOnCompanion()
         {
-            if (await DuplexNetworkManager.Instance.CheckCompanionStatus())
-            {
-                MessageBox.Show(Lang.matchCompanionIsOnline);
-            }
-            else
-            {
-                MessageBox.Show(Lang.matchCompanionLostConnection);
-            }
+            await DuplexNetworkManager.Instance.CheckCompanionStatus();
         }
 
         public async Task HandleAgentSelection(BoardCoordinatesDM coordinates)

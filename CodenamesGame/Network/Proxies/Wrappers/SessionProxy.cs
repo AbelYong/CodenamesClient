@@ -10,13 +10,15 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 {
     public class SessionProxy : ISessionProxy
     {
+        public event EventHandler ConnectionLost;
         public delegate ISessionManager SessionClientFactory(InstanceContext context, string endpointName);
         private readonly SessionClientFactory _clientFactory;
         private static readonly Lazy<SessionProxy> _instance = new Lazy<SessionProxy>(() => new SessionProxy());
         private const string _ENDPOINT_NAME = "NetTcpBinding_ISessionManager";
         private ISessionManager _client;
         private PlayerDM _player;
-        public event EventHandler ConnectionLost;
+        private bool _isCleanedUp = false;
+        private readonly object _lock = new object();
 
         public static SessionProxy Instance
         {
@@ -73,7 +75,9 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             try
             {
                 ((ICommunicationObject)_client).Open();
-                return _client.Connect(player);
+                request = _client.Connect(player);
+                _isCleanedUp = false;
+                return request;
             }
             catch (TimeoutException)
             {
@@ -150,6 +154,14 @@ namespace CodenamesGame.Network.Proxies.Wrappers
 
         private void OnChannelFaulted(object sender, EventArgs e)
         {
+            lock (_lock)
+            {
+                if (_isCleanedUp)
+                {
+                    return;
+                }
+                _isCleanedUp = true;
+            }
             CloseProxy();
             ConnectionLost?.Invoke(this, EventArgs.Empty);
         }
