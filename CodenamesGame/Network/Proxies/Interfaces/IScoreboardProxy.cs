@@ -9,5 +9,6 @@ namespace CodenamesGame.Network.Proxies.Interfaces
         void Initialize(Guid playerID);
         void Disconnect();
         ScoreboardRequest GetMyScore(Guid playerID);
+        ScoreboardRequest GetTopPlayers();
     }
 }

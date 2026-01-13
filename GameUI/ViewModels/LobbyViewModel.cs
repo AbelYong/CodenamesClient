@@ -23,7 +23,7 @@ namespace CodenamesClient.GameUI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public event Action<MatchDM> BeginMatch;
         public ObservableCollection<FriendItem> Friends { get; }
-        private Dictionary<string, bool> _alreadySentToAddresses = new Dictionary<string, bool>();
+        private readonly Dictionary<string, bool> _alreadySentToAddresses = new Dictionary<string, bool>();
         private MatchDM _match;
         private readonly PlayerDM _me;
         private PlayerDM _partyHost;

@@ -108,6 +108,35 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             return GenerateServerUnavaibleRequest<ScoreboardRequest>();
         }
 
+        public ScoreboardRequest GetTopPlayers() 
+        {
+            TryReconnect();
+            if (VerifyClientOpen())
+            {
+                try
+                {
+                    return _client.GetTopPlayers();
+                }
+                catch (TimeoutException)
+                {
+                    CloseProxy();
+                    return GenerateServerTimeoutRequest<ScoreboardRequest>();
+                }
+                catch (CommunicationException)
+                {
+                    CloseProxy();
+                    return GenerateServerUnavaibleRequest<ScoreboardRequest>();
+                }
+                catch (Exception ex)
+                {
+                    CloseProxy();
+                    CodenamesGameLogger.Log.Error("Unexpected exception getting top players: ", ex);
+                    return GenerateClientErrorRequest<ScoreboardRequest>();
+                }
+            }
+            return GenerateServerUnavaibleRequest<ScoreboardRequest>();
+        }
+
         private bool VerifyClientOpen()
         {
             return _client != null && ((ICommunicationObject)_client).State == CommunicationState.Opened;
@@ -134,14 +163,6 @@ namespace CodenamesGame.Network.Proxies.Wrappers
             var request = new T();
             request.IsSuccess = false;
             request.StatusCode = StatusCode.SERVER_TIMEOUT;
-            return request;
-        }
-
-        private static T GenerateServerUnreachableRequest<T>() where T : Request, new()
-        {
-            var request = new T();
-            request.IsSuccess = false;
-            request.StatusCode = StatusCode.SERVER_UNREACHABLE;
             return request;
         }
 

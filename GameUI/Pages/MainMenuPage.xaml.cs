@@ -4,6 +4,7 @@ using CodenamesClient.Operation.Network.Duplex;
 using CodenamesClient.Operation.Network.Oneway;
 using CodenamesClient.Operation.ServiceOperationTypes;
 using CodenamesClient.Properties.Langs;
+using CodenamesClient.Util;
 using CodenamesGame.Domain.POCO;
 using CodenamesGame.Network.EventArguments;
 using System;
@@ -335,8 +336,12 @@ namespace CodenamesClient.GameUI.Pages
 
         private void ClickRefreshScoreboard(object sender, RoutedEventArgs e)
         {
-            _viewModel.CloseScoreboard();
-            _viewModel.OpenScoreboard();
+            var response = _viewModel.RefreshScoreboard();
+            if (response != null && !response.IsSuccess)
+            {
+                string msg = StatusToMessageMapper.GetScoreboardServiceMessage(response.StatusCode);
+                MessageBox.Show(msg, Lang.globalErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ClickSendRequest(object sender, RoutedEventArgs e)

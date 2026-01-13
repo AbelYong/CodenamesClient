@@ -217,5 +217,10 @@ namespace CodenamesClient.Operation.Network.Duplex
         {
             return ScoreboardProxy.Instance.GetMyScore(playerID);
         }
+
+        public ScoreboardRequest GetTopPlayers()
+        {
+            return _scoreboardOperation.GetTopPlayers();
+        }
     }
 }

@@ -31,5 +31,10 @@ namespace CodenamesGame.Network
         {
             return _proxy.GetMyScore(playerID);
         }
+
+        public ScoreboardRequest GetTopPlayers()
+        {
+            return _proxy.GetTopPlayers();
+        }
     }
 }

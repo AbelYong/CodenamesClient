@@ -46,5 +46,6 @@ namespace CodenamesClient.Operation.Network.Duplex
         void ConnectToScoreboardService(Guid playerID);
         void DisconnectFromScoreboardService();
         ScoreboardRequest GetMyScore(Guid playerID);
+        ScoreboardRequest GetTopPlayers();
     }
 }
